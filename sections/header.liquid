@@ -1,0 +1,856 @@
+{% liquid
+  assign menu = section.settings.menu
+  assign highlight_title = section.settings.highlight_item | strip
+  assign border_alpha = section.settings.border_opacity | times: 0.01
+%}
+
+<header
+  class="fulva-header fulva-header--{{ section.id }}{% if section.settings.sticky %} is-sticky{% endif %}"
+  style="
+    --fh-bg: {{ section.settings.bg_color }};
+    --fh-text: {{ section.settings.text_color }};
+    --fh-border: {{ section.settings.border_color | color_modify: 'alpha', border_alpha }};
+    --fh-hover: {{ section.settings.hover_color }};
+    --fh-accent: {{ section.settings.accent_color }};
+    --fh-height: {{ section.settings.height_desktop }}px;
+    --fh-height-mobile: {{ section.settings.height_mobile }}px;
+    --fh-height-used: max(48px, calc({{ section.settings.height_desktop }}px - 8px));
+    --fh-height-mobile-used: max(48px, calc({{ section.settings.height_mobile }}px - 6px));
+    --fh-px: {{ section.settings.padding_x_desktop }}px;
+    --fh-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --fh-max-width: {% if section.settings.max_width > 0 %}{{ section.settings.max_width }}px{% else %}100%{% endif %};
+    --fh-nav-gap: {{ section.settings.nav_gap }}px;
+    --fh-logo-size: {{ section.settings.logo_size_desktop }}px;
+    --fh-logo-size-mobile: {{ section.settings.logo_size_mobile }}px;
+    --fh-logo-dot: {{ section.settings.logo_dot_size }}px;
+    --fh-highlight-dot: {{ section.settings.highlight_dot_size }}px;
+    --fh-highlight-offset: {{ section.settings.highlight_dot_offset }}px;
+    --fh-action-gap: {{ section.settings.action_gap }}px;
+    --fh-action-fs: {{ section.settings.action_font_size }}px;
+    --fh-btn-py: {{ section.settings.button_padding_y }}px;
+    --fh-btn-px: {{ section.settings.button_padding_x }}px;
+    --fh-btn-radius: {{ section.settings.button_radius }}px;
+    --fh-wa-color: {{ section.settings.whatsapp_icon_color }};
+    --fh-track-border: {{ section.settings.track_border_color }};
+    --fh-track-border-w: {{ section.settings.track_border_width }}px;
+    --fh-track-py: {{ section.settings.track_padding_y }}px;
+    --fh-track-px: {{ section.settings.track_padding_x }}px;
+    --fh-mobile-bg: {{ section.settings.mobile_menu_bg }};
+    --fh-mobile-text: {{ section.settings.mobile_menu_text }};
+  "
+>
+  <div class="fulva-header__inner">
+    {% if section.settings.enable_mobile_menu and menu != blank and menu.links.size > 0 %}
+      <div class="fulva-header__mobile-toggle">
+        <details class="fulva-header__mobile-menu">
+          <summary class="fulva-header__icon-btn" aria-label="{{ section.settings.mobile_menu_label | escape }}">
+            {% if section.settings.show_icons %}
+              <svg class="fulva-header__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+            {% endif %}
+            {% if section.settings.show_mobile_label %}
+              <span class="fulva-header__btn-text">{{ section.settings.mobile_menu_label | escape }}</span>
+            {% endif %}
+          </summary>
+          <div class="fulva-header__mobile-panel" role="dialog" aria-label="{{ section.settings.mobile_menu_label | escape }}">
+            <ul class="fulva-header__mobile-list">
+              {% for link in menu.links %}
+                <li class="fulva-header__mobile-item">
+                  <a class="fulva-header__mobile-link" href="{{ link.url }}">{{ link.title | escape }}</a>
+                  {% if link.links.size > 0 %}
+                    <ul class="fulva-header__mobile-sublist" role="list">
+                      {% for childlink in link.links %}
+                        <li class="fulva-header__mobile-subitem">
+                          <a class="fulva-header__mobile-sublink" href="{{ childlink.url }}">{{ childlink.title | escape }}</a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                </li>
+              {% endfor %}
+              {% if section.settings.show_track_order and section.settings.track_order_url != blank %}
+                <li class="fulva-header__mobile-item is-track">
+                  <a class="fulva-header__mobile-link is-track" href="{{ section.settings.track_order_url }}">
+                    {% if section.settings.show_icons %}
+                      <svg class="fulva-header__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11z"></path>
+                        <circle cx="12" cy="10" r="2"></circle>
+                      </svg>
+                    {% endif %}
+                    {{ section.settings.track_order_label | escape }}
+                  </a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </details>
+      </div>
+    {% endif %}
+
+    <a class="fulva-header__logo" href="{{ routes.root_url }}">
+      {% if section.settings.logo_image != blank %}
+        <img
+          class="fulva-header__logo-img"
+          src="{{ section.settings.logo_image | image_url: width: 600 }}"
+          alt="{{ shop.name | escape }}"
+          width="{{ section.settings.logo_image.width }}"
+          height="{{ section.settings.logo_image.height }}"
+          loading="eager"
+        >
+      {% else %}
+        <span class="fulva-header__logo-text">
+          {{ section.settings.logo_text | escape }}
+          {% if section.settings.show_logo_dot %}
+            <span class="fulva-header__logo-dot" aria-hidden="true"></span>
+          {% endif %}
+        </span>
+      {% endif %}
+    </a>
+
+    <nav class="fulva-header__nav" aria-label="Primary">
+      {% if menu != blank and menu.links.size > 0 %}
+        <ul class="fulva-header__nav-list">
+          {% for link in menu.links %}
+            {% assign is_highlight = false %}
+            {% if highlight_title != blank and link.title == highlight_title %}
+              {% assign is_highlight = true %}
+            {% endif %}
+            <li class="fulva-header__nav-item{% if is_highlight %} is-highlight{% endif %}{% if link.links.size > 0 %} has-children{% endif %}">
+              <a class="fulva-header__nav-link" href="{{ link.url }}">{{ link.title | escape }}</a>
+              {% if link.links.size > 0 %}
+                <div class="fulva-header__submenu" role="list">
+                  {% for childlink in link.links %}
+                    <a class="fulva-header__submenu-link" href="{{ childlink.url }}">{{ childlink.title | escape }}</a>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+    </nav>
+
+    <div class="fulva-header__actions">
+      {% if section.settings.show_whatsapp and section.settings.whatsapp_url != blank and section.settings.whatsapp_display != 'widget' %}
+        <a class="fulva-header__btn is-wa" href="{{ section.settings.whatsapp_url }}" {% if section.settings.whatsapp_new_tab %}target="_blank" rel="noopener"{% endif %}>
+          {% if section.settings.show_icons %}
+            <svg class="fulva-header__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20.52 3.48A11.86 11.86 0 0 0 12.07 0C5.44 0 .05 5.39.04 12.03c0 2.12.55 4.19 1.6 6.02L0 24l6.12-1.6a11.95 11.95 0 0 0 5.95 1.52h.01c6.63 0 12.02-5.39 12.03-12.02a11.95 11.95 0 0 0-3.59-8.42ZM12.08 21.97h-.01a9.95 9.95 0 0 1-5.08-1.4l-.36-.22-3.63.95.97-3.54-.23-.37a9.98 9.98 0 0 1-1.53-5.31C2.22 6.6 6.64 2.18 12.08 2.18a9.95 9.95 0 0 1 7.06 2.93 9.9 9.9 0 0 1 2.92 7.03c-.01 5.44-4.43 9.83-9.98 9.83Z"></path>
+              <path d="M17.32 14.63c-.28-.14-1.68-.83-1.94-.92-.26-.1-.45-.14-.64.14-.19.28-.73.92-.89 1.11-.16.19-.33.21-.61.07-.28-.14-1.16-.43-2.22-1.38-.82-.73-1.37-1.64-1.53-1.92-.16-.28-.02-.43.12-.57.13-.13.28-.33.42-.49.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.49-.07-.14-.64-1.55-.88-2.12-.23-.56-.46-.48-.64-.49h-.55c-.19 0-.5.07-.76.35-.26.28-1 0.96-1 2.38 0 1.4 1.03 2.76 1.17 2.95.14.19 2.01 3.07 4.87 4.3.68.29 1.2.47 1.62.6.68.21 1.3.18 1.79.11.55-.08 1.68-.69 1.92-1.36.24-.67.24-1.23.17-1.35-.07-.12-.26-.19-.54-.33Z"></path>
+            </svg>
+          {% endif %}
+          <span class="fulva-header__btn-text">{{ section.settings.whatsapp_label | escape }}</span>
+        </a>
+      {% endif %}
+
+      {% if section.settings.show_track_order and section.settings.track_order_url != blank %}
+        <a class="fulva-header__btn is-track{% if section.settings.track_style == 'solid' %} is-solid{% endif %}" href="{{ section.settings.track_order_url }}">
+          {% if section.settings.show_icons %}
+            <svg class="fulva-header__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11z"></path>
+              <circle cx="12" cy="10" r="2"></circle>
+            </svg>
+          {% endif %}
+          <span class="fulva-header__btn-text">{{ section.settings.track_order_label | escape }}</span>
+        </a>
+      {% endif %}
+
+      {% if section.settings.show_cart %}
+        <a class="fulva-header__btn is-cart" href="{{ routes.cart_url }}">
+          {% if section.settings.show_icons %}
+            <svg class="fulva-header__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"></path>
+            </svg>
+          {% endif %}
+          <span class="fulva-header__btn-text">
+            {{ section.settings.cart_label | escape }}
+            {% if section.settings.show_cart_count %} ({{ cart.item_count }}){% endif %}
+          </span>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</header>
+
+{% if section.settings.show_whatsapp and section.settings.whatsapp_url != blank and section.settings.whatsapp_display != 'header' %}
+  {% liquid
+    assign wa_widget_border_alpha = section.settings.whatsapp_widget_border_opacity | times: 0.01
+    assign wa_widget_shadow_alpha = section.settings.whatsapp_widget_shadow_opacity | times: 0.01
+  %}
+
+  <a
+    class="fulva-wa-widget fulva-wa-widget--{{ section.id }}{% if section.settings.whatsapp_widget_position == 'bottom_left' %} is-left{% else %} is-right{% endif %}{% if section.settings.whatsapp_widget_hide_mobile %} is-hide-mobile{% endif %}{% if section.settings.whatsapp_widget_hide_desktop %} is-hide-desktop{% endif %}"
+    href="{{ section.settings.whatsapp_url }}"
+    aria-label="{{ section.settings.whatsapp_widget_aria | escape }}"
+    style="
+      --fww-bg: {{ section.settings.whatsapp_widget_bg }};
+      --fww-text: {{ section.settings.whatsapp_widget_text_color }};
+      --fww-icon: {{ section.settings.whatsapp_widget_icon_color }};
+      --fww-border: {{ section.settings.whatsapp_widget_border_color | color_modify: 'alpha', wa_widget_border_alpha }};
+      --fww-shadow: {{ section.settings.whatsapp_widget_shadow_color | color_modify: 'alpha', wa_widget_shadow_alpha }};
+      --fww-x: {{ section.settings.whatsapp_widget_offset_x }}px;
+      --fww-y: {{ section.settings.whatsapp_widget_offset_y }}px;
+      --fww-icon-size: {{ section.settings.whatsapp_widget_icon_size }}px;
+      --fww-px: {{ section.settings.whatsapp_widget_padding_x }}px;
+      --fww-py: {{ section.settings.whatsapp_widget_padding_y }}px;
+    "
+    {% if section.settings.whatsapp_new_tab %}
+      target="_blank"
+      rel="noopener"
+    {% endif %}
+  >
+    <span class="fulva-wa-widget__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+        <path d="M20.52 3.48A11.86 11.86 0 0 0 12.07 0C5.44 0 .05 5.39.04 12.03c0 2.12.55 4.19 1.6 6.02L0 24l6.12-1.6a11.95 11.95 0 0 0 5.95 1.52h.01c6.63 0 12.02-5.39 12.03-12.02a11.95 11.95 0 0 0-3.59-8.42ZM12.08 21.97h-.01a9.95 9.95 0 0 1-5.08-1.4l-.36-.22-3.63.95.97-3.54-.23-.37a9.98 9.98 0 0 1-1.53-5.31C2.22 6.6 6.64 2.18 12.08 2.18a9.95 9.95 0 0 1 7.06 2.93 9.9 9.9 0 0 1 2.92 7.03c-.01 5.44-4.43 9.83-9.98 9.83Z"></path>
+        <path d="M17.32 14.63c-.28-.14-1.68-.83-1.94-.92-.26-.1-.45-.14-.64.14-.19.28-.73.92-.89 1.11-.16.19-.33.21-.61.07-.28-.14-1.16-.43-2.22-1.38-.82-.73-1.37-1.64-1.53-1.92-.16-.28-.02-.43.12-.57.13-.13.28-.33.42-.49.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.49-.07-.14-.64-1.55-.88-2.12-.23-.56-.46-.48-.64-.49h-.55c-.19 0-.5.07-.76.35-.26.28-1 0.96-1 2.38 0 1.4 1.03 2.76 1.17 2.95.14.19 2.01 3.07 4.87 4.3.68.29 1.2.47 1.62.6.68.21 1.3.18 1.79.11.55-.08 1.68-.69 1.92-1.36.24-.67.24-1.23.17-1.35-.07-.12-.26-.19-.54-.33Z"></path>
+      </svg>
+    </span>
+    {% if section.settings.whatsapp_widget_show_label %}
+      <span class="fulva-wa-widget__text">{{ section.settings.whatsapp_widget_label | escape }}</span>
+    {% endif %}
+  </a>
+{% endif %}
+
+<style>
+  .fulva-header--{{ section.id }} {
+    background: var(--fh-bg);
+    color: var(--fh-text);
+    border-bottom: {% if section.settings.show_border %}1px solid var(--fh-border){% else %}0{% endif %};
+    {% if section.settings.sticky %}
+      position: sticky;
+      top: 0;
+      z-index: 60;
+    {% endif %}
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__inner {
+    max-width: var(--fh-max-width);
+    margin: 0 auto;
+    min-height: var(--fh-height-used);
+    padding: 0 var(--fh-px);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__logo {
+    color: inherit;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    justify-self: start;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__logo-text {
+    font-family: {% if section.settings.logo_font == 'heading' %}var(--font-heading-family, inherit){% else %}var(--font-body-family, inherit){% endif %};
+    font-style: {% if section.settings.logo_font == 'heading' %}var(--font-heading-style, normal){% else %}var(--font-body-style, normal){% endif %};
+    font-weight: {% if section.settings.logo_font == 'heading' %}var(--font-heading-weight, 700){% else %}var(--font-body-weight, 700){% endif %};
+    font-size: var(--fh-logo-size);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--fh-accent);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 3px;
+    white-space: nowrap;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__logo-dot {
+    width: var(--fh-logo-dot);
+    height: var(--fh-logo-dot);
+    border-radius: 999px;
+    background: var(--fh-accent);
+    display: inline-block;
+    transform: translateY(-0.22em);
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__logo-img {
+    height: auto;
+    max-height: calc(var(--fh-height-used) - 16px);
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__nav {
+    justify-self: center;
+    text-align: center;
+    min-width: 0;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--fh-nav-gap);
+    flex-wrap: nowrap;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__nav-item {
+    position: relative;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__nav-link {
+    font-family: var(--font-body-family, inherit);
+    font-style: var(--font-body-style, normal);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--fh-text);
+    text-decoration: none;
+    position: relative;
+    padding: 6px 2px;
+    transition: color 200ms ease;
+    white-space: nowrap;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__nav-link:hover {
+    color: var(--fh-hover);
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__submenu {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 240px;
+    max-width: min(360px, 70vw);
+    background: var(--fh-mobile-bg);
+    color: var(--fh-mobile-text);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 14px;
+    padding: 8px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform-origin: top center;
+    transition: opacity 160ms ease, transform 160ms ease, visibility 160ms ease;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__nav-item.has-children:hover .fulva-header__submenu,
+  .fulva-header--{{ section.id }} .fulva-header__nav-item.has-children:focus-within .fulva-header__submenu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__submenu-link {
+    display: block;
+    padding: 10px 10px;
+    border-radius: 10px;
+    color: inherit;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background 180ms ease, color 180ms ease;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__submenu-link:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--fh-hover);
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__nav-item.is-highlight .fulva-header__nav-link::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--fh-highlight-offset) * -1);
+    left: 50%;
+    transform: translateX(-50%);
+    width: var(--fh-highlight-dot);
+    height: var(--fh-highlight-dot);
+    border-radius: 999px;
+    background: {{ section.settings.highlight_dot_color }};
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__actions {
+    justify-self: end;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fh-action-gap);
+    min-width: 0;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__mobile-toggle {
+    display: none;
+    justify-self: start;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__btn,
+  .fulva-header--{{ section.id }} .fulva-header__icon-btn {
+    font-family: var(--font-body-family, inherit);
+    font-style: var(--font-body-style, normal);
+    font-weight: 700;
+    font-size: var(--fh-action-fs);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--fh-text);
+    text-decoration: none;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    line-height: 1;
+    transition: color 200ms ease, border-color 200ms ease, background 200ms ease;
+    cursor: pointer;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__icon-btn {
+    padding: 8px;
+    border-radius: 10px;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__icon-btn:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__btn:hover,
+  .fulva-header--{{ section.id }} .fulva-header__icon-btn:hover {
+    color: var(--fh-hover);
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__btn.is-track {
+    border: var(--fh-track-border-w) solid var(--fh-track-border);
+    border-radius: 999px;
+    padding: var(--fh-track-py) var(--fh-track-px);
+    color: var(--fh-text);
+    white-space: nowrap;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__btn.is-track:hover {
+    border-color: var(--fh-hover);
+    color: var(--fh-hover);
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__btn.is-track.is-solid {
+    background: var(--fh-accent);
+    color: #ffffff;
+    border-color: var(--fh-accent);
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__btn.is-track.is-solid:hover {
+    filter: brightness(0.95);
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    stroke: currentColor;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__btn.is-wa {
+    color: var(--fh-text);
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__btn.is-wa .fulva-header__icon {
+    color: var(--fh-wa-color);
+    stroke: none;
+  }
+
+  .fulva-wa-widget--{{ section.id }} {
+    position: fixed;
+    bottom: var(--fww-y);
+    z-index: 90;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: var(--fww-py) var(--fww-px);
+    border-radius: 999px;
+    background: var(--fww-bg);
+    color: var(--fww-text);
+    border: 1px solid var(--fww-border);
+    box-shadow: 0 18px 44px var(--fww-shadow);
+    text-decoration: none;
+    font-family: var(--font-body-family, inherit);
+    font-weight: 800;
+    line-height: 1;
+    white-space: nowrap;
+    transition: transform 0.2s ease, filter 0.2s ease;
+  }
+
+  .fulva-wa-widget--{{ section.id }}.is-right {
+    right: var(--fww-x);
+  }
+
+  .fulva-wa-widget--{{ section.id }}.is-left {
+    left: var(--fww-x);
+  }
+
+  .fulva-wa-widget--{{ section.id }}:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.02);
+  }
+
+  .fulva-wa-widget--{{ section.id }} .fulva-wa-widget__icon {
+    width: var(--fww-icon-size);
+    height: var(--fww-icon-size);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fww-icon);
+    flex: 0 0 auto;
+  }
+
+  .fulva-wa-widget--{{ section.id }} .fulva-wa-widget__icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    fill: currentColor;
+  }
+
+  .fulva-wa-widget--{{ section.id }} .fulva-wa-widget__text {
+    font-size: 13px;
+  }
+
+  @media (max-width: 749px) {
+    .fulva-wa-widget--{{ section.id }}.is-hide-mobile {
+      display: none;
+    }
+    {% if section.settings.whatsapp_widget_show_label_mobile == false %}
+      .fulva-wa-widget--{{ section.id }} .fulva-wa-widget__text {
+        display: none;
+      }
+    {% endif %}
+  }
+
+  @media (min-width: 750px) {
+    .fulva-wa-widget--{{ section.id }}.is-hide-desktop {
+      display: none;
+    }
+  }
+
+  {% if section.settings.show_icons %}
+    .fulva-header--{{ section.id }} .fulva-header__btn.is-track .fulva-header__icon {
+      display: none;
+    }
+  {% endif %}
+
+  .fulva-header--{{ section.id }} .fulva-header__mobile-menu {
+    display: none;
+    position: relative;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__mobile-menu > summary {
+    list-style: none;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__mobile-menu > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__mobile-panel {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: min(320px, calc(100vw - 24px));
+    background: var(--fh-mobile-bg);
+    color: var(--fh-mobile-text);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 14px;
+    padding: 10px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__mobile-list {
+    list-style: none;
+    margin: 0;
+    padding: 8px;
+    display: grid;
+    gap: 6px;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__mobile-link {
+    display: block;
+    padding: 12px 12px;
+    border-radius: 10px;
+    color: inherit;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 180ms ease, color 180ms ease;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__mobile-link:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--fh-hover);
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__mobile-link.is-track {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: var(--fh-track-border-w) solid var(--fh-track-border);
+    border-radius: 999px;
+    padding: var(--fh-track-py) var(--fh-track-px);
+    background: transparent;
+    color: var(--fh-text);
+    width: 100%;
+    justify-content: center;
+    white-space: nowrap;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__mobile-item.is-track {
+    margin-top: 6px;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__mobile-link.is-track:hover {
+    border-color: var(--fh-hover);
+    color: var(--fh-hover);
+    background: rgba(0, 0, 0, 0.03);
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__mobile-sublist {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 12px;
+    display: grid;
+    gap: 4px;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__mobile-sublink {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 10px;
+    color: inherit;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 180ms ease, color 180ms ease;
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__mobile-sublink:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--fh-hover);
+  }
+
+  .fulva-header--{{ section.id }} .fulva-header__btn:focus-visible,
+  .fulva-header--{{ section.id }} .fulva-header__nav-link:focus-visible,
+  .fulva-header--{{ section.id }} summary:focus-visible {
+    outline: 2px solid var(--fh-hover);
+    outline-offset: 2px;
+    border-radius: 10px;
+  }
+
+  @media (max-width: 749px) {
+    .fulva-header--{{ section.id }} .fulva-header__inner {
+      min-height: var(--fh-height-mobile-used);
+      padding: 0 var(--fh-px-mobile);
+      grid-template-columns: 1fr auto 1fr;
+      gap: 10px;
+    }
+
+    .fulva-header--{{ section.id }} .fulva-header__mobile-toggle {
+      display: block;
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .fulva-header--{{ section.id }} .fulva-header__mobile-menu {
+      display: inline-flex;
+    }
+
+    .fulva-header--{{ section.id }} .fulva-header__logo-text {
+      font-size: var(--fh-logo-size-mobile);
+    }
+
+    .fulva-header--{{ section.id }} .fulva-header__logo {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: center;
+    }
+
+    .fulva-header--{{ section.id }} .fulva-header__nav {
+      display: none;
+    }
+
+    .fulva-header--{{ section.id }} .fulva-header__actions {
+      grid-column: 3;
+      grid-row: 1;
+      justify-self: end;
+    }
+
+    .fulva-header--{{ section.id }} .fulva-header__btn-text {
+      {% if section.settings.hide_labels_mobile %}display: none;{% endif %}
+    }
+
+    .fulva-header--{{ section.id }} .fulva-header__mobile-panel {
+      position: fixed;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%) translateY(-8px);
+      top: calc(var(--fh-height-mobile-used) + 10px);
+      z-index: 80;
+      max-height: calc(100vh - var(--fh-height-mobile-used) - 24px);
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 160ms ease, transform 160ms ease, visibility 160ms ease;
+    }
+
+    .fulva-header--{{ section.id }} details[open].fulva-header__mobile-menu .fulva-header__mobile-panel {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .fulva-header--{{ section.id }} .fulva-header__btn.is-track {
+      display: none;
+    }
+
+    .fulva-header--{{ section.id }} .fulva-header__btn.is-cart {
+      order: 1;
+    }
+
+    .fulva-header--{{ section.id }} .fulva-header__btn.is-wa {
+      order: 2;
+    }
+
+    .fulva-header--{{ section.id }} .fulva-header__btn.is-wa,
+    .fulva-header--{{ section.id }} .fulva-header__btn.is-cart,
+    .fulva-header--{{ section.id }} .fulva-header__icon-btn {
+      padding: 10px;
+      border-radius: 12px;
+    }
+
+    .fulva-header--{{ section.id }} .fulva-header__icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    {% if section.settings.show_icons %}
+      .fulva-header--{{ section.id }} .fulva-header__btn.is-track .fulva-header__btn-text {
+        display: none;
+      }
+
+      .fulva-header--{{ section.id }} .fulva-header__btn.is-track .fulva-header__icon {
+        display: inline-block;
+      }
+    {% endif %}
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Header custom",
+  "settings": [
+    { "type": "header", "content": "Layout" },
+    { "type": "checkbox", "id": "sticky", "label": "Sticky header", "default": true },
+    { "type": "checkbox", "id": "show_border", "label": "Show bottom border", "default": true },
+    { "type": "range", "id": "height_desktop", "label": "Height desktop (px)", "min": 48, "max": 120, "step": 1, "default": 72 },
+    { "type": "range", "id": "height_mobile", "label": "Height mobile (px)", "min": 48, "max": 120, "step": 1, "default": 64 },
+    { "type": "range", "id": "padding_x_desktop", "label": "Padding X desktop (px)", "min": 0, "max": 80, "step": 2, "default": 60 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding X mobile (px)", "min": 0, "max": 30, "step": 1, "default": 16 },
+    { "type": "range", "id": "max_width", "label": "Max width (0 = full width)", "min": 0, "max": 1800, "step": 20, "default": 0 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#1A1A1A" },
+    { "type": "color", "id": "hover_color", "label": "Hover", "default": "#1B5E2F" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#1B5E2F" },
+    { "type": "color", "id": "border_color", "label": "Border color", "default": "#000000" },
+    { "type": "range", "id": "border_opacity", "label": "Border opacity (%)", "min": 0, "max": 20, "step": 1, "default": 6 },
+
+    { "type": "header", "content": "Logo" },
+    { "type": "image_picker", "id": "logo_image", "label": "Logo image" },
+    { "type": "text", "id": "logo_text", "label": "Logo text", "default": "fulva" },
+    { "type": "select", "id": "logo_font", "label": "Logo font", "default": "heading", "options": [
+      { "value": "heading", "label": "Theme heading font" },
+      { "value": "body", "label": "Theme body font" }
+    ]},
+    { "type": "range", "id": "logo_size_desktop", "label": "Logo size desktop (px)", "min": 18, "max": 40, "step": 1, "default": 28 },
+    { "type": "range", "id": "logo_size_mobile", "label": "Logo size mobile (px)", "min": 16, "max": 34, "step": 1, "default": 24 },
+    { "type": "checkbox", "id": "show_logo_dot", "label": "Show logo dot", "default": true },
+    { "type": "range", "id": "logo_dot_size", "label": "Logo dot size (px)", "min": 3, "max": 10, "step": 1, "default": 5 },
+
+    { "type": "header", "content": "Navigation" },
+    { "type": "link_list", "id": "menu", "label": "Menu" },
+    { "type": "range", "id": "nav_gap", "label": "Nav gap (px)", "min": 12, "max": 60, "step": 2, "default": 36 },
+    { "type": "text", "id": "highlight_item", "label": "Highlight menu item title", "default": "Gifting" },
+    { "type": "color", "id": "highlight_dot_color", "label": "Highlight dot color", "default": "#D4A843" },
+    { "type": "range", "id": "highlight_dot_size", "label": "Highlight dot size (px)", "min": 3, "max": 10, "step": 1, "default": 5 },
+    { "type": "range", "id": "highlight_dot_offset", "label": "Highlight dot offset (px)", "min": 4, "max": 12, "step": 1, "default": 6 },
+
+    { "type": "header", "content": "Actions" },
+    { "type": "checkbox", "id": "show_icons", "label": "Show icons", "default": true },
+    { "type": "range", "id": "action_gap", "label": "Action gap (px)", "min": 6, "max": 24, "step": 1, "default": 10 },
+    { "type": "range", "id": "action_font_size", "label": "Action font size (px)", "min": 11, "max": 15, "step": 1, "default": 13 },
+    { "type": "range", "id": "button_padding_y", "label": "Button padding Y (px)", "min": 6, "max": 14, "step": 1, "default": 8 },
+    { "type": "range", "id": "button_padding_x", "label": "Button padding X (px)", "min": 10, "max": 26, "step": 1, "default": 18 },
+    { "type": "range", "id": "button_radius", "label": "Button radius (px)", "min": 0, "max": 50, "step": 1, "default": 50 },
+
+    { "type": "checkbox", "id": "show_whatsapp", "label": "Show WhatsApp", "default": true },
+    { "type": "select", "id": "whatsapp_display", "label": "WhatsApp placement", "default": "widget", "options": [
+      { "value": "widget", "label": "Floating widget" },
+      { "value": "header", "label": "In header" },
+      { "value": "both", "label": "Both" }
+    ]},
+    { "type": "text", "id": "whatsapp_label", "label": "WhatsApp label", "default": "WhatsApp" },
+    { "type": "url", "id": "whatsapp_url", "label": "WhatsApp URL" },
+    { "type": "checkbox", "id": "whatsapp_new_tab", "label": "Open WhatsApp in new tab", "default": true },
+    { "type": "color", "id": "whatsapp_icon_color", "label": "WhatsApp icon color", "default": "#1B5E2F" },
+
+    { "type": "header", "content": "WhatsApp widget" },
+    { "type": "text", "id": "whatsapp_widget_label", "label": "Widget label", "default": "Chat on WhatsApp" },
+    { "type": "text", "id": "whatsapp_widget_aria", "label": "Widget ARIA label", "default": "Chat with us on WhatsApp" },
+    { "type": "checkbox", "id": "whatsapp_widget_show_label", "label": "Show widget label", "default": false },
+    { "type": "checkbox", "id": "whatsapp_widget_show_label_mobile", "label": "Show widget label on mobile", "default": false },
+    { "type": "select", "id": "whatsapp_widget_position", "label": "Widget position", "default": "bottom_right", "options": [
+      { "value": "bottom_right", "label": "Bottom right" },
+      { "value": "bottom_left", "label": "Bottom left" }
+    ]},
+    { "type": "range", "id": "whatsapp_widget_offset_x", "label": "Widget offset X (px)", "min": 0, "max": 40, "step": 1, "default": 18 },
+    { "type": "range", "id": "whatsapp_widget_offset_y", "label": "Widget offset Y (px)", "min": 0, "max": 60, "step": 1, "default": 18 },
+    { "type": "range", "id": "whatsapp_widget_icon_size", "label": "Widget icon size (px)", "min": 18, "max": 30, "step": 1, "default": 22 },
+    { "type": "range", "id": "whatsapp_widget_padding_x", "label": "Widget padding X (px)", "min": 10, "max": 22, "step": 1, "default": 14 },
+    { "type": "range", "id": "whatsapp_widget_padding_y", "label": "Widget padding Y (px)", "min": 8, "max": 18, "step": 1, "default": 12 },
+    { "type": "color", "id": "whatsapp_widget_bg", "label": "Widget background", "default": "#1B5E2F" },
+    { "type": "color", "id": "whatsapp_widget_text_color", "label": "Widget text", "default": "#FFFFFF" },
+    { "type": "color", "id": "whatsapp_widget_icon_color", "label": "Widget icon", "default": "#FFFFFF" },
+    { "type": "color", "id": "whatsapp_widget_border_color", "label": "Widget border color", "default": "#000000" },
+    { "type": "range", "id": "whatsapp_widget_border_opacity", "label": "Widget border opacity (%)", "min": 0, "max": 30, "step": 1, "default": 0 },
+    { "type": "color", "id": "whatsapp_widget_shadow_color", "label": "Widget shadow color", "default": "#000000" },
+    { "type": "range", "id": "whatsapp_widget_shadow_opacity", "label": "Widget shadow opacity (%)", "min": 0, "max": 30, "step": 1, "default": 18 },
+    { "type": "checkbox", "id": "whatsapp_widget_hide_mobile", "label": "Hide widget on mobile", "default": false },
+    { "type": "checkbox", "id": "whatsapp_widget_hide_desktop", "label": "Hide widget on desktop", "default": false },
+
+    { "type": "checkbox", "id": "show_track_order", "label": "Show Track Order", "default": true },
+    { "type": "text", "id": "track_order_label", "label": "Track Order label", "default": "Track Order" },
+    { "type": "url", "id": "track_order_url", "label": "Track Order URL" },
+    { "type": "color", "id": "track_border_color", "label": "Track border color", "default": "#BDBDBD" },
+    { "type": "range", "id": "track_border_width", "label": "Track border width (px)", "min": 1, "max": 4, "step": 1, "default": 2 },
+    { "type": "range", "id": "track_padding_y", "label": "Track padding Y (px)", "min": 6, "max": 16, "step": 1, "default": 10 },
+    { "type": "range", "id": "track_padding_x", "label": "Track padding X (px)", "min": 14, "max": 44, "step": 1, "default": 28 },
+    { "type": "select", "id": "track_style", "label": "Track Order style", "default": "outline", "options": [
+      { "value": "outline", "label": "Outline" },
+      { "value": "solid", "label": "Solid" }
+    ]},
+
+    { "type": "checkbox", "id": "show_cart", "label": "Show Cart", "default": true },
+    { "type": "text", "id": "cart_label", "label": "Cart label", "default": "Cart" },
+    { "type": "checkbox", "id": "show_cart_count", "label": "Show cart count", "default": true },
+
+    { "type": "header", "content": "Mobile menu" },
+    { "type": "checkbox", "id": "enable_mobile_menu", "label": "Enable mobile menu", "default": true },
+    { "type": "text", "id": "mobile_menu_label", "label": "Mobile menu label", "default": "Menu" },
+    { "type": "checkbox", "id": "show_mobile_label", "label": "Show menu label on mobile", "default": false },
+    { "type": "checkbox", "id": "hide_labels_mobile", "label": "Hide action labels on mobile", "default": true },
+    { "type": "color", "id": "mobile_menu_bg", "label": "Mobile panel background", "default": "#FFFFFF" },
+    { "type": "color", "id": "mobile_menu_text", "label": "Mobile panel text", "default": "#1A1A1A" }
+  ],
+  "presets": [
+    { "name": "Header custom" }
+  ]
+}
+{% endschema %}

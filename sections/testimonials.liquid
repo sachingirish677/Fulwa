@@ -1,0 +1,610 @@
+{% liquid
+  assign border_alpha = section.settings.border_opacity | times: 0.01
+  assign card_border_alpha = section.settings.card_border_opacity | times: 0.01
+  assign shadow_alpha = section.settings.shadow_opacity | times: 0.01
+
+  assign testimonial_blocks = section.blocks | where: 'type', 'testimonial'
+%}
+
+<section
+  class="fulva-testimonials fulva-testimonials--{{ section.id }}{% if section.settings.hide_on_mobile %} fulva-testimonials--hide-mobile{% endif %}{% if section.settings.hide_on_desktop %} fulva-testimonials--hide-desktop{% endif %}"
+  aria-label="{{ section.settings.aria_label | escape }}"
+  style="
+    --ft-bg: {{ section.settings.background }};
+    --ft-text: {{ section.settings.text_color }};
+    --ft-muted: {{ section.settings.muted_text_color }};
+    --ft-accent: {{ section.settings.accent_color }};
+    --ft-highlight: {{ section.settings.highlight_color }};
+    --ft-border: {{ section.settings.border_color | color_modify: 'alpha', border_alpha }};
+    --ft-card-bg: {{ section.settings.card_background }};
+    --ft-card-border: {{ section.settings.card_border_color | color_modify: 'alpha', card_border_alpha }};
+    --ft-shadow: {{ section.settings.shadow_color | color_modify: 'alpha', shadow_alpha }};
+    --ft-max: {% if section.settings.max_width > 0 %}{{ section.settings.max_width }}px{% else %}100%{% endif %};
+    --ft-px: {{ section.settings.padding_x_desktop }}px;
+    --ft-py: {{ section.settings.padding_y_desktop }}px;
+    --ft-px-m: {{ section.settings.padding_x_mobile }}px;
+    --ft-py-m: {{ section.settings.padding_y_mobile }}px;
+    --ft-gap: {{ section.settings.gap }}px;
+    --ft-radius: {{ section.settings.radius }}px;
+    --ft-card-min: {{ section.settings.card_min_width }}px;
+    --ft-cols: {{ section.settings.cards_per_view_desktop }};
+  "
+>
+  <div class="fulva-testimonials__inner">
+    <header class="fulva-testimonials__header">
+      {% if section.settings.eyebrow != blank %}
+        <div class="fulva-testimonials__eyebrow">{{ section.settings.eyebrow | escape }}</div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="fulva-testimonials__title">{{ section.settings.heading }}</h2>
+      {% endif %}
+
+      {% if section.settings.subheading != blank %}
+        <div class="fulva-testimonials__sub">{{ section.settings.subheading }}</div>
+      {% endif %}
+
+      {% if section.settings.trust_line != blank %}
+        <div class="fulva-testimonials__trust">
+          <span class="fulva-testimonials__trust-stars" aria-hidden="true">★★★★★</span>
+          <span class="fulva-testimonials__trust-lines">
+            <span class="fulva-testimonials__trust-text">{{ section.settings.trust_line | escape }}</span>
+            {% if section.settings.trust_subline != blank %}
+              <span class="fulva-testimonials__trust-sub">{{ section.settings.trust_subline | escape }}</span>
+            {% endif %}
+          </span>
+        </div>
+      {% endif %}
+    </header>
+
+    <div class="fulva-testimonials__wrap">
+      {% if section.settings.show_arrows %}
+        <button class="fulva-testimonials__arrow fulva-testimonials__arrow--prev" type="button" aria-label="Scroll left" data-ft-prev>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M14.7 5.3a1 1 0 0 1 0 1.4L9.4 12l5.3 5.3a1 1 0 1 1-1.4 1.4l-6-6a1 1 0 0 1 0-1.4l6-6a1 1 0 0 1 1.4 0z"></path>
+          </svg>
+        </button>
+      {% endif %}
+
+      <div class="fulva-testimonials__track" role="list" aria-label="{{ section.settings.aria_label | escape }}" data-ft-track>
+        {% for block in testimonial_blocks %}
+          {% liquid
+            assign rating = block.settings.rating
+            if rating < 1
+              assign rating = 5
+            endif
+          %}
+
+          <article class="fulva-testimonials__card" role="listitem" {{ block.shopify_attributes }}>
+            <div class="fulva-testimonials__card-top">
+              <div class="fulva-testimonials__stars" aria-label="Rating {{ rating }} out of 5">
+                <span aria-hidden="true">
+                  {% for i in (1..5) %}
+                    {% if i <= rating %}
+                      ★
+                    {% else %}
+                      ☆
+                    {% endif %}
+                  {% endfor %}
+                </span>
+              </div>
+
+              {% if section.settings.show_quote_icon %}
+                <div class="fulva-testimonials__quote" aria-hidden="true">”</div>
+              {% endif %}
+            </div>
+
+            {% if block.settings.title != blank %}
+              <div class="fulva-testimonials__card-title">{{ block.settings.title | escape }}</div>
+            {% endif %}
+
+            {% if block.settings.body != blank %}
+              <div class="fulva-testimonials__card-body">{{ block.settings.body | escape }}</div>
+            {% endif %}
+
+            <div class="fulva-testimonials__person">
+              <div class="fulva-testimonials__avatar" aria-hidden="{% if block.settings.avatar != blank %}false{% else %}true{% endif %}">
+                {% if block.settings.avatar != blank %}
+                  <img
+                    class="fulva-testimonials__avatar-img"
+                    src="{{ block.settings.avatar | image_url: width: 120 }}"
+                    srcset="
+                      {{ block.settings.avatar | image_url: width: 60 }} 60w,
+                      {{ block.settings.avatar | image_url: width: 90 }} 90w,
+                      {{ block.settings.avatar | image_url: width: 120 }} 120w,
+                      {{ block.settings.avatar | image_url: width: 180 }} 180w
+                    "
+                    sizes="36px"
+                    width="{{ block.settings.avatar.width }}"
+                    height="{{ block.settings.avatar.height }}"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  >
+                {% else %}
+                  <div class="fulva-testimonials__avatar-fallback" aria-hidden="true"></div>
+                {% endif %}
+              </div>
+
+              <div class="fulva-testimonials__person-text">
+                <div class="fulva-testimonials__name">
+                  {{ block.settings.name | escape }}
+                  {% if block.settings.verified %}
+                    <span class="fulva-testimonials__verified" aria-label="Verified">✓</span>
+                  {% endif %}
+                </div>
+                {% if block.settings.meta != blank %}
+                  <div class="fulva-testimonials__meta">{{ block.settings.meta | escape }}</div>
+                {% endif %}
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+
+      {% if section.settings.show_arrows %}
+        <button class="fulva-testimonials__arrow fulva-testimonials__arrow--next" type="button" aria-label="Scroll right" data-ft-next>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M9.3 18.7a1 1 0 0 1 0-1.4L14.6 12 9.3 6.7a1 1 0 1 1 1.4-1.4l6 6a1 1 0 0 1 0 1.4l-6 6a1 1 0 0 1-1.4 0z"></path>
+          </svg>
+        </button>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .fulva-testimonials--{{ section.id }} {
+    background: var(--ft-bg);
+    color: var(--ft-text);
+    font-family: var(--font-body-family, inherit);
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__inner {
+    max-width: var(--ft-max);
+    margin: 0 auto;
+    padding: var(--ft-py) var(--ft-px);
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.55);
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__eyebrow::before {
+    content: '';
+    width: 18px;
+    height: 2px;
+    background: var(--ft-accent);
+    border-radius: 99px;
+    flex: 0 0 auto;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__title {
+    margin: 0;
+    font-family: var(--font-heading-family, inherit);
+    font-size: 34px;
+    font-weight: 950;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__title em {
+    font-style: normal;
+    color: var(--ft-highlight);
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__sub {
+    color: var(--ft-muted);
+    font-size: 13px;
+    line-height: 1.4;
+    max-width: 70ch;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__trust {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(0,0,0,0.08);
+    background: #ffffff;
+    color: #111111;
+    font-weight: 900;
+    box-shadow: 0 16px 34px rgba(0,0,0,0.06);
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__trust-stars {
+    color: var(--ft-accent);
+    letter-spacing: 0.12em;
+    transform: translateY(-0.5px);
+    font-size: 12px;
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__trust-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__trust-text {
+    font-size: 12px;
+    font-weight: 950;
+    line-height: 1.2;
+    color: rgba(0,0,0,0.88);
+    white-space: nowrap;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__trust-sub {
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: rgba(0,0,0,0.55);
+    white-space: nowrap;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__wrap {
+    position: relative;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__track {
+    display: flex;
+    gap: var(--ft-gap);
+    align-items: stretch;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    padding-bottom: 2px;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__card {
+    flex: 0 0 calc((100% - (var(--ft-gap) * (var(--ft-cols) - 1))) / var(--ft-cols));
+    scroll-snap-align: start;
+    background: var(--ft-card-bg);
+    border: 1px solid var(--ft-card-border);
+    border-radius: var(--ft-radius);
+    box-shadow: 0 16px 34px var(--ft-shadow);
+    padding: 14px 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__stars {
+    font-size: 12px;
+    color: var(--ft-accent);
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__quote {
+    font-size: 20px;
+    font-weight: 900;
+    line-height: 1;
+    color: rgba(0,0,0,0.14);
+    transform: translateY(-2px);
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__card-title {
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__card-body {
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--ft-muted);
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__person {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    overflow: hidden;
+    flex: 0 0 auto;
+    border: 1px solid var(--ft-border);
+    background: rgba(0,0,0,0.04);
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__avatar-fallback {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 30%, rgba(0,0,0,0.12), rgba(0,0,0,0.02));
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__person-text {
+    min-width: 0;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__name {
+    font-size: 12px;
+    font-weight: 900;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__verified {
+    font-size: 11px;
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #0b5f1d;
+    background: rgba(28, 154, 56, 0.15);
+    border: 1px solid rgba(28, 154, 56, 0.25);
+    flex: 0 0 auto;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__meta {
+    font-size: 11px;
+    color: var(--ft-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid var(--ft-border);
+    background: rgba(255,255,255,0.82);
+    color: rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__arrow svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__arrow--prev {
+    left: -10px;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__arrow--next {
+    right: -10px;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__arrow:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 989px) {
+    .fulva-testimonials--{{ section.id }} {
+      --ft-cols: 2;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .fulva-testimonials--{{ section.id }} .fulva-testimonials__inner {
+      padding: var(--ft-py-m) var(--ft-px-m);
+    }
+
+    .fulva-testimonials--{{ section.id }} .fulva-testimonials__title {
+      font-size: 24px;
+    }
+
+    .fulva-testimonials--{{ section.id }} .fulva-testimonials__track {
+      scroll-padding-left: 0;
+    }
+
+    .fulva-testimonials--{{ section.id }} .fulva-testimonials__card {
+      flex: 0 0 max(var(--ft-card-min), 78vw);
+    }
+
+    .fulva-testimonials--{{ section.id }} .fulva-testimonials__arrow {
+      display: none;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .fulva-testimonials--{{ section.id }}.fulva-testimonials--hide-mobile {
+      display: none;
+    }
+  }
+
+  @media (min-width: 750px) {
+    .fulva-testimonials--{{ section.id }}.fulva-testimonials--hide-desktop {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.querySelector('.fulva-testimonials--{{ section.id }}');
+    if (!root) return;
+    const track = root.querySelector('[data-ft-track]');
+    const prev = root.querySelector('[data-ft-prev]');
+    const next = root.querySelector('[data-ft-next]');
+    if (!track) return;
+
+    // Mouse drag to scroll
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    track.addEventListener('mousedown', (e) => {
+      isDown = true;
+      track.style.scrollSnapType = 'none';
+      startX = e.pageX - track.offsetLeft;
+      scrollLeft = track.scrollLeft;
+    });
+
+    track.addEventListener('mouseleave', () => {
+      isDown = false;
+      track.style.scrollSnapType = '';
+    });
+
+    track.addEventListener('mouseup', () => {
+      isDown = false;
+      track.style.scrollSnapType = '';
+    });
+
+    track.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - track.offsetLeft;
+      const walk = (x - startX) * 2;
+      track.scrollLeft = scrollLeft - walk;
+    });
+
+    if (!prev || !next) return;
+
+    const getStep = () => {
+      const card = track.querySelector('.fulva-testimonials__card');
+      if (!card) return 320;
+      const gap = parseInt(getComputedStyle(track).gap, 10) || 0;
+      return card.getBoundingClientRect().width + gap;
+    };
+
+    const update = () => {
+      const max = track.scrollWidth - track.clientWidth;
+      prev.disabled = track.scrollLeft <= 10;
+      next.disabled = track.scrollLeft >= max - 10;
+    };
+
+    prev.addEventListener('click', () => track.scrollBy({ left: -getStep() * 1.2, behavior: 'smooth' }));
+    next.addEventListener('click', () => track.scrollBy({ left: getStep() * 1.2, behavior: 'smooth' }));
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    setTimeout(update, 100);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Fulva testimonials",
+  "settings": [
+    { "type": "text", "id": "aria_label", "label": "ARIA label", "default": "Customer testimonials" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "REAL PEOPLE, REAL LOVE" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "What Our Customers <em>Say</em>" },
+    { "type": "richtext", "id": "subheading", "label": "Subheading", "default": "<p>Trusted by <strong>50,000+</strong> customers across India.</p>" },
+    { "type": "text", "id": "trust_line", "label": "Trust line", "default": "Trusted by 50,000+ Customers" },
+    { "type": "text", "id": "trust_subline", "label": "Trust subline", "default": "4.9 average • 2,847 verified reviews across India" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show arrows (desktop)", "default": true },
+    { "type": "checkbox", "id": "show_quote_icon", "label": "Show quote icon on cards", "default": true },
+    { "type": "range", "id": "cards_per_view_desktop", "label": "Cards per view (desktop)", "min": 3, "max": 6, "step": 1, "default": 5 },
+    { "type": "range", "id": "max_width", "label": "Max width (0 = full width)", "min": 0, "max": 1800, "step": 20, "default": 0 },
+    { "type": "range", "id": "padding_x_desktop", "label": "Padding X desktop (px)", "min": 0, "max": 80, "step": 2, "default": 40 },
+    { "type": "range", "id": "padding_y_desktop", "label": "Padding Y desktop (px)", "min": 0, "max": 90, "step": 2, "default": 34 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding X mobile (px)", "min": 0, "max": 26, "step": 1, "default": 16 },
+    { "type": "range", "id": "padding_y_mobile", "label": "Padding Y mobile (px)", "min": 0, "max": 60, "step": 1, "default": 18 },
+    { "type": "range", "id": "gap", "label": "Card gap (px)", "min": 10, "max": 28, "step": 1, "default": 14 },
+    { "type": "range", "id": "radius", "label": "Card radius (px)", "min": 0, "max": 22, "step": 1, "default": 14 },
+    { "type": "range", "id": "card_min_width", "label": "Card min width (mobile px)", "min": 220, "max": 360, "step": 2, "default": 280 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#F5F6F2" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#101010" },
+    { "type": "color", "id": "muted_text_color", "label": "Muted text", "default": "#6B6B6B" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#F4C026" },
+    { "type": "color", "id": "highlight_color", "label": "Heading highlight", "default": "#1C9A38" },
+    { "type": "color", "id": "border_color", "label": "Border", "default": "#000000" },
+    { "type": "range", "id": "border_opacity", "label": "Border opacity (%)", "min": 0, "max": 30, "step": 1, "default": 8 },
+    { "type": "color", "id": "card_background", "label": "Card background", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_border_color", "label": "Card border", "default": "#000000" },
+    { "type": "range", "id": "card_border_opacity", "label": "Card border opacity (%)", "min": 0, "max": 30, "step": 1, "default": 6 },
+    { "type": "color", "id": "shadow_color", "label": "Shadow color", "default": "#000000" },
+    { "type": "range", "id": "shadow_opacity", "label": "Shadow opacity (%)", "min": 0, "max": 24, "step": 1, "default": 6 },
+
+    { "type": "header", "content": "Visibility" },
+    { "type": "checkbox", "id": "hide_on_mobile", "label": "Hide on mobile", "default": false },
+    { "type": "checkbox", "id": "hide_on_desktop", "label": "Hide on desktop", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "text", "id": "badge", "label": "Badge", "default": "Verified" },
+        { "type": "range", "id": "rating", "label": "Rating", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "title", "label": "Title", "default": "Excellent taste" },
+        { "type": "textarea", "id": "body", "label": "Review", "default": "Super rich flavour and premium packaging. Perfect for gifting." },
+        { "type": "image_picker", "id": "avatar", "label": "Avatar (optional)" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Priyanka" },
+        { "type": "text", "id": "meta", "label": "Meta (optional)", "default": "Repeat customer" },
+        { "type": "checkbox", "id": "verified", "label": "Show verified tick", "default": true }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fulva testimonials",
+      "blocks": [
+        { "type": "testimonial" },
+        { "type": "testimonial" },
+        { "type": "testimonial" },
+        { "type": "testimonial" }
+      ]
+    }
+  ]
+}
+{% endschema %}

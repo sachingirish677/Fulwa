@@ -1,0 +1,972 @@
+<style>
+  .fulva-reels--{{ section.id }} {
+    padding: 0;
+    background: var(--fr-bg);
+    border-top: 1px solid var(--fr-border);
+    font-family: var(--font-body-family, inherit);
+    position: relative;
+  }
+
+  .fulva-reels--{{ section.id }} .fulva-reels__inner {
+    max-width: var(--fr-max);
+    margin: 0 auto;
+    padding: var(--fr-py) 0;
+  }
+
+  /* Header */
+  .fulva-reels--{{ section.id }} .fulva-reels-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0 var(--fr-px);
+    margin-bottom: 28px;
+  }
+
+  .fulva-reels--{{ section.id }} .fulva-reels-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  /* Eyebrow */
+  .fulva-reels--{{ section.id }} .fulva-reels-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--fr-accent);
+    font-weight: 500;
+  }
+  .fulva-reels--{{ section.id }} .fulva-reels-eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 2px;
+    background: var(--fr-accent);
+  }
+
+  /* Title row */
+  .fulva-reels--{{ section.id }} .fulva-reels-title-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .fulva-reels--{{ section.id }} .fulva-reels-title {
+    font-family: var(--font-heading-family, inherit);
+    font-size: 38px;
+    font-weight: 400;
+    color: var(--fr-text);
+    line-height: 1.15;
+    margin: 0;
+  }
+  .fulva-reels--{{ section.id }} .fulva-reels-title em {
+    font-family: var(--font-heading-family, inherit);
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  /* Instagram pill button */
+  .fulva-reels--{{ section.id }} .fulva-ig-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    border-radius: 50px;
+    background: #1B5E2F;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+    position: relative;
+    z-index: 3;
+    pointer-events: auto;
+  }
+  .fulva-reels--{{ section.id }} .fulva-ig-btn:hover {
+    background: #237a3b;
+  }
+  .fulva-reels--{{ section.id }} .fulva-ig-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  /* Filter chips */
+  .fulva-reels--{{ section.id }} .fulva-ugc-filter {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding-top: 18px;
+    flex-wrap: wrap;
+  }
+  .fulva-reels--{{ section.id }} .fulva-filter-chip {
+    padding: 7px 18px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid rgba(0,0,0,0.12);
+    background: transparent;
+    color: var(--fr-text);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: var(--font-body-family, inherit);
+    white-space: nowrap;
+  }
+  .fulva-reels--{{ section.id }} .fulva-filter-chip:hover {
+    border-color: #1B5E2F;
+    color: #1B5E2F;
+  }
+  .fulva-reels--{{ section.id }} .fulva-filter-chip.active {
+    background: #1B5E2F;
+    color: #ffffff;
+    border-color: #1B5E2F;
+  }
+
+  /* Reels track wrapper */
+  .fulva-reels--{{ section.id }} .fulva-reels-track-wrap {
+    position: relative;
+    padding: 0;
+  }
+
+  /* Scrollable track */
+  .fulva-reels--{{ section.id }} .fulva-reels-track {
+    display: flex;
+    gap: var(--fr-gap);
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 8px var(--fr-px) 16px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: var(--fr-px);
+    overscroll-behavior-x: contain;
+  }
+  .fulva-reels--{{ section.id }} .fulva-reels-track::-webkit-scrollbar { display: none; }
+  .fulva-reels--{{ section.id }} .fulva-reels-track.is-dragging {
+    cursor: grabbing;
+  }
+  .fulva-reels--{{ section.id }} .fulva-reels-track.is-dragging .fulva-reel-card {
+    pointer-events: none;
+  }
+
+  /* Individual reel card */
+  .fulva-reels--{{ section.id }} .fulva-reel-card {
+    flex-shrink: 0;
+    width: var(--fr-card-w);
+    height: var(--fr-card-h);
+    border-radius: var(--fr-radius);
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    background: #2a2a2a;
+    scroll-snap-align: start;
+    transform: translateZ(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    contain: layout paint;
+  }
+
+  /* Reel thumbnail */
+  .fulva-reels--{{ section.id }} .fulva-reel-card .reel-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+    pointer-events: none;
+  }
+
+  .fulva-reels--{{ section.id }} .fulva-reel-card.is-video-manual .reel-thumb {
+    pointer-events: auto;
+  }
+
+  .fulva-reels--{{ section.id }} .fulva-reel-card.is-hidden {
+    display: none;
+  }
+
+  /* Dark gradient overlay at bottom */
+  .fulva-reels--{{ section.id }} .fulva-reel-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 55%;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.75) 100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Top-left: Instagram camera icon */
+  .fulva-reels--{{ section.id }} .fulva-reel-ig-icon {
+    position: absolute;
+    top: 12px; left: 12px;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: rgba(27,94,47,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    text-decoration: none;
+    pointer-events: auto;
+  }
+  .fulva-reels--{{ section.id }} .fulva-reel-ig-icon svg {
+    width: 14px; height: 14px;
+    color: #fff;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+  }
+
+  /* Top-right: View count */
+  .fulva-reels--{{ section.id }} .fulva-reel-views {
+    position: absolute;
+    top: 12px; right: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #ffffff;
+    background: rgba(0,0,0,0.35);
+    padding: 3px 8px;
+    border-radius: 10px;
+    z-index: 5;
+  }
+
+  /* Bottom overlay content */
+  .fulva-reels--{{ section.id }} .fulva-reel-bottom {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 16px 14px;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Username */
+  .fulva-reels--{{ section.id }} .fulva-reel-user {
+    font-size: 12px;
+    color: rgba(255,255,255,0.8);
+    font-weight: 400;
+  }
+
+  /* Product tag */
+  .fulva-reels--{{ section.id }} .fulva-reel-product-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(212,168,67,0.9);
+    color: #1a1a1a;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 4px;
+    width: fit-content;
+    letter-spacing: 0.2px;
+  }
+
+  /* Bottom row: Buy Now + heart */
+  .fulva-reels--{{ section.id }} .fulva-reel-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .fulva-reels--{{ section.id }} .fulva-reel-buy {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 16px;
+    border-radius: 50px;
+    background: #1B5E2F;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.25s ease;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body-family, inherit);
+  }
+  .fulva-reels--{{ section.id }} .fulva-reel-buy:hover {
+    background: #237a3b;
+  }
+
+  .fulva-reels--{{ section.id }} .fulva-reel-likes {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: #ffffff;
+    font-weight: 500;
+  }
+  .fulva-reels--{{ section.id }} .fulva-reel-likes .heart {
+    color: #ff4757;
+    font-size: 13px;
+  }
+
+  /* Navigation arrows overlaid on track */
+  .fulva-reels--{{ section.id }} .fulva-reels-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(255,255,255,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 20;
+    color: var(--fr-text);
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  .fulva-reels--{{ section.id }} .fulva-reels-nav:hover {
+    border-color: #1B5E2F;
+    color: #1B5E2F;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  }
+  .fulva-reels--{{ section.id }} .fulva-reels-nav:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  .fulva-reels--{{ section.id }} .fulva-reels-nav.nav-left { left: calc(var(--fr-px) / 2); }
+  .fulva-reels--{{ section.id }} .fulva-reels-nav.nav-right { right: calc(var(--fr-px) / 2); }
+  .fulva-reels--{{ section.id }} .fulva-reels-nav svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  /* Reel placeholder (for demo) */
+  .fulva-reels--{{ section.id }} .fulva-reel-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px;
+    background: linear-gradient(145deg, #3a3028, #5a4838);
+  }
+
+
+  /* ==========================
+     SECTION 6: AVAILABLE ACROSS INDIA
+     ========================== */
+  .fulva-available--{{ section.id }} {
+    padding: 28px var(--fr-px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    font-family: var(--font-body-family, inherit);
+  }
+
+  .fulva-available--{{ section.id }} .fulva-available-label {
+    font-size: 12px;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: #8a8a8a;
+    font-weight: 600;
+  }
+
+  .fulva-available--{{ section.id }} .fulva-platforms {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .fulva-available--{{ section.id }} .fulva-platform-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 14px 24px;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: #ffffff;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    cursor: pointer;
+  }
+  .fulva-available--{{ section.id }} .fulva-platform-btn:hover {
+    border-color: rgba(0,0,0,0.2);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+
+  .fulva-available--{{ section.id }} .fulva-platform-label {
+    font-size: 11px;
+    color: #8a8a8a;
+    font-weight: 400;
+  }
+
+  .fulva-available--{{ section.id }} .fulva-platform-name {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.2;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .fulva-available--{{ section.id }} .fulva-platform-logo {
+    height: 24px;
+    width: auto;
+    display: block;
+  }
+
+  /* Amazon specific styling */
+  .fulva-available--{{ section.id }} .fulva-platform-btn.amazon .fulva-platform-name {
+    font-family: var(--font-body-family, inherit);
+    letter-spacing: -0.5px;
+  }
+
+  /* Flipkart specific styling */
+  .fulva-available--{{ section.id }} .fulva-platform-btn.flipkart .fulva-platform-name {
+    color: #2874F0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .fulva-available--{{ section.id }} .fulva-platform-btn.flipkart .fk-icon {
+    display: inline-flex;
+    background: #FFE500;
+    border-radius: 4px;
+    padding: 2px 4px;
+    font-size: 16px;
+  }
+
+  @media (max-width: 749px) {
+    .fulva-reels--{{ section.id }} .fulva-reels__inner {
+      padding: var(--fr-py-m) 0;
+    }
+
+    .fulva-reels--{{ section.id }} .fulva-reels-header {
+      flex-direction: column;
+      padding: 0 var(--fr-px-m);
+      gap: 16px;
+    }
+
+    .fulva-reels--{{ section.id }} .fulva-reels-title {
+      font-size: 28px;
+    }
+
+    .fulva-reels--{{ section.id }} .fulva-ugc-filter {
+      padding-top: 4px;
+    }
+
+    .fulva-reels--{{ section.id }} .fulva-reels-track {
+      padding: 8px var(--fr-px-m) 16px;
+      scroll-padding-left: var(--fr-px-m);
+    }
+
+    .fulva-reels--{{ section.id }} .fulva-reel-card {
+      width: var(--fr-card-w-m);
+      height: var(--fr-card-h-m);
+    }
+
+    .fulva-reels--{{ section.id }} .fulva-reels-nav {
+      display: none;
+    }
+
+    .fulva-available--{{ section.id }} {
+      padding: 24px var(--fr-px-m);
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .fulva-reels--{{ section.id }}.fulva-reels--hide-mobile {
+      display: none;
+    }
+  }
+
+  @media (min-width: 750px) {
+    .fulva-reels--{{ section.id }}.fulva-reels--hide-desktop {
+      display: none;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .fulva-reels--{{ section.id }} .fulva-reel-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+    }
+
+    .fulva-reels--{{ section.id }} .fulva-reel-card:hover .reel-thumb {
+      transform: scale(1.05);
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .fulva-reels--{{ section.id }} .fulva-reels-track {
+      cursor: grab;
+    }
+    .fulva-reels--{{ section.id }} .fulva-reels-track.is-dragging {
+      cursor: grabbing;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fulva-reels--{{ section.id }} .fulva-reels-track {
+      scroll-behavior: auto;
+    }
+    .fulva-reels--{{ section.id }} .fulva-reel-card,
+    .fulva-reels--{{ section.id }} .fulva-reel-card .reel-thumb,
+    .fulva-reels--{{ section.id }} .fulva-reels-nav,
+    .fulva-reels--{{ section.id }} .fulva-filter-chip,
+    .fulva-reels--{{ section.id }} .fulva-reel-buy {
+      transition: none;
+    }
+  }
+</style>
+
+{% liquid
+  assign border_alpha = section.settings.border_opacity | times: 0.01
+  assign bg_color = section.settings.background
+  assign text_color = section.settings.text_color
+  assign accent_color = section.settings.accent_color
+  assign border_color = section.settings.border_color | color_modify: 'alpha', border_alpha
+
+  assign ig_href = section.settings.ig_link
+  if ig_href != blank
+    unless ig_href contains '://'
+      assign ig_href = 'https://' | append: ig_href
+    endunless
+  endif
+
+  assign reel_blocks = section.blocks | where: 'type', 'reel'
+%}
+
+<section
+  class="fulva-reels fulva-reels--{{ section.id }}{% if section.settings.hide_on_mobile %} fulva-reels--hide-mobile{% endif %}{% if section.settings.hide_on_desktop %} fulva-reels--hide-desktop{% endif %}"
+  aria-label="{{ section.settings.aria_label | escape }}"
+  style="
+    --fr-bg: {{ bg_color }};
+    --fr-text: {{ text_color }};
+    --fr-accent: {{ accent_color }};
+    --fr-border: {{ border_color }};
+    --fr-max: {% if section.settings.max_width > 0 %}{{ section.settings.max_width }}px{% else %}100%{% endif %};
+    --fr-px: {{ section.settings.padding_x_desktop }}px;
+    --fr-py: {{ section.settings.padding_y_desktop }}px;
+    --fr-px-m: {{ section.settings.padding_x_mobile }}px;
+    --fr-py-m: {{ section.settings.padding_y_mobile }}px;
+    --fr-card-w: {{ section.settings.card_width_desktop }}px;
+    --fr-card-h: {{ section.settings.card_height_desktop }}px;
+    --fr-card-w-m: {{ section.settings.card_width_mobile }}px;
+    --fr-card-h-m: {{ section.settings.card_height_mobile }}px;
+    --fr-gap: {{ section.settings.gap }}px;
+    --fr-radius: {{ section.settings.radius }}px;
+  "
+>
+  <div class="fulva-reels__inner">
+    <!-- Header -->
+    <div class="fulva-reels-header">
+      <div class="fulva-reels-header-left">
+        {% if section.settings.eyebrow != blank %}
+          <div class="fulva-reels-eyebrow">{{ section.settings.eyebrow | escape }}</div>
+        {% endif %}
+        <div class="fulva-reels-title-row">
+          {% if section.settings.heading != blank %}
+            <h2 class="fulva-reels-title">{{ section.settings.heading }}</h2>
+          {% endif %}
+          {% if section.settings.ig_handle != blank and section.settings.ig_link != blank %}
+            <a href="{{ ig_href }}" target="_blank" rel="noopener" class="fulva-ig-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+              {{ section.settings.ig_handle | escape }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+
+      {% if section.settings.show_filters %}
+        <div class="fulva-ugc-filter">
+          <button class="fulva-filter-chip active">All</button>
+          {% if section.settings.filter_1 != blank %}<button class="fulva-filter-chip">{{ section.settings.filter_1 | escape }}</button>{% endif %}
+          {% if section.settings.filter_2 != blank %}<button class="fulva-filter-chip">{{ section.settings.filter_2 | escape }}</button>{% endif %}
+          {% if section.settings.filter_3 != blank %}<button class="fulva-filter-chip">{{ section.settings.filter_3 | escape }}</button>{% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Reels track -->
+    <div class="fulva-reels-track-wrap">
+      {% if section.settings.show_arrows %}
+        <button class="fulva-reels-nav nav-left" aria-label="Scroll left" data-fr-prev>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14.7 5.3a1 1 0 0 1 0 1.4L9.4 12l5.3 5.3a1 1 0 1 1-1.4 1.4l-6-6a1 1 0 0 1 0-1.4l6-6a1 1 0 0 1 1.4 0z"></path></svg>
+        </button>
+      {% endif %}
+
+      <div class="fulva-reels-track" id="reelsTrack-{{ section.id }}" data-fr-track>
+        {% for block in reel_blocks %}
+          {% liquid
+            assign img = block.settings.image
+            assign mp4_url = block.settings.mp4_url
+            assign category = block.settings.category
+          %}
+          <div class="fulva-reel-card" data-fr-category="{{ category | escape }}" {{ block.shopify_attributes }}>
+            {% if mp4_url != blank %}
+              <video class="reel-thumb" autoplay muted loop playsinline webkit-playsinline preload="metadata"{% if img != blank %} poster="{{ img | image_url: width: 600 }}"{% endif %}>
+                <source src="{{ mp4_url }}" type="video/mp4">
+              </video>
+            {% elsif img != blank %}
+              <img class="reel-thumb" src="{{ img | image_url: width: 400 }}" alt="{{ img.alt | escape }}" loading="lazy">
+            {% else %}
+              <div class="fulva-reel-placeholder">✨</div>
+            {% endif %}
+
+            {% if ig_href != blank %}
+              <a class="fulva-reel-ig-icon" href="{{ ig_href }}" target="_blank" rel="noopener" aria-label="Open Instagram">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/></svg>
+              </a>
+            {% else %}
+              <div class="fulva-reel-ig-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/></svg>
+              </div>
+            {% endif %}
+            
+            {% if block.settings.views != blank %}
+              <span class="fulva-reel-views">{{ block.settings.views | escape }}</span>
+            {% endif %}
+
+            <div class="fulva-reel-bottom">
+              {% if block.settings.username != blank %}
+                <span class="fulva-reel-user">{{ block.settings.username | escape }}</span>
+              {% endif %}
+              {% if block.settings.product_tag != blank %}
+                <span class="fulva-reel-product-tag">{{ block.settings.product_tag | escape }}</span>
+              {% endif %}
+              <div class="fulva-reel-actions">
+                {% if block.settings.button_link != blank and block.settings.button_label != blank %}
+                  <a href="{{ block.settings.button_link }}" class="fulva-reel-buy">{{ block.settings.button_label | escape }}</a>
+                {% else %}
+                  <div></div>
+                {% endif %}
+                {% if block.settings.likes != blank %}
+                  <span class="fulva-reel-likes"><span class="heart">♥</span> {{ block.settings.likes | escape }}</span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      {% if section.settings.show_arrows %}
+        <button class="fulva-reels-nav nav-right" aria-label="Scroll right" data-fr-next>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9.3 18.7a1 1 0 0 1 0-1.4L14.6 12 9.3 6.7a1 1 0 1 1 1.4-1.4l6 6a1 1 0 0 1 0 1.4l-6 6a1 1 0 0 1-1.4 0z"></path></svg>
+        </button>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% if section.settings.show_bottom_section %}
+<section class="fulva-available fulva-available--{{ section.id }}" style="background: {{ section.settings.bottom_bg }}; border-top: 1px solid {{ section.settings.border_color | color_modify: 'alpha', border_alpha }};">
+  <span class="fulva-available-label">{{ section.settings.bottom_heading | escape }}</span>
+
+  <div class="fulva-platforms">
+    {% if section.settings.amazon_link != blank %}
+      <a href="{{ section.settings.amazon_link }}" target="_blank" rel="noopener" class="fulva-platform-btn amazon">
+        <span class="fulva-platform-label">Shop on</span>
+        <span class="fulva-platform-name">
+          {% if section.settings.amazon_logo != blank %}
+            <img class="fulva-platform-logo" src="{{ section.settings.amazon_logo | image_url: width: 200 }}" alt="{{ section.settings.amazon_logo_alt | escape }}" loading="lazy">
+          {% else %}
+            amazon
+          {% endif %}
+        </span>
+      </a>
+    {% endif %}
+    {% if section.settings.flipkart_link != blank %}
+      <a href="{{ section.settings.flipkart_link }}" target="_blank" rel="noopener" class="fulva-platform-btn flipkart">
+        <span class="fulva-platform-label">Shop on</span>
+        <span class="fulva-platform-name">
+          {% if section.settings.flipkart_logo != blank %}
+            <img class="fulva-platform-logo" src="{{ section.settings.flipkart_logo | image_url: width: 200 }}" alt="{{ section.settings.flipkart_logo_alt | escape }}" loading="lazy">
+          {% else %}
+            Flipkart <span class="fk-icon" aria-hidden="true">🛒</span>
+          {% endif %}
+        </span>
+      </a>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+
+
+<script>
+  (() => {
+    const root = document.querySelector('.fulva-reels--{{ section.id }}');
+    if (!root) return;
+
+    // Slider logic
+    const track = root.querySelector('[data-fr-track]');
+    const prevBtn = root.querySelector('[data-fr-prev]');
+    const nextBtn = root.querySelector('[data-fr-next]');
+    if (!track) return;
+
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const videos = track.querySelectorAll('video.reel-thumb');
+    const attemptPlay = (v) => {
+      if (prefersReducedMotion) {
+        v.controls = true;
+        return;
+      }
+      try {
+        v.muted = true;
+        v.loop = true;
+        v.setAttribute('muted', '');
+        v.setAttribute('playsinline', '');
+        v.setAttribute('webkit-playsinline', '');
+        v.playsInline = true;
+      } catch (e) {}
+
+      const p = v.play && v.play();
+      if (p && typeof p.catch === 'function') {
+        p.catch(() => {
+          const card = v.closest && v.closest('.fulva-reel-card');
+          if (card) card.classList.add('is-video-manual');
+          v.controls = true;
+        });
+      }
+    };
+
+    videos.forEach((v) => {
+      v.addEventListener('loadedmetadata', () => attemptPlay(v), { passive: true });
+      v.addEventListener('canplay', () => attemptPlay(v), { passive: true });
+    });
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const v = entry.target;
+          if (entry.isIntersecting) {
+            attemptPlay(v);
+          } else {
+            try { v.pause(); } catch (e) {}
+          }
+        });
+      }, { root: track, threshold: 0.6 });
+      videos.forEach((v) => io.observe(v));
+    } else {
+      videos.forEach((v) => attemptPlay(v));
+    }
+
+    // Filter logic (production-ready)
+    const chips = root.querySelectorAll('.fulva-filter-chip');
+    const cards = Array.from(track.querySelectorAll('.fulva-reel-card'));
+    const applyFilter = (label) => {
+      const key = (label || '').trim();
+      const isAll = key.toLowerCase() === 'all';
+      cards.forEach((card) => {
+        const cat = (card.getAttribute('data-fr-category') || '').trim();
+        const match = isAll || (cat !== '' && cat === key);
+        card.classList.toggle('is-hidden', !match);
+        if (!match) {
+          const v = card.querySelector && card.querySelector('video.reel-thumb');
+          if (v) {
+            try { v.pause(); } catch (e) {}
+          }
+        }
+      });
+      if (prevBtn && nextBtn) setTimeout(updateArrowStates, 0);
+    };
+
+    if (chips.length) {
+      chips.forEach((chip) => {
+        chip.addEventListener('click', () => {
+          chips.forEach((c) => c.classList.remove('active'));
+          chip.classList.add('active');
+          applyFilter(chip.textContent || 'All');
+        });
+      });
+      applyFilter('All');
+    }
+
+    // Desktop arrow navigation
+    const getScrollAmount = () => {
+      const card = track.querySelector('.fulva-reel-card');
+      if (!card) return 300;
+      const gap = parseInt(getComputedStyle(track).gap) || 0;
+      return card.offsetWidth + gap;
+    };
+
+    const updateArrowStates = () => {
+      if (prevBtn) prevBtn.disabled = track.scrollLeft <= 10;
+      if (nextBtn) {
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        nextBtn.disabled = track.scrollLeft >= maxScroll - 10;
+      }
+    };
+
+    if (prevBtn && nextBtn) {
+      prevBtn.addEventListener('click', () => {
+        track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+      });
+      nextBtn.addEventListener('click', () => {
+        track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+      });
+      track.addEventListener('scroll', updateArrowStates, { passive: true });
+      setTimeout(updateArrowStates, 100);
+      window.addEventListener('resize', updateArrowStates);
+    }
+
+    // Desktop Mouse Drag to Scroll
+    const canDrag = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    let isDragged = false;
+
+    if (canDrag) {
+      track.addEventListener('mousedown', (e) => {
+        isDown = true;
+        isDragged = false;
+        startX = e.pageX - track.offsetLeft;
+        scrollLeft = track.scrollLeft;
+      });
+
+      track.addEventListener('mouseleave', () => {
+        isDown = false;
+        track.classList.remove('is-dragging');
+        track.style.scrollSnapType = '';
+        if (isDragged) setTimeout(() => { isDragged = false; }, 0);
+      });
+
+      track.addEventListener('mouseup', () => {
+        isDown = false;
+        track.classList.remove('is-dragging');
+        track.style.scrollSnapType = '';
+        if (isDragged) setTimeout(() => { isDragged = false; }, 0);
+      });
+
+      track.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        const x = e.pageX - track.offsetLeft;
+        const walk = (x - startX) * 2;
+        if (Math.abs(walk) > 10) {
+          if (!isDragged) {
+            isDragged = true;
+            track.classList.add('is-dragging');
+            track.style.scrollSnapType = 'none';
+          }
+        }
+        if (isDragged) e.preventDefault();
+        track.scrollLeft = scrollLeft - walk;
+      });
+    }
+
+    // Prevent links from triggering when dragging
+    track.querySelectorAll('.fulva-reel-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (isDragged) {
+          e.preventDefault();
+          return;
+        }
+
+        const buy = e.target.closest && e.target.closest('.fulva-reel-buy');
+        if (buy) return;
+      });
+    });
+
+    // Touch swipe for mobile (improves default scroll behavior)
+    track.addEventListener('touchstart', (e) => {
+      if (!e.touches || e.touches.length !== 1) return;
+      track.style.scrollSnapType = 'none';
+    }, { passive: true });
+
+    track.addEventListener('touchend', () => {
+      track.style.scrollSnapType = '';
+    }, { passive: true });
+
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Fulva Reels",
+  "settings": [
+    { "type": "text", "id": "aria_label", "label": "ARIA label", "default": "Instagram Reels" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Real People, Real Moments" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "The <em>Halwa</em> Diaries" },
+    { "type": "text", "id": "ig_handle", "label": "Instagram handle", "default": "@fulva.in" },
+    { "type": "url", "id": "ig_link", "label": "Instagram link" },
+
+    { "type": "header", "content": "Filters" },
+    { "type": "checkbox", "id": "show_filters", "label": "Show filter chips", "default": true },
+    { "type": "text", "id": "filter_1", "label": "Filter 1", "default": "Unboxing" },
+    { "type": "text", "id": "filter_2", "label": "Filter 2", "default": "Taste Tests" },
+    { "type": "text", "id": "filter_3", "label": "Filter 3", "default": "Gifting" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show navigation arrows (Desktop)", "default": true },
+    { "type": "range", "id": "max_width", "label": "Max width (0 = full width)", "min": 0, "max": 1800, "step": 20, "default": 0 },
+    { "type": "range", "id": "padding_x_desktop", "label": "Padding X desktop (px)", "min": 0, "max": 80, "step": 2, "default": 64 },
+    { "type": "range", "id": "padding_y_desktop", "label": "Padding Y desktop (px)", "min": 0, "max": 80, "step": 2, "default": 32 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding X mobile (px)", "min": 0, "max": 30, "step": 1, "default": 16 },
+    { "type": "range", "id": "padding_y_mobile", "label": "Padding Y mobile (px)", "min": 0, "max": 40, "step": 1, "default": 24 },
+    { "type": "range", "id": "gap", "label": "Card gap (px)", "min": 8, "max": 30, "step": 1, "default": 12 },
+    { "type": "range", "id": "radius", "label": "Card radius (px)", "min": 0, "max": 30, "step": 1, "default": 16 },
+
+    { "type": "header", "content": "Card sizes" },
+    { "type": "range", "id": "card_width_desktop", "label": "Card width desktop (px)", "min": 180, "max": 320, "step": 4, "default": 248 },
+    { "type": "range", "id": "card_height_desktop", "label": "Card height desktop (px)", "min": 300, "max": 600, "step": 4, "default": 448 },
+    { "type": "range", "id": "card_width_mobile", "label": "Card width mobile (px)", "min": 140, "max": 280, "step": 4, "default": 212 },
+    { "type": "range", "id": "card_height_mobile", "label": "Card height mobile (px)", "min": 250, "max": 502, "step": 4, "default": 382 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "background", "label": "Section background", "default": "#F7F5F0" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#1A1A1A" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#D4A843" },
+    { "type": "color", "id": "border_color", "label": "Section border", "default": "#000000" },
+    { "type": "range", "id": "border_opacity", "label": "Section border opacity (%)", "min": 0, "max": 40, "step": 2, "default": 6 },
+
+    { "type": "header", "content": "Bottom Banner (Available Across India)" },
+    { "type": "checkbox", "id": "show_bottom_section", "label": "Show bottom banner", "default": true },
+    { "type": "color", "id": "bottom_bg", "label": "Bottom banner background", "default": "#FFFFFF" },
+    { "type": "text", "id": "bottom_heading", "label": "Heading", "default": "Available Across India" },
+    { "type": "url", "id": "amazon_link", "label": "Amazon link" },
+    { "type": "image_picker", "id": "amazon_logo", "label": "Amazon logo (optional)" },
+    { "type": "text", "id": "amazon_logo_alt", "label": "Amazon logo alt text", "default": "Amazon" },
+    { "type": "url", "id": "flipkart_link", "label": "Flipkart link" },
+    { "type": "image_picker", "id": "flipkart_logo", "label": "Flipkart logo (optional)" },
+    { "type": "text", "id": "flipkart_logo_alt", "label": "Flipkart logo alt text", "default": "Flipkart" },
+
+    { "type": "header", "content": "Visibility" },
+    { "type": "checkbox", "id": "hide_on_mobile", "label": "Hide on mobile", "default": false },
+    { "type": "checkbox", "id": "hide_on_desktop", "label": "Hide on desktop", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "reel",
+      "name": "Reel Card",
+      "limit": 12,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Reel Image (or Video Fallback)" },
+        { "type": "url", "id": "mp4_url", "label": "MP4 link (upload in Settings → Files)" },
+        { "type": "text", "id": "category", "label": "Category (must match filter chip text)", "default": "Unboxing" },
+        { "type": "text", "id": "views", "label": "Views (e.g. 1.2M)", "default": "1.2M views" },
+        { "type": "text", "id": "username", "label": "Instagram Username", "default": "@fulva.in" },
+        { "type": "text", "id": "product_tag", "label": "Product Tag", "default": "24 Variety Box" },
+        { "type": "text", "id": "button_label", "label": "Button Label", "default": "Buy Now" },
+        { "type": "url", "id": "button_link", "label": "Button Link" },
+        { "type": "text", "id": "likes", "label": "Likes (e.g. 84K)", "default": "84K" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fulva Reels",
+      "blocks": [
+        { "type": "reel" },
+        { "type": "reel" },
+        { "type": "reel" },
+        { "type": "reel" },
+        { "type": "reel" }
+      ]
+    }
+  ]
+}
+{% endschema %}

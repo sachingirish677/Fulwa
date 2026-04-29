@@ -1,0 +1,146 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "custom_announcement_VdbNRN": {
+      "type": "custom_announcement",
+      "blocks": {
+        "message_8YKVGW": {
+          "type": "message",
+          "settings": {
+            "text": "Free delivery above ₹499",
+            "highlight": false,
+            "link": "",
+            "open_in_new_tab": false
+          }
+        },
+        "message_9JWnLT": {
+          "type": "message",
+          "settings": {
+            "text": "Eid Special: <strong>40% OFF</strong> — Limited stock",
+            "highlight": true,
+            "link": "",
+            "open_in_new_tab": false
+          }
+        },
+        "message_CxXY8a": {
+          "type": "message",
+          "settings": {
+            "text": "24 Varieties · Zero Preservatives · Made fresh in Calicut",
+            "highlight": false,
+            "link": "",
+            "open_in_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "message_8YKVGW",
+        "message_9JWnLT",
+        "message_CxXY8a"
+      ],
+      "name": "Announcement marquee",
+      "settings": {
+        "enable_marquee": true,
+        "animation_duration": 40,
+        "direction": "ltr",
+        "pause_on_hover": true,
+        "bg_color": "#1b5e2f",
+        "text_color": "#ffffff",
+        "accent_color": "#d4a843",
+        "link_color": "#ffffff",
+        "separator_color": "#3a8f4f",
+        "bar_height": 33,
+        "padding_y": 0,
+        "padding_x": 0,
+        "max_width": 0,
+        "copy_gap": 60,
+        "static_gap": 12,
+        "font_size_desktop": 12,
+        "font_size_mobile": 12,
+        "font_weight": "400",
+        "accent_weight": "600",
+        "letter_spacing": 3,
+        "item_padding_x": 6,
+        "show_separator": true,
+        "separator_symbol": "●",
+        "separator_size": 6,
+        "separator_gap": 14,
+        "hide_on_mobile": false,
+        "hide_on_desktop": false,
+        "aria_label": "Store announcements"
+      }
+    },
+    "header_section": {
+      "type": "header",
+      "settings": {
+        "sticky": true,
+        "show_border": true,
+        "height_desktop": 72,
+        "height_mobile": 64,
+        "padding_x_desktop": 60,
+        "padding_x_mobile": 16,
+        "max_width": 0,
+        "bg_color": "#ffffff",
+        "text_color": "#1a1a1a",
+        "hover_color": "#1b5e2f",
+        "accent_color": "#1b5e2f",
+        "border_color": "#000000",
+        "border_opacity": 6,
+        "logo_image": "shopify://shop_images/Layer_1.webp",
+        "logo_text": "fulva",
+        "logo_font": "heading",
+        "logo_size_desktop": 40,
+        "logo_size_mobile": 34,
+        "show_logo_dot": true,
+        "logo_dot_size": 5,
+        "menu": "main-menu",
+        "nav_gap": 36,
+        "highlight_item": "Gifting",
+        "highlight_dot_color": "#d4a843",
+        "highlight_dot_size": 5,
+        "highlight_dot_offset": 6,
+        "show_icons": true,
+        "action_gap": 10,
+        "action_font_size": 13,
+        "button_padding_y": 8,
+        "button_padding_x": 18,
+        "button_radius": 50,
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp",
+        "whatsapp_url": "https://wa.me/9746804906",
+        "whatsapp_new_tab": true,
+        "whatsapp_icon_color": "#25d366",
+        "show_track_order": true,
+        "track_order_label": "Track Order",
+        "track_order_url": "shopify://pages/contact",
+        "track_border_color": "#bdbdbd",
+        "track_border_width": 2,
+        "track_padding_y": 10,
+        "track_padding_x": 28,
+        "track_style": "outline",
+        "show_cart": true,
+        "cart_label": "Cart",
+        "show_cart_count": true,
+        "enable_mobile_menu": true,
+        "mobile_menu_label": "Menu",
+        "show_mobile_label": false,
+        "hide_labels_mobile": true,
+        "mobile_menu_bg": "#ffffff",
+        "mobile_menu_text": "#1a1a1a"
+      }
+    }
+  },
+  "order": [
+    "custom_announcement_VdbNRN",
+    "header_section"
+  ]
+}

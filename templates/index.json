@@ -1,0 +1,842 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_hero_banner_DcgeWT": {
+      "type": "custom_hero_banner",
+      "blocks": {
+        "slide_xBrQkF": {
+          "type": "slide",
+          "settings": {
+            "bg_image_desktop": "shopify://shop_images/image_2.webp",
+            "bg_image_mobile": "shopify://shop_images/image_2.webp",
+            "bg_fallback_color": "#000000",
+            "bg_fit": "cover",
+            "eyebrow_text": "AUTHENTIC KOZHIKODEN CRAFT",
+            "title_text": "Taste the tradition of",
+            "accent_text": "<em>Calicut</em>",
+            "subtext": "<p>Freshly made halwa, crafted with care and shipped across India.</p>",
+            "image": "shopify://shop_images/image_6.webp",
+            "placeholder_text": "Add a hero image in the editor",
+            "primary_label": "Buy Now",
+            "primary_url": "shopify://products/12-box",
+            "secondary_label": "Our Story",
+            "secondary_url": "shopify://pages/contact",
+            "stat_1_number": "50K+",
+            "stat_1_label": "Happy customers",
+            "stat_2_number": "12",
+            "stat_2_label": "Varieties",
+            "stat_3_number": "0",
+            "stat_3_label": "Preservatives"
+          }
+        }
+      },
+      "block_order": [
+        "slide_xBrQkF"
+      ],
+      "name": "Hero banner",
+      "settings": {
+        "aria_label": "Hero banner",
+        "hero_image": "shopify://shop_images/image_6.webp",
+        "background_image_desktop": "shopify://shop_images/image_2.webp",
+        "background_image_mobile": "shopify://shop_images/image_2.webp",
+        "background_image": "shopify://shop_images/image_2.webp",
+        "background_fallback_color": "#000000",
+        "background_fit": "cover",
+        "empty_state_text": "Add slide blocks to show this hero.",
+        "height_desktop": 790,
+        "height_mobile": 720,
+        "padding_x_desktop": 80,
+        "padding_x_mobile": 16,
+        "max_width": 0,
+        "image_max_width_desktop": 820,
+        "image_max_width_mobile": 520,
+        "text_color": "#ffffff",
+        "muted_text_color": "#ffffff99",
+        "muted_text_opacity": 60,
+        "accent_color": "#d4a843",
+        "eyebrow_size": 11,
+        "title_size_desktop": 68,
+        "title_size_mobile": 44,
+        "accent_size_desktop": 80,
+        "accent_size_mobile": 56,
+        "subtext_size": 15,
+        "show_buttons_desktop": true,
+        "show_buttons_mobile": true,
+        "button_padding_y": 13,
+        "button_padding_x": 28,
+        "primary_bg": "#d4a843",
+        "primary_text": "#1a1a1a",
+        "secondary_border": "#ffffff4d",
+        "secondary_border_opacity": 30,
+        "secondary_text": "#ffffff",
+        "enable_float": true,
+        "float_amount": 10,
+        "float_duration": 7,
+        "touch_hover_effect": true,
+        "hover_scale": 102,
+        "hover_raise": 6,
+        "transition_duration_ms": 400,
+        "enable_autoplay": false,
+        "autoplay_interval": 6,
+        "pause_on_hover": true,
+        "hover_switch_dots": true,
+        "show_bottom_controls": true,
+        "hide_on_mobile": false,
+        "hide_on_desktop": false
+      }
+    },
+    "category_custom_9pYbcJ": {
+      "type": "category_custom",
+      "blocks": {
+        "category_bzAbfQ": {
+          "type": "category",
+          "settings": {
+            "collection": "assorted",
+            "label": "",
+            "url": ""
+          }
+        },
+        "category_j8Vk3F": {
+          "type": "category",
+          "settings": {
+            "collection": "combo",
+            "label": "",
+            "url": ""
+          }
+        },
+        "category_y9YzzN": {
+          "type": "category",
+          "settings": {
+            "collection": "fruit",
+            "label": "",
+            "url": ""
+          }
+        },
+        "category_jmehfP": {
+          "type": "category",
+          "settings": {
+            "collection": "single-variety",
+            "label": "",
+            "url": ""
+          }
+        },
+        "category_aqP3CR": {
+          "type": "category",
+          "settings": {
+            "collection": "unbeatable-deal",
+            "label": "",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "category_bzAbfQ",
+        "category_j8Vk3F",
+        "category_y9YzzN",
+        "category_jmehfP",
+        "category_aqP3CR"
+      ],
+      "name": "Fulva categories",
+      "settings": {
+        "aria_label": "Browse categories",
+        "heading": "All <em>Categories</em>",
+        "eyebrow": "Browse by type",
+        "show_arrows": true,
+        "max_width": 0,
+        "padding_x_desktop": 64,
+        "padding_y_desktop": 30,
+        "padding_x_mobile": 16,
+        "padding_y_mobile": 16,
+        "gap": 14,
+        "radius": 12,
+        "card_width_desktop": 130,
+        "card_height_desktop": 146,
+        "thumb_size_desktop": 106,
+        "card_width_mobile": 112,
+        "card_height_mobile": 132,
+        "thumb_size_mobile": 92,
+        "background": "#ffffff",
+        "text_color": "#1a1a1a",
+        "accent_color": "#1b5e2f",
+        "border_color": "#000000",
+        "border_opacity": 10,
+        "card_background": "#ffffff",
+        "card_border_color": "#000000",
+        "card_border_opacity": 7,
+        "card_title_color": "#1b5e2f",
+        "shadow_color": "#000000",
+        "card_shadow_opacity": 7,
+        "hide_on_mobile": false,
+        "hide_on_desktop": false
+      }
+    },
+    "reels_cbrpDN": {
+      "type": "reels",
+      "blocks": {
+        "reel_WDYRWt": {
+          "type": "reel",
+          "settings": {
+            "mp4_url": "https://cdn.shopify.com/videos/c/o/v/3530311c8d6641c19cab558fcd8dc737.mp4",
+            "category": "Unboxing",
+            "views": "1.2M views",
+            "username": "@fulva.in",
+            "product_tag": "24 Variety Box",
+            "button_label": "Buy Now",
+            "button_link": "shopify://products/24-box",
+            "likes": "84K"
+          }
+        },
+        "reel_zcrY9T": {
+          "type": "reel",
+          "settings": {
+            "mp4_url": "https://cdn.shopify.com/videos/c/o/v/040fdfad02854692a54acdc8a3e9371d.mp4",
+            "category": "Unboxing",
+            "views": "1.2M views",
+            "username": "@fulva.in",
+            "product_tag": "24 Variety Box",
+            "button_label": "Buy Now",
+            "button_link": "shopify://products/24-box",
+            "likes": "84K"
+          }
+        },
+        "reel_eXGrzJ": {
+          "type": "reel",
+          "settings": {
+            "mp4_url": "https://cdn.shopify.com/videos/c/o/v/3530311c8d6641c19cab558fcd8dc737.mp4",
+            "category": "Unboxing",
+            "views": "1.2M views",
+            "username": "@fulva.in",
+            "product_tag": "24 Variety Box",
+            "button_label": "Buy Now",
+            "button_link": "",
+            "likes": "84K"
+          }
+        },
+        "reel_UiFMcF": {
+          "type": "reel",
+          "settings": {
+            "mp4_url": "https://cdn.shopify.com/videos/c/o/v/3530311c8d6641c19cab558fcd8dc737.mp4",
+            "category": "Unboxing",
+            "views": "1.2M views",
+            "username": "@fulva.in",
+            "product_tag": "24 Variety Box",
+            "button_label": "Buy Now",
+            "button_link": "",
+            "likes": "84K"
+          }
+        },
+        "reel_WNJ4c9": {
+          "type": "reel",
+          "settings": {
+            "mp4_url": "https://cdn.shopify.com/videos/c/o/v/040fdfad02854692a54acdc8a3e9371d.mp4",
+            "category": "Unboxing",
+            "views": "1.2M views",
+            "username": "@fulva.in",
+            "product_tag": "24 Variety Box",
+            "button_label": "Buy Now",
+            "button_link": "",
+            "likes": "84K"
+          }
+        }
+      },
+      "block_order": [
+        "reel_WDYRWt",
+        "reel_zcrY9T",
+        "reel_eXGrzJ",
+        "reel_UiFMcF",
+        "reel_WNJ4c9"
+      ],
+      "name": "Fulva Reels",
+      "settings": {
+        "aria_label": "Instagram Reels",
+        "eyebrow": "Real People, Real Moments",
+        "heading": "The <em>Halwa</em> Diaries",
+        "ig_handle": "@fulva.in",
+        "ig_link": "https://www.instagram.com/fulva.in",
+        "show_filters": true,
+        "filter_1": "Unboxing",
+        "filter_2": "Taste Tests",
+        "filter_3": "Gifting",
+        "show_arrows": true,
+        "max_width": 0,
+        "padding_x_desktop": 64,
+        "padding_y_desktop": 32,
+        "padding_x_mobile": 16,
+        "padding_y_mobile": 24,
+        "gap": 12,
+        "radius": 16,
+        "card_width_desktop": 248,
+        "card_height_desktop": 448,
+        "card_width_mobile": 212,
+        "card_height_mobile": 382,
+        "background": "#f7f5f0",
+        "text_color": "#1a1a1a",
+        "accent_color": "#d4a843",
+        "border_color": "#000000",
+        "border_opacity": 6,
+        "show_bottom_section": true,
+        "bottom_bg": "#ffffff",
+        "bottom_heading": "Available Across India",
+        "amazon_link": "",
+        "amazon_logo_alt": "Amazon",
+        "flipkart_link": "",
+        "flipkart_logo_alt": "Flipkart",
+        "hide_on_mobile": false,
+        "hide_on_desktop": false
+      }
+    },
+    "offer_banner_EkAPLg": {
+      "type": "offer_banner",
+      "blocks": {
+        "product_hJ8Mw9": {
+          "type": "product",
+          "settings": {
+            "product": "12-box",
+            "subtitle": "Assorted · 120g",
+            "show_custom_badge": false,
+            "badge_text": "~50%",
+            "fallback_title": "Grand Edition"
+          }
+        },
+        "product_PBnKir": {
+          "type": "product",
+          "settings": {
+            "product": "6-varieties-of-delicious-calicut-halwa",
+            "subtitle": "Assorted · 120g",
+            "show_custom_badge": false,
+            "badge_text": "~50%",
+            "fallback_title": "Grand Edition"
+          }
+        },
+        "product_Xc4fWp": {
+          "type": "product",
+          "settings": {
+            "product": "3-varieties-of-delicious-calicut-halwa",
+            "subtitle": "Assorted · 120g",
+            "show_custom_badge": false,
+            "badge_text": "~50%",
+            "fallback_title": "Grand Edition"
+          }
+        }
+      },
+      "block_order": [
+        "product_hJ8Mw9",
+        "product_PBnKir",
+        "product_Xc4fWp"
+      ],
+      "name": "Fulva seasonal",
+      "settings": {
+        "aria_label": "Seasonal featured products",
+        "bg_image_desktop": "shopify://shop_images/Gemini_Generated_Image_jbeu4ajbeu4ajbeu_1_1.png",
+        "overlay_top_opacity": 25,
+        "overlay_mid_opacity": 15,
+        "overlay_bottom_opacity": 30,
+        "eyebrow": "Right now",
+        "title_before": "Ramzan &",
+        "title_accent": "Eid Delights",
+        "subtitle": "Limited edition festive boxes. Available while stocks last.",
+        "primary_button_label": "Shop Eid Collection",
+        "primary_button_link": "",
+        "secondary_button_label": "Bulk Enquiry →",
+        "secondary_button_link": "",
+        "cart_label": "Cart",
+        "show_arrows": false,
+        "max_width": 0,
+        "height_desktop": 740,
+        "height_mobile": 720,
+        "padding_x_desktop": 64,
+        "padding_y_desktop": 64,
+        "padding_x_mobile": 16,
+        "padding_y_mobile": 28,
+        "card_gap": 14,
+        "card_radius": 12,
+        "card_width_desktop": 360,
+        "card_width_mobile": 280,
+        "accent_color": "#d4a843",
+        "text_color": "#ffffff",
+        "muted_text_color": "#ffffff",
+        "muted_text_opacity": 65,
+        "primary_button_bg": "#d4a843",
+        "primary_button_text": "#1a1a1a",
+        "secondary_button_border": "#ffffff",
+        "secondary_button_text": "#ffffff",
+        "card_bg": "#ffffff",
+        "fallback_price": "₹1,113",
+        "hide_on_mobile": false,
+        "hide_on_desktop": false
+      }
+    },
+    "popular_products_MB9ep6": {
+      "type": "popular_products",
+      "blocks": {
+        "product_4NAnRi": {
+          "type": "product",
+          "settings": {
+            "product": "24-box",
+            "subtitle": "Assorted · 120g",
+            "show_custom_badge": false,
+            "badge_text": "~50%",
+            "fallback_title": "Product name"
+          }
+        },
+        "product_LnXmRh": {
+          "type": "product",
+          "settings": {
+            "product": "24-box",
+            "subtitle": "Assorted · 120g",
+            "show_custom_badge": false,
+            "badge_text": "~50%",
+            "fallback_title": "Product name"
+          }
+        },
+        "product_374xeA": {
+          "type": "product",
+          "settings": {
+            "product": "3-varieties-of-delicious-calicut-halwa",
+            "subtitle": "Assorted · 120g",
+            "show_custom_badge": false,
+            "badge_text": "~50%",
+            "fallback_title": "Product name"
+          }
+        },
+        "product_XQgVjq": {
+          "type": "product",
+          "settings": {
+            "product": "24-box",
+            "subtitle": "Assorted · 120g",
+            "show_custom_badge": false,
+            "badge_text": "~50%",
+            "fallback_title": "Product name"
+          }
+        },
+        "product_yb8G9r": {
+          "type": "product",
+          "settings": {
+            "product": "3-varieties-of-delicious-calicut-halwa",
+            "subtitle": "Assorted · 120g",
+            "show_custom_badge": false,
+            "badge_text": "~50%",
+            "fallback_title": "Product name"
+          }
+        },
+        "product_3zeqbq": {
+          "type": "product",
+          "settings": {
+            "product": "6-varieties-of-delicious-calicut-halwa",
+            "subtitle": "Assorted · 120g",
+            "show_custom_badge": false,
+            "badge_text": "~50%",
+            "fallback_title": "Product name"
+          }
+        }
+      },
+      "block_order": [
+        "product_4NAnRi",
+        "product_LnXmRh",
+        "product_374xeA",
+        "product_XQgVjq",
+        "product_yb8G9r",
+        "product_3zeqbq"
+      ],
+      "name": "Fulva popular products",
+      "settings": {
+        "aria_label": "Most popular products",
+        "eyebrow": "Top sellers",
+        "title_before": "Most",
+        "title_emphasis": "Popular",
+        "title_after": "Products",
+        "layout_mode": "grid",
+        "mobile_layout": "swipe",
+        "show_arrows": true,
+        "max_width": 0,
+        "padding_x_desktop": 64,
+        "padding_y_desktop": 52,
+        "padding_x_mobile": 16,
+        "padding_y_mobile": 24,
+        "gap": 14,
+        "card_radius": 15,
+        "image_height": 200,
+        "card_width_desktop": 248,
+        "card_width_mobile": 210,
+        "view_all_label": "View All Products →",
+        "view_all_link": "",
+        "cart_label": "Cart",
+        "fallback_price": "₹1,113",
+        "background": "#ffffff",
+        "text_color": "#000000",
+        "muted_text_color": "#8a8a8a",
+        "accent_color": "#d4a843",
+        "primary_green": "#1b5e2f",
+        "primary_green_hover": "#237a3b",
+        "border_color": "#000000",
+        "border_opacity": 6,
+        "card_border_color": "#000000",
+        "card_border_opacity": 0,
+        "shadow_color": "#000000",
+        "shadow_opacity": 10,
+        "hide_on_mobile": false,
+        "hide_on_desktop": false
+      }
+    },
+    "spotlight_6AGJxq": {
+      "type": "spotlight",
+      "blocks": {
+        "product_hNff6t": {
+          "type": "product",
+          "settings": {
+            "product": "12-box",
+            "subtitle": "Assorted · 120g",
+            "show_custom_badge": false,
+            "badge_text": "~50%",
+            "fallback_title": "Product name"
+          }
+        },
+        "product_RV34Df": {
+          "type": "product",
+          "settings": {
+            "product": "24-box",
+            "subtitle": "Assorted · 120g",
+            "show_custom_badge": false,
+            "badge_text": "~50%",
+            "fallback_title": "Product name"
+          }
+        },
+        "product_iJk73n": {
+          "type": "product",
+          "settings": {
+            "product": "24-box",
+            "subtitle": "Assorted · 120g",
+            "show_custom_badge": false,
+            "badge_text": "~50%",
+            "fallback_title": "Product name"
+          }
+        }
+      },
+      "block_order": [
+        "product_hNff6t",
+        "product_RV34Df",
+        "product_iJk73n"
+      ],
+      "name": "Fulva spotlight",
+      "settings": {
+        "aria_label": "In the spotlight products",
+        "eyebrow": "Our finest",
+        "title_before": "In the",
+        "title_emphasis": "Spotlight",
+        "show_title_after": false,
+        "title_after": "Products",
+        "subtitle": "Hand-picked favorites crafted for gifting and sharing.",
+        "desktop_layout": "grid",
+        "mobile_layout": "swipe",
+        "show_arrows": false,
+        "max_width": 0,
+        "padding_x_desktop": 64,
+        "padding_y_desktop": 56,
+        "padding_x_mobile": 16,
+        "padding_y_mobile": 24,
+        "gap": 14,
+        "card_radius": 15,
+        "image_height": 270,
+        "card_width_desktop": 360,
+        "card_width_mobile": 280,
+        "cart_label": "Cart",
+        "fallback_price": "₹1,113",
+        "background": "#f7f5f0",
+        "radial_color": "#f4c026",
+        "text_color": "#000000",
+        "muted_text_color": "#8a8a8a",
+        "accent_color": "#d4a843",
+        "primary_green": "#1b5e2f",
+        "primary_green_hover": "#237a3b",
+        "border_color": "#000000",
+        "border_opacity": 6,
+        "topline_color_1": "#1b5e2f",
+        "topline_color_2": "#2aae7f",
+        "card_border_color": "#000000",
+        "card_border_opacity": 0,
+        "shadow_color": "#000000",
+        "shadow_opacity": 10,
+        "blob_1_color": "#1b5e2f",
+        "blob_1_opacity": 12,
+        "blob_2_color": "#d4a843",
+        "blob_2_opacity": 12,
+        "hide_on_mobile": false,
+        "hide_on_desktop": false
+      }
+    },
+    "influencer_reels_HkfzDh": {
+      "type": "influencer_reels",
+      "blocks": {
+        "mention_N9RNmC": {
+          "type": "mention",
+          "settings": {
+            "link": "",
+            "name": "Influencer Name",
+            "title": "Creator",
+            "handle": "@fulva.in",
+            "badge": "Trending",
+            "metric": "1M+ views",
+            "like_text": "84K",
+            "quote": "Loved the taste and the giftable packaging."
+          }
+        },
+        "mention_Qha94K": {
+          "type": "mention",
+          "settings": {
+            "link": "",
+            "name": "Influencer Name",
+            "title": "Creator",
+            "handle": "@fulva.in",
+            "badge": "Trending",
+            "metric": "1M+ views",
+            "like_text": "84K",
+            "quote": "Loved the taste and the giftable packaging."
+          }
+        },
+        "mention_UXPJpP": {
+          "type": "mention",
+          "settings": {
+            "link": "",
+            "name": "Influencer Name",
+            "title": "Creator",
+            "handle": "@fulva.in",
+            "badge": "Trending",
+            "metric": "1M+ views",
+            "like_text": "84K",
+            "quote": "Loved the taste and the giftable packaging."
+          }
+        },
+        "mention_BENU7J": {
+          "type": "mention",
+          "settings": {
+            "link": "",
+            "name": "Influencer Name",
+            "title": "Creator",
+            "handle": "@fulva.in",
+            "badge": "Trending",
+            "metric": "1M+ views",
+            "like_text": "84K",
+            "quote": "Loved the taste and the giftable packaging."
+          }
+        }
+      },
+      "block_order": [
+        "mention_N9RNmC",
+        "mention_Qha94K",
+        "mention_UXPJpP",
+        "mention_BENU7J"
+      ],
+      "name": "Fulva buzz",
+      "settings": {
+        "aria_label": "What they’re saying",
+        "eyebrow": "Loved by Celebs",
+        "heading": "They’re talking about <em>Fulva</em>",
+        "show_subtitle": true,
+        "subtitle": "Social proof that feels premium, credible, and on-brand.",
+        "show_cta": false,
+        "cta_label": "View all",
+        "cta_link": "",
+        "show_arrows": true,
+        "show_play_icon": true,
+        "show_profiles": true,
+        "show_likes": true,
+        "show_progress": true,
+        "max_width": 0,
+        "padding_x_desktop": 64,
+        "padding_y_desktop": 34,
+        "padding_x_mobile": 16,
+        "padding_y_mobile": 18,
+        "gap": 14,
+        "radius": 18,
+        "media_radius": 18,
+        "card_width_desktop": 320,
+        "card_width_mobile": 260,
+        "stage_height_desktop": 540,
+        "stage_height_mobile": 500,
+        "slide_offset_desktop": 180,
+        "slide_offset_mobile": 140,
+        "mid_scale": 86,
+        "far_scale": 72,
+        "profile_size": 62,
+        "card_aspect_ratio": "0.5625",
+        "show_badge": true,
+        "show_metric": true,
+        "show_title": true,
+        "show_quote": true,
+        "show_handle": true,
+        "show_stars": true,
+        "background_style": "radial",
+        "use_exact_palette": true,
+        "background": "#fff6dc",
+        "background_2": "#064414",
+        "background_3": "#031a08",
+        "glow_1": "#1c9a38",
+        "glow_2": "#0b5f1d",
+        "text_color": "#101010",
+        "muted_text_color": "#4d4d4d",
+        "accent_color": "#f4c026",
+        "title_highlight_color": "#f4c026",
+        "border_color": "#000000",
+        "border_opacity": 8,
+        "card_background": "#ffffff",
+        "card_border_color": "#000000",
+        "card_border_opacity": 8,
+        "shadow_color": "#000000",
+        "shadow_opacity": 12,
+        "hide_on_mobile": false,
+        "hide_on_desktop": false
+      }
+    },
+    "testimonials_7xKHqX": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_7fpCpx": {
+          "type": "testimonial",
+          "settings": {
+            "badge": "Verified",
+            "rating": 5,
+            "title": "Excellent taste",
+            "body": "Super rich flavour and premium packaging. Perfect for gifting.",
+            "name": "Priyanka",
+            "meta": "Repeat customer",
+            "verified": true
+          }
+        },
+        "testimonial_PQhmcp": {
+          "type": "testimonial",
+          "settings": {
+            "badge": "Verified",
+            "rating": 5,
+            "title": "Excellent taste",
+            "body": "Super rich flavour and premium packaging. Perfect for gifting.",
+            "name": "Priyanka",
+            "meta": "Repeat customer",
+            "verified": true
+          }
+        },
+        "testimonial_NPxYc9": {
+          "type": "testimonial",
+          "settings": {
+            "badge": "Verified",
+            "rating": 5,
+            "title": "Excellent taste",
+            "body": "Super rich flavour and premium packaging. Perfect for gifting.",
+            "name": "Priyanka",
+            "meta": "Repeat customer",
+            "verified": true
+          }
+        },
+        "testimonial_MyqRDQ": {
+          "type": "testimonial",
+          "settings": {
+            "badge": "Verified",
+            "rating": 5,
+            "title": "Excellent taste",
+            "body": "Super rich flavour and premium packaging. Perfect for gifting.",
+            "name": "Priyanka",
+            "meta": "Repeat customer",
+            "verified": true
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_7fpCpx",
+        "testimonial_PQhmcp",
+        "testimonial_NPxYc9",
+        "testimonial_MyqRDQ"
+      ],
+      "name": "Fulva testimonials",
+      "settings": {
+        "aria_label": "Customer testimonials",
+        "eyebrow": "Loved by customers",
+        "heading": "What Our Customers Say",
+        "subheading": "<p>Trusted by <strong>50,000+</strong> customers across India.</p>",
+        "trust_line": "Trusted by 50,000+ Customers",
+        "trust_subline": "4.9 average • 2,847 verified reviews across India",
+        "show_arrows": false,
+        "show_quote_icon": true,
+        "cards_per_view_desktop": 5,
+        "max_width": 0,
+        "padding_x_desktop": 40,
+        "padding_y_desktop": 34,
+        "padding_x_mobile": 16,
+        "padding_y_mobile": 18,
+        "gap": 14,
+        "radius": 14,
+        "card_min_width": 280,
+        "background": "#f5f6f2",
+        "text_color": "#101010",
+        "muted_text_color": "#4d4d4d",
+        "accent_color": "#f4c026",
+        "highlight_color": "#1c9a38",
+        "border_color": "#000000",
+        "border_opacity": 8,
+        "card_background": "#ffffff",
+        "card_border_color": "#000000",
+        "card_border_opacity": 10,
+        "shadow_color": "#000000",
+        "shadow_opacity": 10,
+        "hide_on_mobile": false,
+        "hide_on_desktop": false
+      }
+    },
+    "bannerwithtext_ramMzx": {
+      "type": "bannerwithtext",
+      "name": "Fulva split story",
+      "settings": {
+        "aria_label": "Story section",
+        "eyebrow": "OUR HERITAGE",
+        "heading": "A <em>Tradition</em> Worth Protecting",
+        "subheading": "Quick order, custom gifting, and faster support — chat with our team.",
+        "show_whatsapp_icon": true,
+        "primary_label": "Start Chat on WhatsApp",
+        "primary_link": "",
+        "secondary_label": "Track Order",
+        "secondary_link": "",
+        "max_width": 0,
+        "padding_x_desktop": 0,
+        "padding_y_desktop": 0,
+        "padding_x_mobile": 0,
+        "padding_y_mobile": 0,
+        "radius": 18,
+        "button_radius": 26,
+        "button_width_desktop": 260,
+        "button_gap": 10,
+        "background": "#eaf6ea",
+        "background_2": "#f8e9b4",
+        "text_color": "#101010",
+        "muted_text_color": "#6b6b6b",
+        "accent_color": "#1c9a38",
+        "eyebrow_line_color": "#f4c026",
+        "primary_button_bg": "#1b5e2f",
+        "primary_button_text": "#ffffff",
+        "secondary_button_bg": "#ffffff",
+        "secondary_button_text": "#101010",
+        "secondary_button_border": "#d1d1d1",
+        "border_color": "#000000",
+        "border_opacity": 0,
+        "hide_on_mobile": false,
+        "hide_on_desktop": false
+      }
+    }
+  },
+  "order": [
+    "custom_hero_banner_DcgeWT",
+    "category_custom_9pYbcJ",
+    "reels_cbrpDN",
+    "offer_banner_EkAPLg",
+    "popular_products_MB9ep6",
+    "spotlight_6AGJxq",
+    "influencer_reels_HkfzDh",
+    "testimonials_7xKHqX",
+    "bannerwithtext_ramMzx"
+  ]
+}

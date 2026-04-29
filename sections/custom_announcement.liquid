@@ -1,0 +1,712 @@
+{% liquid
+  assign enable_marquee = section.settings.enable_marquee
+  assign animation_style = section.settings.animation_style
+
+  assign ticker_in = section.settings.ticker_in
+  assign ticker_hold = section.settings.ticker_hold
+  assign ticker_out = section.settings.ticker_out
+  assign ticker_segment = ticker_in | plus: ticker_hold | plus: ticker_out
+  assign ticker_total = ticker_segment | times: section.blocks.size
+
+  if ticker_total <= 0
+    assign ticker_total = 1
+  endif
+
+  assign pct_in = ticker_in | times: 100.0 | divided_by: ticker_total
+  assign pct_hold = ticker_in | plus: ticker_hold | times: 100.0 | divided_by: ticker_total
+  assign pct_out = ticker_segment | times: 100.0 | divided_by: ticker_total
+%}
+
+<div
+  class="fulva-announcement fulva-announcement--{{ section.id }}{% if section.settings.hide_on_mobile %} fulva-announcement--hide-mobile{% endif %}{% if section.settings.hide_on_desktop %} fulva-announcement--hide-desktop{% endif %}"
+  style="
+    --fa-bg: {{ section.settings.bg_color }};
+    --fa-text: {{ section.settings.text_color }};
+    --fa-accent: {{ section.settings.accent_color }};
+    --fa-link: {{ section.settings.link_color }};
+    --fa-sep: {{ section.settings.separator_color }};
+    --fa-height: {{ section.settings.bar_height }}px;
+    --fa-py: {{ section.settings.padding_y }}px;
+    --fa-px: {{ section.settings.padding_x }}px;
+    --fa-max-width: {% if section.settings.max_width > 0 %}{{ section.settings.max_width }}px{% else %}100%{% endif %};
+    --fa-font-size: {{ section.settings.font_size_desktop }}px;
+    --fa-font-size-mobile: {{ section.settings.font_size_mobile }}px;
+    --fa-font-weight: {{ section.settings.font_weight }};
+    --fa-accent-weight: {{ section.settings.accent_weight }};
+    --fa-letter-spacing: {{ section.settings.letter_spacing | times: 0.01 }}em;
+    --fa-speed: {{ section.settings.animation_duration }}s;
+    --fa-ticker-seg: {{ ticker_segment }}s;
+    --fa-ticker-total: {{ ticker_total }}s;
+    --fa-item-px: {{ section.settings.item_padding_x }}px;
+    --fa-sep-size: {{ section.settings.separator_size }}px;
+    --fa-sep-gap: {{ section.settings.separator_gap }}px;
+    --fa-copy-gap: {{ section.settings.copy_gap }}px;
+    --fa-static-gap: {{ section.settings.static_gap }}px;
+  "
+>
+  <div class="fulva-announcement__container">
+    <div class="fulva-announcement__viewport" role="region" aria-label="{{ section.settings.aria_label | escape }}">
+      {% if section.blocks.size == 0 %}
+        <div class="fulva-announcement__static">
+          <span class="fulva-announcement__item">Add announcement blocks in the editor.</span>
+        </div>
+      {% elsif enable_marquee and animation_style == 'ticker' %}
+        <div class="fulva-announcement__ticker{% if section.settings.pause_on_hover %} is-pausable{% endif %}" aria-live="polite">
+          {% for block in section.blocks %}
+            <div
+              class="fulva-announcement__ticker-item{% if block.settings.highlight %} is-accent{% endif %}"
+              style="animation-delay: {{ forloop.index0 | times: ticker_segment }}s; animation-duration: {{ ticker_total }}s;"
+              {{ block.shopify_attributes }}
+            >
+              {% if block.settings.link != blank %}
+                <a
+                  class="fulva-announcement__link"
+                  href="{{ block.settings.link }}"
+                  {% if block.settings.open_in_new_tab %}
+                    target="_blank"
+                    rel="noopener"
+                  {% endif %}
+                >
+                  {{ block.settings.text }}
+                </a>
+              {% else %}
+                {{ block.settings.text }}
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% elsif enable_marquee %}
+        <div class="fulva-announcement__track{% if section.settings.direction == 'rtl' %} is-rtl{% endif %}{% if section.settings.pause_on_hover %} is-pausable{% endif %}">
+          <div class="fulva-announcement__copy">
+            {% for block in section.blocks %}
+              <span class="fulva-announcement__item{% if block.settings.highlight %} is-accent{% endif %}" {{ block.shopify_attributes }}>
+                {% if block.settings.link != blank %}
+                  <a
+                    class="fulva-announcement__link"
+                    href="{{ block.settings.link }}"
+                    {% if block.settings.open_in_new_tab %}
+                      target="_blank"
+                      rel="noopener"
+                    {% endif %}
+                  >
+                    {{ block.settings.text }}
+                  </a>
+                {% else %}
+                  {{ block.settings.text }}
+                {% endif %}
+              </span>
+              {% if section.settings.show_separator and forloop.last == false %}
+                <span class="fulva-announcement__sep" aria-hidden="true">{{ section.settings.separator_symbol }}</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class="fulva-announcement__spacer" aria-hidden="true"></div>
+          <div class="fulva-announcement__copy" aria-hidden="true">
+            {% for block in section.blocks %}
+              <span class="fulva-announcement__item{% if block.settings.highlight %} is-accent{% endif %}">
+                {% if block.settings.link != blank %}
+                  <a
+                    class="fulva-announcement__link"
+                    href="{{ block.settings.link }}"
+                    {% if block.settings.open_in_new_tab %}
+                      target="_blank"
+                      rel="noopener"
+                    {% endif %}
+                  >
+                    {{ block.settings.text }}
+                  </a>
+                {% else %}
+                  {{ block.settings.text }}
+                {% endif %}
+              </span>
+              {% if section.settings.show_separator and forloop.last == false %}
+                <span class="fulva-announcement__sep" aria-hidden="true">{{ section.settings.separator_symbol }}</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% else %}
+        <div class="fulva-announcement__static">
+          {% for block in section.blocks %}
+            <span class="fulva-announcement__item{% if block.settings.highlight %} is-accent{% endif %}" {{ block.shopify_attributes }}>
+              {% if block.settings.link != blank %}
+                <a
+                  class="fulva-announcement__link"
+                  href="{{ block.settings.link }}"
+                  {% if block.settings.open_in_new_tab %}
+                    target="_blank"
+                    rel="noopener"
+                  {% endif %}
+                >
+                  {{ block.settings.text }}
+                </a>
+              {% else %}
+                {{ block.settings.text }}
+              {% endif %}
+            </span>
+            {% if section.settings.show_separator and forloop.last == false %}
+              <span class="fulva-announcement__sep" aria-hidden="true">{{ section.settings.separator_symbol }}</span>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .fulva-announcement--{{ section.id }} {
+    background: var(--fa-bg);
+    color: var(--fa-text);
+    font-family: var(--font-body-family, inherit);
+    font-style: var(--font-body-style, normal);
+    font-weight: var(--fa-font-weight);
+    letter-spacing: var(--fa-letter-spacing);
+  }
+
+  .fulva-announcement--{{ section.id }} .fulva-announcement__container {
+    width: 100%;
+    max-width: var(--fa-max-width);
+    margin: 0 auto;
+    padding: 0 var(--fa-px);
+  }
+
+  .fulva-announcement--{{ section.id }} .fulva-announcement__viewport {
+    min-height: calc(var(--fa-height) + (var(--fa-py) * 2));
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: var(--fa-py) 0;
+  }
+
+  .fulva-announcement--{{ section.id }} .fulva-announcement__static {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--fa-static-gap);
+    width: 100%;
+    font-size: var(--fa-font-size);
+    line-height: 1.2;
+  }
+
+  .fulva-announcement--{{ section.id }} .fulva-announcement__ticker {
+    position: relative;
+    width: 100%;
+    min-height: 1.2em;
+    font-size: var(--fa-font-size);
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .fulva-announcement--{{ section.id }} .fulva-announcement__ticker-item {
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--fa-item-px);
+    white-space: nowrap;
+    will-change: transform, opacity;
+    transform: translate3d(120%, 0, 0);
+    opacity: 0;
+    animation-name: fulva-ticker-{{ section.id }};
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+  }
+
+  .fulva-announcement--{{ section.id }}:hover .fulva-announcement__ticker.is-pausable .fulva-announcement__ticker-item {
+    animation-play-state: paused;
+  }
+
+  .fulva-announcement--{{ section.id }} .fulva-announcement__track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    white-space: nowrap;
+    font-size: var(--fa-font-size);
+    line-height: 1.2;
+    will-change: transform;
+    animation: fulva-marquee-{{ section.id }} var(--fa-speed) linear infinite;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .fulva-announcement--{{ section.id }}:hover .fulva-announcement__track.is-pausable {
+    animation-play-state: paused;
+  }
+
+  .fulva-announcement--{{ section.id }} .fulva-announcement__track.is-rtl {
+    animation-direction: reverse;
+  }
+
+  .fulva-announcement--{{ section.id }} .fulva-announcement__copy {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  .fulva-announcement--{{ section.id }} .fulva-announcement__spacer {
+    flex: 0 0 var(--fa-copy-gap);
+    width: var(--fa-copy-gap);
+  }
+
+  .fulva-announcement--{{ section.id }} .fulva-announcement__item {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 var(--fa-item-px);
+  }
+
+  .fulva-announcement--{{ section.id }} .fulva-announcement__item.is-accent {
+    color: var(--fa-accent);
+    font-weight: var(--fa-accent-weight);
+  }
+
+  .fulva-announcement--{{ section.id }} .fulva-announcement__link {
+    color: var(--fa-link);
+    text-decoration: none;
+  }
+
+  .fulva-announcement--{{ section.id }} .fulva-announcement__link:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .fulva-announcement--{{ section.id }} .fulva-announcement__sep {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 var(--fa-sep-gap);
+    color: var(--fa-sep);
+    font-size: var(--fa-sep-size);
+    line-height: 1;
+  }
+
+  @keyframes fulva-marquee-{{ section.id }} {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  @keyframes fulva-ticker-{{ section.id }} {
+    0% {
+      transform: translate3d(120%, 0, 0);
+      opacity: 0;
+    }
+    {{ pct_in }}% {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+    {{ pct_hold }}% {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+    {{ pct_out }}% {
+      transform: translate3d(-120%, 0, 0);
+      opacity: 0;
+    }
+    100% {
+      transform: translate3d(-120%, 0, 0);
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .fulva-announcement--{{ section.id }} .fulva-announcement__static,
+    .fulva-announcement--{{ section.id }} .fulva-announcement__track,
+    .fulva-announcement--{{ section.id }} .fulva-announcement__ticker {
+      font-size: var(--fa-font-size-mobile);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fulva-announcement--{{ section.id }} .fulva-announcement__viewport {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .fulva-announcement--{{ section.id }} .fulva-announcement__track {
+      animation: none;
+      width: 100%;
+    }
+
+    .fulva-announcement--{{ section.id }} .fulva-announcement__ticker-item {
+      animation: none;
+      position: static;
+      transform: none;
+      opacity: 1;
+    }
+
+    .fulva-announcement--{{ section.id }} .fulva-announcement__ticker-item:not(:first-child) {
+      display: none;
+    }
+
+    .fulva-announcement--{{ section.id }} .fulva-announcement__spacer,
+    .fulva-announcement--{{ section.id }} .fulva-announcement__copy[aria-hidden='true'] {
+      display: none;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .fulva-announcement--{{ section.id }}.fulva-announcement--hide-mobile {
+      display: none;
+    }
+  }
+
+  @media (min-width: 750px) {
+    .fulva-announcement--{{ section.id }}.fulva-announcement--hide-desktop {
+      display: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Announcement marquee",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_marquee",
+      "label": "Enable scrolling marquee",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "animation_style",
+      "label": "Animation style",
+      "default": "ticker",
+      "options": [
+        { "value": "ticker", "label": "One-by-one (right → center → left)" },
+        { "value": "marquee", "label": "Continuous marquee" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "animation_duration",
+      "label": "Animation duration (seconds)",
+      "min": 10,
+      "max": 110,
+      "step": 1,
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "One-by-one timing"
+    },
+    {
+      "type": "range",
+      "id": "ticker_in",
+      "label": "Enter duration (s)",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "ticker_hold",
+      "label": "Center hold (s)",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "ticker_out",
+      "label": "Exit duration (s)",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Scroll direction",
+      "default": "ltr",
+      "options": [
+        { "value": "ltr", "label": "Left" },
+        { "value": "rtl", "label": "Right" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on hover",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#1B5E2F"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent (highlighted blocks)",
+      "default": "#D4A843"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "separator_color",
+      "label": "Separator",
+      "default": "#3A8F4F"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "bar_height",
+      "label": "Bar height (px)",
+      "min": 24,
+      "max": 80,
+      "step": 1,
+      "default": 33
+    },
+    {
+      "type": "range",
+      "id": "padding_y",
+      "label": "Vertical padding (px)",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Horizontal padding (px)",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width (0 = full width)",
+      "min": 0,
+      "max": 1800,
+      "step": 20,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "copy_gap",
+      "label": "Gap between repeated copies (px)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "static_gap",
+      "label": "Gap (non-scrolling) (px)",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "font_size_desktop",
+      "label": "Font size desktop (px)",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "label": "Font size mobile (px)",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "default": "400",
+      "options": [
+        { "value": "300", "label": "300" },
+        { "value": "400", "label": "400" },
+        { "value": "500", "label": "500" },
+        { "value": "600", "label": "600" },
+        { "value": "700", "label": "700" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "accent_weight",
+      "label": "Accent weight",
+      "default": "600",
+      "options": [
+        { "value": "400", "label": "400" },
+        { "value": "500", "label": "500" },
+        { "value": "600", "label": "600" },
+        { "value": "700", "label": "700" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "label": "Letter spacing (0.00–0.20em)",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "item_padding_x",
+      "label": "Horizontal padding per item (px)",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Separators"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_separator",
+      "label": "Show separators between blocks",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "separator_symbol",
+      "label": "Separator symbol",
+      "default": "●"
+    },
+    {
+      "type": "range",
+      "id": "separator_size",
+      "label": "Separator size (px)",
+      "min": 6,
+      "max": 18,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "separator_gap",
+      "label": "Separator gap (px)",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Visibility & accessibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_desktop",
+      "label": "Hide on desktop",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "ARIA label",
+      "default": "Store announcements"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "Free delivery above ₹499"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Highlight (use accent color)",
+          "default": false
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_in_new_tab",
+          "label": "Open link in new tab",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement marquee",
+      "blocks": [
+        { "type": "message" },
+        {
+          "type": "message",
+          "settings": {
+            "text": "Eid Special: <strong>40% OFF</strong> — Limited stock",
+            "highlight": true
+          }
+        },
+        {
+          "type": "message",
+          "settings": {
+            "text": "24 Varieties · Zero Preservatives · Made fresh in Calicut"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

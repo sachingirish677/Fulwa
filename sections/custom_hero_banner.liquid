@@ -1,0 +1,1361 @@
+{% liquid
+  assign muted_alpha = section.settings.muted_text_opacity | times: 0.01
+  assign border_alpha = section.settings.secondary_border_opacity | times: 0.01
+
+  assign transition_ms = section.settings.transition_duration_ms
+  assign autoplay_on = section.settings.enable_autoplay
+  assign autoplay_ms = section.settings.autoplay_interval | times: 1000
+
+  assign slide_blocks = section.blocks | where: 'type', 'slide'
+%}
+
+<section
+  class="fulva-hero fulva-hero--{{ section.id }}{% if section.settings.hide_on_mobile %} fulva-hero--hide-mobile{% endif %}{% if section.settings.hide_on_desktop %} fulva-hero--hide-desktop{% endif %}"
+  aria-label="{{ section.settings.aria_label | escape }}"
+  data-fulva-hero
+  style="
+    --fh-bg-fallback: {{ section.settings.background_fallback_color }};
+    --fh-text: {{ section.settings.text_color }};
+    --fh-muted: {{ section.settings.muted_text_color | color_modify: 'alpha', muted_alpha }};
+    --fh-accent: {{ section.settings.accent_color }};
+    --fh-height: {{ section.settings.height_desktop }}px;
+    --fh-height-mobile: {{ section.settings.height_mobile }}px;
+    --fh-height-used: max(360px, min({{ section.settings.height_desktop }}px, 62vh));
+    --fh-height-mobile-used: max(440px, min({{ section.settings.height_mobile }}px, 56vh));
+    --fh-px: {{ section.settings.padding_x_desktop }}px;
+    --fh-px-mobile: {{ section.settings.padding_x_mobile }}px;
+    --fh-max-width: {% if section.settings.max_width > 0 %}{{ section.settings.max_width }}px{% else %}100%{% endif %};
+    --fh-eyebrow-size: {{ section.settings.eyebrow_size }}px;
+    --fh-title-size: {{ section.settings.title_size_desktop }}px;
+    --fh-title-size-mobile: {{ section.settings.title_size_mobile }}px;
+    --fh-accent-size: {{ section.settings.accent_size_desktop }}px;
+    --fh-accent-size-mobile: {{ section.settings.accent_size_mobile }}px;
+    --fh-sub-size: {{ section.settings.subtext_size }}px;
+    --fh-btn-py: {{ section.settings.button_padding_y }}px;
+    --fh-btn-px: {{ section.settings.button_padding_x }}px;
+    --fh-primary-bg: {{ section.settings.primary_bg }};
+    --fh-primary-text: {{ section.settings.primary_text }};
+    --fh-secondary-border: {{ section.settings.secondary_border | color_modify: 'alpha', border_alpha }};
+    --fh-secondary-text: {{ section.settings.secondary_text }};
+    --fh-trans: {{ transition_ms }}ms;
+    --fh-hover-scale: {{ section.settings.hover_scale | times: 0.01 }};
+    --fh-hover-raise: {{ section.settings.hover_raise }}px;
+    --fh-float-amp: {{ section.settings.float_amount }}px;
+    --fh-float-speed: {{ section.settings.float_duration }}s;
+    --fh-img-max: {{ section.settings.image_max_width_desktop }}px;
+    --fh-img-max-mobile: {{ section.settings.image_max_width_mobile }}px;
+  "
+>
+  <div class="fulva-hero__bgstage" aria-hidden="true">
+    {% if slide_blocks.size > 0 %}
+      {% for block in slide_blocks %}
+        {% liquid
+          assign s_bg_d = block.settings.bg_image_desktop
+          assign s_bg_m = block.settings.bg_image_mobile
+          assign s_bg_legacy = block.settings.bg_image
+          assign s_bg_color = block.settings.bg_fallback_color
+          assign s_bg_fit = block.settings.bg_fit
+          if s_bg_fit == blank
+            assign s_bg_fit = 'cover'
+          endif
+
+          assign s_bg_fallback = s_bg_d
+          if s_bg_fallback == blank
+            assign s_bg_fallback = s_bg_legacy
+          endif
+          if s_bg_fallback == blank
+            assign s_bg_fallback = s_bg_m
+          endif
+
+          if s_bg_fallback == blank
+            assign s_bg_d = section.settings.background_image_desktop
+            assign s_bg_m = section.settings.background_image_mobile
+            assign s_bg_legacy = section.settings.background_image
+            assign s_bg_color = section.settings.background_fallback_color
+            assign s_bg_fit = section.settings.background_fit
+            if s_bg_fit == blank
+              assign s_bg_fit = 'cover'
+            endif
+
+            assign s_bg_fallback = s_bg_d
+            if s_bg_fallback == blank
+              assign s_bg_fallback = s_bg_legacy
+            endif
+            if s_bg_fallback == blank
+              assign s_bg_fallback = s_bg_m
+            endif
+          endif
+
+          assign s_pos_d = '50% 50%'
+          assign s_pos_m = '50% 50%'
+
+          if s_bg_d != blank and s_bg_d.presentation.focal_point != blank
+            assign s_pos_d = s_bg_d.presentation.focal_point
+          elsif s_bg_fallback != blank and s_bg_fallback.presentation.focal_point != blank
+            assign s_pos_d = s_bg_fallback.presentation.focal_point
+          endif
+
+          if s_bg_m != blank and s_bg_m.presentation.focal_point != blank
+            assign s_pos_m = s_bg_m.presentation.focal_point
+          elsif s_bg_fallback != blank and s_bg_fallback.presentation.focal_point != blank
+            assign s_pos_m = s_bg_fallback.presentation.focal_point
+          endif
+        %}
+
+        <div class="fulva-hero__bgslide{% if s_bg_fit == 'contain' %} is-bg-contain{% endif %}{% if forloop.first %} is-active{% endif %}" data-fulva-hero-bg data-index="{{ forloop.index0 }}" style="--fhs-bg: {{ s_bg_color }}; --fhs-bg-pos-d: {{ s_pos_d }}; --fhs-bg-pos-m: {{ s_pos_m }};">
+          <div class="fulva-hero__bg-fill"></div>
+          {% if s_bg_fallback != blank %}
+            <picture class="fulva-hero__bg-picture">
+              {% if s_bg_m != blank %}
+                <source
+                  media="(max-width: 989px)"
+                  srcset="
+                    {{ s_bg_m | image_url: width: 750 }} 750w,
+                    {{ s_bg_m | image_url: width: 1000 }} 1000w,
+                    {{ s_bg_m | image_url: width: 1300 }} 1300w,
+                    {{ s_bg_m | image_url: width: 1600 }} 1600w
+                  "
+                  sizes="100vw"
+                >
+              {% endif %}
+              {% if s_bg_d != blank %}
+                <source
+                  media="(min-width: 990px)"
+                  srcset="
+                    {{ s_bg_d | image_url: width: 1200 }} 1200w,
+                    {{ s_bg_d | image_url: width: 1600 }} 1600w,
+                    {{ s_bg_d | image_url: width: 2000 }} 2000w,
+                    {{ s_bg_d | image_url: width: 2400 }} 2400w
+                  "
+                  sizes="100vw"
+                >
+              {% endif %}
+              <img
+                class="fulva-hero__bg-img"
+                src="{{ s_bg_fallback | image_url: width: 2000 }}"
+                width="{{ s_bg_fallback.width }}"
+                height="{{ s_bg_fallback.height }}"
+                alt=""
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                {% if forloop.first %}fetchpriority="high"{% endif %}
+                decoding="async"
+              >
+            </picture>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <div class="fulva-hero__container">
+    <div class="fulva-hero__stage" data-fulva-hero-stage>
+      {% if slide_blocks.size == 0 %}
+        <div class="fulva-hero__empty">{{ section.settings.empty_state_text | escape }}</div>
+      {% else %}
+        {% for block in slide_blocks %}
+          <div class="fulva-hero__slide{% if forloop.first %} is-active{% endif %}" data-fulva-hero-slide data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+            <div class="fulva-hero__grid">
+              <div class="fulva-hero__text-group">
+                {% if block.settings.eyebrow_text != blank %}
+                  <div class="fulva-hero__eyebrow">{{ block.settings.eyebrow_text | escape }}</div>
+                {% endif %}
+
+                {% if block.settings.title_text != blank or block.settings.accent_text != blank %}
+                  <h2 class="fulva-hero__title">
+                    {% if block.settings.title_text != blank %}
+                      {{ block.settings.title_text }}
+                    {% endif %}
+                    {% if block.settings.accent_text != blank %}
+                      <span class="fulva-hero__accent">{{ block.settings.accent_text }}</span>
+                    {% endif %}
+                  </h2>
+                {% endif %}
+
+                {% if block.settings.subtext != blank %}
+                  <div class="fulva-hero__sub">{{ block.settings.subtext }}</div>
+                {% endif %}
+              </div>
+
+              <div class="fulva-hero__media">
+                <div class="fulva-hero__image-wrap{% if section.settings.enable_float %} is-floating{% endif %}">
+                  {% liquid
+                    assign hero_img = block.settings.image
+                    if hero_img == blank
+                      assign hero_img = section.settings.hero_image
+                    endif
+                  %}
+                  <div class="fulva-hero__image-inner">
+                    {% if hero_img != blank %}
+                      <img
+                        class="fulva-hero__image"
+                        src="{{ hero_img | image_url: width: 1600 }}"
+                        srcset="
+                          {{ hero_img | image_url: width: 600 }} 600w,
+                          {{ hero_img | image_url: width: 900 }} 900w,
+                          {{ hero_img | image_url: width: 1200 }} 1200w,
+                          {{ hero_img | image_url: width: 1600 }} 1600w
+                        "
+                        sizes="(min-width: 990px) 55vw, 100vw"
+                        width="{{ hero_img.width }}"
+                        height="{{ hero_img.height }}"
+                        alt="{{ hero_img.alt | escape }}"
+                        loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                        {% if forloop.first %}fetchpriority="high"{% endif %}
+                      >
+                    {% else %}
+                      <div class="fulva-hero__image-placeholder">{{ block.settings.placeholder_text | escape }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+
+              <div class="fulva-hero__bottom-group">
+                {% if block.settings.stat_1_number != blank or block.settings.stat_2_number != blank or block.settings.stat_3_number != blank %}
+                  <div class="fulva-hero__stats" role="list">
+                    {% if block.settings.stat_1_number != blank %}
+                      <div class="fulva-hero__stat" role="listitem">
+                        <div class="fulva-hero__stat-num">{{ block.settings.stat_1_number | escape }}</div>
+                        {% if block.settings.stat_1_label != blank %}
+                          <div class="fulva-hero__stat-label">{{ block.settings.stat_1_label | escape }}</div>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                    {% if block.settings.stat_2_number != blank %}
+                      <div class="fulva-hero__stat" role="listitem">
+                        <div class="fulva-hero__stat-num">{{ block.settings.stat_2_number | escape }}</div>
+                        {% if block.settings.stat_2_label != blank %}
+                          <div class="fulva-hero__stat-label">{{ block.settings.stat_2_label | escape }}</div>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                    {% if block.settings.stat_3_number != blank %}
+                      <div class="fulva-hero__stat" role="listitem">
+                        <div class="fulva-hero__stat-num">{{ block.settings.stat_3_number | escape }}</div>
+                        {% if block.settings.stat_3_label != blank %}
+                          <div class="fulva-hero__stat-label">{{ block.settings.stat_3_label | escape }}</div>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                  </div>
+                {% endif %}
+
+                {% if block.settings.primary_label != blank or block.settings.secondary_label != blank %}
+                  <div class="fulva-hero__actions">
+                    {% if block.settings.primary_label != blank and block.settings.primary_url != blank %}
+                      <a class="fulva-hero__btn is-primary" href="{{ block.settings.primary_url }}">{{ block.settings.primary_label | escape }}</a>
+                    {% endif %}
+                    {% if block.settings.secondary_label != blank and block.settings.secondary_url != blank %}
+                      <a class="fulva-hero__btn is-secondary" href="{{ block.settings.secondary_url }}">{{ block.settings.secondary_label | escape }}</a>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    {% if section.settings.show_bottom_controls and slide_blocks.size > 1 %}
+      <div class="fulva-hero__bottom" aria-label="Hero controls">
+        <div class="fulva-hero__bottom-left" role="tablist" aria-label="Slides">
+          {% for block in slide_blocks %}
+            <button
+              class="fulva-hero__dot{% if forloop.first %} is-active{% endif %}"
+              type="button"
+              role="tab"
+              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              aria-label="Go to slide {{ forloop.index }}"
+              data-fulva-hero-dot
+              data-index="{{ forloop.index0 }}"
+            ></button>
+          {% endfor %}
+        </div>
+        <div class="fulva-hero__bottom-right">
+          <button class="fulva-hero__arrow" type="button" aria-label="Previous slide" data-fulva-hero-prev>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M14.7 5.3a1 1 0 0 1 0 1.4L9.4 12l5.3 5.3a1 1 0 1 1-1.4 1.4l-6-6a1 1 0 0 1 0-1.4l6-6a1 1 0 0 1 1.4 0z"></path>
+            </svg>
+          </button>
+          <button class="fulva-hero__arrow" type="button" aria-label="Next slide" data-fulva-hero-next>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M9.3 18.7a1 1 0 0 1 0-1.4L14.6 12 9.3 6.7a1 1 0 1 1 1.4-1.4l6 6a1 1 0 0 1 0 1.4l-6 6a1 1 0 0 1-1.4 0z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .fulva-hero--{{ section.id }} {
+    color: var(--fh-text);
+    font-family: var(--font-body-family, inherit);
+    font-style: var(--font-body-style, normal);
+    position: relative;
+    overflow: hidden;
+    background: var(--fh-bg-fallback);
+    --fh-title-size-used: clamp(34px, calc(var(--fh-height-used) * 0.09), var(--fh-title-size));
+    --fh-accent-size-used: clamp(38px, calc(var(--fh-height-used) * 0.10), var(--fh-accent-size));
+    --fh-sub-size-used: clamp(13px, calc(var(--fh-height-used) * 0.018), var(--fh-sub-size));
+    --fh-title-size-mobile-used: clamp(28px, calc(var(--fh-height-mobile-used) * 0.075), var(--fh-title-size-mobile));
+    --fh-accent-size-mobile-used: clamp(32px, calc(var(--fh-height-mobile-used) * 0.085), var(--fh-accent-size-mobile));
+    --fh-sub-size-mobile-used: clamp(12px, calc(var(--fh-height-mobile-used) * 0.018), var(--fh-sub-size));
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__bgstage {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__bgslide {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: var(--fhs-bg, var(--fh-bg-fallback));
+    opacity: 0;
+    transition: opacity var(--fh-trans) ease;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__bgslide.is-active {
+    opacity: 1;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__bg-fill {
+    position: absolute;
+    inset: 0;
+    background: var(--fhs-bg, var(--fh-bg-fallback));
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__bg-picture {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--fhs-bg-pos-d, 50% 50%);
+    transform: translateZ(0);
+    z-index: 0;
+    display: block;
+    background: var(--fhs-bg, var(--fh-bg-fallback));
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__bgslide.is-bg-contain .fulva-hero__bg-img {
+    object-fit: contain;
+  }
+
+  @media (max-width: 989px) {
+    .fulva-hero--{{ section.id }} .fulva-hero__bg-img {
+      object-position: var(--fhs-bg-pos-m, 50% 50%);
+    }
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__container {
+    width: 100%;
+    max-width: var(--fh-max-width);
+    margin: 0 auto;
+    padding: 0 var(--fh-px);
+    position: relative;
+    z-index: 5;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__stage {
+    position: relative;
+    min-height: var(--fh-height-used);
+    touch-action: pan-y;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__empty {
+    min-height: var(--fh-height-used);
+    padding: 44px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    border: 1px dashed rgba(255, 255, 255, 0.28);
+    color: var(--fh-muted);
+    text-align: center;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__stage > .fulva-hero__slide {
+    display: none;
+  }
+
+  .fulva-hero--{{ section.id }}:not(.is-init) .fulva-hero__stage > .fulva-hero__slide:first-of-type {
+    display: block;
+    position: relative;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+
+  .fulva-hero--{{ section.id }}.is-init .fulva-hero__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate3d(0, 10px, 0);
+    transition: opacity var(--fh-trans) ease, transform var(--fh-trans) cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+    contain: layout paint;
+  }
+
+  .fulva-hero--{{ section.id }}.is-init .fulva-hero__slide {
+    display: block;
+  }
+
+  .fulva-hero--{{ section.id }}.is-init .fulva-hero__slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .fulva-hero--{{ section.id }}.is-init .fulva-hero__slide.is-active .fulva-hero__text-group,
+  .fulva-hero--{{ section.id }}.is-init .fulva-hero__slide.is-active .fulva-hero__bottom-group {
+    animation: fulva-hero-content-in-{{ section.id }} var(--fh-trans) ease both;
+  }
+
+  .fulva-hero--{{ section.id }}.is-init .fulva-hero__slide.is-active .fulva-hero__image-wrap {
+    animation: fulva-hero-media-in-{{ section.id }} calc(var(--fh-trans) + 120ms) ease both;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__grid {
+    min-height: var(--fh-height-used);
+    display: grid;
+    grid-template-columns: 45% 55%;
+    grid-template-rows: auto auto;
+    align-content: center;
+    gap: 0 clamp(16px, calc(var(--fh-height-used) * 0.03), 22px);
+    padding: clamp(16px, calc(var(--fh-height-used) * 0.035), 30px) 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__text-group {
+    grid-column: 1;
+    grid-row: 1;
+    max-width: 560px;
+    align-self: end;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__bottom-group {
+    grid-column: 1;
+    grid-row: 2;
+    max-width: 560px;
+    align-self: start;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--fh-eyebrow-size);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--fh-accent);
+    font-weight: 600;
+    font-family: var(--font-body-family, inherit);
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 2px;
+    background: var(--fh-accent);
+    flex: 0 0 auto;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__title {
+    margin: 12px 0 0 0;
+    font-family: var(--font-heading-family, inherit);
+    font-style: var(--font-heading-style, normal);
+    font-weight: var(--font-heading-weight, 700);
+    font-size: var(--fh-title-size-used);
+    line-height: 1.02;
+    color: var(--fh-text);
+    position: relative;
+    text-shadow: 0 10px 26px rgba(0, 0, 0, 0.38);
+    letter-spacing: -0.01em;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__title em {
+    font-style: italic;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__title::after {
+    content: '';
+    display: block;
+    width: 56px;
+    height: 2px;
+    margin-top: 10px;
+    background: var(--fh-accent);
+    transform-origin: left center;
+    transform: scaleX(1);
+    opacity: 0.95;
+  }
+
+  .fulva-hero--{{ section.id }}.is-init .fulva-hero__slide.is-active .fulva-hero__title::after {
+    animation: fulva-hero-title-line-{{ section.id }} calc(var(--fh-trans) + 120ms) ease both;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__accent {
+    display: block;
+    margin-top: -2px;
+    font-style: italic;
+    font-weight: var(--font-heading-weight, 700);
+    font-size: var(--fh-accent-size-used);
+    color: var(--fh-accent);
+    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.35));
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__accent em {
+    font-style: italic;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__sub {
+    margin-top: 12px;
+    font-size: var(--fh-sub-size-used);
+    line-height: 1.7;
+    color: var(--fh-muted);
+    max-width: 420px;
+    font-family: var(--font-body-family, inherit);
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__sub p {
+    margin: 0;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__actions {
+    display: flex;
+    gap: 12px;
+    margin-top: clamp(12px, calc(var(--fh-height-used) * 0.02), 20px);
+    flex-wrap: wrap;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--fh-btn-py) var(--fh-btn-px);
+    border-radius: 0;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    white-space: nowrap;
+    font-family: var(--font-body-family, inherit);
+    min-height: 44px;
+    transition: transform 160ms ease, filter 160ms ease, background 160ms ease, color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__btn.is-primary {
+    background: var(--fh-primary-bg);
+    color: var(--fh-primary-text);
+    box-shadow: 0 0 18px var(--fh-primary-bg);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__btn.is-primary:hover {
+    filter: brightness(1.04);
+    transform: translateY(-1px);
+    box-shadow: 0 0 30px var(--fh-primary-bg);
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__btn.is-secondary {
+    background: rgba(255, 255, 255, 0.10);
+    border: 2px solid var(--fh-secondary-border);
+    color: var(--fh-secondary-text);
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__btn.is-secondary:hover {
+    border-color: var(--fh-text);
+    filter: brightness(1.02);
+  }
+
+  @media (max-width: 989px) {
+    .fulva-hero--{{ section.id }} .fulva-hero__btn.is-secondary {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: rgba(255, 255, 255, 0.62);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+    }
+  }
+
+  @keyframes fulva-hero-content-in-{{ section.id }} {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 10px, 0);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes fulva-hero-title-line-{{ section.id }} {
+    0% {
+      transform: scaleX(0);
+      opacity: 0.25;
+    }
+    100% {
+      transform: scaleX(1);
+      opacity: 0.95;
+    }
+  }
+
+  @keyframes fulva-hero-media-in-{{ section.id }} {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 14px, 0) scale(0.98);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @keyframes fulva-hero-float-{{ section.id }} {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, calc(var(--fh-float-amp) * -1), 0);
+    }
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__stats {
+    margin-top: clamp(12px, calc(var(--fh-height-used) * 0.02), 18px);
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 0;
+    max-width: 420px;
+    padding: 12px 14px;
+    background: rgba(0, 0, 0, 0.28);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__stat {
+    padding: 0 16px;
+    border-left: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__stat:first-child {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__stat-num {
+    font-family: var(--font-heading-family, inherit);
+    font-style: var(--font-heading-style, normal);
+    font-weight: var(--font-heading-weight, 700);
+    font-size: 22px;
+    line-height: 1.1;
+    color: var(--fh-text);
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__stat-label {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--fh-muted);
+    font-family: var(--font-body-family, inherit);
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__media {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    position: relative;
+    min-height: clamp(220px, calc(var(--fh-height-used) * 0.40), 340px);
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__image-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__image-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate3d(0, 0, 0);
+    transition: transform 220ms ease, filter 220ms ease;
+    will-change: transform;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__image-wrap.is-floating .fulva-hero__image-inner {
+    animation: fulva-hero-float-{{ section.id }} var(--fh-float-speed) ease-in-out infinite;
+  }
+
+  .fulva-hero--{{ section.id }}.is-interacting .fulva-hero__image-inner,
+  .fulva-hero--{{ section.id }}:hover .fulva-hero__image-inner {
+    transform: translate3d(0, calc(var(--fh-hover-raise) * -1), 0) scale(var(--fh-hover-scale));
+    filter: drop-shadow(0 18px 38px rgba(0, 0, 0, 0.25));
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__image {
+    width: 100%;
+    max-width: var(--fh-img-max);
+    height: auto;
+    max-height: calc(var(--fh-height-used) - 110px);
+    object-fit: contain;
+    transform: translateZ(0);
+    display: block;
+    margin: 0 auto;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__image-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 360px;
+    border-radius: 18px;
+    border: 1px dashed rgba(255, 255, 255, 0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    color: var(--fh-muted);
+  }
+
+
+  .fulva-hero--{{ section.id }} .fulva-hero__bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: clamp(10px, calc(var(--fh-height-used) * 0.016), 14px) 0 clamp(12px, calc(var(--fh-height-used) * 0.022), 20px);
+    gap: 16px;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__bottom-left {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__dot.is-active {
+    background: var(--fh-accent);
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__bottom-right {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 18px;
+    user-select: none;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__arrow {
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .fulva-hero--{{ section.id }} .fulva-hero__arrow svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    display: block;
+  }
+
+  @media (max-width: 989px) {
+    .fulva-hero--{{ section.id }} .fulva-hero__container {
+      padding: 0 var(--fh-px-mobile);
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__stage {
+      min-height: var(--fh-height-mobile-used);
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__grid {
+      min-height: var(--fh-height-mobile-used);
+      display: flex;
+      flex-direction: column;
+      padding: clamp(12px, calc(var(--fh-height-mobile-used) * 0.03), 16px) 0 8px;
+      gap: 14px;
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__actions {
+      display: {% if section.settings.show_buttons_mobile %}flex{% else %}none{% endif %};
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__text-group {
+      order: 1;
+      text-align: left;
+      margin: 0;
+      width: 100%;
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__media {
+      order: 2;
+      min-height: 220px;
+      justify-content: center;
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__bottom-group {
+      order: 3;
+      text-align: left;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__actions {
+      order: 1;
+      justify-content: flex-start;
+      margin-top: 14px;
+      margin-bottom: 10px;
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__stats {
+      order: 2;
+      margin-top: 0;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      justify-items: start;
+      text-align: left;
+      margin-left: 0;
+      margin-right: 0;
+      max-width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__sub {
+      margin-left: 0;
+      margin-right: 0;
+      font-size: var(--fh-sub-size-mobile-used);
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__title {
+      font-size: var(--fh-title-size-mobile-used);
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__accent {
+      font-size: var(--fh-accent-size-mobile-used);
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__title::after {
+      width: 44px;
+      margin-top: 8px;
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__image {
+      max-height: clamp(220px, 45vw, 340px);
+      max-width: var(--fh-img-max-mobile);
+      margin: 0 auto;
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__stat {
+      border-left: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 0 10px;
+      min-width: 0;
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__stat:first-child {
+      border-left: 0;
+      padding-left: 0;
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__stat:last-child {
+      padding-right: 0;
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__stat-num {
+      font-size: 18px;
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__stat-label {
+      font-size: 11px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__bottom {
+      grid-template-columns: 1fr auto;
+      justify-items: stretch;
+      padding: 12px 0 18px;
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__bottom-right {
+      display: inline-flex;
+      justify-content: flex-end;
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__arrow {
+      width: 40px;
+      height: 40px;
+      border-color: rgba(255, 255, 255, 0.42);
+      background: rgba(255, 255, 255, 0.10);
+      color: rgba(255, 255, 255, 0.92);
+    }
+  }
+
+  @media (min-width: 990px) {
+    .fulva-hero--{{ section.id }} .fulva-hero__actions {
+      display: {% if section.settings.show_buttons_desktop %}flex{% else %}none{% endif %};
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fulva-hero--{{ section.id }} .is-anim {
+      animation: none;
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__slide {
+      transition: none;
+      transform: none;
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__slide.is-active .fulva-hero__text-group,
+    .fulva-hero--{{ section.id }} .fulva-hero__slide.is-active .fulva-hero__bottom-group,
+    .fulva-hero--{{ section.id }} .fulva-hero__slide.is-active .fulva-hero__image-wrap,
+    .fulva-hero--{{ section.id }} .fulva-hero__image-wrap.is-floating .fulva-hero__image-inner {
+      animation: none;
+    }
+
+    .fulva-hero--{{ section.id }} .fulva-hero__title::after {
+      animation: none;
+    }
+
+  }
+
+  @media (max-width: 989px) {
+    .fulva-hero--{{ section.id }}.fulva-hero--hide-mobile {
+      display: none;
+    }
+  }
+
+  @media (min-width: 990px) {
+    .fulva-hero--{{ section.id }}.fulva-hero--hide-desktop {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.querySelector('.fulva-hero--{{ section.id }}[data-fulva-hero]');
+    if (!root) return;
+
+    const slides = Array.from(root.querySelectorAll('[data-fulva-hero-slide]'));
+    if (slides.length === 0) return;
+
+    const bgSlides = Array.from(root.querySelectorAll('[data-fulva-hero-bg]'));
+    const dots = Array.from(root.querySelectorAll('[data-fulva-hero-dot]'));
+    const prevBtn = root.querySelector('[data-fulva-hero-prev]');
+    const nextBtn = root.querySelector('[data-fulva-hero-next]');
+    const stage = root.querySelector('[data-fulva-hero-stage]');
+
+    let index = 0;
+    let timer = null;
+    let pointerId = null;
+    let startX = 0;
+    let startY = 0;
+    let touchTimer = null;
+
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const autoplayOn = {{ autoplay_on | json }};
+    const autoplayMs = {{ autoplay_ms | json }};
+    const pauseOnHover = {{ section.settings.pause_on_hover | json }};
+    const hoverSwitch = {{ section.settings.hover_switch_dots | json }};
+
+    const ensureActive = () => {
+      let activeIndex = slides.findIndex((s) => s.classList.contains('is-active'));
+      if (activeIndex < 0) {
+        slides[0].classList.add('is-active');
+        activeIndex = 0;
+      }
+      index = activeIndex;
+
+      if (bgSlides.length) {
+        bgSlides.forEach((b, i) => b.classList.toggle('is-active', i === index));
+      }
+
+      if (dots.length) {
+        dots.forEach((d, i) => {
+          const on = i === index;
+          d.classList.toggle('is-active', on);
+          d.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+      }
+    };
+
+    ensureActive();
+    if (slides.length > 1) root.classList.add('is-init');
+    if (slides.length <= 1) return;
+
+    const setActive = (next) => {
+      const count = slides.length;
+      const n = ((next % count) + count) % count;
+      if (n === index) return;
+
+      slides[index].classList.remove('is-active');
+      slides[n].classList.add('is-active');
+
+      if (bgSlides.length) {
+        bgSlides[index]?.classList.remove('is-active');
+        bgSlides[n]?.classList.add('is-active');
+      }
+
+      if (dots.length) {
+        dots[index]?.classList.remove('is-active');
+        dots[index]?.setAttribute('aria-selected', 'false');
+        dots[n]?.classList.add('is-active');
+        dots[n]?.setAttribute('aria-selected', 'true');
+      }
+
+      index = n;
+    };
+
+    const next = () => setActive(index + 1);
+    const prev = () => setActive(index - 1);
+
+    const handleSwipe = (dx, dy) => {
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+        dx < 0 ? next() : prev();
+        return true;
+      }
+      return false;
+    };
+
+    const stop = () => {
+      if (timer) window.clearInterval(timer);
+      timer = null;
+    };
+
+    const start = () => {
+      if (!autoplayOn || prefersReduced) return;
+      stop();
+      timer = window.setInterval(next, Math.max(1500, autoplayMs || 0));
+    };
+
+    dots.forEach((dot) => {
+      const i = Number(dot.getAttribute('data-index') || 0);
+      dot.addEventListener('click', () => {
+        stop();
+        setActive(i);
+        start();
+      });
+      if (hoverSwitch) {
+        dot.addEventListener('mouseenter', () => {
+          stop();
+          setActive(i);
+        });
+        dot.addEventListener('mouseleave', () => start());
+      }
+    });
+
+    prevBtn?.addEventListener('click', () => {
+      stop();
+      prev();
+      start();
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      stop();
+      next();
+      start();
+    });
+
+    const hasTouch = 'ontouchstart' in window || (navigator.maxTouchPoints || 0) > 0;
+
+    if (stage) {
+      let touchId = null;
+
+      if (!hasTouch) {
+        stage.addEventListener(
+          'pointerdown',
+          (e) => {
+            if (pointerId !== null) return;
+            pointerId = e.pointerId;
+            startX = e.clientX;
+            startY = e.clientY;
+            stage.setPointerCapture(pointerId);
+
+            if (!prefersReduced && {{ section.settings.touch_hover_effect | json }}) {
+              root.classList.add('is-interacting');
+              if (touchTimer) window.clearTimeout(touchTimer);
+              touchTimer = window.setTimeout(() => root.classList.remove('is-interacting'), 700);
+            }
+          },
+          { capture: true }
+        );
+
+        stage.addEventListener(
+          'pointerup',
+          (e) => {
+            if (pointerId !== e.pointerId) return;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+            pointerId = null;
+            stop();
+            handleSwipe(dx, dy);
+            start();
+          },
+          { capture: true }
+        );
+
+        stage.addEventListener(
+          'pointercancel',
+          (e) => {
+            if (pointerId !== e.pointerId) return;
+            pointerId = null;
+            start();
+          },
+          { capture: true }
+        );
+      }
+
+      stage.addEventListener(
+        'touchstart',
+        (e) => {
+          if (e.touches.length !== 1) return;
+          const t = e.touches[0];
+          touchId = t.identifier;
+          startX = t.clientX;
+          startY = t.clientY;
+        },
+        { passive: true, capture: true }
+      );
+
+      stage.addEventListener(
+        'touchmove',
+        (e) => {
+          if (touchId === null) return;
+          const t = Array.from(e.touches).find((x) => x.identifier === touchId);
+          if (!t) return;
+          const dx = t.clientX - startX;
+          const dy = t.clientY - startY;
+          if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) e.preventDefault();
+        },
+        { passive: false, capture: true }
+      );
+
+      stage.addEventListener(
+        'touchend',
+        (e) => {
+          if (touchId === null) return;
+          const t = Array.from(e.changedTouches).find((x) => x.identifier === touchId);
+          if (!t) return;
+          const dx = t.clientX - startX;
+          const dy = t.clientY - startY;
+          touchId = null;
+          stop();
+          handleSwipe(dx, dy);
+          start();
+        },
+        { passive: true, capture: true }
+      );
+
+      stage.addEventListener(
+        'touchcancel',
+        () => {
+          touchId = null;
+          start();
+        },
+        { passive: true, capture: true }
+      );
+    }
+
+    if (pauseOnHover) {
+      root.addEventListener('mouseenter', () => stop());
+      root.addEventListener('mouseleave', () => start());
+    }
+
+    start();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Fulva hero slider",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "aria_label", "label": "ARIA label", "default": "Hero banner" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero image (halwa box) - fallback" },
+    { "type": "header", "content": "Fallback background (optional)" },
+    { "type": "image_picker", "id": "background_image_desktop", "label": "Background image (desktop fallback)" },
+    { "type": "image_picker", "id": "background_image_mobile", "label": "Background image (mobile fallback)" },
+    { "type": "image_picker", "id": "background_image", "label": "Background image (single fallback)" },
+    { "type": "color", "id": "background_fallback_color", "label": "Background color (fallback)", "default": "#000000" },
+    {
+      "type": "select",
+      "id": "background_fit",
+      "label": "Background fit (fallback)",
+      "default": "cover",
+      "options": [
+        { "value": "cover", "label": "Fill (crop)" },
+        { "value": "contain", "label": "Fit (no crop)" }
+      ]
+    },
+    { "type": "text", "id": "empty_state_text", "label": "Empty state text", "default": "Add slide blocks to show this hero." },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "height_desktop", "label": "Height desktop (px)", "min": 400, "max": 1400, "step": 10, "default": 980 },
+    { "type": "range", "id": "height_mobile", "label": "Height mobile (px)", "min": 520, "max": 900, "step": 10, "default": 600 },
+    { "type": "range", "id": "padding_x_desktop", "label": "Padding X desktop (px)", "min": 0, "max": 100, "step": 2, "default": 80 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding X mobile (px)", "min": 0, "max": 30, "step": 1, "default": 16 },
+    { "type": "range", "id": "max_width", "label": "Max width (0 = full width)", "min": 0, "max": 1800, "step": 20, "default": 0 },
+    { "type": "range", "id": "image_max_width_desktop", "label": "Hero image max width desktop (px)", "min": 300, "max": 900, "step": 10, "default": 820 },
+    { "type": "range", "id": "image_max_width_mobile", "label": "Hero image max width mobile (px)", "min": 220, "max": 520, "step": 10, "default": 520 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#FFFFFF" },
+    { "type": "color", "id": "muted_text_color", "label": "Muted text", "default": "#FFFFFF" },
+    { "type": "range", "id": "muted_text_opacity", "label": "Muted text opacity (%)", "min": 0, "max": 100, "step": 1, "default": 60 },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#D4A843" },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size (px)", "min": 10, "max": 14, "step": 1, "default": 11 },
+    { "type": "range", "id": "title_size_desktop", "label": "Title size desktop (px)", "min": 40, "max": 80, "step": 1, "default": 68 },
+    { "type": "range", "id": "title_size_mobile", "label": "Title size mobile (px)", "min": 30, "max": 56, "step": 1, "default": 44 },
+    { "type": "range", "id": "accent_size_desktop", "label": "Accent size desktop (px)", "min": 40, "max": 90, "step": 1, "default": 80 },
+    { "type": "range", "id": "accent_size_mobile", "label": "Accent size mobile (px)", "min": 34, "max": 72, "step": 1, "default": 56 },
+    { "type": "range", "id": "subtext_size", "label": "Subtext size (px)", "min": 12, "max": 18, "step": 1, "default": 15 },
+
+    { "type": "header", "content": "Buttons" },
+    { "type": "checkbox", "id": "show_buttons_desktop", "label": "Show buttons (desktop)", "default": true },
+    { "type": "checkbox", "id": "show_buttons_mobile", "label": "Show buttons (mobile)", "default": true },
+    { "type": "range", "id": "button_padding_y", "label": "Button padding Y (px)", "min": 10, "max": 18, "step": 1, "default": 13 },
+    { "type": "range", "id": "button_padding_x", "label": "Button padding X (px)", "min": 16, "max": 44, "step": 1, "default": 28 },
+    { "type": "color", "id": "primary_bg", "label": "Primary background", "default": "#D4A843" },
+    { "type": "color", "id": "primary_text", "label": "Primary text", "default": "#1A1A1A" },
+    { "type": "color", "id": "secondary_border", "label": "Secondary border", "default": "#FFFFFF" },
+    { "type": "range", "id": "secondary_border_opacity", "label": "Secondary border opacity (%)", "min": 0, "max": 100, "step": 1, "default": 30 },
+    { "type": "color", "id": "secondary_text", "label": "Secondary text", "default": "#FFFFFF" },
+
+    { "type": "header", "content": "Animation" },
+    { "type": "checkbox", "id": "enable_float", "label": "Float hero image", "default": true },
+    { "type": "range", "id": "float_amount", "label": "Float amount (px)", "min": 0, "max": 30, "step": 1, "default": 10 },
+    { "type": "range", "id": "float_duration", "label": "Float duration (seconds)", "min": 3, "max": 12, "step": 1, "default": 7 },
+
+    { "type": "header", "content": "Hover & touch" },
+    { "type": "checkbox", "id": "touch_hover_effect", "label": "Touch effect on swipe/tap", "default": true },
+    { "type": "range", "id": "hover_scale", "label": "Hover scale (%)", "min": 100, "max": 110, "step": 1, "default": 102 },
+    { "type": "range", "id": "hover_raise", "label": "Hover raise (px)", "min": 0, "max": 16, "step": 1, "default": 6 },
+
+    { "type": "header", "content": "Slider" },
+    { "type": "range", "id": "transition_duration_ms", "label": "Transition duration (ms)", "min": 100, "max": 1100, "step": 10, "default": 400 },
+    { "type": "checkbox", "id": "enable_autoplay", "label": "Autoplay", "default": true },
+    { "type": "range", "id": "autoplay_interval", "label": "Autoplay interval (seconds)", "min": 2, "max": 20, "step": 1, "default": 6 },
+    { "type": "checkbox", "id": "pause_on_hover", "label": "Pause on hover", "default": true },
+    { "type": "checkbox", "id": "hover_switch_dots", "label": "Hover dots to switch", "default": true },
+
+    { "type": "header", "content": "Bottom controls" },
+    { "type": "checkbox", "id": "show_bottom_controls", "label": "Show bottom controls", "default": true },
+
+    { "type": "header", "content": "Visibility" },
+    { "type": "checkbox", "id": "hide_on_mobile", "label": "Hide on mobile", "default": false },
+    { "type": "checkbox", "id": "hide_on_desktop", "label": "Hide on desktop", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "limit": 6,
+      "settings": [
+        { "type": "header", "content": "Background" },
+        { "type": "image_picker", "id": "bg_image_desktop", "label": "Background image (desktop)" },
+        { "type": "image_picker", "id": "bg_image_mobile", "label": "Background image (mobile)" },
+        { "type": "image_picker", "id": "bg_image", "label": "Background image (single / fallback)" },
+        { "type": "color", "id": "bg_fallback_color", "label": "Background color (fallback)", "default": "#000000" },
+        {
+          "type": "select",
+          "id": "bg_fit",
+          "label": "Background fit",
+          "default": "cover",
+          "options": [
+            { "value": "cover", "label": "Fill (crop)" },
+            { "value": "contain", "label": "Fit (no crop)" }
+          ]
+        },
+        { "type": "text", "id": "eyebrow_text", "label": "Eyebrow", "default": "AUTHENTIC KOZHIKODEN CRAFT" },
+        { "type": "inline_richtext", "id": "title_text", "label": "Title", "default": "Taste the tradition of" },
+        { "type": "inline_richtext", "id": "accent_text", "label": "Accent line", "default": "<em>Calicut</em>" },
+        { "type": "richtext", "id": "subtext", "label": "Subtext", "default": "<p>Freshly made halwa, crafted with care and shipped across India.</p>" },
+        { "type": "image_picker", "id": "image", "label": "Hero image (halwa box)" },
+        { "type": "text", "id": "placeholder_text", "label": "Placeholder text", "default": "Add a hero image in the editor" },
+        { "type": "text", "id": "primary_label", "label": "Primary button label", "default": "Buy Now" },
+        { "type": "url", "id": "primary_url", "label": "Primary button link" },
+        { "type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "Our Story" },
+        { "type": "url", "id": "secondary_url", "label": "Secondary button link" },
+        { "type": "header", "content": "Stats" },
+        { "type": "text", "id": "stat_1_number", "label": "Stat 1 number", "default": "50K+" },
+        { "type": "text", "id": "stat_1_label", "label": "Stat 1 label", "default": "Happy customers" },
+        { "type": "text", "id": "stat_2_number", "label": "Stat 2 number", "default": "12" },
+        { "type": "text", "id": "stat_2_label", "label": "Stat 2 label", "default": "Varieties" },
+        { "type": "text", "id": "stat_3_number", "label": "Stat 3 number", "default": "0" },
+        { "type": "text", "id": "stat_3_label", "label": "Stat 3 label", "default": "Preservatives" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fulva hero slider",
+      "blocks": [
+        { "type": "slide" },
+        {
+          "type": "slide",
+          "settings": {
+            "title_text": "Discover our",
+            "accent_text": "<em>Signature Box</em>",
+            "primary_label": "Shop Now"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

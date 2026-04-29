@@ -1,0 +1,537 @@
+{% liquid
+  assign border_alpha = section.settings.border_opacity | times: 0.01
+  assign card_border_alpha = section.settings.card_border_opacity | times: 0.01
+  assign card_shadow_alpha = section.settings.card_shadow_opacity | times: 0.01
+
+  assign category_blocks = section.blocks | where: 'type', 'category'
+%}
+
+<fulva-categories
+  class="fulva-categories fulva-categories--{{ section.id }}{% if section.settings.hide_on_mobile %} fulva-categories--hide-mobile{% endif %}{% if section.settings.hide_on_desktop %} fulva-categories--hide-desktop{% endif %}"
+  aria-label="{{ section.settings.aria_label | escape }}"
+  style="
+    --fc-bg: {{ section.settings.background }};
+    --fc-text: {{ section.settings.text_color }};
+    --fc-accent: {{ section.settings.accent_color }};
+    --fc-border: {{ section.settings.border_color | color_modify: 'alpha', border_alpha }};
+    --fc-card-bg: {{ section.settings.card_background }};
+    --fc-card-border: {{ section.settings.card_border_color | color_modify: 'alpha', card_border_alpha }};
+    --fc-card-title: {{ section.settings.card_title_color }};
+    --fc-shadow: {{ section.settings.shadow_color | color_modify: 'alpha', card_shadow_alpha }};
+    --fc-max: {% if section.settings.max_width > 0 %}{{ section.settings.max_width }}px{% else %}100%{% endif %};
+    --fc-px: {{ section.settings.padding_x_desktop }}px;
+    --fc-py: {{ section.settings.padding_y_desktop }}px;
+    --fc-px-m: {{ section.settings.padding_x_mobile }}px;
+    --fc-py-m: {{ section.settings.padding_y_mobile }}px;
+    --fc-gap: {{ section.settings.gap }}px;
+    --fc-card-w: {{ section.settings.card_width_desktop }}px;
+    --fc-card-h: {{ section.settings.card_height_desktop }}px;
+    --fc-thumb: {{ section.settings.thumb_size_desktop }}px;
+    --fc-card-w-m: {{ section.settings.card_width_mobile }}px;
+    --fc-card-h-m: {{ section.settings.card_height_mobile }}px;
+    --fc-thumb-m: {{ section.settings.thumb_size_mobile }}px;
+    --fc-radius: {{ section.settings.radius }}px;
+  "
+>
+  <div class="fulva-categories__inner">
+    <div class="fulva-categories__label">
+      {% if section.settings.heading != blank %}
+        <h2 class="fulva-categories__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.eyebrow != blank %}
+        <div class="fulva-categories__eyebrow">{{ section.settings.eyebrow | escape }}</div>
+      {% endif %}
+
+      {% if section.settings.show_arrows %}
+        <div class="fulva-categories__nav">
+          <button class="fulva-categories__arrow" type="button" aria-label="Scroll left" data-fc-prev>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M14.7 5.3a1 1 0 0 1 0 1.4L9.4 12l5.3 5.3a1 1 0 1 1-1.4 1.4l-6-6a1 1 0 0 1 0-1.4l6-6a1 1 0 0 1 1.4 0z"></path>
+            </svg>
+          </button>
+          <button class="fulva-categories__arrow" type="button" aria-label="Scroll right" data-fc-next>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M9.3 18.7a1 1 0 0 1 0-1.4L14.6 12 9.3 6.7a1 1 0 1 1 1.4-1.4l6 6a1 1 0 0 1 0 1.4l-6 6a1 1 0 0 1-1.4 0z"></path>
+            </svg>
+          </button>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="fulva-categories__track" role="list" aria-label="{{ section.settings.aria_label | escape }}" data-fc-track>
+      {% for block in category_blocks %}
+        {% liquid
+          assign col = block.settings.collection
+          assign url = block.settings.url
+          if col != blank
+            assign url = col.url
+          endif
+
+          assign label = block.settings.label
+          if label == blank and col != blank
+            assign label = col.title
+          endif
+          if label == blank
+            assign label = 'Category'
+          endif
+
+          assign img = block.settings.image
+          if img == blank and col != blank
+            assign img = col.image | default: col.featured_image
+          endif
+
+          assign placeholder_letter = label | strip_html | strip | slice: 0, 1 | upcase
+        %}
+
+        {% if url != blank %}
+          <a class="fulva-categories__card" href="{{ url }}" role="listitem" {{ block.shopify_attributes }}>
+        {% else %}
+          <div class="fulva-categories__card" role="listitem" {{ block.shopify_attributes }}>
+        {% endif %}
+            <div class="fulva-categories__card-name">{{ label | escape }}</div>
+            <div class="fulva-categories__thumb" aria-hidden="{% if img != blank %}false{% else %}true{% endif %}">
+              {% if img != blank %}
+                <img
+                  class="fulva-categories__thumb-img"
+                  src="{{ img | image_url: width: 240 }}"
+                  srcset="
+                    {{ img | image_url: width: 120 }} 120w,
+                    {{ img | image_url: width: 180 }} 180w,
+                    {{ img | image_url: width: 240 }} 240w,
+                    {{ img | image_url: width: 320 }} 320w
+                  "
+                  sizes="(max-width: 749px) {{ section.settings.thumb_size_mobile }}px, {{ section.settings.thumb_size_desktop }}px"
+                  width="{{ img.width }}"
+                  height="{{ img.height }}"
+                  alt="{{ label | escape }}"
+                  loading="lazy"
+                  decoding="async"
+                >
+              {% else %}
+                <div class="fulva-categories__thumb-placeholder" aria-hidden="true">{{ placeholder_letter }}</div>
+              {% endif %}
+            </div>
+        {% if url != blank %}
+          </a>
+        {% else %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</fulva-categories>
+
+<style>
+  .fulva-categories--{{ section.id }} {
+    display: block;
+    background: var(--fc-bg);
+    border-top: 1px dashed var(--fc-border);
+    border-bottom: 1px dashed var(--fc-border);
+    color: var(--fc-text);
+    font-family: var(--font-body-family, inherit);
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__inner {
+    max-width: var(--fc-max);
+    margin: 0 auto;
+    padding: var(--fc-py) 0;
+    display: flex;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__label {
+    flex: 0 0 auto;
+    min-width: 170px;
+    padding-left: var(--fc-px);
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__heading {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.15;
+    font-weight: 800;
+    color: var(--fc-text);
+    letter-spacing: -0.01em;
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__heading em {
+    font-family: var(--font-heading-family, inherit);
+    font-style: normal;
+    font-weight: 800;
+    color: var(--fc-card-title);
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--fc-accent);
+    font-weight: 700;
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 2px;
+    background: var(--fc-accent);
+    flex: 0 0 auto;
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__nav {
+    display: flex;
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__arrow {
+    width: 32px;
+    height: 32px;
+    border-radius: 99px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: #FFFFFF;
+    color: var(--fc-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__arrow:hover {
+    border-color: var(--fc-accent);
+    color: var(--fc-accent);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__arrow:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    border-color: rgba(0, 0, 0, 0.1);
+    color: var(--fc-text);
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__arrow svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__track {
+    flex: 1 1 auto;
+    display: flex;
+    gap: var(--fc-gap);
+    overflow-x: auto;
+    padding: 8px var(--fc-px);
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: var(--fc-px);
+    overscroll-behavior-x: contain;
+    cursor: grab;
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__track.is-dragging {
+    cursor: grabbing;
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__card {
+    flex: 0 0 auto;
+    width: var(--fc-card-w);
+    height: var(--fc-card-h);
+    border-radius: var(--fc-radius);
+    background: var(--fc-card-bg);
+    border: 1px solid var(--fc-card-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    scroll-snap-align: start;
+    transform: translateZ(0);
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__card:focus-visible {
+    outline: 2px solid var(--fc-accent);
+    outline-offset: 3px;
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 26px var(--fc-shadow);
+    border-color: var(--fc-accent);
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__card-name {
+    padding: 10px 10px 6px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--fc-card-title);
+    text-align: center;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__thumb {
+    width: var(--fc-thumb);
+    height: var(--fc-thumb);
+    border-radius: calc(var(--fc-radius) - 6px);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.03);
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translateZ(0);
+    transition: transform 260ms ease;
+    display: block;
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__card:hover .fulva-categories__thumb-img {
+    transform: scale(1.06);
+  }
+
+  .fulva-categories--{{ section.id }} .fulva-categories__thumb-placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    font-size: 34px;
+    font-weight: 800;
+    color: rgba(0, 0, 0, 0.45);
+    background: linear-gradient(145deg, #f8f5ef, #f0ebe0);
+  }
+
+  @media (max-width: 749px) {
+    .fulva-categories--{{ section.id }} .fulva-categories__inner {
+      padding: var(--fc-py-m) 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 14px;
+    }
+
+    .fulva-categories--{{ section.id }} .fulva-categories__label {
+      min-width: 0;
+      padding-left: var(--fc-px-m);
+      padding-right: var(--fc-px-m);
+    }
+
+    .fulva-categories--{{ section.id }} .fulva-categories__track {
+      scroll-padding-left: var(--fc-px-m);
+      padding: 8px var(--fc-px-m);
+    }
+
+    .fulva-categories--{{ section.id }} .fulva-categories__nav {
+      display: none; /* Hide desktop arrows on mobile, they use swipe */
+    }
+
+    .fulva-categories--{{ section.id }} .fulva-categories__card {
+      width: var(--fc-card-w-m);
+      height: var(--fc-card-h-m);
+    }
+
+    .fulva-categories--{{ section.id }} .fulva-categories__thumb {
+      width: var(--fc-thumb-m);
+      height: var(--fc-thumb-m);
+    }
+  }
+
+  @media (max-width: 749px) {
+    .fulva-categories--{{ section.id }}.fulva-categories--hide-mobile {
+      display: none;
+    }
+  }
+
+  @media (min-width: 750px) {
+    .fulva-categories--{{ section.id }}.fulva-categories--hide-desktop {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  if (!customElements.get('fulva-categories')) {
+    customElements.define('fulva-categories', class extends HTMLElement {
+      connectedCallback() {
+        this.track = this.querySelector('[data-fc-track]');
+        this.prevBtn = this.querySelector('[data-fc-prev]');
+        this.nextBtn = this.querySelector('[data-fc-next]');
+        
+        if (!this.track) return;
+
+        this.updateArrowStates = this.updateArrowStates.bind(this);
+        
+        if (this.prevBtn && this.nextBtn) {
+          this.prevBtn.addEventListener('click', () => {
+            this.track.scrollBy({ left: -this.getScrollAmount() * 2, behavior: 'smooth' });
+          });
+          this.nextBtn.addEventListener('click', () => {
+            this.track.scrollBy({ left: this.getScrollAmount() * 2, behavior: 'smooth' });
+          });
+          this.track.addEventListener('scroll', this.updateArrowStates, { passive: true });
+          setTimeout(this.updateArrowStates, 100);
+          window.addEventListener('resize', this.updateArrowStates);
+        }
+
+        // Desktop Mouse Drag to Scroll
+        this.isDown = false;
+        this.startX = 0;
+        this.scrollLeft = 0;
+
+        this.track.addEventListener('mousedown', (e) => {
+          if (e.button !== 0) return; // Only left click
+          this.isDown = true;
+          this.track.classList.add('is-dragging');
+          this.startX = e.pageX - this.track.offsetLeft;
+          this.scrollLeft = this.track.scrollLeft;
+          this.track.style.scrollSnapType = 'none';
+        });
+
+        this.track.addEventListener('mouseleave', () => {
+          this.isDown = false;
+          this.track.classList.remove('is-dragging');
+          this.track.style.scrollSnapType = '';
+        });
+
+        this.track.addEventListener('mouseup', () => {
+          this.isDown = false;
+          this.track.classList.remove('is-dragging');
+          this.track.style.scrollSnapType = '';
+        });
+
+        this.track.addEventListener('mousemove', (e) => {
+          if (!this.isDown) return;
+          e.preventDefault();
+          const x = e.pageX - this.track.offsetLeft;
+          const walk = (x - this.startX) * 2; // Scroll speed multiplier
+          this.track.scrollLeft = this.scrollLeft - walk;
+        });
+
+        // Prevent links from triggering when dragging
+        const cards = this.track.querySelectorAll('.fulva-categories__card');
+        cards.forEach(card => {
+          card.addEventListener('click', (e) => {
+            if (this.track.classList.contains('is-dragging')) {
+              e.preventDefault();
+            }
+          });
+        });
+      }
+
+      getScrollAmount() {
+        const card = this.track.querySelector('.fulva-categories__card');
+        if (!card) return 200;
+        const gap = parseInt(window.getComputedStyle(this.track).gap) || 0;
+        return card.offsetWidth + gap;
+      }
+
+      updateArrowStates() {
+        if (this.prevBtn) this.prevBtn.disabled = this.track.scrollLeft <= 10;
+        if (this.nextBtn) {
+          const maxScroll = this.track.scrollWidth - this.track.clientWidth;
+          this.nextBtn.disabled = this.track.scrollLeft >= maxScroll - 10;
+        }
+      }
+
+      disconnectedCallback() {
+        window.removeEventListener('resize', this.updateArrowStates);
+      }
+    });
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Fulva categories",
+  "settings": [
+    { "type": "text", "id": "aria_label", "label": "ARIA label", "default": "Browse categories" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "All <em>Categories</em>" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Browse by type" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show navigation arrows (Desktop)", "default": true },
+    { "type": "range", "id": "max_width", "label": "Max width (0 = full width)", "min": 0, "max": 1800, "step": 20, "default": 0 },
+    { "type": "range", "id": "padding_x_desktop", "label": "Padding X desktop (px)", "min": 0, "max": 80, "step": 2, "default": 64 },
+    { "type": "range", "id": "padding_y_desktop", "label": "Padding Y desktop (px)", "min": 0, "max": 60, "step": 2, "default": 30 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding X mobile (px)", "min": 0, "max": 30, "step": 1, "default": 16 },
+    { "type": "range", "id": "padding_y_mobile", "label": "Padding Y mobile (px)", "min": 0, "max": 40, "step": 1, "default": 16 },
+    { "type": "range", "id": "gap", "label": "Card gap (px)", "min": 8, "max": 30, "step": 1, "default": 14 },
+    { "type": "range", "id": "radius", "label": "Card radius (px)", "min": 0, "max": 20, "step": 1, "default": 12 },
+
+    { "type": "header", "content": "Card sizes" },
+    { "type": "range", "id": "card_width_desktop", "label": "Card width desktop (px)", "min": 90, "max": 200, "step": 2, "default": 130 },
+    { "type": "range", "id": "card_height_desktop", "label": "Card height desktop (px)", "min": 110, "max": 220, "step": 2, "default": 146 },
+    { "type": "range", "id": "thumb_size_desktop", "label": "Thumbnail size desktop (px)", "min": 70, "max": 150, "step": 2, "default": 106 },
+    { "type": "range", "id": "card_width_mobile", "label": "Card width mobile (px)", "min": 84, "max": 170, "step": 2, "default": 112 },
+    { "type": "range", "id": "card_height_mobile", "label": "Card height mobile (px)", "min": 100, "max": 200, "step": 2, "default": 132 },
+    { "type": "range", "id": "thumb_size_mobile", "label": "Thumbnail size mobile (px)", "min": 64, "max": 130, "step": 2, "default": 92 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "background", "label": "Section background", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#1A1A1A" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#D4A843" },
+    { "type": "color", "id": "border_color", "label": "Section border", "default": "#000000" },
+    { "type": "range", "id": "border_opacity", "label": "Section border opacity (%)", "min": 0, "max": 40, "step": 2, "default": 10 },
+
+    { "type": "color", "id": "card_background", "label": "Card background", "default": "#F6F6F6" },
+    { "type": "color", "id": "card_border_color", "label": "Card border", "default": "#000000" },
+    { "type": "range", "id": "card_border_opacity", "label": "Card border opacity (%)", "min": 0, "max": 30, "step": 1, "default": 5 },
+    { "type": "color", "id": "card_title_color", "label": "Card title color", "default": "#1B5E2F" },
+    { "type": "color", "id": "shadow_color", "label": "Hover shadow color", "default": "#000000" },
+    { "type": "range", "id": "card_shadow_opacity", "label": "Hover shadow opacity (%)", "min": 0, "max": 20, "step": 1, "default": 7 },
+
+    { "type": "header", "content": "Visibility" },
+    { "type": "checkbox", "id": "hide_on_mobile", "label": "Hide on mobile", "default": false },
+    { "type": "checkbox", "id": "hide_on_desktop", "label": "Hide on desktop", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "limit": 12,
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "label", "label": "Custom label (optional)" },
+        { "type": "image_picker", "id": "image", "label": "Custom image (optional)" },
+        { "type": "url", "id": "url", "label": "Custom link (optional)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fulva categories",
+      "blocks": [
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" }
+      ]
+    }
+  ]
+}
+{% endschema %}

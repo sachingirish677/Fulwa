@@ -1,0 +1,816 @@
+{% liquid
+  assign overlay_top = section.settings.overlay_top_opacity | times: 0.01
+  assign overlay_mid = section.settings.overlay_mid_opacity | times: 0.01
+  assign overlay_bottom = section.settings.overlay_bottom_opacity | times: 0.01
+  assign muted_alpha = section.settings.muted_text_opacity | times: 0.01
+
+  assign track_blocks = section.blocks | where: 'type', 'product'
+%}
+
+<fulva-seasonal
+  class="fulva-seasonal fulva-seasonal--{{ section.id }}{% if section.settings.hide_on_mobile %} fulva-seasonal--hide-mobile{% endif %}{% if section.settings.hide_on_desktop %} fulva-seasonal--hide-desktop{% endif %}"
+  aria-label="{{ section.settings.aria_label | escape }}"
+  style="
+    --fs-max: {% if section.settings.max_width > 0 %}{{ section.settings.max_width }}px{% else %}100%{% endif %};
+    --fs-px: {{ section.settings.padding_x_desktop }}px;
+    --fs-py: {{ section.settings.padding_y_desktop }}px;
+    --fs-px-m: {{ section.settings.padding_x_mobile }}px;
+    --fs-py-m: {{ section.settings.padding_y_mobile }}px;
+    --fs-h: {{ section.settings.height_desktop }}px;
+    --fs-h-m: {{ section.settings.height_mobile }}px;
+    --fs-accent: {{ section.settings.accent_color }};
+    --fs-text: {{ section.settings.text_color }};
+    --fs-muted: {{ section.settings.muted_text_color | color_modify: 'alpha', muted_alpha }};
+    --fs-btn-primary-bg: {{ section.settings.primary_button_bg }};
+    --fs-btn-primary-text: {{ section.settings.primary_button_text }};
+    --fs-btn-secondary-bg: {{ section.settings.secondary_button_bg }};
+    --fs-btn-secondary-text: {{ section.settings.secondary_button_text }};
+    --fs-card-bg: {{ section.settings.card_bg }};
+    --fs-price: {{ section.settings.price_color }};
+    --fs-cart-bg: {{ section.settings.cart_bg }};
+    --fs-cart-text: {{ section.settings.cart_text }};
+    --fs-card-radius: {{ section.settings.card_radius }}px;
+    --fs-gap: {{ section.settings.card_gap }}px;
+    --fs-card-w: {{ section.settings.card_width_desktop }}px;
+    --fs-card-w-m: {{ section.settings.card_width_mobile }}px;
+    --fs-offset: max(var(--fs-px), calc((100% - {% if section.settings.max_width > 0 %}{{ section.settings.max_width }}px{% else %}100%{% endif %}) / 2 + var(--fs-px)));
+    --fs-offset-m: max(var(--fs-px-m), calc((100% - {% if section.settings.max_width > 0 %}{{ section.settings.max_width }}px{% else %}100%{% endif %}) / 2 + var(--fs-px-m)));
+  "
+>
+  <div class="fulva-seasonal__bg{% if section.settings.bg_image_desktop == blank and section.settings.bg_image_mobile == blank %} is-fallback{% endif %}">
+    {% if section.settings.bg_image_desktop != blank or section.settings.bg_image_mobile != blank %}
+      <picture>
+        {% if section.settings.bg_image_mobile != blank %}
+          <source media="(max-width: 749px)" srcset="{{ section.settings.bg_image_mobile | image_url: width: 1200 }}">
+        {% endif %}
+        {% if section.settings.bg_image_desktop != blank %}
+          <img
+            src="{{ section.settings.bg_image_desktop | image_url: width: 2200 }}"
+            alt="{{ section.settings.bg_image_desktop.alt | escape }}"
+            loading="lazy"
+            decoding="async"
+          >
+        {% elsif section.settings.bg_image_mobile != blank %}
+          <img
+            src="{{ section.settings.bg_image_mobile | image_url: width: 1200 }}"
+            alt="{{ section.settings.bg_image_mobile.alt | escape }}"
+            loading="lazy"
+            decoding="async"
+          >
+        {% endif %}
+      </picture>
+    {% endif %}
+  </div>
+
+  <div class="fulva-seasonal__overlay" style="--fs-o1: {{ overlay_top }}; --fs-o2: {{ overlay_mid }}; --fs-o3: {{ overlay_bottom }};"></div>
+
+  <div class="fulva-seasonal__inner">
+    <div class="fulva-seasonal__header">
+      {% if section.settings.eyebrow != blank %}
+        <div class="fulva-seasonal__eyebrow">{{ section.settings.eyebrow | escape }}</div>
+      {% endif %}
+
+      {% if section.settings.title_before != blank or section.settings.title_accent != blank %}
+        <h2 class="fulva-seasonal__title">
+          {% if section.settings.title_before != blank %}
+            {{ section.settings.title_before }}
+          {% endif %}
+          {% if section.settings.title_accent != blank %}
+            <span class="fulva-seasonal__title-accent">{{ section.settings.title_accent }}</span>
+          {% endif %}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.subtitle != blank %}
+        <div class="fulva-seasonal__sub">{{ section.settings.subtitle }}</div>
+      {% endif %}
+
+      {% if section.settings.primary_button_label != blank or section.settings.secondary_button_label != blank %}
+        <div class="fulva-seasonal__btns">
+          {% if section.settings.primary_button_label != blank and section.settings.primary_button_link != blank %}
+            <a class="fulva-seasonal__btn is-primary" href="{{ section.settings.primary_button_link }}">{{ section.settings.primary_button_label | escape }}</a>
+          {% endif %}
+          {% if section.settings.secondary_button_label != blank and section.settings.secondary_button_link != blank %}
+            <a class="fulva-seasonal__btn is-secondary" href="{{ section.settings.secondary_button_link }}">{{ section.settings.secondary_button_label | escape }}</a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="fulva-seasonal__cards-wrap">
+      {% if section.settings.show_arrows and track_blocks.size > 0 %}
+        <button class="fulva-seasonal__nav is-prev" type="button" aria-label="Scroll left" data-fs-prev>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M14.7 5.3a1 1 0 0 1 0 1.4L9.4 12l5.3 5.3a1 1 0 1 1-1.4 1.4l-6-6a1 1 0 0 1 0-1.4l6-6a1 1 0 0 1 1.4 0z"></path>
+          </svg>
+        </button>
+      {% endif %}
+
+      <div class="fulva-seasonal__cards" role="list" data-fs-track>
+        {% for block in track_blocks %}
+          {% liquid
+            assign product = block.settings.product
+            assign variant = nil
+            if product != blank
+              assign variant = product.selected_or_first_available_variant
+            endif
+
+            assign badge_text = block.settings.badge_text
+            assign show_custom_badge = block.settings.show_custom_badge
+            assign show_percent_badge = false
+            assign percent_off = 0
+            if product != blank and variant != blank and variant.compare_at_price > variant.price
+              assign diff = variant.compare_at_price | minus: variant.price
+              assign percent_off = diff | times: 100.0 | divided_by: variant.compare_at_price | round
+              assign show_percent_badge = true
+            endif
+          %}
+
+          <div class="fulva-seasonal__card" role="listitem" {{ block.shopify_attributes }}>
+            <div class="fulva-seasonal__card-media">
+              {% if show_percent_badge %}
+                <div class="fulva-seasonal__badge">-{{ percent_off }}%</div>
+              {% elsif show_custom_badge and badge_text != blank %}
+                <div class="fulva-seasonal__badge">{{ badge_text | escape }}</div>
+              {% endif %}
+
+              {% if product != blank and product.featured_image != blank %}
+                <img
+                  class="fulva-seasonal__card-img"
+                  src="{{ product.featured_image | image_url: width: 900 }}"
+                  srcset="
+                    {{ product.featured_image | image_url: width: 360 }} 360w,
+                    {{ product.featured_image | image_url: width: 540 }} 540w,
+                    {{ product.featured_image | image_url: width: 720 }} 720w,
+                    {{ product.featured_image | image_url: width: 900 }} 900w
+                  "
+                  sizes="(max-width: 749px) {{ section.settings.card_width_mobile }}px, {{ section.settings.card_width_desktop }}px"
+                  width="{{ product.featured_image.width }}"
+                  height="{{ product.featured_image.height }}"
+                  alt="{{ product.title | escape }}"
+                  loading="lazy"
+                  decoding="async"
+                >
+              {% else %}
+                <div class="fulva-seasonal__ph" aria-hidden="true">✦</div>
+              {% endif %}
+            </div>
+
+            <div class="fulva-seasonal__card-body">
+              <div class="fulva-seasonal__name">
+                {% if product != blank %}
+                  {{ product.title | escape }}
+                {% else %}
+                  {{ block.settings.fallback_title | escape }}
+                {% endif %}
+              </div>
+
+              {% if block.settings.subtitle != blank %}
+                <div class="fulva-seasonal__meta">{{ block.settings.subtitle | escape }}</div>
+              {% endif %}
+
+              <div class="fulva-seasonal__footer">
+                <div class="fulva-seasonal__price">
+                  {% if variant != blank %}
+                    <span class="fulva-seasonal__price-current">{{ variant.price | money }}</span>
+                    {% if variant.compare_at_price > variant.price %}
+                      <span class="fulva-seasonal__price-compare">{{ variant.compare_at_price | money }}</span>
+                    {% endif %}
+                  {% else %}
+                    <span class="fulva-seasonal__price-current">{{ section.settings.fallback_price | escape }}</span>
+                  {% endif %}
+                </div>
+
+                {% if product != blank and variant != blank %}
+                  {% form 'product', product, class: 'fulva-seasonal__form' %}
+                    <input type="hidden" name="id" value="{{ variant.id }}">
+                    <button class="fulva-seasonal__cart" type="submit"{% unless variant.available %} disabled{% endunless %}>
+                      <span class="fulva-seasonal__cart-plus">+</span>
+                      <span>{{ section.settings.cart_label | escape }}</span>
+                    </button>
+                  {% endform %}
+                {% else %}
+                  <div class="fulva-seasonal__cart is-disabled">
+                    <span class="fulva-seasonal__cart-plus">+</span>
+                    <span>{{ section.settings.cart_label | escape }}</span>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      {% if section.settings.show_arrows and track_blocks.size > 0 %}
+        <button class="fulva-seasonal__nav is-next" type="button" aria-label="Scroll right" data-fs-next>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M9.3 18.7a1 1 0 0 1 0-1.4L14.6 12 9.3 6.7a1 1 0 1 1 1.4-1.4l6 6a1 1 0 0 1 0 1.4l-6 6a1 1 0 0 1-1.4 0z"></path>
+          </svg>
+        </button>
+      {% endif %}
+    </div>
+  </div>
+</fulva-seasonal>
+
+<style>
+  .fulva-seasonal--{{ section.id }} {
+    display: block;
+    position: relative;
+    width: 100%;
+    min-height: var(--fs-h);
+    overflow: hidden;
+    color: var(--fs-text);
+    font-family: var(--font-body-family, sans-serif);
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg, #0b2f57 0%, #0b2a4e 55%, #08213c 100%);
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__bg picture,
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__bg img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__bg img {
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(
+      180deg,
+      rgba(10, 20, 50, var(--fs-o1)) 0%,
+      rgba(10, 20, 50, var(--fs-o2)) 45%,
+      rgba(10, 20, 50, var(--fs-o3)) 100%
+    );
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__inner {
+    position: relative;
+    z-index: 5;
+    margin: 0 auto;
+    padding: var(--fs-py) 0;
+    width: 100%;
+    min-height: var(--fs-h);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__header {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 var(--fs-px);
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--fs-accent);
+    font-weight: 600;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__eyebrow::before,
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__eyebrow::after {
+    content: '';
+    width: 28px;
+    height: 2px;
+    background: var(--fs-accent);
+    flex: 0 0 auto;
+    opacity: 0.95;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__title {
+    margin: 12px 0 0;
+    font-family: var(--font-heading-family, serif);
+    font-size: 44px;
+    line-height: 1.12;
+    font-weight: 700;
+    color: var(--fs-text);
+    letter-spacing: -0.01em;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__title-accent {
+    font-style: italic;
+    color: var(--fs-accent);
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__sub {
+    margin-top: 10px;
+    color: var(--fs-muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__sub p {
+    margin: 0;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__btns {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform 160ms ease, filter 160ms ease, background 160ms ease, color 160ms ease, border-color 160ms ease;
+    min-height: 44px;
+    font-family: var(--font-body-family, sans-serif);
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__btn.is-primary {
+    background: var(--fs-btn-primary-bg);
+    color: var(--fs-btn-primary-text);
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__btn.is-primary:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__btn.is-secondary {
+    background: var(--fs-btn-secondary-bg);
+    border: 1px solid var(--fs-btn-secondary-bg);
+    color: var(--fs-btn-secondary-text);
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__btn.is-secondary:hover {
+    filter: brightness(0.95);
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__cards-wrap {
+    position: relative;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__cards {
+    display: flex;
+    gap: var(--fs-gap);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: var(--fs-offset);
+    overscroll-behavior-x: contain;
+    padding: 6px var(--fs-offset) 12px;
+    width: 100%;
+    cursor: grab;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__cards.is-dragging {
+    cursor: grabbing;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__cards::-webkit-scrollbar {
+    display: none;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__card {
+    flex: 0 0 auto;
+    width: var(--fs-card-w);
+    border-radius: var(--fs-card-radius);
+    overflow: hidden;
+    background: var(--fs-card-bg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+    transform: translateZ(0);
+    transition: transform 200ms ease, box-shadow 200ms ease;
+    scroll-snap-align: center;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 46px rgba(0, 0, 0, 0.28);
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__card-media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__card-media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 55%, rgba(0, 0, 0, 0.08) 100%);
+    pointer-events: none;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 3;
+    background: var(--fs-accent);
+    color: #1a1a1a;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: translateZ(0);
+    transition: transform 320ms ease;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__card:hover .fulva-seasonal__card-img {
+    transform: scale(1.04);
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__ph {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    font-size: 42px;
+    color: rgba(0, 0, 0, 0.35);
+    background: linear-gradient(145deg, #f5f0e6, #ebe4d4);
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__card-body {
+    padding: 14px 14px 16px;
+    background: var(--fs-card-bg);
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__name {
+    font-size: 15px;
+    font-weight: 800;
+    color: #1a1a1a;
+    line-height: 1.25;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__meta {
+    margin-top: 3px;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.55);
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__footer {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__price {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__price-current {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--fs-price);
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__price-compare {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.35);
+    text-decoration: line-through;
+    font-weight: 500;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__form {
+    margin: 0;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__cart {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 4px;
+    background: var(--fs-cart-bg);
+    color: var(--fs-cart-text);
+    font-size: 13px;
+    font-weight: 700;
+    border: 0;
+    cursor: pointer;
+    transition: transform 160ms ease, filter 160ms ease, background 160ms ease;
+    min-height: 36px;
+    font-family: var(--font-body-family, sans-serif);
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__cart:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.04);
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__cart:disabled,
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__cart.is-disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__cart-plus {
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__nav {
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.10);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.92);
+    transition: transform 160ms ease, filter 160ms ease, border-color 160ms ease;
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__nav.is-prev {
+    left: max(16px, calc(var(--fs-offset) - 22px));
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__nav.is-next {
+    right: max(16px, calc(var(--fs-offset) - 22px));
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__nav:hover {
+    transform: translateY(-1px);
+    border-color: rgba(255, 255, 255, 0.50);
+    filter: brightness(1.03);
+  }
+
+  .fulva-seasonal--{{ section.id }} .fulva-seasonal__nav svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  @media (max-width: 749px) {
+    .fulva-seasonal--{{ section.id }} {
+      min-height: var(--fs-h-m);
+    }
+
+    .fulva-seasonal--{{ section.id }} .fulva-seasonal__inner {
+      padding: var(--fs-py-m) 0;
+      min-height: var(--fs-h-m);
+    }
+
+    .fulva-seasonal--{{ section.id }} .fulva-seasonal__header {
+      padding: 0 var(--fs-px-m);
+    }
+
+    .fulva-seasonal--{{ section.id }} .fulva-seasonal__title {
+      font-size: 34px;
+    }
+
+    .fulva-seasonal--{{ section.id }} .fulva-seasonal__cards-wrap {
+      margin-top: 22px;
+    }
+
+    .fulva-seasonal--{{ section.id }} .fulva-seasonal__nav {
+      display: none;
+    }
+
+    .fulva-seasonal--{{ section.id }} .fulva-seasonal__cards {
+      scroll-padding-left: var(--fs-offset-m);
+      padding: 6px var(--fs-offset-m) 12px;
+    }
+
+    .fulva-seasonal--{{ section.id }} .fulva-seasonal__card {
+      width: var(--fs-card-w-m);
+      scroll-snap-align: start;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .fulva-seasonal--{{ section.id }}.fulva-seasonal--hide-mobile {
+      display: none;
+    }
+  }
+
+  @media (min-width: 750px) {
+    .fulva-seasonal--{{ section.id }}.fulva-seasonal--hide-desktop {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  if (!customElements.get('fulva-seasonal')) {
+    customElements.define('fulva-seasonal', class extends HTMLElement {
+      connectedCallback() {
+        this.track = this.querySelector('[data-fs-track]');
+        this.prevBtn = this.querySelector('[data-fs-prev]');
+        this.nextBtn = this.querySelector('[data-fs-next]');
+        if (!this.track) return;
+
+        this.updateArrows = this.updateArrows.bind(this);
+
+        if (this.prevBtn && this.nextBtn) {
+          this.prevBtn.addEventListener('click', () => {
+            this.track.scrollBy({ left: -this.getScrollAmount() * 2, behavior: 'smooth' });
+          });
+          this.nextBtn.addEventListener('click', () => {
+            this.track.scrollBy({ left: this.getScrollAmount() * 2, behavior: 'smooth' });
+          });
+          this.track.addEventListener('scroll', this.updateArrows, { passive: true });
+          window.addEventListener('resize', this.updateArrows);
+          setTimeout(this.updateArrows, 100);
+        }
+
+        this.initDrag();
+      }
+
+      initDrag() {
+        this.isDown = false;
+        this.startX = 0;
+        this.scrollLeft = 0;
+
+        this.track.addEventListener('mousedown', (e) => {
+          if (e.button !== 0) return;
+          this.isDown = true;
+          this.track.classList.add('is-dragging');
+          this.startX = e.pageX - this.track.offsetLeft;
+          this.scrollLeft = this.track.scrollLeft;
+          this.track.style.scrollSnapType = 'none';
+        });
+
+        this.track.addEventListener('mouseleave', () => {
+          this.isDown = false;
+          this.track.classList.remove('is-dragging');
+          this.track.style.scrollSnapType = '';
+        });
+
+        this.track.addEventListener('mouseup', () => {
+          this.isDown = false;
+          this.track.classList.remove('is-dragging');
+          this.track.style.scrollSnapType = '';
+        });
+
+        this.track.addEventListener('mousemove', (e) => {
+          if (!this.isDown) return;
+          e.preventDefault();
+          const x = e.pageX - this.track.offsetLeft;
+          const walk = (x - this.startX) * 2;
+          this.track.scrollLeft = this.scrollLeft - walk;
+        });
+
+        const cards = this.track.querySelectorAll('.fulva-seasonal__card');
+        cards.forEach(card => {
+          card.addEventListener('click', (e) => {
+            if (this.track.classList.contains('is-dragging')) {
+              e.preventDefault();
+            }
+          });
+        });
+      }
+
+      getScrollAmount() {
+        const card = this.track.querySelector('.fulva-seasonal__card');
+        if (!card) return 360;
+        const gap = parseInt(window.getComputedStyle(this.track).gap) || 0;
+        return card.offsetWidth + gap;
+      }
+
+      updateArrows() {
+        if (!this.prevBtn || !this.nextBtn) return;
+        this.prevBtn.disabled = this.track.scrollLeft <= 10;
+        const maxScroll = this.track.scrollWidth - this.track.clientWidth;
+        this.nextBtn.disabled = this.track.scrollLeft >= maxScroll - 10;
+      }
+
+      disconnectedCallback() {
+        window.removeEventListener('resize', this.updateArrows);
+      }
+    });
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Fulva seasonal",
+  "settings": [
+    { "type": "text", "id": "aria_label", "label": "ARIA label", "default": "Seasonal featured products" },
+
+    { "type": "header", "content": "Background" },
+    { "type": "image_picker", "id": "bg_image_desktop", "label": "Background image (desktop)" },
+    { "type": "image_picker", "id": "bg_image_mobile", "label": "Background image (mobile)" },
+    { "type": "range", "id": "overlay_top_opacity", "label": "Overlay top opacity (%)", "min": 0, "max": 80, "step": 1, "default": 25 },
+    { "type": "range", "id": "overlay_mid_opacity", "label": "Overlay middle opacity (%)", "min": 0, "max": 80, "step": 1, "default": 15 },
+    { "type": "range", "id": "overlay_bottom_opacity", "label": "Overlay bottom opacity (%)", "min": 0, "max": 90, "step": 1, "default": 30 },
+
+    { "type": "header", "content": "Text" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Right now" },
+    { "type": "text", "id": "title_before", "label": "Title (before)", "default": "Ramzan &" },
+    { "type": "text", "id": "title_accent", "label": "Title (accent)", "default": "Eid Delights" },
+    { "type": "inline_richtext", "id": "subtitle", "label": "Subtitle", "default": "Limited edition festive boxes. Available while stocks last." },
+
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "primary_button_label", "label": "Primary button label", "default": "Shop Eid Collection" },
+    { "type": "url", "id": "primary_button_link", "label": "Primary button link" },
+    { "type": "text", "id": "secondary_button_label", "label": "Secondary button label", "default": "Bulk Enquiry →" },
+    { "type": "url", "id": "secondary_button_link", "label": "Secondary button link" },
+    { "type": "text", "id": "cart_label", "label": "Cart label", "default": "Cart" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show navigation arrows (desktop)", "default": false },
+    { "type": "range", "id": "max_width", "label": "Max width (0 = full width)", "min": 0, "max": 1800, "step": 20, "default": 0 },
+    { "type": "range", "id": "height_desktop", "label": "Height desktop (px)", "min": 520, "max": 980, "step": 10, "default": 740 },
+    { "type": "range", "id": "height_mobile", "label": "Height mobile (px)", "min": 520, "max": 980, "step": 10, "default": 720 },
+    { "type": "range", "id": "padding_x_desktop", "label": "Padding X desktop (px)", "min": 0, "max": 120, "step": 2, "default": 64 },
+    { "type": "range", "id": "padding_y_desktop", "label": "Padding Y desktop (px)", "min": 0, "max": 120, "step": 2, "default": 64 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding X mobile (px)", "min": 0, "max": 30, "step": 1, "default": 16 },
+    { "type": "range", "id": "padding_y_mobile", "label": "Padding Y mobile (px)", "min": 0, "max": 60, "step": 1, "default": 28 },
+    { "type": "range", "id": "card_gap", "label": "Card gap (px)", "min": 8, "max": 24, "step": 1, "default": 14 },
+    { "type": "range", "id": "card_radius", "label": "Card radius (px)", "min": 0, "max": 20, "step": 1, "default": 12 },
+    { "type": "range", "id": "card_width_desktop", "label": "Card width desktop (px)", "min": 260, "max": 420, "step": 2, "default": 360 },
+    { "type": "range", "id": "card_width_mobile", "label": "Card width mobile (px)", "min": 220, "max": 340, "step": 2, "default": 280 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#FFC107" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#FFFFFF" },
+    { "type": "color", "id": "muted_text_color", "label": "Muted text", "default": "#FFFFFF" },
+    { "type": "range", "id": "muted_text_opacity", "label": "Muted text opacity (%)", "min": 0, "max": 100, "step": 1, "default": 65 },
+    { "type": "color", "id": "primary_button_bg", "label": "Primary button background", "default": "#FFC107" },
+    { "type": "color", "id": "primary_button_text", "label": "Primary button text", "default": "#1A1A1A" },
+    { "type": "color", "id": "secondary_button_bg", "label": "Secondary button background", "default": "#FFFFFF" },
+    { "type": "color", "id": "secondary_button_text", "label": "Secondary button text", "default": "#1B5E2F" },
+    { "type": "color", "id": "card_bg", "label": "Card background", "default": "#FFFFFF" },
+    { "type": "color", "id": "price_color", "label": "Price color", "default": "#1B5E2F" },
+    { "type": "color", "id": "cart_bg", "label": "Cart button background", "default": "#407E4C" },
+    { "type": "color", "id": "cart_text", "label": "Cart button text", "default": "#FFFFFF" },
+
+    { "type": "header", "content": "Fallbacks" },
+    { "type": "text", "id": "fallback_price", "label": "Fallback price (when no product)", "default": "₹1,113" },
+
+    { "type": "header", "content": "Visibility" },
+    { "type": "checkbox", "id": "hide_on_mobile", "label": "Hide on mobile", "default": false },
+    { "type": "checkbox", "id": "hide_on_desktop", "label": "Hide on desktop", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product card",
+      "limit": 6,
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle (optional)", "default": "Assorted · 120g" },
+        { "type": "checkbox", "id": "show_custom_badge", "label": "Show custom badge", "default": false },
+        { "type": "text", "id": "badge_text", "label": "Badge text", "default": "~50%" },
+        { "type": "text", "id": "fallback_title", "label": "Fallback title", "default": "Grand Edition" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fulva seasonal",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}

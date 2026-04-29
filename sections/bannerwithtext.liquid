@@ -1,0 +1,279 @@
+{% liquid
+  assign border_alpha = section.settings.border_opacity | times: 0.01
+%}
+
+<section
+  class="fulva-wa fulva-wa--{{ section.id }}{% if section.settings.hide_on_mobile %} fulva-wa--hide-mobile{% endif %}{% if section.settings.hide_on_desktop %} fulva-wa--hide-desktop{% endif %}"
+  aria-label="{{ section.settings.aria_label | escape }}"
+  style="
+    --fw-bg1: {{ section.settings.background }};
+    --fw-bg2: {{ section.settings.background_2 }};
+    --fw-text: {{ section.settings.text_color }};
+    --fw-muted: {{ section.settings.muted_text_color }};
+    --fw-accent: {{ section.settings.accent_color }};
+    --fw-eyeline: {{ section.settings.eyebrow_line_color }};
+    --fw-border: {{ section.settings.border_color | color_modify: 'alpha', border_alpha }};
+    --fw-max: {% if section.settings.max_width > 0 %}{{ section.settings.max_width }}px{% else %}100%{% endif %};
+    --fw-px: {{ section.settings.padding_x_desktop }}px;
+    --fw-py: {{ section.settings.padding_y_desktop }}px;
+    --fw-px-m: {{ section.settings.padding_x_mobile }}px;
+    --fw-py-m: {{ section.settings.padding_y_mobile }}px;
+    --fw-radius: {{ section.settings.radius }}px;
+    --fw-btn-radius: {{ section.settings.button_radius }}px;
+    --fw-btn-w: {{ section.settings.button_width_desktop }}px;
+    --fw-btn-gap: {{ section.settings.button_gap }}px;
+    --fw-btn-bg: {{ section.settings.primary_button_bg }};
+    --fw-btn-text: {{ section.settings.primary_button_text }};
+    --fw-btn2-bg: {{ section.settings.secondary_button_bg }};
+    --fw-btn2-text: {{ section.settings.secondary_button_text }};
+    --fw-btn2-border: {{ section.settings.secondary_button_border }};
+  "
+>
+  <div class="fulva-wa__inner">
+    <div class="fulva-wa__bar">
+      <div class="fulva-wa__left">
+        {% if section.settings.eyebrow != blank %}
+          <div class="fulva-wa__eyebrow">{{ section.settings.eyebrow | escape }}</div>
+        {% endif %}
+        {% if section.settings.heading != blank %}
+          <h2 class="fulva-wa__title">{{ section.settings.heading }}</h2>
+        {% endif %}
+        {% if section.settings.subheading != blank %}
+          <div class="fulva-wa__sub">{{ section.settings.subheading }}</div>
+        {% endif %}
+      </div>
+
+      <div class="fulva-wa__actions">
+        {% if section.settings.primary_label != blank and section.settings.primary_link != blank %}
+          <a class="fulva-wa__btn fulva-wa__btn--primary" href="{{ section.settings.primary_link }}">
+            {% if section.settings.show_whatsapp_icon %}
+              <span class="fulva-wa__btn-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                  <path d="M20.5 11.9c0 4.7-3.8 8.5-8.5 8.5-1.5 0-2.9-.4-4.2-1l-3.8 1 1.1-3.7c-.8-1.4-1.2-3-1.2-4.8 0-4.7 3.8-8.5 8.5-8.5s8.6 3.8 8.6 8.5zm-8.5-6.8c-3.8 0-6.8 3-6.8 6.8 0 1.6.5 3.1 1.4 4.3l.3.5-.6 2.2 2.3-.6.5.3c1.2.7 2.6 1.1 4 .9 3.7 0 6.8-3 6.8-6.8 0-3.7-3.1-6.8-6.9-6.8zm3.9 9.5c-.2.5-1.1 1-1.6 1.1-.4.1-.9.1-1.5-.1-.4-.1-.9-.3-1.5-.6-2.6-1.4-4.3-3.9-4.4-4-.1-.2-1.1-1.4-1.1-2.7 0-1.2.6-1.8.9-2.1.2-.2.5-.3.7-.3h.5c.1 0 .4 0 .6.4.2.5.7 1.8.7 2s.1.3 0 .5-.2.3-.3.4l-.3.3c-.2.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1.1 2.1 1.4 2.4 1.6.3.1.5.1.7-.1l.7-.9c.2-.2.3-.2.6-.1.2.1 1.7.8 2 .9.3.1.5.2.6.3.1.1.1.6-.1 1.1z"></path>
+                </svg>
+              </span>
+            {% endif %}
+            <span class="fulva-wa__btn-label">{{ section.settings.primary_label | escape }}</span>
+          </a>
+        {% endif %}
+        {% if section.settings.secondary_label != blank and section.settings.secondary_link != blank %}
+          <a class="fulva-wa__btn fulva-wa__btn--secondary" href="{{ section.settings.secondary_link }}">{{ section.settings.secondary_label | escape }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .fulva-wa--{{ section.id }} {
+    background: linear-gradient(90deg, var(--fw-bg1), var(--fw-bg2));
+    color: var(--fw-text);
+    font-family: var(--font-body-family, inherit);
+  }
+
+  .fulva-wa--{{ section.id }} .fulva-wa__inner {
+    max-width: var(--fw-max);
+    margin: 0 auto;
+    padding: var(--fw-py) var(--fw-px);
+  }
+
+  .fulva-wa--{{ section.id }} .fulva-wa__bar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 46px;
+  }
+
+  .fulva-wa--{{ section.id }} .fulva-wa__left {
+    min-width: 0;
+  }
+
+  .fulva-wa--{{ section.id }} .fulva-wa__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--fw-accent);
+    margin-bottom: 8px;
+  }
+
+  .fulva-wa--{{ section.id }} .fulva-wa__eyebrow::before {
+    content: '';
+    width: 18px;
+    height: 2px;
+    background: var(--fw-eyeline);
+    border-radius: 99px;
+    flex: 0 0 auto;
+  }
+
+  .fulva-wa--{{ section.id }} .fulva-wa__title {
+    margin: 0;
+    font-family: var(--font-heading-family, inherit);
+    font-size: 32px;
+    font-weight: 950;
+    letter-spacing: -0.02em;
+    line-height: 1.06;
+    color: var(--fw-text);
+  }
+
+  .fulva-wa--{{ section.id }} .fulva-wa__sub {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--fw-muted);
+    max-width: 56ch;
+  }
+
+  .fulva-wa--{{ section.id }} .fulva-wa__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--fw-btn-gap);
+    flex: 0 0 auto;
+    margin-top: 6px;
+  }
+
+  .fulva-wa--{{ section.id }} .fulva-wa__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 11px 16px;
+    min-width: var(--fw-btn-w);
+    border-radius: var(--fw-btn-radius);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 950;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    transition: transform 0.2s ease, filter 0.2s ease;
+  }
+
+  .fulva-wa--{{ section.id }} .fulva-wa__btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.02);
+  }
+
+  .fulva-wa--{{ section.id }} .fulva-wa__btn--primary {
+    background: var(--fw-btn-bg);
+    color: var(--fw-btn-text);
+    border-color: rgba(0,0,0,0.08);
+    box-shadow: 0 14px 40px rgba(0,0,0,0.14);
+  }
+
+  .fulva-wa--{{ section.id }} .fulva-wa__btn--secondary {
+    background: var(--fw-btn2-bg);
+    color: var(--fw-btn2-text);
+    border-color: var(--fw-btn2-border);
+    box-shadow: 0 14px 40px rgba(0,0,0,0.06);
+  }
+
+  .fulva-wa--{{ section.id }} .fulva-wa__btn-icon {
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+  }
+
+  .fulva-wa--{{ section.id }} .fulva-wa__btn-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    display: block;
+  }
+
+  @media (max-width: 749px) {
+    .fulva-wa--{{ section.id }} .fulva-wa__inner {
+      padding: var(--fw-py-m) var(--fw-px-m);
+    }
+
+    .fulva-wa--{{ section.id }} .fulva-wa__bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .fulva-wa--{{ section.id }} .fulva-wa__actions {
+      width: 100%;
+      align-items: stretch;
+    }
+
+    .fulva-wa--{{ section.id }} .fulva-wa__btn {
+      min-width: 0;
+      width: 100%;
+    }
+
+    .fulva-wa--{{ section.id }} .fulva-wa__title {
+      font-size: 26px;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .fulva-wa--{{ section.id }}.fulva-wa--hide-mobile {
+      display: none;
+    }
+  }
+
+  @media (min-width: 750px) {
+    .fulva-wa--{{ section.id }}.fulva-wa--hide-desktop {
+      display: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Fulva WhatsApp CTA",
+  "settings": [
+    { "type": "text", "id": "aria_label", "label": "ARIA label", "default": "WhatsApp order" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "DIRECT & PERSONAL" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Prefer to Order on WhatsApp?" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Quick order, custom gifting, and faster support — chat with our team." },
+
+    { "type": "header", "content": "Buttons" },
+    { "type": "checkbox", "id": "show_whatsapp_icon", "label": "Show WhatsApp icon", "default": true },
+    { "type": "text", "id": "primary_label", "label": "Primary button label", "default": "Start Chat on WhatsApp" },
+    { "type": "url", "id": "primary_link", "label": "Primary button link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "Track Order" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary button link" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "max_width", "label": "Max width (0 = full width)", "min": 0, "max": 1800, "step": 20, "default": 0 },
+    { "type": "range", "id": "padding_x_desktop", "label": "Padding X desktop (px)", "min": 0, "max": 80, "step": 2, "default": 40 },
+    { "type": "range", "id": "padding_y_desktop", "label": "Padding Y desktop (px)", "min": 0, "max": 70, "step": 2, "default": 28 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding X mobile (px)", "min": 0, "max": 26, "step": 1, "default": 16 },
+    { "type": "range", "id": "padding_y_mobile", "label": "Padding Y mobile (px)", "min": 0, "max": 60, "step": 1, "default": 18 },
+    { "type": "range", "id": "radius", "label": "Bar radius (px)", "min": 0, "max": 26, "step": 1, "default": 18 },
+    { "type": "range", "id": "button_radius", "label": "Button radius (px)", "min": 0, "max": 26, "step": 1, "default": 26 },
+    { "type": "range", "id": "button_width_desktop", "label": "Button width desktop (px)", "min": 180, "max": 360, "step": 2, "default": 260 },
+    { "type": "range", "id": "button_gap", "label": "Button gap (px)", "min": 6, "max": 18, "step": 1, "default": 10 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "background", "label": "Background (left)", "default": "#F4C026" },
+    { "type": "color", "id": "background_2", "label": "Background (right)", "default": "#F8E9B4" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#101010" },
+    { "type": "color", "id": "muted_text_color", "label": "Muted text", "default": "#5A5A5A" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#1B5E2F" },
+    { "type": "color", "id": "eyebrow_line_color", "label": "Eyebrow line", "default": "#1B5E2F" },
+    { "type": "color", "id": "primary_button_bg", "label": "Primary button background", "default": "#1B5E2F" },
+    { "type": "color", "id": "primary_button_text", "label": "Primary button text", "default": "#FFFFFF" },
+    { "type": "color", "id": "secondary_button_bg", "label": "Secondary button background", "default": "#FFFFFF" },
+    { "type": "color", "id": "secondary_button_text", "label": "Secondary button text", "default": "#101010" },
+    { "type": "color", "id": "secondary_button_border", "label": "Secondary button border", "default": "#D1D1D1" },
+    { "type": "color", "id": "border_color", "label": "Border", "default": "#000000" },
+    { "type": "range", "id": "border_opacity", "label": "Border opacity (%)", "min": 0, "max": 26, "step": 1, "default": 12 },
+
+    { "type": "header", "content": "Visibility" },
+    { "type": "checkbox", "id": "hide_on_mobile", "label": "Hide on mobile", "default": false },
+    { "type": "checkbox", "id": "hide_on_desktop", "label": "Hide on desktop", "default": false }
+  ],
+  "presets": [
+    { "name": "Fulva WhatsApp CTA" }
+  ]
+}
+{% endschema %}

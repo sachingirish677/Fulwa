@@ -1,0 +1,658 @@
+{% liquid
+  assign section_products = section.blocks | where: 'type', 'product'
+  assign border_alpha = section.settings.border_opacity | times: 0.01
+  assign card_border_alpha = section.settings.card_border_opacity | times: 0.01
+  assign shadow_alpha = section.settings.shadow_opacity | times: 0.01
+%}
+
+<section
+  class="fulva-popular fulva-popular--{{ section.id }}{% if section.settings.hide_on_mobile %} fulva-popular--hide-mobile{% endif %}{% if section.settings.hide_on_desktop %} fulva-popular--hide-desktop{% endif %}"
+  aria-label="{{ section.settings.aria_label | escape }}"
+  style="
+    --fp-bg: {{ section.settings.background }};
+    --fp-text: {{ section.settings.text_color }};
+    --fp-muted: {{ section.settings.muted_text_color }};
+    --fp-accent: {{ section.settings.accent_color }};
+    --fp-green: {{ section.settings.primary_green }};
+    --fp-green-hover: {{ section.settings.primary_green_hover }};
+    --fp-border: {{ section.settings.border_color | color_modify: 'alpha', border_alpha }};
+    --fp-card-border: {{ section.settings.card_border_color | color_modify: 'alpha', card_border_alpha }};
+    --fp-shadow: {{ section.settings.shadow_color | color_modify: 'alpha', shadow_alpha }};
+    --fp-max: {% if section.settings.max_width > 0 %}{{ section.settings.max_width }}px{% else %}100%{% endif %};
+    --fp-px: {{ section.settings.padding_x_desktop }}px;
+    --fp-py: {{ section.settings.padding_y_desktop }}px;
+    --fp-px-m: {{ section.settings.padding_x_mobile }}px;
+    --fp-py-m: {{ section.settings.padding_y_mobile }}px;
+    --fp-gap: {{ section.settings.gap }}px;
+    --fp-radius: {{ section.settings.card_radius }}px;
+    --fp-img-h: {{ section.settings.image_height }}px;
+    --fp-card-w: {{ section.settings.card_width_desktop }}px;
+    --fp-card-w-m: {{ section.settings.card_width_mobile }}px;
+  "
+>
+  <div class="fulva-popular__inner">
+    <div class="fulva-popular__head">
+      <div class="fulva-popular__head-left">
+        {% if section.settings.eyebrow != blank %}
+          <div class="fulva-popular__eyebrow">{{ section.settings.eyebrow | escape }}</div>
+        {% endif %}
+        {% if section.settings.title_before != blank or section.settings.title_emphasis != blank or section.settings.title_after != blank %}
+          <h2 class="fulva-popular__title">
+            {% if section.settings.title_before != blank %}{{ section.settings.title_before }}{% endif %}
+            {% if section.settings.title_emphasis != blank %}<em>{{ section.settings.title_emphasis }}</em>{% endif %}
+            {% if section.settings.title_after != blank %}{{ section.settings.title_after }}{% endif %}
+          </h2>
+        {% endif %}
+      </div>
+
+      {% if section.settings.show_arrows %}
+        <div class="fulva-popular__nav" aria-label="Carousel navigation">
+          <button class="fulva-popular__arrow is-prev" type="button" aria-label="Previous" data-fp-prev>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M14.7 5.3a1 1 0 0 1 0 1.4L9.4 12l5.3 5.3a1 1 0 1 1-1.4 1.4l-6-6a1 1 0 0 1 0-1.4l6-6a1 1 0 0 1 1.4 0z"></path>
+            </svg>
+          </button>
+          <button class="fulva-popular__arrow is-next" type="button" aria-label="Next" data-fp-next>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M9.3 18.7a1 1 0 0 1 0-1.4L14.6 12 9.3 6.7a1 1 0 1 1 1.4-1.4l6 6a1 1 0 0 1 0 1.4l-6 6a1 1 0 0 1-1.4 0z"></path>
+            </svg>
+          </button>
+        </div>
+      {% endif %}
+    </div>
+
+    <div
+      class="fulva-popular__track"
+      role="list"
+      aria-label="{{ section.settings.aria_label | escape }}"
+      data-fp-track
+    >
+      {% for block in section_products %}
+        {% liquid
+          assign product = block.settings.product
+          assign variant = nil
+          if product != blank
+            assign variant = product.selected_or_first_available_variant
+          endif
+
+          assign show_custom_badge = block.settings.show_custom_badge
+          assign badge_text = block.settings.badge_text
+
+          assign show_percent_badge = false
+          assign percent_off = 0
+          if product != blank and variant != blank and variant.compare_at_price > variant.price
+            assign diff = variant.compare_at_price | minus: variant.price
+            assign percent_off = diff | times: 100.0 | divided_by: variant.compare_at_price | round
+            assign show_percent_badge = true
+          endif
+        %}
+
+        <div class="fulva-popular__card" role="listitem" {{ block.shopify_attributes }}>
+          <div class="fulva-popular__media">
+            {% if show_percent_badge %}
+              <div class="fulva-popular__badge">-{{ percent_off }}%</div>
+            {% elsif show_custom_badge and badge_text != blank %}
+              <div class="fulva-popular__badge">{{ badge_text | escape }}</div>
+            {% endif %}
+
+            {% if product != blank and product.featured_image != blank %}
+              <img
+                class="fulva-popular__img"
+                src="{{ product.featured_image | image_url: width: 900 }}"
+                srcset="
+                  {{ product.featured_image | image_url: width: 360 }} 360w,
+                  {{ product.featured_image | image_url: width: 540 }} 540w,
+                  {{ product.featured_image | image_url: width: 720 }} 720w,
+                  {{ product.featured_image | image_url: width: 900 }} 900w
+                "
+                sizes="(max-width: 749px) {{ section.settings.card_width_mobile }}px, 220px"
+                width="{{ product.featured_image.width }}"
+                height="{{ product.featured_image.height }}"
+                alt="{{ product.title | escape }}"
+                loading="lazy"
+                decoding="async"
+              >
+            {% else %}
+              <div class="fulva-popular__ph" aria-hidden="true">✦</div>
+            {% endif %}
+          </div>
+
+          <div class="fulva-popular__body">
+            <div class="fulva-popular__name">
+              {% if product != blank %}
+                {{ product.title | escape }}
+              {% else %}
+                {{ block.settings.fallback_title | escape }}
+              {% endif %}
+            </div>
+
+            {% if block.settings.subtitle != blank %}
+              <div class="fulva-popular__subtitle">{{ block.settings.subtitle | escape }}</div>
+            {% endif %}
+
+            <div class="fulva-popular__footer">
+              <div class="fulva-popular__prices">
+                {% if variant != blank %}
+                  <span class="fulva-popular__price">{{ variant.price | money }}</span>
+                  {% if variant.compare_at_price > variant.price %}
+                    <span class="fulva-popular__compare">{{ variant.compare_at_price | money }}</span>
+                  {% endif %}
+                {% else %}
+                  <span class="fulva-popular__price">{{ section.settings.fallback_price | escape }}</span>
+                {% endif %}
+              </div>
+
+              {% if product != blank and variant != blank %}
+                {% form 'product', product, class: 'fulva-popular__form' %}
+                  <input type="hidden" name="id" value="{{ variant.id }}">
+                  <button class="fulva-popular__cart" type="submit"{% unless variant.available %} disabled{% endunless %}>
+                    <span class="fulva-popular__plus">+</span>
+                    <span>{{ section.settings.cart_label | escape }}</span>
+                  </button>
+                {% endform %}
+              {% else %}
+                <div class="fulva-popular__cart is-disabled">
+                  <span class="fulva-popular__plus">+</span>
+                  <span>{{ section.settings.cart_label | escape }}</span>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.view_all_label != blank and section.settings.view_all_link != blank %}
+      <div class="fulva-popular__viewall">
+        <a href="{{ section.settings.view_all_link }}">{{ section.settings.view_all_label | escape }}</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .fulva-popular--{{ section.id }} {
+    background: var(--fp-bg);
+    border-top: 1px solid var(--fp-border);
+    color: var(--fp-text);
+    font-family: var(--font-body-family, sans-serif);
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__inner {
+    max-width: var(--fp-max);
+    margin: 0 auto;
+    padding: var(--fp-py) var(--fp-px);
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--fp-accent);
+    font-weight: 700;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 2px;
+    background: var(--fp-accent);
+    flex: 0 0 auto;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__title {
+    margin: 6px 0 0;
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--fp-text);
+    letter-spacing: -0.01em;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__title em {
+    font-family: var(--font-heading-family, serif);
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__nav {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__arrow {
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    border: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 160ms ease, filter 160ms ease, background 160ms ease;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__arrow svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__arrow.is-prev {
+    background: #EDEDED;
+    color: rgba(0, 0, 0, 0.55);
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__arrow.is-next {
+    background: var(--fp-green);
+    color: #FFFFFF;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__arrow:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.03);
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__arrow:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__track {
+    margin-top: 18px;
+    display: flex;
+    gap: var(--fp-gap);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    padding: 8px 0 12px;
+    cursor: grab;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__track.is-dragging {
+    cursor: grabbing;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__track.is-dragging .fulva-popular__card {
+    pointer-events: none;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__card {
+    border-radius: var(--fp-radius);
+    overflow: hidden;
+    background: transparent;
+    border: 0;
+    transition: transform 200ms ease;
+    flex: 0 0 auto;
+    width: var(--fp-card-w);
+    scroll-snap-align: start;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__card:hover {
+    transform: translateY(-2px);
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__media {
+    position: relative;
+    height: var(--fp-img-h);
+    border-radius: calc(var(--fp-radius) - 1px);
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.03);
+    box-shadow: 0 10px 24px var(--fp-shadow);
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    background: var(--fp-green);
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 999px;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: translateZ(0);
+    transition: transform 260ms ease;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__card:hover .fulva-popular__img {
+    transform: scale(1.04);
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__ph {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    font-size: 44px;
+    color: rgba(0, 0, 0, 0.35);
+    background: linear-gradient(145deg, #f5f0e6, #ebe4d4);
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__body {
+    padding: 14px 2px 0;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__name {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--fp-text);
+    line-height: 1.35;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__subtitle {
+    margin-top: 3px;
+    font-size: 12px;
+    color: var(--fp-muted);
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 14px;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__prices {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__price {
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--fp-text);
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__compare {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.35);
+    text-decoration: line-through;
+    font-weight: 600;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__form {
+    margin: 0;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__cart {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 18px;
+    border-radius: 0;
+    background: var(--fp-green);
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 700;
+    border: 0;
+    cursor: pointer;
+    transition: background 160ms ease, transform 160ms ease, filter 160ms ease;
+    font-family: var(--font-body-family, sans-serif);
+    white-space: nowrap;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__cart:hover {
+    background: var(--fp-green-hover);
+    transform: translateY(-1px);
+    filter: brightness(1.02);
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__cart:disabled,
+  .fulva-popular--{{ section.id }} .fulva-popular__cart.is-disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__plus {
+    font-weight: 900;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__viewall {
+    text-align: center;
+    margin-top: 28px;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__viewall a {
+    color: var(--fp-text);
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1.5px;
+  }
+
+  .fulva-popular--{{ section.id }} .fulva-popular__viewall a:hover {
+    color: var(--fp-green);
+  }
+
+  @media (max-width: 749px) {
+    .fulva-popular--{{ section.id }} .fulva-popular__inner {
+      padding: var(--fp-py-m) var(--fp-px-m);
+    }
+
+    .fulva-popular--{{ section.id }} .fulva-popular__title {
+      font-size: 28px;
+    }
+
+    .fulva-popular--{{ section.id }} .fulva-popular__nav {
+      display: none;
+    }
+
+    .fulva-popular--{{ section.id }} .fulva-popular__track {
+      padding: 8px 0 12px;
+    }
+
+    .fulva-popular--{{ section.id }} .fulva-popular__card {
+      width: var(--fp-card-w-m);
+    }
+  }
+
+  @media (max-width: 749px) {
+    .fulva-popular--{{ section.id }}.fulva-popular--hide-mobile {
+      display: none;
+    }
+  }
+
+  @media (min-width: 750px) {
+    .fulva-popular--{{ section.id }}.fulva-popular--hide-desktop {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.querySelector('.fulva-popular--{{ section.id }}');
+    if (!root) return;
+    const track = root.querySelector('[data-fp-track]');
+    const prevBtn = root.querySelector('[data-fp-prev]');
+    const nextBtn = root.querySelector('[data-fp-next]');
+    if (!track) return;
+
+    const getScrollAmount = () => {
+      const card = track.querySelector('.fulva-popular__card');
+      if (!card) return 320;
+      const gap = parseInt(getComputedStyle(track).gap) || 0;
+      return card.offsetWidth + gap;
+    };
+
+    const updateArrows = () => {
+      if (!prevBtn || !nextBtn) return;
+      prevBtn.disabled = track.scrollLeft <= 10;
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      nextBtn.disabled = track.scrollLeft >= maxScroll - 10;
+    };
+
+    if (prevBtn && nextBtn) {
+      prevBtn.addEventListener('click', () => track.scrollBy({ left: -getScrollAmount() * 2, behavior: 'smooth' }));
+      nextBtn.addEventListener('click', () => track.scrollBy({ left: getScrollAmount() * 2, behavior: 'smooth' }));
+      track.addEventListener('scroll', updateArrows, { passive: true });
+      window.addEventListener('resize', updateArrows);
+      setTimeout(updateArrows, 100);
+    }
+
+    // Mouse drag scroll (desktop)
+    let isDown = false;
+    let startX = 0;
+    let startScrollLeft = 0;
+    let dragged = false;
+
+    track.addEventListener('mousedown', (e) => {
+      isDown = true;
+      dragged = false;
+      startX = e.pageX - track.offsetLeft;
+      startScrollLeft = track.scrollLeft;
+      track.classList.add('is-dragging');
+      track.style.scrollSnapType = 'none';
+    });
+
+    const endDrag = () => {
+      if (!isDown) return;
+      isDown = false;
+      track.classList.remove('is-dragging');
+      track.style.scrollSnapType = '';
+      setTimeout(() => {
+        dragged = false;
+      }, 0);
+    };
+
+    track.addEventListener('mouseleave', endDrag);
+    track.addEventListener('mouseup', endDrag);
+
+    track.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - track.offsetLeft;
+      const walk = (x - startX) * 2;
+      if (Math.abs(walk) > 10) dragged = true;
+      track.scrollLeft = startScrollLeft - walk;
+    });
+
+    track.addEventListener(
+      'click',
+      (e) => {
+        if (!dragged) return;
+        e.preventDefault();
+        e.stopPropagation();
+      },
+      true
+    );
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Fulva popular products",
+  "settings": [
+    { "type": "text", "id": "aria_label", "label": "ARIA label", "default": "Most popular products" },
+
+    { "type": "header", "content": "Text" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Top sellers" },
+    { "type": "text", "id": "title_before", "label": "Title (before)", "default": "Most" },
+    { "type": "text", "id": "title_emphasis", "label": "Title (italic)", "default": "Popular" },
+    { "type": "text", "id": "title_after", "label": "Title (after)", "default": "Products" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "layout_mode", "label": "Desktop layout", "default": "grid", "options": [
+      { "value": "grid", "label": "Grid" },
+      { "value": "carousel", "label": "Carousel (scroll)" }
+    ]},
+    { "type": "select", "id": "mobile_layout", "label": "Mobile layout", "default": "swipe", "options": [
+      { "value": "grid", "label": "2-column grid" },
+      { "value": "swipe", "label": "Swipe carousel" }
+    ]},
+    { "type": "checkbox", "id": "show_arrows", "label": "Show navigation arrows (desktop)", "default": true },
+    { "type": "range", "id": "max_width", "label": "Max width (0 = full width)", "min": 0, "max": 1800, "step": 20, "default": 0 },
+    { "type": "range", "id": "padding_x_desktop", "label": "Padding X desktop (px)", "min": 0, "max": 100, "step": 2, "default": 64 },
+    { "type": "range", "id": "padding_y_desktop", "label": "Padding Y desktop (px)", "min": 0, "max": 120, "step": 2, "default": 52 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding X mobile (px)", "min": 0, "max": 30, "step": 1, "default": 16 },
+    { "type": "range", "id": "padding_y_mobile", "label": "Padding Y mobile (px)", "min": 0, "max": 60, "step": 1, "default": 24 },
+    { "type": "range", "id": "gap", "label": "Card gap (px)", "min": 8, "max": 24, "step": 1, "default": 14 },
+    { "type": "range", "id": "card_radius", "label": "Image radius (px)", "min": 0, "max": 24, "step": 1, "default": 15 },
+    { "type": "range", "id": "image_height", "label": "Image height (px)", "min": 140, "max": 320, "step": 2, "default": 200 },
+    { "type": "range", "id": "card_width_desktop", "label": "Carousel card width desktop (px)", "min": 200, "max": 360, "step": 2, "default": 248 },
+    { "type": "range", "id": "card_width_mobile", "label": "Carousel card width mobile (px)", "min": 160, "max": 300, "step": 2, "default": 210 },
+
+    { "type": "header", "content": "Links" },
+    { "type": "text", "id": "view_all_label", "label": "View all label", "default": "View All Products →" },
+    { "type": "url", "id": "view_all_link", "label": "View all link" },
+    { "type": "text", "id": "cart_label", "label": "Cart label", "default": "Cart" },
+    { "type": "text", "id": "fallback_price", "label": "Fallback price", "default": "₹1,113" },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#000000" },
+    { "type": "color", "id": "muted_text_color", "label": "Muted text", "default": "#8A8A8A" },
+    { "type": "color", "id": "accent_color", "label": "Eyebrow accent", "default": "#D4A843" },
+    { "type": "color", "id": "primary_green", "label": "Primary green", "default": "#1B5E2F" },
+    { "type": "color", "id": "primary_green_hover", "label": "Primary green hover", "default": "#237A3B" },
+    { "type": "color", "id": "border_color", "label": "Top border", "default": "#000000" },
+    { "type": "range", "id": "border_opacity", "label": "Top border opacity (%)", "min": 0, "max": 30, "step": 1, "default": 6 },
+    { "type": "color", "id": "card_border_color", "label": "Card border (optional)", "default": "#000000" },
+    { "type": "range", "id": "card_border_opacity", "label": "Card border opacity (%)", "min": 0, "max": 20, "step": 1, "default": 0 },
+    { "type": "color", "id": "shadow_color", "label": "Shadow color", "default": "#000000" },
+    { "type": "range", "id": "shadow_opacity", "label": "Shadow opacity (%)", "min": 0, "max": 30, "step": 1, "default": 10 },
+
+    { "type": "header", "content": "Visibility" },
+    { "type": "checkbox", "id": "hide_on_mobile", "label": "Hide on mobile", "default": false },
+    { "type": "checkbox", "id": "hide_on_desktop", "label": "Hide on desktop", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "limit": 20,
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Assorted · 120g" },
+        { "type": "checkbox", "id": "show_custom_badge", "label": "Show custom badge", "default": false },
+        { "type": "text", "id": "badge_text", "label": "Badge text", "default": "~50%" },
+        { "type": "text", "id": "fallback_title", "label": "Fallback title", "default": "Product name" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fulva popular products",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}

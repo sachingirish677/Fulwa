@@ -1,0 +1,944 @@
+{% liquid
+  assign border_alpha = section.settings.border_opacity | times: 0.01
+  assign card_border_alpha = section.settings.card_border_opacity | times: 0.01
+  assign shadow_alpha = section.settings.shadow_opacity | times: 0.01
+
+  assign buzz_blocks = section.blocks | where: 'type', 'mention'
+
+  assign bg = section.settings.background
+  assign bg2 = section.settings.background_2
+  assign bg3 = section.settings.background_3
+  assign text_color = section.settings.text_color
+  assign muted_color = section.settings.muted_text_color
+  assign accent_color = section.settings.accent_color
+  assign title_highlight = section.settings.title_highlight_color
+
+  if section.settings.use_exact_palette
+    assign bg = '#0C6A20'
+    assign bg2 = '#064414'
+    assign bg3 = '#031A08'
+    assign text_color = '#FFFFFF'
+    assign muted_color = '#D4E3D7'
+    assign accent_color = '#F4C026'
+    assign title_highlight = '#F4C026'
+  endif
+%}
+
+<section
+  class="fulva-buzz fulva-buzz--{{ section.id }} fulva-buzz--bg-{{ section.settings.background_style }}{% if section.settings.hide_on_mobile %} fulva-buzz--hide-mobile{% endif %}{% if section.settings.hide_on_desktop %} fulva-buzz--hide-desktop{% endif %}"
+  aria-label="{{ section.settings.aria_label | escape }}"
+  style="
+    --fb-bg: {{ bg }};
+    --fb-bg2: {{ bg2 }};
+    --fb-bg3: {{ bg3 }};
+    --fb-glow1: {{ section.settings.glow_1 }};
+    --fb-glow2: {{ section.settings.glow_2 }};
+    --fb-text: {{ text_color }};
+    --fb-muted: {{ muted_color }};
+    --fb-accent: {{ accent_color }};
+    --fb-title-highlight: {{ title_highlight }};
+    --fb-border: {{ section.settings.border_color | color_modify: 'alpha', border_alpha }};
+    --fb-card-bg: {{ section.settings.card_background }};
+    --fb-card-border: {{ section.settings.card_border_color | color_modify: 'alpha', card_border_alpha }};
+    --fb-shadow: {{ section.settings.shadow_color | color_modify: 'alpha', shadow_alpha }};
+    --fb-max: {% if section.settings.max_width > 0 %}{{ section.settings.max_width }}px{% else %}100%{% endif %};
+    --fb-px: {{ section.settings.padding_x_desktop }}px;
+    --fb-py: {{ section.settings.padding_y_desktop }}px;
+    --fb-px-m: {{ section.settings.padding_x_mobile }}px;
+    --fb-py-m: {{ section.settings.padding_y_mobile }}px;
+    --fb-gap: {{ section.settings.gap }}px;
+    --fb-radius: {{ section.settings.radius }}px;
+    --fb-card-w: {{ section.settings.card_width_desktop }}px;
+    --fb-card-w-m: {{ section.settings.card_width_mobile }}px;
+    --fb-card-ar: {{ section.settings.card_aspect_ratio }};
+    --fb-media-radius: {{ section.settings.media_radius }}px;
+    --fb-stage-h: {{ section.settings.stage_height_desktop }}px;
+    --fb-stage-h-m: {{ section.settings.stage_height_mobile }}px;
+    --fb-offset: {{ section.settings.slide_offset_desktop }}px;
+    --fb-offset-m: {{ section.settings.slide_offset_mobile }}px;
+    --fb-mid-scale: {{ section.settings.mid_scale | times: 0.01 }};
+    --fb-far-scale: {{ section.settings.far_scale | times: 0.01 }};
+    --fb-profile-size: {{ section.settings.profile_size }}px;
+  "
+>
+  <div class="fulva-buzz__inner">
+    <header class="fulva-buzz__header">
+      {% if section.settings.eyebrow != blank %}
+        <div class="fulva-buzz__eyebrow">{{ section.settings.eyebrow | escape }}</div>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2 class="fulva-buzz__title">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.show_subtitle and section.settings.subtitle != blank %}
+        <div class="fulva-buzz__subtitle">{{ section.settings.subtitle }}</div>
+      {% endif %}
+      {% if section.settings.show_cta and section.settings.cta_label != blank and section.settings.cta_link != blank %}
+        <a class="fulva-buzz__cta" href="{{ section.settings.cta_link }}" aria-label="{{ section.settings.cta_label | escape }}">
+          {{ section.settings.cta_label | escape }}
+        </a>
+      {% endif %}
+    </header>
+
+    {% if section.settings.show_profiles %}
+      <div class="fulva-buzz__profiles" role="list" aria-label="Featured people" data-fb-profiles>
+        {% for block in buzz_blocks %}
+          {% liquid
+            assign avatar = block.settings.avatar
+            assign name = block.settings.name
+            if name == blank
+              assign name = 'Creator'
+            endif
+            assign role = block.settings.title
+            if role == blank
+              assign role = 'INFLUENCER'
+            endif
+          %}
+
+          <button class="fulva-buzz__profile" type="button" role="listitem" data-fb-profile data-index="{{ forloop.index0 }}" aria-label="{{ name | escape }}" {{ block.shopify_attributes }}>
+            <span class="fulva-buzz__profile-avatar" aria-hidden="{% if avatar != blank %}false{% else %}true{% endif %}">
+              {% if avatar != blank %}
+                <img
+                  class="fulva-buzz__profile-avatar-img"
+                  src="{{ avatar | image_url: width: 160 }}"
+                  srcset="
+                    {{ avatar | image_url: width: 80 }} 80w,
+                    {{ avatar | image_url: width: 120 }} 120w,
+                    {{ avatar | image_url: width: 160 }} 160w,
+                    {{ avatar | image_url: width: 240 }} 240w
+                  "
+                  sizes="{{ section.settings.profile_size }}px"
+                  width="{{ avatar.width }}"
+                  height="{{ avatar.height }}"
+                  alt="{{ name | escape }}"
+                  loading="lazy"
+                  decoding="async"
+                >
+              {% else %}
+                <span class="fulva-buzz__profile-avatar-fallback" aria-hidden="true"></span>
+              {% endif %}
+            </span>
+            <span class="fulva-buzz__profile-role">• {{ role | escape }}</span>
+            <span class="fulva-buzz__profile-name">{{ name | escape }}</span>
+          </button>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="fulva-buzz__carousel" data-fb-carousel>
+      {% if section.settings.show_arrows %}
+        <button class="fulva-buzz__carousel-arrow fulva-buzz__carousel-arrow--prev" type="button" aria-label="Previous" data-fb-prev>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M14.7 5.3a1 1 0 0 1 0 1.4L9.4 12l5.3 5.3a1 1 0 1 1-1.4 1.4l-6-6a1 1 0 0 1 0-1.4l6-6a1 1 0 0 1 1.4 0z"></path>
+          </svg>
+        </button>
+      {% endif %}
+
+      <div class="fulva-buzz__stage" data-fb-stage aria-label="{{ section.settings.aria_label | escape }}">
+        {% for block in buzz_blocks %}
+          {% liquid
+            assign primary_link = block.settings.link
+            assign video = block.settings.video
+            assign media = block.settings.media
+            assign name = block.settings.name
+            if name == blank
+              assign name = 'Creator'
+            endif
+            assign views = block.settings.metric
+            if views == blank
+              assign views = '1.2M'
+            endif
+            assign likes = block.settings.like_text
+            if likes == blank
+              assign likes = '84K'
+            endif
+          %}
+
+          <div class="fulva-buzz__slide" data-fb-slide data-index="{{ forloop.index0 }}" aria-hidden="true" {{ block.shopify_attributes }}>
+            {% if primary_link != blank %}
+              <a class="fulva-buzz__slide-link" href="{{ primary_link }}" aria-label="{{ name | escape }}">
+            {% endif %}
+                <div class="fulva-buzz__slide-media">
+                  {% if video != blank %}
+                    {{ video | video_tag: class: 'fulva-buzz__slide-video', autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
+                  {% elsif media != blank %}
+                    <img
+                      class="fulva-buzz__slide-img"
+                      src="{{ media | image_url: width: 900 }}"
+                      srcset="
+                        {{ media | image_url: width: 360 }} 360w,
+                        {{ media | image_url: width: 520 }} 520w,
+                        {{ media | image_url: width: 720 }} 720w,
+                        {{ media | image_url: width: 900 }} 900w
+                      "
+                      sizes="(max-width: 749px) {{ section.settings.card_width_mobile }}px, {{ section.settings.card_width_desktop }}px"
+                      width="{{ media.width }}"
+                      height="{{ media.height }}"
+                      alt="{{ name | escape }}"
+                      loading="lazy"
+                      decoding="async"
+                    >
+                  {% else %}
+                    <div class="fulva-buzz__slide-placeholder" aria-hidden="true"></div>
+                  {% endif %}
+
+                  {% if section.settings.show_play_icon %}
+                    <div class="fulva-buzz__slide-play" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M9 7.5v9l8-4.5-8-4.5z"></path>
+                      </svg>
+                    </div>
+                  {% endif %}
+
+                  {% if section.settings.show_metric %}
+                    <div class="fulva-buzz__slide-views">{{ views | escape }}</div>
+                  {% endif %}
+
+                  {% if section.settings.show_likes %}
+                    <div class="fulva-buzz__slide-likes" aria-label="Likes">
+                      <span aria-hidden="true">♥</span>
+                      <span>{{ likes | escape }}</span>
+                    </div>
+                  {% endif %}
+                </div>
+            {% if primary_link != blank %}
+              </a>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+
+      {% if section.settings.show_arrows %}
+        <button class="fulva-buzz__carousel-arrow fulva-buzz__carousel-arrow--next" type="button" aria-label="Next" data-fb-next>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M9.3 18.7a1 1 0 0 1 0-1.4L14.6 12 9.3 6.7a1 1 0 1 1 1.4-1.4l6 6a1 1 0 0 1 0 1.4l-6 6a1 1 0 0 1-1.4 0z"></path>
+          </svg>
+        </button>
+      {% endif %}
+    </div>
+
+    {% if section.settings.show_progress %}
+      <div class="fulva-buzz__progress" aria-hidden="true" data-fb-progress>
+        {% for block in buzz_blocks %}
+          <span class="fulva-buzz__progress-dot" data-fb-dot data-index="{{ forloop.index0 }}"></span>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .fulva-buzz--{{ section.id }} {
+    color: var(--fb-text);
+    font-family: var(--font-body-family, inherit);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fulva-buzz--{{ section.id }}.fulva-buzz--bg-linear {
+    background: linear-gradient(180deg, var(--fb-bg), var(--fb-bg2));
+  }
+
+  .fulva-buzz--{{ section.id }}.fulva-buzz--bg-radial {
+    background: radial-gradient(circle at 50% 0%, var(--fb-bg) 0%, var(--fb-bg2) 55%, var(--fb-bg3) 100%);
+  }
+
+  .fulva-buzz--{{ section.id }}::before,
+  .fulva-buzz--{{ section.id }}::after {
+    content: none;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__inner {
+    max-width: var(--fb-max);
+    margin: 0 auto;
+    padding: var(--fb-py) 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 var(--fb-px);
+    text-align: center;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: rgba(255,255,255,0.72);
+    font-weight: 800;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 2px;
+    background: rgba(255,255,255,0.55);
+    flex: 0 0 auto;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__title {
+    margin: 0;
+    font-family: var(--font-heading-family, inherit);
+    font-size: 40px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    color: rgba(255,255,255,0.95);
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__title em {
+    font-style: normal;
+    color: var(--fb-title-highlight);
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__subtitle {
+    color: rgba(255,255,255,0.70);
+    font-size: 14px;
+    line-height: 1.4;
+    max-width: 62ch;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    background: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.92);
+    border: 1px solid rgba(255,255,255,0.18);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 18px 44px rgba(0,0,0,0.30);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__cta:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.02);
+    box-shadow: 0 22px 56px rgba(0,0,0,0.38);
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__profiles {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 26px;
+    padding: 26px var(--fb-px) 10px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__profiles::-webkit-scrollbar {
+    display: none;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__profile {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 88px;
+    flex: 0 0 auto;
+    text-align: center;
+    color: inherit;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__profile-avatar {
+    width: var(--fb-profile-size);
+    height: var(--fb-profile-size);
+    border-radius: 999px;
+    border: 2px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 18px 44px rgba(0,0,0,0.22);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__profile-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__profile-avatar-fallback {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__profile-role {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    font-weight: 900;
+    color: var(--fb-accent);
+    text-transform: uppercase;
+    white-space: nowrap;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.15;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__profile-name {
+    font-size: 12px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.88);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+    line-height: 1.15;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__profile.is-active .fulva-buzz__profile-avatar {
+    border-color: var(--fb-accent);
+    box-shadow: 0 0 0 2px var(--fb-accent), 0 20px 46px rgba(0,0,0,0.26);
+    transform: translateY(-1px);
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__carousel {
+    position: relative;
+    padding: 10px var(--fb-px) 0;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__stage {
+    position: relative;
+    height: var(--fb-stage-h);
+    max-width: 100%;
+    margin: 0 auto;
+    touch-action: pan-y;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__slide {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--fb-card-w);
+    transform: translate(-50%, -50%) scale(0.7);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 420ms cubic-bezier(.2,.9,.2,1), opacity 420ms ease;
+    z-index: 1;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) translateX(0) scale(1);
+    z-index: 5;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__slide.is-prev {
+    opacity: 0.92;
+    transform: translate(-50%, -50%) translateX(calc(var(--fb-offset) * -1)) scale(var(--fb-mid-scale));
+    z-index: 4;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__slide.is-next {
+    opacity: 0.92;
+    transform: translate(-50%, -50%) translateX(var(--fb-offset)) scale(var(--fb-mid-scale));
+    z-index: 4;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__slide.is-far-prev {
+    opacity: 0.28;
+    transform: translate(-50%, -50%) translateX(calc(var(--fb-offset) * -2)) scale(var(--fb-far-scale));
+    z-index: 3;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__slide.is-far-next {
+    opacity: 0.28;
+    transform: translate(-50%, -50%) translateX(calc(var(--fb-offset) * 2)) scale(var(--fb-far-scale));
+    z-index: 3;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__slide-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__slide-media {
+    position: relative;
+    border-radius: var(--fb-radius);
+    overflow: hidden;
+    box-shadow: 0 28px 72px rgba(0,0,0,0.42);
+    border: 1px solid rgba(255,255,255,0.10);
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__slide-media::before {
+    content: '';
+    display: block;
+    aspect-ratio: var(--fb-card-ar);
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__slide-img,
+  .fulva-buzz--{{ section.id }} .fulva-buzz__slide-video,
+  .fulva-buzz--{{ section.id }} .fulva-buzz__slide-placeholder {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__slide-placeholder {
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.16), rgba(255,255,255,0.04));
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__slide-play {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    width: 52px;
+    height: 52px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+    pointer-events: none;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__slide-play svg {
+    width: 22px;
+    height: 22px;
+    fill: rgba(0, 0, 0, 0.88);
+    transform: translateX(1px);
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__slide-views {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    padding: 7px 10px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.55);
+    color: rgba(255,255,255,0.92);
+    font-size: 12px;
+    font-weight: 800;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(10px);
+    pointer-events: none;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__slide-likes {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.46);
+    color: rgba(255,255,255,0.92);
+    font-size: 12px;
+    font-weight: 800;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    pointer-events: none;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 46px;
+    height: 46px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 18px 44px rgba(0,0,0,0.28);
+    backdrop-filter: blur(10px);
+    transition: transform 0.2s ease, filter 0.2s ease;
+    z-index: 10;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__carousel-arrow:hover {
+    transform: translateY(-50%) scale(1.02);
+    filter: brightness(1.05);
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__carousel-arrow svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__carousel-arrow--prev {
+    left: 8px;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__carousel-arrow--next {
+    right: 8px;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px var(--fb-px) 0;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__progress-dot {
+    width: 18px;
+    height: 4px;
+    border-radius: 99px;
+    background: rgba(255,255,255,0.22);
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  .fulva-buzz--{{ section.id }} .fulva-buzz__progress-dot.is-active {
+    background: rgba(255,255,255,0.78);
+    transform: scaleX(1.25);
+  }
+
+  @media (max-width: 989px) {
+    .fulva-buzz--{{ section.id }} .fulva-buzz__carousel-arrow--prev {
+      left: 0;
+    }
+    .fulva-buzz--{{ section.id }} .fulva-buzz__carousel-arrow--next {
+      right: 0;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .fulva-buzz--{{ section.id }} .fulva-buzz__inner {
+      padding: var(--fb-py-m) 0;
+    }
+
+    .fulva-buzz--{{ section.id }} .fulva-buzz__header {
+      padding: 0 var(--fb-px-m);
+    }
+
+    .fulva-buzz--{{ section.id }} .fulva-buzz__title {
+      font-size: 30px;
+    }
+
+    .fulva-buzz--{{ section.id }} .fulva-buzz__subtitle {
+      font-size: 13px;
+    }
+
+    .fulva-buzz--{{ section.id }} .fulva-buzz__profiles {
+      padding: 18px var(--fb-px-m) 8px;
+      gap: 18px;
+    }
+
+    .fulva-buzz--{{ section.id }} .fulva-buzz__profile {
+      min-width: 74px;
+    }
+
+    .fulva-buzz--{{ section.id }} .fulva-buzz__profile-role,
+    .fulva-buzz--{{ section.id }} .fulva-buzz__profile-name {
+      max-width: 92px;
+    }
+
+    .fulva-buzz--{{ section.id }} .fulva-buzz__carousel {
+      padding: 8px var(--fb-px-m) 0;
+    }
+
+    .fulva-buzz--{{ section.id }} .fulva-buzz__stage {
+      height: var(--fb-stage-h-m);
+    }
+
+    .fulva-buzz--{{ section.id }} .fulva-buzz__slide {
+      width: var(--fb-card-w-m);
+    }
+
+    .fulva-buzz--{{ section.id }} .fulva-buzz__slide.is-prev {
+      transform: translate(-50%, -50%) translateX(calc(var(--fb-offset-m) * -1)) scale(var(--fb-mid-scale));
+    }
+
+    .fulva-buzz--{{ section.id }} .fulva-buzz__slide.is-next {
+      transform: translate(-50%, -50%) translateX(var(--fb-offset-m)) scale(var(--fb-mid-scale));
+    }
+
+    .fulva-buzz--{{ section.id }} .fulva-buzz__slide.is-far-prev {
+      transform: translate(-50%, -50%) translateX(calc(var(--fb-offset-m) * -2)) scale(var(--fb-far-scale));
+    }
+
+    .fulva-buzz--{{ section.id }} .fulva-buzz__slide.is-far-next {
+      transform: translate(-50%, -50%) translateX(calc(var(--fb-offset-m) * 2)) scale(var(--fb-far-scale));
+    }
+
+    .fulva-buzz--{{ section.id }} .fulva-buzz__carousel-arrow {
+      width: 42px;
+      height: 42px;
+    }
+
+    .fulva-buzz--{{ section.id }} .fulva-buzz__progress {
+      padding: 10px var(--fb-px-m) 0;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .fulva-buzz--{{ section.id }}.fulva-buzz--hide-mobile {
+      display: none;
+    }
+  }
+
+  @media (min-width: 750px) {
+    .fulva-buzz--{{ section.id }}.fulva-buzz--hide-desktop {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fulva-buzz--{{ section.id }} .fulva-buzz__cta {
+      transition: none;
+    }
+    .fulva-buzz--{{ section.id }} .fulva-buzz__carousel-arrow {
+      transition: none;
+    }
+    .fulva-buzz--{{ section.id }} .fulva-buzz__slide {
+      transition: none;
+    }
+    .fulva-buzz--{{ section.id }} .fulva-buzz__progress-dot {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.querySelector('.fulva-buzz--{{ section.id }}');
+    if (!root) return;
+
+    const prevBtn = root.querySelector('[data-fb-prev]');
+    const nextBtn = root.querySelector('[data-fb-next]');
+    const stage = root.querySelector('[data-fb-stage]');
+    const slides = Array.from(root.querySelectorAll('[data-fb-slide]'));
+    const profiles = Array.from(root.querySelectorAll('[data-fb-profile]'));
+    const dots = Array.from(root.querySelectorAll('[data-fb-dot]'));
+    if (!stage || slides.length === 0) return;
+
+    const n = slides.length;
+    let active = 0;
+
+    const setActive = (idx) => {
+      active = ((idx % n) + n) % n;
+
+      const half = Math.floor(n / 2);
+      slides.forEach((el, i) => {
+        const raw = i - active;
+        const wrapped = ((raw + n + half) % n) - half;
+        el.classList.remove('is-active', 'is-prev', 'is-next', 'is-far-prev', 'is-far-next');
+
+        if (wrapped === 0) el.classList.add('is-active');
+        if (wrapped === -1) el.classList.add('is-prev');
+        if (wrapped === 1) el.classList.add('is-next');
+        if (wrapped === -2) el.classList.add('is-far-prev');
+        if (wrapped === 2) el.classList.add('is-far-next');
+
+        el.setAttribute('aria-hidden', wrapped === 0 ? 'false' : 'true');
+      });
+
+      profiles.forEach((p, i) => {
+        p.classList.toggle('is-active', i === active);
+      });
+
+      dots.forEach((d, i) => {
+        d.classList.toggle('is-active', i === active);
+      });
+    };
+
+    const next = () => setActive(active + 1);
+    const prev = () => setActive(active - 1);
+
+    if (nextBtn) nextBtn.addEventListener('click', next);
+    if (prevBtn) prevBtn.addEventListener('click', prev);
+
+    profiles.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.getAttribute('data-index') || '0', 10);
+        setActive(idx);
+      });
+    });
+
+    let startX = 0;
+    let startY = 0;
+    let tracking = false;
+
+    stage.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'touch') return;
+      tracking = true;
+      startX = e.clientX;
+      startY = e.clientY;
+    }, { passive: true });
+
+    stage.addEventListener('pointerup', (e) => {
+      if (!tracking) return;
+      tracking = false;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      if (Math.abs(dx) < 42 || Math.abs(dx) < Math.abs(dy)) return;
+      if (dx < 0) next();
+      else prev();
+    }, { passive: true });
+
+    setActive(0);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Fulva buzz",
+  "settings": [
+    { "type": "text", "id": "aria_label", "label": "ARIA label", "default": "What they’re saying" },
+
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Loved by Celebs" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "They’re talking about <em>Fulva</em>" },
+    { "type": "checkbox", "id": "show_subtitle", "label": "Show subtitle", "default": true },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Filmmakers, athletes, and influencers who fell for Calicut’s finest." },
+
+    { "type": "header", "content": "CTA" },
+    { "type": "checkbox", "id": "show_cta", "label": "Show CTA", "default": false },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "View all" },
+    { "type": "url", "id": "cta_link", "label": "CTA link" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show navigation arrows (Desktop)", "default": true },
+    { "type": "checkbox", "id": "show_play_icon", "label": "Show play icon on media", "default": true },
+    { "type": "checkbox", "id": "show_profiles", "label": "Show profile strip", "default": true },
+    { "type": "checkbox", "id": "show_likes", "label": "Show likes", "default": true },
+    { "type": "checkbox", "id": "show_progress", "label": "Show progress indicators", "default": true },
+    { "type": "range", "id": "max_width", "label": "Max width (0 = full width)", "min": 0, "max": 1800, "step": 20, "default": 0 },
+    { "type": "range", "id": "padding_x_desktop", "label": "Padding X desktop (px)", "min": 0, "max": 90, "step": 2, "default": 64 },
+    { "type": "range", "id": "padding_y_desktop", "label": "Padding Y desktop (px)", "min": 0, "max": 90, "step": 2, "default": 34 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding X mobile (px)", "min": 0, "max": 30, "step": 1, "default": 16 },
+    { "type": "range", "id": "padding_y_mobile", "label": "Padding Y mobile (px)", "min": 0, "max": 60, "step": 1, "default": 18 },
+    { "type": "range", "id": "gap", "label": "Card gap (px)", "min": 10, "max": 32, "step": 1, "default": 14 },
+    { "type": "range", "id": "radius", "label": "Card radius (px)", "min": 0, "max": 28, "step": 1, "default": 18 },
+    { "type": "range", "id": "media_radius", "label": "Media bottom radius (px)", "min": 0, "max": 28, "step": 1, "default": 18 },
+
+    { "type": "header", "content": "Card sizes" },
+    { "type": "range", "id": "card_width_desktop", "label": "Active card width desktop (px)", "min": 240, "max": 440, "step": 2, "default": 340 },
+    { "type": "range", "id": "card_width_mobile", "label": "Active card width mobile (px)", "min": 200, "max": 340, "step": 2, "default": 260 },
+    { "type": "range", "id": "stage_height_desktop", "label": "Carousel height desktop (px)", "min": 360, "max": 720, "step": 10, "default": 540 },
+    { "type": "range", "id": "stage_height_mobile", "label": "Carousel height mobile (px)", "min": 320, "max": 680, "step": 10, "default": 500 },
+    { "type": "range", "id": "slide_offset_desktop", "label": "Slide offset desktop (px)", "min": 120, "max": 260, "step": 2, "default": 180 },
+    { "type": "range", "id": "slide_offset_mobile", "label": "Slide offset mobile (px)", "min": 90, "max": 200, "step": 2, "default": 140 },
+    { "type": "range", "id": "mid_scale", "label": "Side scale (%)", "min": 60, "max": 95, "step": 1, "default": 86 },
+    { "type": "range", "id": "far_scale", "label": "Far scale (%)", "min": 50, "max": 90, "step": 1, "default": 72 },
+    { "type": "range", "id": "profile_size", "label": "Profile size (px)", "min": 46, "max": 86, "step": 2, "default": 62 },
+    {
+      "type": "select",
+      "id": "card_aspect_ratio",
+      "label": "Media aspect ratio",
+      "default": "0.5625",
+      "options": [
+        { "value": "0.5625", "label": "9:16 (Reel)" },
+        { "value": "0.6667", "label": "2:3 (Portrait)" },
+        { "value": "0.75", "label": "3:4 (Portrait)" },
+        { "value": "1", "label": "1:1 (Square)" }
+      ]
+    },
+
+    { "type": "header", "content": "Content visibility" },
+    { "type": "checkbox", "id": "show_badge", "label": "Show badge (unused)", "default": false },
+    { "type": "checkbox", "id": "show_metric", "label": "Show metric pill", "default": true },
+    { "type": "checkbox", "id": "show_title", "label": "Show role/title (profile strip)", "default": true },
+    { "type": "checkbox", "id": "show_quote", "label": "Show quote (unused)", "default": false },
+    { "type": "checkbox", "id": "show_handle", "label": "Show handle (unused)", "default": false },
+    { "type": "checkbox", "id": "show_stars", "label": "Show stars (unused)", "default": false },
+
+    { "type": "header", "content": "Colors" },
+    {
+      "type": "select",
+      "id": "background_style",
+      "label": "Background style",
+      "default": "radial",
+      "options": [
+        { "value": "radial", "label": "Radial (vignette)" },
+        { "value": "linear", "label": "Linear" }
+      ]
+    },
+    { "type": "checkbox", "id": "use_exact_palette", "label": "Lock exact screenshot colors", "default": true },
+    { "type": "color", "id": "background", "label": "Background (top)", "default": "#0C6A20" },
+    { "type": "color", "id": "background_2", "label": "Background (mid)", "default": "#064414" },
+    { "type": "color", "id": "background_3", "label": "Background (edge)", "default": "#031A08" },
+    { "type": "color", "id": "glow_1", "label": "Glow 1", "default": "#1C9A38" },
+    { "type": "color", "id": "glow_2", "label": "Glow 2", "default": "#0B5F1D" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#FFFFFF" },
+    { "type": "color", "id": "muted_text_color", "label": "Muted text", "default": "#D4E3D7" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#F4C026" },
+    { "type": "color", "id": "title_highlight_color", "label": "Title highlight color", "default": "#F4C026" },
+    { "type": "color", "id": "border_color", "label": "Border color", "default": "#FFFFFF" },
+    { "type": "range", "id": "border_opacity", "label": "Section border opacity (%)", "min": 0, "max": 30, "step": 1, "default": 8 },
+    { "type": "color", "id": "card_background", "label": "Card background (unused)", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_border_color", "label": "Card border color (unused)", "default": "#000000" },
+    { "type": "range", "id": "card_border_opacity", "label": "Card border opacity (%)", "min": 0, "max": 30, "step": 1, "default": 8 },
+    { "type": "color", "id": "shadow_color", "label": "Shadow color", "default": "#000000" },
+    { "type": "range", "id": "shadow_opacity", "label": "Shadow opacity (%)", "min": 0, "max": 30, "step": 1, "default": 12 },
+
+    { "type": "header", "content": "Visibility" },
+    { "type": "checkbox", "id": "hide_on_mobile", "label": "Hide on mobile", "default": false },
+    { "type": "checkbox", "id": "hide_on_desktop", "label": "Hide on desktop", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "mention",
+      "name": "Mention",
+      "settings": [
+        { "type": "video", "id": "video", "label": "Video (Reel)" },
+        { "type": "image_picker", "id": "media", "label": "Fallback image (if no video)" },
+        { "type": "url", "id": "link", "label": "Link (optional)" },
+        { "type": "image_picker", "id": "avatar", "label": "Avatar (optional)" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Influencer Name" },
+        { "type": "text", "id": "title", "label": "Role/title", "default": "INFLUENCER" },
+        { "type": "text", "id": "handle", "label": "Handle", "default": "@fulva.in" },
+        { "type": "text", "id": "badge", "label": "Badge", "default": "Trending" },
+        { "type": "text", "id": "metric", "label": "Views", "default": "2.4M" },
+        { "type": "text", "id": "like_text", "label": "Likes", "default": "84K" },
+        { "type": "text", "id": "quote", "label": "Quote (unused)", "default": "Loved the taste and the giftable packaging." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fulva buzz",
+      "blocks": [
+        { "type": "mention" },
+        { "type": "mention" },
+        { "type": "mention" },
+        { "type": "mention" }
+      ]
+    }
+  ]
+}
+{% endschema %}
