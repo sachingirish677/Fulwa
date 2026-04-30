@@ -1,0 +1,110 @@
+<div class="image-banner-strip" style="
+  --ibs-height: {{ block.settings.block_height }}px;
+  --ibs-bg: {{ block.settings.background_color }};
+">
+  <div class="image-banner-strip__container">
+    {%- if block.settings.image_1 != blank -%}
+      {%- if block.settings.link_1 != blank -%}
+        <a href="{{ block.settings.link_1 }}" class="ibs-image-link">
+          <img src="{{ block.settings.image_1 | img_url: 'master' }}" alt="{{ block.settings.image_1.alt | escape }}" loading="lazy">
+        </a>
+      {%- else -%}
+        <div class="ibs-image-wrapper">
+          <img src="{{ block.settings.image_1 | img_url: 'master' }}" alt="{{ block.settings.image_1.alt | escape }}" loading="lazy">
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if block.settings.image_2 != blank -%}
+      {%- if block.settings.link_2 != blank -%}
+        <a href="{{ block.settings.link_2 }}" class="ibs-image-link">
+          <img src="{{ block.settings.image_2 | img_url: 'master' }}" alt="{{ block.settings.image_2.alt | escape }}" loading="lazy">
+        </a>
+      {%- else -%}
+        <div class="ibs-image-wrapper">
+          <img src="{{ block.settings.image_2 | img_url: 'master' }}" alt="{{ block.settings.image_2.alt | escape }}" loading="lazy">
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if block.settings.image_3 != blank -%}
+      {%- if block.settings.link_3 != blank -%}
+        <a href="{{ block.settings.link_3 }}" class="ibs-image-link">
+          <img src="{{ block.settings.image_3 | img_url: 'master' }}" alt="{{ block.settings.image_3.alt | escape }}" loading="lazy">
+        </a>
+      {%- else -%}
+        <div class="ibs-image-wrapper">
+          <img src="{{ block.settings.image_3 | img_url: 'master' }}" alt="{{ block.settings.image_3.alt | escape }}" loading="lazy">
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{{ 'image-banner-strip.css' | asset_url | stylesheet_tag }}
+
+{% schema %}
+{
+  "name": "Fulva Image Banner Strip",
+  "settings": [
+    {
+      "type": "range",
+      "id": "block_height",
+      "label": "Block Height (Desktop)",
+      "min": 60,
+      "max": 300,
+      "step": 4,
+      "default": 164,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Upload Image 1"
+    },
+    {
+      "type": "url",
+      "id": "link_1",
+      "label": "Image 1 Link"
+    },
+    {
+      "type": "header",
+      "content": "Image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Upload Image 2"
+    },
+    {
+      "type": "url",
+      "id": "link_2",
+      "label": "Image 2 Link"
+    },
+    {
+      "type": "header",
+      "content": "Image 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Upload Image 3"
+    },
+    {
+      "type": "url",
+      "id": "link_3",
+      "label": "Image 3 Link"
+    }
+  ]
+}
+{% endschema %}

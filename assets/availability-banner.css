@@ -1,0 +1,67 @@
+.availability-banner {
+  background-color: var(--ab-bg);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.availability-banner__container {
+  width: 100%;
+  max-width: 1200px;
+  height: var(--ab-height);
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+}
+
+.availability-banner__text {
+  font-family: var(--font-body-family, inherit);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 2.16px;
+  color: var(--ab-text-color);
+  text-transform: uppercase;
+  line-height: 100%;
+}
+
+.availability-banner__images {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ab-image-link,
+.ab-image-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.availability-banner__images img {
+  height: 74px;
+  max-height: calc(var(--ab-height) - 40px);
+  max-width: 278px;
+}
+
+@media (max-width: 768px) {
+  .availability-banner__container {
+    flex-direction: column;
+    gap: 15px;
+    height: auto;
+    padding: 20px;
+  }
+
+  .availability-banner__images {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .availability-banner__images img {
+    max-height: 60px;
+  }
+}
