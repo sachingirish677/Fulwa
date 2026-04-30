@@ -1,0 +1,129 @@
+<div class="availability-banner" style="
+  --ab-height: {{ block.settings.section_height }}px;
+  --ab-bg: {{ block.settings.background_color }};
+  --ab-text-color: {{ block.settings.text_color }};
+">
+  <div class="availability-banner__container">
+    <div class="availability-banner__text">
+      {{ block.settings.heading_text }}
+    </div>
+    
+    <div class="availability-banner__images">
+      {%- if block.settings.image_1 != blank -%}
+        {%- if block.settings.link_1 != blank -%}
+          <a href="{{ block.settings.link_1 }}" class="ab-image-link">
+            <img src="{{ block.settings.image_1 | img_url: 'master' }}" alt="{{ block.settings.image_1.alt | escape }}">
+          </a>
+        {%- else -%}
+          <div class="ab-image-wrapper">
+            <img src="{{ block.settings.image_1 | img_url: 'master' }}" alt="{{ block.settings.image_1.alt | escape }}">
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- if block.settings.image_2 != blank -%}
+        {%- if block.settings.link_2 != blank -%}
+          <a href="{{ block.settings.link_2 }}" class="ab-image-link">
+            <img src="{{ block.settings.image_2 | img_url: 'master' }}" alt="{{ block.settings.image_2.alt | escape }}">
+          </a>
+        {%- else -%}
+          <div class="ab-image-wrapper">
+            <img src="{{ block.settings.image_2 | img_url: 'master' }}" alt="{{ block.settings.image_2.alt | escape }}">
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- if block.settings.image_3 != blank -%}
+        {%- if block.settings.link_3 != blank -%}
+          <a href="{{ block.settings.link_3 }}" class="ab-image-link">
+            <img src="{{ block.settings.image_3 | img_url: 'master' }}" alt="{{ block.settings.image_3.alt | escape }}">
+          </a>
+        {%- else -%}
+          <div class="ab-image-wrapper">
+            <img src="{{ block.settings.image_3 | img_url: 'master' }}" alt="{{ block.settings.image_3.alt | escape }}">
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{{ 'availability-banner.css' | asset_url | stylesheet_tag }}
+
+{% schema %}
+{
+  "name": "Fulva Availability Banner",
+  "settings": [
+    {
+      "type": "range",
+      "id": "section_height",
+      "label": "Section Height (Desktop)",
+      "min": 32,
+      "max": 232,
+      "step": 4,
+      "default": 132,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#F8FBF8"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#333333"
+    },
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Heading Text",
+      "default": "AVAILABLE ACROSS INDIA"
+    },
+    {
+      "type": "header",
+      "content": "Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Upload Image 1"
+    },
+    {
+      "type": "url",
+      "id": "link_1",
+      "label": "Image 1 Link"
+    },
+    {
+      "type": "header",
+      "content": "Image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Upload Image 2"
+    },
+    {
+      "type": "url",
+      "id": "link_2",
+      "label": "Image 2 Link"
+    },
+    {
+      "type": "header",
+      "content": "Image 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Upload Image 3"
+    },
+    {
+      "type": "url",
+      "id": "link_3",
+      "label": "Image 3 Link"
+    }
+  ]
+}
+{% endschema %}
