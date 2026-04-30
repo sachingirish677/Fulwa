@@ -361,14 +361,6 @@
     font-family: var(--font-body-family, inherit);
   }
 
-  .fulva-available--{{ section.id }} .fulva-available-label {
-    font-size: 12px;
-    letter-spacing: 3.5px;
-    text-transform: uppercase;
-    color: #8a8a8a;
-    font-weight: 600;
-  }
-
   .fulva-available--{{ section.id }} .fulva-platforms {
     display: flex;
     gap: 14px;
@@ -660,39 +652,6 @@
     </div>
   </div>
 </section>
-
-{% if section.settings.show_bottom_section %}
-<section class="fulva-available fulva-available--{{ section.id }}" style="background: {{ section.settings.bottom_bg }}; border-top: 1px solid {{ section.settings.border_color | color_modify: 'alpha', border_alpha }};">
-  <span class="fulva-available-label">{{ section.settings.bottom_heading | escape }}</span>
-
-  <div class="fulva-platforms">
-    {% if section.settings.amazon_link != blank %}
-      <a href="{{ section.settings.amazon_link }}" target="_blank" rel="noopener" class="fulva-platform-btn amazon">
-        <span class="fulva-platform-label">Shop on</span>
-        <span class="fulva-platform-name">
-          {% if section.settings.amazon_logo != blank %}
-            <img class="fulva-platform-logo" src="{{ section.settings.amazon_logo | image_url: width: 200 }}" alt="{{ section.settings.amazon_logo_alt | escape }}" loading="lazy">
-          {% else %}
-            amazon
-          {% endif %}
-        </span>
-      </a>
-    {% endif %}
-    {% if section.settings.flipkart_link != blank %}
-      <a href="{{ section.settings.flipkart_link }}" target="_blank" rel="noopener" class="fulva-platform-btn flipkart">
-        <span class="fulva-platform-label">Shop on</span>
-        <span class="fulva-platform-name">
-          {% if section.settings.flipkart_logo != blank %}
-            <img class="fulva-platform-logo" src="{{ section.settings.flipkart_logo | image_url: width: 200 }}" alt="{{ section.settings.flipkart_logo_alt | escape }}" loading="lazy">
-          {% else %}
-            Flipkart <span class="fk-icon" aria-hidden="true">🛒</span>
-          {% endif %}
-        </span>
-      </a>
-    {% endif %}
-  </div>
-</section>
-{% endif %}
 
 
 <script>
