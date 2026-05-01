@@ -1,0 +1,144 @@
+.faq-section-wrapper {
+  width: 100%;
+}
+
+.faq-container {
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.faq-left {
+  flex: 1;
+  max-width: 50%;
+  padding: 64px;
+}
+
+.faq-right {
+  flex: 1;
+  max-width: 50%;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+}
+
+.faq-heading {
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 100%;
+  letter-spacing: -1.32px;
+  height: 163px;
+  margin: 0;
+  width: 340px;
+  align-content: center;
+}
+
+.faq-heading-black {
+  color: #1A1A1A;
+  font-weight: 800;
+}
+
+.faq-heading-green {
+  color: #4A774F;
+  font-weight: 800;
+}
+
+.faq-accordion-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.faq-accordion-item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.faq-accordion-item:first-child {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.faq-accordion-header {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 24px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  text-align: left;
+}
+
+.faq-question {
+  font-size: 14px;
+  font-weight: 800;
+  color: #1A1A1A;
+  text-transform: uppercase;
+  padding-right: 20px;
+  line-height: 18.2px;
+  letter-spacing: 0.56px;
+  vertical-align: middle;
+}
+
+.faq-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.faq-accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.faq-answer {
+  padding-bottom: 24px;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.faq-answer p {
+  margin: 0;
+}
+
+.faq-image {
+  width: 100%;
+  height: 100%;
+  object-fit: scale-down;
+}
+
+.faq-image-placeholder {
+  width: 100%;
+  max-width: 550px;
+  height: 400px;
+  background: #EAEAEA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 990px) {
+  .faq-container {
+    flex-direction: column-reverse;
+    gap: 40px;
+  }
+
+  .faq-left,
+  .faq-right {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .faq-right {
+    justify-content: center;
+  }
+
+  .faq-heading {
+    font-size: 32px;
+  }
+}
