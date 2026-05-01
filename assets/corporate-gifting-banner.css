@@ -1,0 +1,179 @@
+.cgb-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #E8CD54;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+}
+
+.cgb-container {
+  width: 100%;
+  height: var(--cgb-height);
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  z-index: 1;
+}
+
+.cgb-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 16px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #0D2010;
+  text-transform: uppercase;
+  letter-spacing: 1.32px;
+  white-space: nowrap;
+  background: #C8D83A2E;
+}
+
+.cgb-product-image {
+  height: calc(var(--cgb-height) - 40px);
+  max-width: 130.18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cgb-product-image img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+.cgb-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.cgb-text-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cgb-heading {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0D2010;
+  letter-spacing: -0.18;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.cgb-subtitle {
+  font-size: 13px;
+  font-weight: 400;
+  color: #0000008C;
+  margin: 0;
+}
+
+.cgb-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cgb-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #526052;
+  background: rgba(0, 0, 0, 0.05);
+  white-space: nowrap;
+}
+
+.cgb-cta-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 140px;
+}
+
+.cgb-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  background-color: #FFFFFF;
+  color: #1A1A1A;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 4px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+}
+
+@media (max-width: 990px) {
+  .cgb-container {
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "badge badge"
+      "image cta"
+      "content content";
+    padding: 24px 20px;
+    gap: 16px;
+    text-align: left;
+  }
+
+  .cgb-badge {
+    grid-area: badge;
+    justify-self: start;
+  }
+
+  .cgb-product-image {
+    grid-area: image;
+    justify-self: start;
+    height: auto;
+    max-height: 120px;
+  }
+
+  .cgb-cta-wrapper {
+    grid-area: cta;
+    justify-self: end;
+    width: auto;
+  }
+
+  .cgb-content {
+    grid-area: content;
+    text-align: left;
+    gap: 16px;
+  }
+
+  .cgb-tags-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .cgb-tags-row::-webkit-scrollbar {
+    display: none;
+  }
+}

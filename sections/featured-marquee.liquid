@@ -1,0 +1,90 @@
+{{ 'featured-marquee.css' | asset_url | stylesheet_tag }}
+
+<div class="featured-marquee" style="--fm-bg: {{ section.settings.bg_color }}; --fm-height: {{ section.settings.max_height }}px; --fm-speed: {{ section.settings.speed }}s;">
+  {%- if section.blocks.size > 0 -%}
+    {%- assign first_block = section.blocks.first -%}
+    <div class="fm-mobile-header">
+      {%- if first_block.settings.image != blank -%}
+        <img src="{{ first_block.settings.image | img_url: 'master' }}" alt="{{ first_block.settings.image.alt | escape }}" loading="lazy" class="fm-image">
+      {%- else -%}
+        <div class="fm-placeholder">Upload Logo</div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div class="fm-track">
+    {%- for i in (1..2) -%}
+      <div class="fm-group" aria-hidden="{% if forloop.index == 2 %}true{% else %}false{% endif %}">
+        {%- for block in section.blocks -%}
+          <div class="fm-item {% if forloop.first %}fm-item-first{% endif %}" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.image.alt | escape }}" loading="lazy" class="fm-image">
+            {%- else -%}
+              <div class="fm-placeholder">Upload Logo</div>
+            {%- endif -%}
+            
+            {%- if forloop.first -%}
+              <span class="fm-separator"></span>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured Marquee",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F2F7F2"
+    },
+    {
+      "type": "range",
+      "id": "max_height",
+      "label": "Block Height",
+      "min": 50,
+      "max": 250,
+      "step": 2,
+      "default": 166,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Animation Speed (seconds)",
+      "min": 5,
+      "max": 60,
+      "step": 1,
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Logo Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Marquee",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
+    }
+  ]
+}
+{% endschema %}

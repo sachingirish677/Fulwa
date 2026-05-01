@@ -1,0 +1,204 @@
+{%- liquid
+  assign bg_image = section.settings.background_image
+  assign bg_color_1 = section.settings.background_color_1
+  assign bg_color_2 = section.settings.background_color_2
+  assign bg_color_3 = section.settings.background_color_3
+-%}
+
+<div class="cgb-wrapper" style="
+  --cgb-height: {{ section.settings.block_height }}px;
+  {% if bg_image != blank %}
+    background-image: url('{{ bg_image | img_url: 'master' }}');
+  {% else %}
+    background-image: linear-gradient(90deg, {{ bg_color_1 }}, {{ bg_color_2 }}, {{ bg_color_3 }});
+  {% endif %}
+">
+  <div class="cgb-container">
+    
+    {%- if section.settings.badge_text != blank -%}
+      <div class="cgb-badge">
+        {{ section.settings.badge_text }}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.product_image != blank -%}
+      <div class="cgb-product-image">
+        <img src="{{ section.settings.product_image | img_url: 'master' }}" alt="{{ section.settings.product_image.alt | escape }}" loading="lazy">
+      </div>
+    {%- endif -%}
+
+    <div class="cgb-content">
+      <div class="cgb-text-header">
+        {%- if section.settings.heading_text != blank -%}
+          <h3 class="cgb-heading">{{ section.settings.heading_text }}</h3>
+        {%- endif -%}
+        {%- if section.settings.subtitle_text != blank -%}
+          <p class="cgb-subtitle">{{ section.settings.subtitle_text }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="cgb-tags-row">
+        {%- for i in (1..9) -%}
+          {%- capture tag_setting -%}tag_{{ i }}{%- endcapture -%}
+          {%- assign tag_text = section.settings[tag_setting] -%}
+          {%- if tag_text != blank -%}
+            <span class="cgb-tag">{{ tag_text }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- if section.settings.cta_text != blank -%}
+      <div class="cgb-cta-wrapper">
+        <a href="{{ section.settings.cta_link | default: '#' }}" class="cgb-cta-btn">
+          {{ section.settings.cta_text }}
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{{ 'corporate-gifting-banner.css' | asset_url | stylesheet_tag }}
+
+{% schema %}
+{
+  "name": "Corporate Gifting Banner",
+  "settings": [
+    {
+      "type": "range",
+      "id": "block_height",
+      "label": "Block Height (Desktop)",
+      "min": 60,
+      "max": 300,
+      "step": 4,
+      "default": 152,
+      "unit": "px"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image (Optional)"
+    },
+    {
+      "type": "color",
+      "id": "background_color_1",
+      "label": "Gradient Color 1",
+      "default": "#E8CD54"
+    },
+    {
+      "type": "color",
+      "id": "background_color_2",
+      "label": "Gradient Color 2",
+      "default": "#D9BC44"
+    },
+    {
+      "type": "color",
+      "id": "background_color_3",
+      "label": "Gradient Color 3",
+      "default": "#C9AC35"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Left Badge Text",
+      "default": "CORPORATE GIFTING"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Product Image"
+    },
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Heading text",
+      "default": "Bulk orders for offices & events — custom branded boxes available"
+    },
+    {
+      "type": "text",
+      "id": "subtitle_text",
+      "label": "Subtitle text",
+      "default": "Minimum 20 boxes · Priority shipping · Your logo on every box"
+    },
+    {
+      "type": "header",
+      "content": "Occasion Tags"
+    },
+    {
+      "type": "text",
+      "id": "tag_1",
+      "label": "Tag 1",
+      "default": "Eid & Ramzan"
+    },
+    {
+      "type": "text",
+      "id": "tag_2",
+      "label": "Tag 2",
+      "default": "Diwali"
+    },
+    {
+      "type": "text",
+      "id": "tag_3",
+      "label": "Tag 3",
+      "default": "Weddings"
+    },
+    {
+      "type": "text",
+      "id": "tag_4",
+      "label": "Tag 4",
+      "default": "Corporate"
+    },
+    {
+      "type": "text",
+      "id": "tag_5",
+      "label": "Tag 5",
+      "default": "Birthdays"
+    },
+    {
+      "type": "text",
+      "id": "tag_6",
+      "label": "Tag 6",
+      "default": "Thank You"
+    },
+    {
+      "type": "text",
+      "id": "tag_7",
+      "label": "Tag 7",
+      "default": "Onam"
+    },
+    {
+      "type": "text",
+      "id": "tag_8",
+      "label": "Tag 8",
+      "default": "Christmas"
+    },
+    {
+      "type": "text",
+      "id": "tag_9",
+      "label": "Tag 9",
+      "default": "Farewell"
+    },
+    {
+      "type": "header",
+      "content": "Call to Action"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button Text",
+      "default": "Get a Quote"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Corporate Gifting Banner"
+    }
+  ]
+}
+{% endschema %}
