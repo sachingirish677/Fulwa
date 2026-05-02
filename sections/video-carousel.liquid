@@ -1,0 +1,173 @@
+{{ 'video-carousel.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'video-carousel.js' | asset_url }}" defer="defer"></script>
+
+<div class="vc-wrapper" style="background-color: {{ section.settings.bg_color }};">
+  <div class="vc-header-container">
+    {%- if section.settings.mini_header != blank -%}
+      <div class="vc-mini-header">
+        <span class="vc-mini-line"></span>
+        {{ section.settings.mini_header }}
+      </div>
+    {%- endif -%}
+    
+    {%- if section.settings.header_1 != blank or section.settings.header_2 != blank -%}
+      <h2 class="vc-main-header">
+        <span class="vc-header-white">{{ section.settings.header_1 }}</span>
+        <span class="vc-header-yellow">{{ section.settings.header_2 }}</span>
+      </h2>
+    {%- endif -%}
+    
+    {%- if section.settings.sub_header != blank -%}
+      <p class="vc-sub-header">{{ section.settings.sub_header }}</p>
+    {%- endif -%}
+  </div>
+
+  <div class="vc-slider-container">
+    <div class="vc-slider-track">
+      {%- for block in section.blocks -%}
+        <div class="vc-slide {% if forloop.first %}is-active{% endif %}" {{ block.shopify_attributes }}>
+          
+          <div class="vc-video-wrapper">
+            {%- if block.settings.video != blank -%}
+              {{ block.settings.video | video_tag: autoplay: forloop.first, loop: true, muted: true, controls: false, class: 'vc-video-el' }}
+            {%- else -%}
+              <div class="vc-placeholder-video"></div>
+            {%- endif -%}
+            
+            <div class="vc-play-icon">
+              <!-- Play Icon (Default) -->
+              <svg class="icon-play" width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.5 11L0.5 21V1L17.5 11Z" fill="#ffffff"/>
+              </svg>
+              <!-- Previous Icon (Left Arrow) -->
+              <svg class="icon-prev" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                <path d="M15 18L9 12L15 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <!-- Next Icon (Right Arrow) -->
+              <svg class="icon-next" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                <path d="M9 18L15 12L9 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            
+            <div class="vc-views-badge">1.2M views</div>
+            {%- if block.settings.creator_name != blank -%}
+              <div class="vc-author-overlay">@{{ block.settings.creator_name | handleize }}</div>
+            {%- endif -%}
+          </div>
+          
+          <div class="vc-details-card">
+            <div class="vc-details-inner">
+              <h3 class="vc-details-title">{{ block.settings.header }}</h3>
+              <div class="vc-details-desc">{{ block.settings.description }}</div>
+              
+              <div class="vc-creator-info">
+                {%- if block.settings.creator_image != blank -%}
+                  <img src="{{ block.settings.creator_image | img_url: 'master' }}" class="vc-creator-img" alt="{{ block.settings.creator_name | escape }}">
+                {%- else -%}
+                  <div class="vc-creator-placeholder"></div>
+                {%- endif -%}
+                <span class="vc-creator-name">{{ block.settings.creator_name }}</span>
+              </div>
+              
+              {%- if block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}" class="vc-link-overlay" aria-label="View product"></a>
+              {%- endif -%}
+            </div>
+          </div>
+          
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Video Carousel",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#0D3B16"
+    },
+    {
+      "type": "text",
+      "id": "mini_header",
+      "label": "Mini Header",
+      "default": "HALWA IN YOUR KITCHEN"
+    },
+    {
+      "type": "text",
+      "id": "header_1",
+      "label": "Header Part 1 (White)",
+      "default": "Cook with"
+    },
+    {
+      "type": "text",
+      "id": "header_2",
+      "label": "Header Part 2 (Yellow)",
+      "default": "Calicut"
+    },
+    {
+      "type": "textarea",
+      "id": "sub_header",
+      "label": "Sub Header",
+      "default": "Recipes, pairings, and creative ideas from our community of halwa lovers."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video_card",
+      "name": "Video Card",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (MP4)"
+        },
+        {
+          "type": "text",
+          "id": "header",
+          "label": "Title",
+          "default": "Ramadan dessert"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Must try... Fulva Tender coconut halwa...</p>"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link URL"
+        },
+        {
+          "type": "image_picker",
+          "id": "creator_image",
+          "label": "Creator Image"
+        },
+        {
+          "type": "text",
+          "id": "creator_name",
+          "label": "Creator Name",
+          "default": "Arjun Mehta"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video Carousel",
+      "blocks": [
+        { "type": "video_card" },
+        { "type": "video_card" },
+        { "type": "video_card" },
+        { "type": "video_card" },
+        { "type": "video_card" }
+      ]
+    }
+  ]
+}
+{% endschema %}
