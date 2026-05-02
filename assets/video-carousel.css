@@ -1,0 +1,381 @@
+.vc-wrapper {
+  width: 100%;
+  padding: 60px 0 80px 0;
+  color: #fff;
+  overflow: hidden;
+}
+
+.vc-header-container {
+  margin: 0 auto;
+  height: 100.39px;
+  padding: 0 40px;
+}
+
+.vc-mini-header {
+  font-size: 11px;
+  font-weight: 700;
+  color: #F4C026;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 11px;
+  letter-spacing: 1.98px;
+  line-height: 100%;
+}
+
+.vc-mini-line {
+  width: 24px;
+  height: 2px;
+  background-color: #FFFFFF;
+}
+
+.vc-main-header {
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 9px;
+}
+
+.vc-header-white {
+  color: #ffffff;
+}
+
+.vc-header-yellow {
+  color: #E8CD54;
+}
+
+.vc-sub-header {
+  font-size: 16px;
+  color: #d1d1d1;
+  max-width: 600px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.vc-slider-container {
+  width: 100%;
+}
+
+.vc-slider-track {
+  position: relative;
+  height: 650px;
+  width: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.vc-slide {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateX(var(--x-offset, 0px));
+  height: 402px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  width: 222px;
+  opacity: 0.8;
+}
+
+.vc-slide:hover {
+  transform: translate(-50%, calc(-50% - 4px)) translateX(var(--x-offset, 0px));
+  opacity: 1;
+}
+
+.vc-slide.is-active {
+  width: 623px;
+  height: 555px;
+  cursor: default;
+  transform: translate(-50%, -50%) translateX(var(--x-offset, 0px));
+  opacity: 1;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.vc-video-wrapper {
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+  position: relative;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.vc-slide.is-active .vc-video-wrapper {
+  width: 283px;
+  border-radius: 12px 0 0 12px;
+}
+
+.vc-video-el {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+
+.vc-slide.is-active .vc-video-el {
+  opacity: 1;
+}
+
+.vc-placeholder-video {
+  width: 100%;
+  height: 100%;
+  background: #333;
+}
+
+.vc-play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(4px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s;
+  z-index: 5;
+}
+
+.vc-play-icon svg {
+  transition: opacity 0.3s ease;
+}
+
+.vc-slide:not(.is-prev):not(.is-next) .icon-play {
+  display: block !important;
+}
+
+.vc-slide:not(.is-prev):not(.is-next) .icon-prev,
+.vc-slide:not(.is-prev):not(.is-next) .icon-next {
+  display: none !important;
+}
+
+.vc-slide.is-prev .icon-prev {
+  display: block !important;
+}
+
+.vc-slide.is-prev .icon-play,
+.vc-slide.is-prev .icon-next {
+  display: none !important;
+}
+
+.vc-slide.is-next .icon-next {
+  display: block !important;
+}
+
+.vc-slide.is-next .icon-play,
+.vc-slide.is-next .icon-prev {
+  display: none !important;
+}
+
+
+
+.vc-slide.is-active .vc-play-icon {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.vc-views-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+  z-index: 2;
+}
+
+.vc-author-overlay {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 2;
+}
+
+.vc-details-card {
+  width: 0;
+  background: #ffffff;
+  color: #1A1A1A;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative;
+  border-radius: 0 12px 12px 0;
+}
+
+.vc-slide.is-active .vc-details-card {
+  width: 480px;
+}
+
+.vc-details-inner {
+  padding: 40px;
+  width: 480px;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.2s;
+}
+
+.vc-slide.is-active .vc-details-inner {
+  opacity: 1;
+}
+
+.vc-details-title {
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0 0 12px 0;
+  line-height: 1.3;
+}
+
+.vc-details-desc {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.vc-details-desc p {
+  margin: 0 0 10px 0;
+}
+
+.vc-creator-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #eee;
+}
+
+.vc-creator-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.vc-creator-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ccc;
+}
+
+.vc-creator-name {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.vc-link-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .vc-header-container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .vc-slide.is-active {
+    width: 166px;
+    height: 301px;
+  }
+
+  .vc-mini-header {
+    font-size: 9px;
+    letter-spacing: 1.9px;
+    margin-bottom: 8px;
+  }
+
+  .vc-slider-container {
+    padding-top: 34.5px;
+    padding-left: 24px;
+  }
+
+  .vc-sub-header {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0;
+    max-width: 360px;
+  }
+
+  .vc-slider-track {
+    height: auto;
+    width: 100%;
+    display: flex;
+    position: static;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    gap: 12px;
+    padding: 0 24px 40px 24px;
+    align-items: flex-start;
+    scroll-snap-type: x mandatory;
+  }
+
+  .vc-wrapper {
+    height: auto;
+    padding-bottom: 24px;
+    padding-top: 24px;
+  }
+
+  .vc-slider-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .vc-main-header {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+
+  .vc-slide {
+    flex-direction: column;
+    width: 166px;
+    height: 301px;
+    max-height: 420px;
+    max-width: 240px;
+    flex-shrink: 0;
+    position: static !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transition: all 0.4s ease;
+    scroll-snap-align: start;
+  }
+
+  .vc-slide.is-active {
+    transform: none !important;
+  }
+
+  .vc-video-wrapper,
+  .vc-slide.is-active .vc-video-wrapper {
+    height: 100%;
+    width: 100%;
+    border-radius: 12px;
+  }
+
+  .vc-details-card {
+    display: none !important;
+  }
+}
