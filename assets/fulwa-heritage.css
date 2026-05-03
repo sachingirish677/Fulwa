@@ -1,0 +1,202 @@
+/* Fulwa Heritage CSS */
+
+.fh-section {
+  width: 100%;
+  overflow: hidden;
+  /* background-color set via inline style */
+}
+
+.fh-container {
+  display: flex;
+  height: var(--desktop-height, 528px);
+  width: 100%;
+}
+
+.fh-image-col {
+  width: 50%;
+  height: 100%;
+  flex-shrink: 0;
+  background-color: var(--image-bg, #FEF9F0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fh-image {
+  width: 100%;
+  height: 100%;
+  object-position: center;
+  display: block;
+}
+
+/* Show desktop image by default, hide mobile image */
+.fh-image-mobile {
+  display: none;
+}
+
+.fh-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #ddd;
+}
+
+.fh-text-col {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 64px;
+}
+
+.fh-text-inner {
+  max-width: 600px;
+}
+
+.fh-tagline {
+  font-size: 11px;
+  font-weight: 700;
+  color: #357A38;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  letter-spacing: 1.98px;
+  margin-bottom: 14px;
+}
+
+.fh-tagline-line {
+  width: 24px;
+  height: 2px;
+  background-color: #F4C026;
+  /* Yellow line */
+}
+
+.fh-heading {
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 44px;
+  margin: 0 0 22px 0;
+  letter-spacing: -1.2px;
+}
+
+.fh-heading-green {
+  color: #377134;
+}
+
+.fh-heading-black {
+  color: #1A1A1A;
+}
+
+.fh-paragraph {
+  font-size: 15px;
+  color: #526052;
+  line-height: 27px;
+  letter-spacing: 0%;
+  margin-bottom: 18px;
+}
+
+.fh-quote-box {
+  background-color: #ffffff;
+  border-left: 3px solid #F4C026;
+  padding: 22px 32px;
+  font-size: 15.5px;
+  color: #2A332A;
+  letter-spacing: 0%;
+  font-style: italic;
+  line-height: 25.58px;
+  font-weight: 400px;
+  margin: 22px 0;
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.fh-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #4A8146;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.fh-button:hover {
+  opacity: 0.8;
+  gap: 12px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .fh-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  s .fh-tagline {
+    font-size: 9px;
+    letter-spacing: 1.8px;
+    font-weight: 700;
+    line-height: 100%;
+    margin-bottom: 8px;
+  }
+
+  .fh-paragraph {
+    font-size: 12.5px;
+    line-height: 20.63px;
+    font-weight: 400px;
+    letter-spacing: 0%;
+  }
+
+  .fh-heading {
+    margin-bottom: 12px;
+  }
+
+  .fh-image-col {
+    width: 100%;
+    height: 293px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fh-paragraph {
+    font-size: 12.5px;
+    font-weight: 400;
+    line-height: 20.63px;
+    letter-spacing: 0%;
+  }
+
+  /* Swap images on mobile */
+  .fh-image-desktop {
+    display: none;
+  }
+
+  .fh-image-mobile {
+    display: block;
+  }
+
+  .fh-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    object-fit: unset;
+    object-position: unset;
+  }
+
+  .fh-text-col {
+    width: 100%;
+    padding: 24px 20px;
+  }
+
+  .fh-heading {
+    font-size: 26px;
+    line-height: 28.6px;
+    letter-spacing: -0.78px;
+  }
+
+  .fh-quote-box {
+    padding: 20px;
+  }
+}

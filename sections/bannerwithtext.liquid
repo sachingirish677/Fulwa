@@ -13,15 +13,15 @@
     --fw-accent: {{ section.settings.accent_color }};
     --fw-eyeline: {{ section.settings.eyebrow_line_color }};
     --fw-border: {{ section.settings.border_color | color_modify: 'alpha', border_alpha }};
-    --fw-max: {% if section.settings.max_width > 0 %}{{ section.settings.max_width }}px{% else %}100%{% endif %};
-    --fw-px: {{ section.settings.padding_x_desktop }}px;
-    --fw-py: {{ section.settings.padding_y_desktop }}px;
-    --fw-px-m: {{ section.settings.padding_x_mobile }}px;
-    --fw-py-m: {{ section.settings.padding_y_mobile }}px;
-    --fw-radius: {{ section.settings.radius }}px;
-    --fw-btn-radius: {{ section.settings.button_radius }}px;
-    --fw-btn-w: {{ section.settings.button_width_desktop }}px;
-    --fw-btn-gap: {{ section.settings.button_gap }}px;
+    --fw-max: 100%;
+    --fw-px: 40px;
+    --fw-py: 28px;
+    --fw-px-m: 16px;
+    --fw-py-m: 18px;
+    --fw-radius: 18px;
+    --fw-btn-radius: 26px;
+    --fw-btn-w: 260px;
+    --fw-btn-gap: 10px;
     --fw-btn-bg: {{ section.settings.primary_button_bg }};
     --fw-btn-text: {{ section.settings.primary_button_text }};
     --fw-btn2-bg: {{ section.settings.secondary_button_bg }};
@@ -48,9 +48,13 @@
           <a class="fulva-wa__btn fulva-wa__btn--primary" href="{{ section.settings.primary_link }}">
             {% if section.settings.show_whatsapp_icon %}
               <span class="fulva-wa__btn-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
-                  <path d="M20.5 11.9c0 4.7-3.8 8.5-8.5 8.5-1.5 0-2.9-.4-4.2-1l-3.8 1 1.1-3.7c-.8-1.4-1.2-3-1.2-4.8 0-4.7 3.8-8.5 8.5-8.5s8.6 3.8 8.6 8.5zm-8.5-6.8c-3.8 0-6.8 3-6.8 6.8 0 1.6.5 3.1 1.4 4.3l.3.5-.6 2.2 2.3-.6.5.3c1.2.7 2.6 1.1 4 .9 3.7 0 6.8-3 6.8-6.8 0-3.7-3.1-6.8-6.9-6.8zm3.9 9.5c-.2.5-1.1 1-1.6 1.1-.4.1-.9.1-1.5-.1-.4-.1-.9-.3-1.5-.6-2.6-1.4-4.3-3.9-4.4-4-.1-.2-1.1-1.4-1.1-2.7 0-1.2.6-1.8.9-2.1.2-.2.5-.3.7-.3h.5c.1 0 .4 0 .6.4.2.5.7 1.8.7 2s.1.3 0 .5-.2.3-.3.4l-.3.3c-.2.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1.1 2.1 1.4 2.4 1.6.3.1.5.1.7-.1l.7-.9c.2-.2.3-.2.6-.1.2.1 1.7.8 2 .9.3.1.5.2.6.3.1.1.1.6-.1 1.1z"></path>
-                </svg>
+                {% if section.settings.button_icon != blank %}
+                  <img src="{{ section.settings.button_icon | image_url: width: 40 }}" alt="{{ section.settings.button_icon.alt | escape }}" width="20" height="20" style="object-fit: contain;">
+                {% else %}
+                  <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                    <path d="M20.5 11.9c0 4.7-3.8 8.5-8.5 8.5-1.5 0-2.9-.4-4.2-1l-3.8 1 1.1-3.7c-.8-1.4-1.2-3-1.2-4.8 0-4.7 3.8-8.5 8.5-8.5s8.6 3.8 8.6 8.5zm-8.5-6.8c-3.8 0-6.8 3-6.8 6.8 0 1.6.5 3.1 1.4 4.3l.3.5-.6 2.2 2.3-.6.5.3c1.2.7 2.6 1.1 4 .9 3.7 0 6.8-3 6.8-6.8 0-3.7-3.1-6.8-6.9-6.8zm3.9 9.5c-.2.5-1.1 1-1.6 1.1-.4.1-.9.1-1.5-.1-.4-.1-.9-.3-1.5-.6-2.6-1.4-4.3-3.9-4.4-4-.1-.2-1.1-1.4-1.1-2.7 0-1.2.6-1.8.9-2.1.2-.2.5-.3.7-.3h.5c.1 0 .4 0 .6.4.2.5.7 1.8.7 2s.1.3 0 .5-.2.3-.3.4l-.3.3c-.2.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1.1 2.1 1.4 2.4 1.6.3.1.5.1.7-.1l.7-.9c.2-.2.3-.2.6-.1.2.1 1.7.8 2 .9.3.1.5.2.6.3.1.1.1.6-.1 1.1z"></path>
+                  </svg>
+                {% endif %}
               </span>
             {% endif %}
             <span class="fulva-wa__btn-label">{{ section.settings.primary_label | escape }}</span>
@@ -237,21 +241,12 @@
 
     { "type": "header", "content": "Buttons" },
     { "type": "checkbox", "id": "show_whatsapp_icon", "label": "Show WhatsApp icon", "default": true },
-    { "type": "text", "id": "primary_label", "label": "Primary button label", "default": "Start Chat on WhatsApp" },
+    { "type": "image_picker", "id": "button_icon", "label": "Custom button icon (optional)" },
+    { "type": "text", "id": "primary_label", "label": "Primary button label", "default": "Chat with us on whatsApp" },
     { "type": "url", "id": "primary_link", "label": "Primary button link" },
     { "type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "Track Order" },
     { "type": "url", "id": "secondary_link", "label": "Secondary button link" },
 
-    { "type": "header", "content": "Layout" },
-    { "type": "range", "id": "max_width", "label": "Max width (0 = full width)", "min": 0, "max": 1800, "step": 20, "default": 0 },
-    { "type": "range", "id": "padding_x_desktop", "label": "Padding X desktop (px)", "min": 0, "max": 80, "step": 2, "default": 40 },
-    { "type": "range", "id": "padding_y_desktop", "label": "Padding Y desktop (px)", "min": 0, "max": 70, "step": 2, "default": 28 },
-    { "type": "range", "id": "padding_x_mobile", "label": "Padding X mobile (px)", "min": 0, "max": 26, "step": 1, "default": 16 },
-    { "type": "range", "id": "padding_y_mobile", "label": "Padding Y mobile (px)", "min": 0, "max": 60, "step": 1, "default": 18 },
-    { "type": "range", "id": "radius", "label": "Bar radius (px)", "min": 0, "max": 26, "step": 1, "default": 18 },
-    { "type": "range", "id": "button_radius", "label": "Button radius (px)", "min": 0, "max": 26, "step": 1, "default": 26 },
-    { "type": "range", "id": "button_width_desktop", "label": "Button width desktop (px)", "min": 180, "max": 360, "step": 2, "default": 260 },
-    { "type": "range", "id": "button_gap", "label": "Button gap (px)", "min": 6, "max": 18, "step": 1, "default": 10 },
 
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "background", "label": "Background (left)", "default": "#F4C026" },
@@ -277,3 +272,5 @@
   ]
 }
 {% endschema %}
+
+{{ 'fulwa-whatsapp-cta.css' | asset_url | stylesheet_tag }}

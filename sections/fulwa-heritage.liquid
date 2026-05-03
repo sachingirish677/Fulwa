@@ -1,0 +1,158 @@
+{{ 'fulwa-heritage.css' | asset_url | stylesheet_tag }}
+
+<section class="fh-section" style="--desktop-height: {{ section.settings.desktop_height }}px; background-color: {{ section.settings.bg_color }}; --image-bg: {{ section.settings.image_bg_color }};">
+  <div class="fh-container">
+    <div class="fh-image-col">
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 1500 | image_tag: class: 'fh-image fh-image-desktop' }}
+      {%- else -%}
+        {{ 'image' | placeholder_svg_tag: 'fh-placeholder fh-image-desktop' }}
+      {%- endif -%}
+      {%- if section.settings.mobile_image != blank -%}
+        {{ section.settings.mobile_image | image_url: width: 900 | image_tag: class: 'fh-image fh-image-mobile' }}
+      {%- endif -%}
+    </div>
+    
+    <div class="fh-text-col">
+      <div class="fh-text-inner">
+        {%- if section.settings.tagline != blank -%}
+          <div class="fh-tagline">
+            <span class="fh-tagline-line"></span>
+            {{ section.settings.tagline }}
+          </div>
+        {%- endif -%}
+        
+        {%- if section.settings.pre_heading != blank or section.settings.heading_1 != blank or section.settings.heading_2 != blank -%}
+          <h2 class="fh-heading">
+            {%- if section.settings.pre_heading != blank -%}
+              <span class="fh-heading-black">{{ section.settings.pre_heading }}</span>&#32;
+            {%- endif -%}
+            <span class="fh-heading-green">{{ section.settings.heading_1 }}</span>
+            <span class="fh-heading-black">{{ section.settings.heading_2 }}</span>
+          </h2>
+        {%- endif -%}
+        
+        {%- if section.settings.text_1 != blank -%}
+          <div class="fh-paragraph">{{ section.settings.text_1 }}</div>
+        {%- endif -%}
+        
+        {%- if section.settings.quote_text != blank -%}
+          <div class="fh-quote-box">
+            {{ section.settings.quote_text }}
+          </div>
+        {%- endif -%}
+        
+        {%- if section.settings.text_2 != blank -%}
+          <div class="fh-paragraph">{{ section.settings.text_2 }}</div>
+        {%- endif -%}
+        
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.button_link | default: '#' }}" class="fh-button">
+            {{ section.settings.button_label }}
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 1L11 6M11 6L6 11M11 6H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Fulwa Heritage",
+  "settings": [
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "min": 400,
+      "max": 800,
+      "step": 8,
+      "unit": "px",
+      "label": "Desktop Height",
+      "default": 528
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F4F9F2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Left Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Image (optional)"
+    },
+    {
+      "type": "color",
+      "id": "image_bg_color",
+      "label": "Image Background Color",
+      "default": "#FEF9F0"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "OUR HERITAGE"
+    },
+    {
+      "type": "text",
+      "id": "pre_heading",
+      "label": "Pre Heading (Black)",
+      "default": "A "
+    },
+    {
+      "type": "text",
+      "id": "heading_1",
+      "label": "Heading Part 1 (Green)",
+      "default": "Tradition "
+    },
+    {
+      "type": "text",
+      "id": "heading_2",
+      "label": "Heading Part 2 (Black)",
+      "default": "Worth Protecting"
+    },
+    {
+      "type": "textarea",
+      "id": "text_1",
+      "label": "Paragraph 1",
+      "default": "Calicut has been making halwa for over a century. The narrow lanes of Kozhikode carry the scent of ghee and sugar — and generations of craftspeople who have kept this art alive."
+    },
+    {
+      "type": "textarea",
+      "id": "quote_text",
+      "label": "Quote Text",
+      "default": "\"We started Fulva to make sure that tradition travels — from the streets of Kozhikode to your home, anywhere in India.\""
+    },
+    {
+      "type": "textarea",
+      "id": "text_2",
+      "label": "Paragraph 2",
+      "default": "Today we work directly with the halwa makers of Calicut, ensuring every piece you receive is authentic, fresh, and made with the same love it always was."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Read Our Full Story"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fulwa Heritage"
+    }
+  ]
+}
+{% endschema %}
