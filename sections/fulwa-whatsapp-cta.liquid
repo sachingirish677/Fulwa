@@ -1,0 +1,140 @@
+{{ 'fulwa-whatsapp-cta.css' | asset_url | stylesheet_tag }}
+
+<section class="fwc-section" style="background: linear-gradient(to bottom, {{ section.settings.grad_start | default: '#FEFCE8' }}, {{ section.settings.grad_end | default: '#F4C026' }});">
+  <div class="fwc-container">
+
+    <div class="fwc-text-col">
+      {%- if section.settings.tagline != blank -%}
+        <div class="fwc-tagline">
+          <span class="fwc-tagline-line"></span>
+          {{ section.settings.tagline }}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="fwc-heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <p class="fwc-description">{{ section.settings.description }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="fwc-buttons-col">
+      {%- if section.settings.whatsapp_label != blank -%}
+        <a
+          href="{{ section.settings.whatsapp_link | default: '#' }}"
+          class="fwc-btn fwc-btn-whatsapp"
+          style="background-color: {{ section.settings.whatsapp_color }};"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 0C4.477 0 0 4.477 0 10c0 1.76.458 3.41 1.26 4.845L0 20l5.31-1.234A9.953 9.953 0 0010 20c5.523 0 10-4.477 10-10S15.523 0 10 0zm5.093 14.19c-.213.598-1.25 1.143-1.714 1.214-.465.071-.935.1-1.393-.088-.321-.132-.734-.308-1.262-.54-2.218-.963-3.664-3.175-3.775-3.322-.11-.146-.9-1.2-.9-2.288 0-1.09.57-1.626.772-1.848a.818.818 0 01.592-.277c.148 0 .295.002.424.008.136.007.318-.052.498.38.185.44.628 1.53.683 1.641.055.11.092.24.018.387-.075.147-.11.238-.22.367-.11.13-.231.29-.33.39-.11.11-.224.23-.096.45.128.22.568.937 1.22 1.517.838.749 1.546.98 1.766 1.09.22.11.348.091.476-.055.13-.146.554-.647.702-.869.147-.222.295-.185.497-.11.203.073 1.286.607 1.507.717.22.11.367.165.42.257.054.092.054.534-.16 1.132z" fill="#ffffff"/>
+          </svg>
+          {{ section.settings.whatsapp_label }}
+        </a>
+      {%- endif -%}
+
+      {%- if section.settings.track_label != blank -%}
+        <a
+          href="{{ section.settings.track_link | default: '#' }}"
+          class="fwc-btn fwc-btn-track"
+          style="background-color: {{ section.settings.track_color }}; border-color: {{ section.settings.track_color }};"
+        >
+          {{ section.settings.track_label }}
+        </a>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "WhatsApp CTA",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background Gradient"
+    },
+    {
+      "type": "color",
+      "id": "grad_start",
+      "label": "Gradient Start Color (Left)",
+      "default": "#FFFFF0"
+    },
+    {
+      "type": "color",
+      "id": "grad_end",
+      "label": "Gradient End Color (Right)",
+      "default": "#F4C026"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "DIRECT & PERSONAL"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Prefer to Order on WhatsApp?"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Bulk orders, custom gifting, or just a question — we're one message away. Real humans, real answers. No bots."
+    },
+    {
+      "type": "header",
+      "content": "WhatsApp Button"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_label",
+      "label": "Button Label",
+      "default": "Chat with us on WhatsApp"
+    },
+    {
+      "type": "url",
+      "id": "whatsapp_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "whatsapp_color",
+      "label": "Button Color",
+      "default": "#357A38"
+    },
+    {
+      "type": "header",
+      "content": "Track Order Button"
+    },
+    {
+      "type": "text",
+      "id": "track_label",
+      "label": "Button Label",
+      "default": "Track Order"
+    },
+    {
+      "type": "url",
+      "id": "track_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "track_color",
+      "label": "Button Color",
+      "default": "#B9B9B9"
+    }
+  ],
+  "presets": [
+    {
+      "name": "WhatsApp CTA"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,255 @@
+/* Fulwa WhatsApp CTA Section */
+
+.fwc-section {
+  width: 100%;
+  padding: 40px 60px;
+}
+
+.fwc-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 40px;
+}
+
+/* Left: Text Column */
+.fwc-text-col {
+  flex: 1;
+  max-width: 520px;
+}
+
+.fwc-tagline {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1A1A1A;
+  text-transform: uppercase;
+  letter-spacing: 1.98px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.fwc-tagline-line {
+  width: 24px;
+  height: 2px;
+  background-color: #F4C026;
+  flex-shrink: 0;
+}
+
+.fwc-heading {
+  font-size: 36px;
+  font-weight: 800;
+  color: #1A1A1A;
+  line-height: 1.15;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.5px;
+}
+
+.fwc-description {
+  font-size: 14px;
+  color: #4A4A4A;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 380px;
+}
+
+/* Right: Buttons Column */
+.fwc-buttons-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex-shrink: 0;
+  min-width: 240px;
+}
+
+.fwc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.25s ease, transform 0.2s ease;
+  border: 2px solid transparent;
+  white-space: nowrap;
+}
+
+.fwc-btn:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+/* WhatsApp Button */
+.fwc-btn-whatsapp {
+  color: #ffffff;
+}
+
+/* Track Order Button */
+.fwc-btn-track {
+  color: #1A1A1A;
+  background-color: #ffffff;
+  border-color: currentColor;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .fwc-section {
+    padding: 40px 20px;
+  }
+
+  .fwc-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+  }
+
+  .fwc-text-col {
+    max-width: 100%;
+  }
+
+  .fwc-heading {
+    font-size: 28px;
+  }
+
+  .fwc-description {
+    max-width: 100%;
+    font-size: 13px;
+  }
+
+  .fwc-buttons-col {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .fwc-btn {
+    width: 100%;
+    padding: 16px 24px;
+    font-size: 15px;
+  }
+}
+
+.fulva-wa--template--21280669434097__bannerwithtext_XbFdPd .fulva-wa__bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 64px;
+}
+
+.fulva-wa--template--21280669434097__bannerwithtext_XbFdPd .fulva-wa__eyebrow::before {
+  width: 24px;
+  height: 2px;
+  background-color: var(--fw-accent);
+  flex-shrink: 0;
+}
+
+.fulva-wa--template--21280669434097__bannerwithtext_XbFdPd .fulva-wa__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 42px;
+  letter-spacing: -1.26px;
+  line-height: 46.2px;
+  font-weight: 900;
+  color: #0F130F;
+  width: 300px;
+  height: 93px;
+  margin-bottom: 13px;
+}
+
+.fulva-wa--template--21280669434097__bannerwithtext_XbFdPd .fulva-wa__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--fw-accent);
+  margin-bottom: 8px;
+}
+
+.fulva-wa--template--21280669434097__bannerwithtext_XbFdPd .fulva-wa__sub {
+  display: flex;
+  text-align: start;
+  letter-spacing: 0%;
+  font-size: 15px;
+  line-height: 25.5px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.45);
+  margin-bottom: 8px;
+  height: 51px;
+  width: 420px;
+}
+
+.fulva-wa--template--21280669434097__bannerwithtext_XbFdPd .fulva-wa__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100.5px;
+  padding-bottom: 100.5px;
+  gap: var(--fw-btn-gap);
+  flex: 0 0 auto;
+  margin-top: 6px;
+}
+
+.fulva-wa--template--21280669434097__bannerwithtext_XbFdPd .fulva-wa__inner {
+  padding: 0;
+}
+
+.fulva-wa--template--21280669434097__bannerwithtext_XbFdPd .fulva-wa__left {
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+@media (max-width: 749px) {
+  .fulva-wa--template--21280669434097__bannerwithtext_XbFdPd .fulva-wa__inner {
+    max-height: 330px;
+  }
+
+  .fulva-wa--template--21280669434097__bannerwithtext_XbFdPd .fulva-wa__left {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .fulva-wa--template--21280669434097__bannerwithtext_XbFdPd .fulva-wa__bar {
+    padding: 24px;
+    gap: 0px;
+  }
+
+  .fulva-wa--template--21280669434097__bannerwithtext_XbFdPd .fulva-wa__eyebrow {
+    font-size: 9px;
+    line-height: 100%;
+    letter-spacing: 1.8px;
+    font-weight: 700;
+    margin-bottom: 13px;
+  }
+
+  .fulva-wa--template--21280669434097__bannerwithtext_XbFdPd .fulva-wa__title {
+    font-size: 32px;
+    line-height: 100%;
+    letter-spacing: -1.28px;
+    font-weight: 900;
+    margin-bottom: 13px;
+    max-width: 218px;
+  }
+
+  .fulva-wa--template--21280669434097__bannerwithtext_XbFdPd .fulva-wa__sub {
+    max-width: 400px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 100%;
+    letter-spacing: 0.48px;
+    height: 30px;
+  }
+
+  .fulva-wa--template--21280669434097__bannerwithtext_XbFdPd .fulva-wa__actions {
+    padding: 0;
+  }
+}
