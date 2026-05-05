@@ -53,8 +53,14 @@
       {% elsif enable_marquee and animation_style == 'ticker' %}
         <div class="fulva-announcement__ticker{% if section.settings.pause_on_hover %} is-pausable{% endif %}" aria-live="polite">
           {% for block in section.blocks %}
+            {%- capture block_text -%}
+              {%- if block.settings.text_1 != blank -%}<span style="color:{{ block.settings.color_1 }};">{{ block.settings.text_1 }}</span>{%- endif -%}
+              {%- if block.settings.text_2 != blank -%}<span style="color:{{ block.settings.color_2 }};">&nbsp;{{ block.settings.text_2 }}</span>{%- endif -%}
+              {%- if block.settings.text_3 != blank -%}<span style="color:{{ block.settings.color_3 }};">&nbsp;{{ block.settings.text_3 }}</span>{%- endif -%}
+              {%- if block.settings.text_4 != blank -%}<span style="color:{{ block.settings.color_4 }};">&nbsp;{{ block.settings.text_4 }}</span>{%- endif -%}
+            {%- endcapture -%}
             <div
-              class="fulva-announcement__ticker-item{% if block.settings.highlight %} is-accent{% endif %}"
+              class="fulva-announcement__ticker-item"
               style="animation-delay: {{ forloop.index0 | times: ticker_segment }}s; animation-duration: {{ ticker_total }}s;"
               {{ block.shopify_attributes }}
             >
@@ -67,10 +73,10 @@
                     rel="noopener"
                   {% endif %}
                 >
-                  {{ block.settings.text }}
+                  {{ block_text }}
                 </a>
               {% else %}
-                {{ block.settings.text }}
+                {{ block_text }}
               {% endif %}
             </div>
           {% endfor %}
@@ -79,7 +85,13 @@
         <div class="fulva-announcement__track{% if section.settings.direction == 'rtl' %} is-rtl{% endif %}{% if section.settings.pause_on_hover %} is-pausable{% endif %}">
           <div class="fulva-announcement__copy">
             {% for block in section.blocks %}
-              <span class="fulva-announcement__item{% if block.settings.highlight %} is-accent{% endif %}" {{ block.shopify_attributes }}>
+              {%- capture block_text -%}
+                {%- if block.settings.text_1 != blank -%}<span style="color:{{ block.settings.color_1 }};">{{ block.settings.text_1 }}</span>{%- endif -%}
+                {%- if block.settings.text_2 != blank -%}<span style="color:{{ block.settings.color_2 }};">&nbsp;{{ block.settings.text_2 }}</span>{%- endif -%}
+                {%- if block.settings.text_3 != blank -%}<span style="color:{{ block.settings.color_3 }};">&nbsp;{{ block.settings.text_3 }}</span>{%- endif -%}
+                {%- if block.settings.text_4 != blank -%}<span style="color:{{ block.settings.color_4 }};">&nbsp;{{ block.settings.text_4 }}</span>{%- endif -%}
+              {%- endcapture -%}
+              <span class="fulva-announcement__item" {{ block.shopify_attributes }}>
                 {% if block.settings.link != blank %}
                   <a
                     class="fulva-announcement__link"
@@ -89,10 +101,10 @@
                       rel="noopener"
                     {% endif %}
                   >
-                    {{ block.settings.text }}
+                    {{ block_text }}
                   </a>
                 {% else %}
-                  {{ block.settings.text }}
+                  {{ block_text }}
                 {% endif %}
               </span>
               {% if section.settings.show_separator and forloop.last == false %}
@@ -103,7 +115,13 @@
           <div class="fulva-announcement__spacer" aria-hidden="true"></div>
           <div class="fulva-announcement__copy" aria-hidden="true">
             {% for block in section.blocks %}
-              <span class="fulva-announcement__item{% if block.settings.highlight %} is-accent{% endif %}">
+              {%- capture block_text -%}
+                {%- if block.settings.text_1 != blank -%}<span style="color:{{ block.settings.color_1 }};">{{ block.settings.text_1 }}</span>{%- endif -%}
+                {%- if block.settings.text_2 != blank -%}<span style="color:{{ block.settings.color_2 }};">&nbsp;{{ block.settings.text_2 }}</span>{%- endif -%}
+                {%- if block.settings.text_3 != blank -%}<span style="color:{{ block.settings.color_3 }};">&nbsp;{{ block.settings.text_3 }}</span>{%- endif -%}
+                {%- if block.settings.text_4 != blank -%}<span style="color:{{ block.settings.color_4 }};">&nbsp;{{ block.settings.text_4 }}</span>{%- endif -%}
+              {%- endcapture -%}
+              <span class="fulva-announcement__item">
                 {% if block.settings.link != blank %}
                   <a
                     class="fulva-announcement__link"
@@ -113,10 +131,10 @@
                       rel="noopener"
                     {% endif %}
                   >
-                    {{ block.settings.text }}
+                    {{ block_text }}
                   </a>
                 {% else %}
-                  {{ block.settings.text }}
+                  {{ block_text }}
                 {% endif %}
               </span>
               {% if section.settings.show_separator and forloop.last == false %}
@@ -128,7 +146,13 @@
       {% else %}
         <div class="fulva-announcement__static">
           {% for block in section.blocks %}
-            <span class="fulva-announcement__item{% if block.settings.highlight %} is-accent{% endif %}" {{ block.shopify_attributes }}>
+            {%- capture block_text -%}
+              {%- if block.settings.text_1 != blank -%}<span style="color:{{ block.settings.color_1 }};">{{ block.settings.text_1 }}</span>{%- endif -%}
+              {%- if block.settings.text_2 != blank -%}<span style="color:{{ block.settings.color_2 }};">&nbsp;{{ block.settings.text_2 }}</span>{%- endif -%}
+              {%- if block.settings.text_3 != blank -%}<span style="color:{{ block.settings.color_3 }};">&nbsp;{{ block.settings.text_3 }}</span>{%- endif -%}
+              {%- if block.settings.text_4 != blank -%}<span style="color:{{ block.settings.color_4 }};">&nbsp;{{ block.settings.text_4 }}</span>{%- endif -%}
+            {%- endcapture -%}
+            <span class="fulva-announcement__item" {{ block.shopify_attributes }}>
               {% if block.settings.link != blank %}
                 <a
                   class="fulva-announcement__link"
@@ -138,10 +162,10 @@
                     rel="noopener"
                   {% endif %}
                 >
-                  {{ block.settings.text }}
+                  {{ block_text }}
                 </a>
               {% else %}
-                {{ block.settings.text }}
+                {{ block_text }}
               {% endif %}
             </span>
             {% if section.settings.show_separator and forloop.last == false %}
@@ -261,10 +285,7 @@
     padding: 0 var(--fa-item-px);
   }
 
-  .fulva-announcement--{{ section.id }} .fulva-announcement__item.is-accent {
-    color: var(--fa-accent);
-    font-weight: var(--fa-accent-weight);
-  }
+
 
   .fulva-announcement--{{ section.id }} .fulva-announcement__link {
     color: var(--fa-link);
@@ -662,16 +683,69 @@
       "name": "Message",
       "settings": [
         {
+          "type": "header",
+          "content": "Text segment 1"
+        },
+        {
           "type": "inline_richtext",
-          "id": "text",
-          "label": "Text",
+          "id": "text_1",
+          "label": "Text 1",
           "default": "Free delivery above ₹499"
         },
         {
-          "type": "checkbox",
-          "id": "highlight",
-          "label": "Highlight (use accent color)",
-          "default": false
+          "type": "color",
+          "id": "color_1",
+          "label": "Color 1",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "header",
+          "content": "Text segment 2"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text_2",
+          "label": "Text 2"
+        },
+        {
+          "type": "color",
+          "id": "color_2",
+          "label": "Color 2",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "header",
+          "content": "Text segment 3"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text_3",
+          "label": "Text 3"
+        },
+        {
+          "type": "color",
+          "id": "color_3",
+          "label": "Color 3",
+          "default": "#D4A843"
+        },
+        {
+          "type": "header",
+          "content": "Text segment 4"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text_4",
+          "label": "Text 4"
+        },
+        {
+          "type": "color",
+          "id": "color_4",
+          "label": "Color 4",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "header",
+          "content": "Link"
         },
         {
           "type": "url",
@@ -695,14 +769,18 @@
         {
           "type": "message",
           "settings": {
-            "text": "Eid Special: <strong>40% OFF</strong> — Limited stock",
-            "highlight": true
+            "text_1": "Eid Special:",
+            "color_1": "#FFFFFF",
+            "text_2": "<strong>40% OFF</strong>",
+            "color_2": "#D4A843",
+            "text_3": "— Limited stock",
+            "color_3": "#FFFFFF"
           }
         },
         {
           "type": "message",
           "settings": {
-            "text": "24 Varieties · Zero Preservatives · Made fresh in Calicut"
+            "text_1": "24 Varieties · Zero Preservatives · Made fresh in Calicut"
           }
         }
       ]
