@@ -17,9 +17,11 @@
 {% stylesheet %}
   .utilities {
     width: 100%;
+    height: 51px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     gap: var(--gap);
     text-wrap: nowrap;
     border-top: var(--border-width) solid var(--color-border);
@@ -33,6 +35,11 @@
       align-items: center;
       text-align: left;
     }
+  }
+
+  .footer-utilities__text {
+    padding-top: 18px;
+    padding-bottom: 18px;
   }
 
   .utilities a {

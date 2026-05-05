@@ -4,89 +4,185 @@
 <div
   class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
 >
-  {% liquid
-    assign total_blocks = section.blocks.size
+  <div class="footer-custom-layout">
+    <div
+      class="footer-content spacing-style"
+      style="
+        --padding-block-start: max(20px, calc(var(--spacing-scale) * 64px));
+        --padding-block-end: max(20px, calc(var(--spacing-scale) * 30px));
+        --footer-gap: 65.5px;
+      "
+    >
+      {% content_for 'blocks' %}
 
-    # Grid layout calculations
-    assign grid_columns = total_blocks | at_most: 4
+      <div class="footer-custom-left">
+        {% if section.settings.address != blank %}
+          <div class="footer-custom-address">
+            {{ section.settings.address }}
+          </div>
+        {% endif %}
 
-    # Calculate last row counts using modulo arithmetic
-    # last_row_count = (total_blocks - 1) % N + 1
-    assign last_row_count = total_blocks | minus: 1 | modulo: 4 | plus: 1
-    assign tablet_last_row_count = total_blocks | minus: 1 | modulo: 2 | plus: 1
-
-    # Check if there are orphaned elements (single item in last row)
-    assign has_isolated_grid_item_desktop = false
-    assign has_isolated_grid_item_tablet = false
-
-    if total_blocks > 4 and last_row_count == 1
-      assign has_isolated_grid_item_desktop = true
-    endif
-
-    if total_blocks == 5
-      assign has_isolated_grid_item_tablet = true
-    endif
-  %}
-  <div
-    class="
-      footer-content
-      spacing-style
-      {% if has_isolated_grid_item_desktop %}footer-content--isolated-grid-item-desktop{% endif %}
-      {% if has_isolated_grid_item_tablet %}footer-content--isolated-grid-item-tablet{% endif %}
-    "
-    style="
-      {%  render 'spacing-style', settings: section.settings %}
-      --footer-gap: {{ section.settings.gap }}px;
-      --grid-columns: {{ grid_columns }};
-      --last-row-count: {{ last_row_count }};
-      --tablet-last-row-count: {{ tablet_last_row_count }};
-    "
-  >
-    {% content_for 'blocks' %}
+        {% if section.settings.fssai_no != blank %}
+          <div class="footer-custom-fssai">
+            FSSAI LIC No. {{ section.settings.fssai_no }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
   </div>
 </div>
 
 {% stylesheet %}
+  /* ===== FOOTER FLEXBOX LAYOUT ===== */
   .footer-content {
     contain: content;
     content-visibility: auto;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--footer-gap);
-    align-items: start;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: flex-start;
   }
 
   .footer-content .menu__heading__default {
     font-weight: var(--font-heading--weight);
   }
 
-  @media screen and (min-width: 750px) and (max-width: 989px) {
+  /* ===== DESKTOP: row layout with order-based column grouping ===== */
+  @media screen and (min-width: 990px) {
     .footer-content {
-      grid-template-columns: repeat(min(var(--grid-columns), 3), 1fr);
-      grid-auto-flow: row;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0;
+      column-gap: 48px;
+      row-gap: 24px;
     }
 
-    .footer-content[style*='--grid-columns: 4'] {
-      grid-template-columns: repeat(2, 1fr);
+    /* --- Branding column (logo + address) --- */
+    .footer-content > .logo-block,
+    .footer-content > .image-block {
+      order: 1;
+      width: 280px;
+      flex-shrink: 0;
     }
 
-    .footer-content--isolated-grid-item-tablet > :last-child {
-      grid-column: 1 / -1;
+    .footer-content > .footer-custom-left {
+      order: 2;
+      width: 280px;
+      flex-shrink: 0;
+    }
+
+    /* --- Menu columns share remaining space --- */
+    .footer-content > .menu {
+      order: 3;
+      flex: 1 1 0;
+      min-width: 120px;
     }
   }
 
+  /* ===== MOBILE: vertical stacking ===== */
+  @media screen and (max-width: 989px) {
+    .footer-content > .logo-block,
+    .footer-content > .image-block {
+      order: 1;
+      width: 100%;
+    }
+
+    .footer-content > .footer-custom-left {
+      order: 2;
+      width: 100%;
+    }
+
+    .footer-content > .menu {
+      order: 3;
+      width: 100%;
+    }
+  }
+
+  /* ===== Outer wrapper ===== */
+  .footer-custom-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== Address & FSSAI ===== */
+  .footer-custom-left {
+    display: flex;
+    flex-direction: column;
+    gap: 13.3px;
+    max-width: 100%;
+  }
+
+  .footer-custom-address {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--color-foreground);
+    max-width: 320px;
+  }
+
+  .footer-custom-address p {
+    margin: 0;
+  }
+
+  .footer-custom-fssai {
+    font-size: 13px;
+    color: var(--color-foreground);
+    font-weight: 400;
+    line-height: 22.75px;
+    letter-spacing: 0%;
+  }
+
+  /* ===== Menu Styling ===== */
+  .footer-custom-layout .menu__heading__default {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #4A7A44;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .footer-custom-layout .menu__item a {
+    font-size: 13px;
+    color: var(--color-foreground);
+    text-decoration: none;
+    line-height: 1.8;
+  }
+
+  .footer-custom-layout .menu__item + .menu__item {
+    margin-top: 12px;
+  }
+
+  /* ===== Decorative Circle Background ===== */
+  .section-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -150px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    border: 1px solid rgba(220, 230, 210, 0.4);
+    background: radial-gradient(circle, rgba(244, 246, 238, 1) 0%, rgba(244, 246, 238, 0) 70%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
   @media screen and (min-width: 990px) {
-    .footer-content {
-      grid-template-columns: repeat(var(--grid-columns), 1fr);
+    .section-wrapper {
+      max-height: 510.23px;
     }
 
-    /* Single item centered */
-    .footer-content[style*='--grid-columns: 1'] {
-      justify-items: center;
-    }
-
-    .footer-content--isolated-grid-item-desktop > :last-child {
-      grid-column: 1 / -1;
+    .footer-custom-layout {
+      padding-inline: 24px;
     }
   }
 {% endstylesheet %}
@@ -177,6 +273,22 @@
     },
     {
       "type": "header",
+      "content": "Company Info"
+    },
+    {
+      "type": "richtext",
+      "id": "address",
+      "label": "Company Address",
+      "default": "<p>Authentic Calicut halwa, crafted with tradition and delivered fresh to your door — anywhere in India.</p>"
+    },
+    {
+      "type": "text",
+      "id": "fssai_no",
+      "label": "FSSAI No",
+      "default": "11324999000545"
+    },
+    {
+      "type": "header",
       "content": "t:content.padding"
     },
     {
@@ -187,7 +299,7 @@
       "max": 100,
       "step": 1,
       "unit": "px",
-      "default": 20
+      "default": 64
     },
     {
       "type": "range",
@@ -209,49 +321,7 @@
         "color_scheme": "scheme-1",
         "padding-block-start": 36,
         "padding-block-end": 36
-      },
-      "blocks": {
-        "newsletter-group": {
-          "type": "group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "gap": 6,
-            "width": "fill",
-            "inherit_color_scheme": true
-          },
-          "blocks": {
-            "newsletter-heading": {
-              "type": "text",
-              "settings": {
-                "text": "t:html_defaults.join_our_email_list",
-                "width": "100%",
-                "alignment": "left",
-                "type_preset": "h3"
-              }
-            },
-            "newsletter-text": {
-              "type": "text",
-              "settings": {
-                "text": "t:html_defaults.get_exclusive_deals_and_early_access_to_new_products",
-                "width": "100%",
-                "alignment": "left",
-                "type_preset": "rte"
-              }
-            }
-          },
-          "block_order": ["newsletter-heading", "newsletter-text"]
-        },
-        "newsletter-form": {
-          "type": "email-signup",
-          "settings": {
-            "width": "fill"
-          }
-        }
-      },
-      "block_order": ["newsletter-group", "newsletter-form"]
+      }
     }
   ]
 }
