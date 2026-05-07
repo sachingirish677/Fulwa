@@ -1,0 +1,197 @@
+.fulva-categories {
+  display: block;
+  background: var(--fc-bg);
+  border-top: 1px dashed var(--fc-border);
+  border-bottom: 1px dashed var(--fc-border);
+  color: var(--fc-text);
+  font-family: var(--font-body-family, inherit);
+}
+
+.fulva-categories .fulva-categories__inner {
+  max-width: var(--fc-max);
+  margin: 0 auto;
+  padding: var(--fc-py) 0;
+  display: flex;
+  align-items: center;
+  gap: 97px;
+}
+
+.fulva-categories .fulva-categories__label {
+  flex: 0 0 auto;
+  min-width: 170px;
+  padding-left: var(--fc-px);
+}
+
+.fulva-categories .fulva-categories__heading {
+  margin: 0;
+  font-size: 26px;
+  line-height: 1.15;
+  font-weight: 800;
+  color: var(--fc-text);
+  letter-spacing: 0.78px;
+}
+
+.fulva-categories .fulva-categories__heading em {
+  font-family: var(--font-heading-family, inherit);
+  font-style: normal;
+  font-weight: 800;
+  color: var(--fc-card-title);
+}
+
+.fulva-categories .fulva-categories__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  font-size: 11px;
+  letter-spacing: 1.98px;
+  text-transform: uppercase;
+  color: var(--fc-accent);
+  font-weight: 700;
+}
+
+.fulva-categories .fulva-categories__eyebrow::before {
+  content: '';
+  width: 24px;
+  height: 2px;
+  background: #F4C026;
+  flex: 0 0 auto;
+}
+
+.fulva-categories .fulva-categories__track {
+  flex: 1 1 auto;
+  display: flex;
+  gap: var(--fc-gap);
+  overflow-x: auto;
+  padding: 16px var(--fc-px);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: var(--fc-px);
+  overscroll-behavior-x: contain;
+  cursor: grab;
+}
+
+.fulva-categories .fulva-categories__track.is-dragging {
+  cursor: grabbing;
+}
+
+.fulva-categories .fulva-categories__track::-webkit-scrollbar {
+  display: none;
+}
+
+.fulva-categories .fulva-categories__card {
+  flex: 0 0 auto;
+  width: var(--fc-card-w);
+  height: var(--fc-card-h);
+  border-radius: var(--fc-radius);
+  background: var(--fc-card-bg);
+  border: 1px solid var(--fc-card-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  scroll-snap-align: start;
+  transform: translateZ(0);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.fulva-categories .fulva-categories__card:focus-visible {
+  outline: 2px solid var(--fc-accent);
+  outline-offset: 3px;
+}
+
+.fulva-categories .fulva-categories__card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 26px var(--fc-shadow);
+  border-color: var(--fc-accent);
+}
+
+.fulva-categories .fulva-categories__card-name {
+  padding: 10px 10px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--fc-card-title);
+  text-align: center;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.fulva-categories .fulva-categories__thumb {
+  width: var(--fc-thumb);
+  height: var(--fc-thumb);
+  border-radius: calc(var(--fc-radius) - 6px);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.fulva-categories .fulva-categories__thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translateZ(0);
+  transition: transform 260ms ease;
+  display: block;
+}
+
+.fulva-categories .fulva-categories__card:hover .fulva-categories__thumb-img {
+  transform: scale(1.06);
+}
+
+.fulva-categories .fulva-categories__thumb-placeholder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-size: 34px;
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.45);
+  background: linear-gradient(145deg, #f8f5ef, #f0ebe0);
+}
+
+@media (max-width: 749px) {
+  .fulva-categories .fulva-categories__inner {
+    padding: var(--fc-py-m) 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .fulva-categories .fulva-categories__label {
+    display: none;
+  }
+
+  .fulva-categories .fulva-categories__track {
+    scroll-padding-left: var(--fc-px-m);
+    padding: 16px var(--fc-px-m);
+  }
+
+  .fulva-categories .fulva-categories__card {
+    width: var(--fc-card-w-m);
+    height: var(--fc-card-h-m);
+  }
+
+  .fulva-categories .fulva-categories__thumb {
+    width: var(--fc-thumb-m);
+    height: var(--fc-thumb-m);
+  }
+}
+
+@media (max-width: 749px) {
+  .fulva-categories.fulva-categories--hide-mobile {
+    display: none;
+  }
+}
+
+@media (min-width: 750px) {
+  .fulva-categories.fulva-categories--hide-desktop {
+    display: none;
+  }
+}
