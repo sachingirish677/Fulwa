@@ -164,7 +164,8 @@
                   <div class="fulva-hero__title-wrapper">
                     <h2 class="fulva-hero__title">
                       {% if block.settings.title_text != blank %}
-                        {{ block.settings.title_text }}
+                        {% assign formatted_title = block.settings.title_text | replace: 'the Legacy', 'the <br class="fh-mobile-break">Legacy' | replace: 'the legacy', 'the <br class="fh-mobile-break">legacy' %}
+                        {{ formatted_title }}
                       {% endif %}
                       {% if block.settings.accent_text != blank %}
                         <span class="fulva-hero__accent fh-desktop-only">{{ block.settings.accent_text }}</span>
