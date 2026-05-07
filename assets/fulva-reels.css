@@ -1,0 +1,554 @@
+.fulva-reels {
+    padding: 0;
+    background: var(--fr-bg);
+    border-top: 1px solid var(--fr-border);
+    font-family: var(--font-body-family, inherit);
+    position: relative;
+  }
+
+  .fulva-reels .fulva-reels__inner {
+    max-width: var(--fr-max);
+    margin: 0 auto;
+    padding: var(--fr-py) 0;
+  }
+
+  /* Header */
+  .fulva-reels .fulva-reels-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 var(--fr-px);
+    margin-bottom: 36px;
+  }
+
+  .fulva-reels .fulva-reels-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  /* Eyebrow */
+  .fulva-reels .fulva-reels-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: ;
+    font-weight: 500;
+  }
+  .fulva-reels .fulva-reels-eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 2px;
+    background: var(--fr-accent);
+  }
+
+  /* Title row */
+  .fulva-reels .fulva-reels-title-row {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    flex-wrap: wrap;
+  }
+  .fulva-reels .fulva-reels-title {
+    font-family: var(--font-heading-family, inherit);
+    font-size: 44px;
+    font-weight: 800;
+    color: var(--fr-text);
+    line-height: 1.15;
+    letter-spacing:-1.32px;
+    margin: 0;
+  }
+  .fulva-reels .fulva-reels-title em {
+    font-family: var(--font-heading-family, inherit);
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  /* Instagram pill button */
+  .fulva-reels .fulva-ig-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 16px;
+    border-radius: 50px;
+    background: var(--fr-ig-grad);
+    color: #ffffff;
+    font-size: 13.5px;
+    line-height:100%;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+    position: relative;
+    z-index: 3;
+    pointer-events: auto;
+  }
+  .fulva-reels .fulva-ig-btn:hover {
+    filter: brightness(1.1);
+  }
+  .fulva-reels .fulva-ig-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  /* Filter chips */
+  .fulva-reels .fulva-ugc-filter {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding-top: 18px;
+    flex-wrap: wrap;
+  }
+  .fulva-reels .fulva-filter-chip {
+    padding: 7px 18px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid rgba(0,0,0,0.12);
+    background: transparent;
+    color: var(--fr-text);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: var(--font-body-family, inherit);
+    white-space: nowrap;
+  }
+  .fulva-reels .fulva-filter-chip:hover {
+    border-color: #1B5E2F;
+    color: #1B5E2F;
+  }
+  .fulva-reels .fulva-filter-chip.active {
+    background: #1B5E2F;
+    color: #ffffff;
+    border-color: #1B5E2F;
+  }
+
+  /* Reels track wrapper */
+  .fulva-reels .fulva-reels-track-wrap {
+    position: relative;
+    padding: 0;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  /* Scrollable track */
+  .fulva-reels .fulva-reels-track {
+    display: flex;
+    width: 100%;
+    gap: var(--fr-gap);
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 8px var(--fr-px) 16px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 var(--fr-px);
+    overscroll-behavior-x: contain;
+  }
+  .fulva-reels .fulva-reels-track::-webkit-scrollbar { display: none; }
+  .fulva-reels .fulva-reels-track.is-dragging {
+    cursor: grabbing;
+  }
+  .fulva-reels .fulva-reels-track.is-dragging .fulva-reel-card {
+    pointer-events: none;
+  }
+
+  /* Individual reel card */
+  .fulva-reels .fulva-reel-card {
+    flex-shrink: 0;
+    width: var(--fr-card-w);
+    height: var(--fr-card-h);
+    border-radius: var(--fr-radius);
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    background: #2a2a2a;
+    scroll-snap-align: start;
+    transform: translateZ(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    contain: layout paint;
+  }
+
+  /* Reel thumbnail */
+  .fulva-reels .fulva-reel-card .reel-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+    pointer-events: none;
+  }
+
+  .fulva-reels .fulva-reel-card.is-video-manual .reel-thumb {
+    pointer-events: auto;
+  }
+
+  .fulva-reels .fulva-reel-card.is-hidden {
+    display: none;
+  }
+
+  /* Dark gradient overlay at bottom */
+  .fulva-reels .fulva-reel-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 55%;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.75) 100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Top-left: Instagram camera icon */
+  .fulva-reels .fulva-reel-ig-icon {
+    position: absolute;
+    top: 12px; left: 12px;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: rgba(27,94,47,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    text-decoration: none;
+    pointer-events: auto;
+  }
+  .fulva-reels .fulva-reel-ig-icon svg {
+    width: 14px; height: 14px;
+    color: #fff;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+  }
+
+  /* Top-right: View count */
+  .fulva-reels .fulva-reel-views {
+    position: absolute;
+    top: 12px; right: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #ffffff;
+    background: rgba(0,0,0,0.35);
+    padding: 3px 8px;
+    border-radius: 10px;
+    z-index: 5;
+  }
+
+  /* Bottom overlay content */
+  .fulva-reels .fulva-reel-bottom {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 16px 14px;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Username */
+  .fulva-reels .fulva-reel-user {
+    font-size: 10.5px;
+    color: #ffffff;
+    font-weight:800;
+    letter-spacing:0%;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+
+  /* Product tag */
+  .fulva-reels .fulva-reel-product-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #F4C026;
+    color: #000000;
+    font-size: 9px;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 6px;
+    width: fit-content; 
+    letter-spacing: 0.45px;
+    margin-bottom: 4px;
+  }
+
+  /* Bottom row: Buy Now + heart */
+  .fulva-reels .fulva-reel-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .fulva-reels .fulva-reel-buy {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: #ffffff;
+    color: #357A38;
+    font-size: 9.5px;
+    font-weight: 800;
+    letter-spacing:0%;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body-family, inherit);
+  }
+  .fulva-reels .fulva-reel-buy:hover {
+    background: #f0f0f0;
+    transform: scale(1.02);
+  }
+
+  .fulva-reels .fulva-reel-likes {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    color: #ffffff;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+  .fulva-reels .fulva-reel-likes .heart {
+    color: #FF4B4B;
+    font-size: 16px;
+  }
+
+  /* Navigation arrows overlaid on track */
+  .fulva-reels .fulva-reels-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 20;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    box-shadow: none;
+  }
+  .fulva-reels .fulva-reels-nav:hover {
+    background: rgba(255, 255, 255, 0.5);
+    transform: translateY(-50%) scale(1.05);
+  }
+  .fulva-reels .fulva-reels-nav:disabled {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .fulva-reels .fulva-reels-nav.nav-left { left: 32px; }
+  .fulva-reels .fulva-reels-nav.nav-right { right: 32px; }
+  .fulva-reels .fulva-reels-nav svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+  }
+
+  /* Reel placeholder (for demo) */
+  .fulva-reels .fulva-reel-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px;
+    background: linear-gradient(145deg, #3a3028, #5a4838);
+  }
+
+
+  /* ==========================
+     SECTION 6: AVAILABLE ACROSS INDIA
+     ========================== */
+  .fulva-available {
+    padding: 28px var(--fr-px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    font-family: var(--font-body-family, inherit);
+  }
+
+  .fulva-available .fulva-platforms {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .fulva-available .fulva-platform-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 14px 24px;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: #ffffff;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    cursor: pointer;
+  }
+  .fulva-available .fulva-platform-btn:hover {
+    border-color: rgba(0,0,0,0.2);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+
+  .fulva-available .fulva-platform-label {
+    font-size: 11px;
+    color: #8a8a8a;
+    font-weight: 400;
+  }
+
+  .fulva-available .fulva-platform-name {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.2;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .fulva-available .fulva-platform-logo {
+    height: 24px;
+    width: auto;
+    display: block;
+  }
+
+  /* Amazon specific styling */
+  .fulva-available .fulva-platform-btn.amazon .fulva-platform-name {
+    font-family: var(--font-body-family, inherit);
+    letter-spacing: -0.5px;
+  }
+
+  /* Flipkart specific styling */
+  .fulva-available .fulva-platform-btn.flipkart .fulva-platform-name {
+    color: #2874F0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .fulva-available .fulva-platform-btn.flipkart .fk-icon {
+    display: inline-flex;
+    background: #FFE500;
+    border-radius: 4px;
+    padding: 2px 4px;
+    font-size: 16px;
+  }
+
+  @media (max-width: 969px) {
+    .fulva-reels .fulva-ugc-filter {
+      display: none;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .fulva-reels .fulva-reels__inner {
+      padding: var(--fr-py-m) 0;
+    }
+
+    .fulva-reels .fulva-reels-header {
+      flex-direction: column;
+      padding: 0 var(--fr-px-m);
+      gap: 8px;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .fulva-reels .fulva-reels-header-left {
+      gap: 13px;
+      width: 100%;
+    }
+
+    .fulva-reels .fulva-reels-title-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 13px;
+      width: 100%;
+    }
+
+    .fulva-reels .fulva-reels-title {
+      font-size: 26px;
+      line-height: 1.1;
+      font-weight:700;
+      letter-spacing: 1.8px;
+    }
+
+    .fulva-reels .fulva-reels-eyebrow {
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      letter-spacing:1.8px;
+      font-weight:700;
+    }
+
+    .fulva-reels .fulva-ig-btn {
+      margin-top: 4px;
+    }
+
+    /* Moved to separate media query for 960px */
+
+    .fulva-reels .fulva-reels-track {
+      padding: 8px var(--fr-px-m) 16px;
+      scroll-padding-left: var(--fr-px-m);
+    }
+
+    .fulva-reels .fulva-reel-card {
+      width: var(--fr-card-w-m);
+      height: var(--fr-card-h-m);
+    }
+
+    .fulva-reels .fulva-reels-nav {
+      display: none;
+    }
+
+    .fulva-available {
+      padding: 24px var(--fr-px-m);
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .fulva-reels.fulva-reels--hide-mobile {
+      display: none;
+    }
+  }
+
+  @media (min-width: 750px) {
+    .fulva-reels.fulva-reels--hide-desktop {
+      display: none;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .fulva-reels .fulva-reel-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+    }
+
+    .fulva-reels .fulva-reel-card:hover .reel-thumb {
+      transform: scale(1.05);
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .fulva-reels .fulva-reels-track {
+      cursor: grab;
+    }
+    .fulva-reels .fulva-reels-track.is-dragging {
+      cursor: grabbing;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fulva-reels .fulva-reels-track {
+      scroll-behavior: auto;
+    }
+    .fulva-reels .fulva-reel-card,
+    .fulva-reels .fulva-reel-card .reel-thumb,
+    .fulva-reels .fulva-reels-nav,
+    .fulva-reels .fulva-filter-chip,
+    .fulva-reels .fulva-reel-buy {
+      transition: none;
+    }
+  }
