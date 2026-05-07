@@ -17,8 +17,6 @@
         "message_8YKVGW": {
           "type": "message",
           "settings": {
-            "text": "Free delivery above ₹499",
-            "highlight": false,
             "link": "",
             "open_in_new_tab": false
           }
@@ -26,8 +24,6 @@
         "message_9JWnLT": {
           "type": "message",
           "settings": {
-            "text": "Eid Special: <strong>40% OFF</strong> — Limited stock",
-            "highlight": true,
             "link": "",
             "open_in_new_tab": false
           }
@@ -35,8 +31,6 @@
         "message_CxXY8a": {
           "type": "message",
           "settings": {
-            "text": "24 Varieties · Zero Preservatives · Made fresh in Calicut",
-            "highlight": false,
             "link": "",
             "open_in_new_tab": false
           }
