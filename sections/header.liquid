@@ -271,10 +271,10 @@
   }
 
   .fulva-header--{{ section.id }} .fulva-header__logo-img {
-    height: auto;
+    height: 28px;
     max-height: calc(var(--fh-height-used) - 16px);
-    width: auto;
-    max-width: 180px;
+    width: 75px;
+    max-width: 75px;
     object-fit: contain;
   }
 
@@ -421,10 +421,15 @@
 
   .fulva-header--{{ section.id }} .fulva-header__btn.is-track {
     border: var(--fh-track-border-w) solid var(--fh-track-border);
-    border-radius: 999px;
+    border-radius: 24px;
     padding: var(--fh-track-py) var(--fh-track-px);
     color: var(--fh-text);
     white-space: nowrap;
+    width: 113px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .fulva-header--{{ section.id }} .fulva-header__btn.is-track:hover {
@@ -647,6 +652,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      height: 72px;
     }
 
     .fulva-header--{{ section.id }} .fulva-header__mobile-toggle {
