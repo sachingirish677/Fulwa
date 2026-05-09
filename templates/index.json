@@ -314,9 +314,18 @@
       "settings": {
         "aria_label": "Instagram Reels",
         "eyebrow": "Real People, Real Moments",
-        "heading": "The <em>Halwa</em> Diaries",
+        "heading_1": "The",
+        "heading_1_color": "#1a1a1a",
+        "heading_2": "<em>Halwa</em>",
+        "heading_2_color": "#357a38",
+        "heading_3": "Diaries",
+        "heading_3_color": "#1a1a1a",
         "ig_handle": "@fulva.in",
         "ig_link": "https://www.instagram.com/fulva.in",
+        "ig_grad_1": "#f09433",
+        "ig_grad_2": "#e6683c",
+        "ig_grad_3": "#dc2743",
+        "ig_grad_4": "#bc1888",
         "show_filters": true,
         "filter_1": "Unboxing",
         "filter_2": "Taste Tests",
@@ -328,12 +337,12 @@
         "padding_x_mobile": 16,
         "padding_y_mobile": 24,
         "gap": 12,
-        "radius": 16,
+        "radius": 13,
         "card_width_desktop": 248,
         "card_height_desktop": 448,
         "card_width_mobile": 212,
         "card_height_mobile": 382,
-        "background": "#f7f5f0",
+        "background": "#fafdf9",
         "text_color": "#1a1a1a",
         "accent_color": "#d4a843",
         "border_color": "#000000",
@@ -347,6 +356,94 @@
         "flipkart_logo_alt": "Flipkart",
         "hide_on_mobile": false,
         "hide_on_desktop": false
+      }
+    },
+    "availability_banner_DVQT66": {
+      "type": "availability-banner",
+      "blocks": {
+        "platform_image_ihXfWq": {
+          "type": "platform_image",
+          "settings": {
+            "image": "shopify://shop_images/Component_4_2.png",
+            "link": "",
+            "alt_text": "",
+            "full_width_mobile": false
+          }
+        },
+        "platform_image_mVnMQp": {
+          "type": "platform_image",
+          "settings": {
+            "image": "shopify://shop_images/Component_4_3.png",
+            "link": "",
+            "alt_text": "",
+            "full_width_mobile": false
+          }
+        },
+        "platform_image_MXwhhX": {
+          "type": "platform_image",
+          "settings": {
+            "image": "shopify://shop_images/Component_6.png",
+            "link": "",
+            "alt_text": "",
+            "full_width_mobile": false
+          }
+        },
+        "platform_image_TrXBc3": {
+          "type": "platform_image",
+          "settings": {
+            "image": "shopify://shop_images/Component_7.png",
+            "link": "",
+            "alt_text": "",
+            "full_width_mobile": false
+          }
+        },
+        "platform_image_KNLx4G": {
+          "type": "platform_image",
+          "settings": {
+            "image": "shopify://shop_images/Component_8.png",
+            "link": "",
+            "alt_text": "",
+            "full_width_mobile": false
+          }
+        },
+        "platform_image_3zWHhe": {
+          "type": "platform_image",
+          "settings": {
+            "image": "shopify://shop_images/Component_5_1.png",
+            "link": "",
+            "alt_text": "",
+            "full_width_mobile": false
+          }
+        }
+      },
+      "block_order": [
+        "platform_image_ihXfWq",
+        "platform_image_mVnMQp",
+        "platform_image_MXwhhX",
+        "platform_image_TrXBc3",
+        "platform_image_KNLx4G",
+        "platform_image_3zWHhe"
+      ],
+      "name": "Fulva Availability Banner",
+      "settings": {
+        "section_height": 132,
+        "background_color": "#fafdf9",
+        "text_color": "#333333",
+        "heading_text": "AVAILABLE ACROSS INDIA"
+      }
+    },
+    "image_banner_strip_f3h99L": {
+      "type": "image-banner-strip",
+      "name": "Fulva Image Banner Strip",
+      "settings": {
+        "block_height": 164,
+        "background_color": "#fafdf9",
+        "image_1": "shopify://shop_images/Frame_55_1.png",
+        "link_1": "",
+        "image_2": "shopify://shop_images/Frame_56.png",
+        "link_2": "",
+        "image_3": "shopify://shop_images/Frame_57.png",
+        "link_3": ""
       }
     },
     "offer_banner_EkAPLg": {
@@ -882,6 +979,8 @@
     "custom_hero_banner_DcgeWT",
     "category_custom_9pYbcJ",
     "reels_cbrpDN",
+    "availability_banner_DVQT66",
+    "image_banner_strip_f3h99L",
     "offer_banner_EkAPLg",
     "popular_products_MB9ep6",
     "spotlight_6AGJxq",
