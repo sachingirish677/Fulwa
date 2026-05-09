@@ -9,41 +9,20 @@
     </div>
     
     <div class="availability-banner__images">
-      {%- if section.settings.image_1 != blank -%}
-        {%- if section.settings.link_1 != blank -%}
-          <a href="{{ section.settings.link_1 }}" class="ab-image-link">
-            <img src="{{ section.settings.image_1 | img_url: 'master' }}" alt="{{ section.settings.image_1.alt | escape }}">
-          </a>
-        {%- else -%}
-          <div class="ab-image-wrapper">
-            <img src="{{ section.settings.image_1 | img_url: 'master' }}" alt="{{ section.settings.image_1.alt | escape }}">
-          </div>
+      {%- for block in section.blocks -%}
+        {%- if block.settings.image != blank -%}
+          {%- assign alt = block.settings.alt_text | default: block.settings.image.alt -%}
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" class="ab-image-link{% if block.settings.full_width_mobile %} ab-image--full-mobile{% endif %}" {{ block.shopify_attributes }}>
+              <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ alt | escape }}">
+            </a>
+          {%- else -%}
+            <div class="ab-image-wrapper{% if block.settings.full_width_mobile %} ab-image--full-mobile{% endif %}" {{ block.shopify_attributes }}>
+              <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ alt | escape }}">
+            </div>
+          {%- endif -%}
         {%- endif -%}
-      {%- endif -%}
-
-      {%- if section.settings.image_2 != blank -%}
-        {%- if section.settings.link_2 != blank -%}
-          <a href="{{ section.settings.link_2 }}" class="ab-image-link">
-            <img src="{{ section.settings.image_2 | img_url: 'master' }}" alt="{{ section.settings.image_2.alt | escape }}">
-          </a>
-        {%- else -%}
-          <div class="ab-image-wrapper">
-            <img src="{{ section.settings.image_2 | img_url: 'master' }}" alt="{{ section.settings.image_2.alt | escape }}">
-          </div>
-        {%- endif -%}
-      {%- endif -%}
-
-      {%- if section.settings.image_3 != blank -%}
-        {%- if section.settings.link_3 != blank -%}
-          <a href="{{ section.settings.link_3 }}" class="ab-image-link">
-            <img src="{{ section.settings.image_3 | img_url: 'master' }}" alt="{{ section.settings.image_3.alt | escape }}">
-          </a>
-        {%- else -%}
-          <div class="ab-image-wrapper">
-            <img src="{{ section.settings.image_3 | img_url: 'master' }}" alt="{{ section.settings.image_3.alt | escape }}">
-          </div>
-        {%- endif -%}
-      {%- endif -%}
+      {%- endfor -%}
     </div>
   </div>
 </div>
@@ -81,53 +60,46 @@
       "id": "heading_text",
       "label": "Heading Text",
       "default": "AVAILABLE ACROSS INDIA"
-    },
+    }
+  ],
+  "blocks": [
     {
-      "type": "header",
-      "content": "Image 1"
-    },
-    {
-      "type": "image_picker",
-      "id": "image_1",
-      "label": "Upload Image 1"
-    },
-    {
-      "type": "url",
-      "id": "link_1",
-      "label": "Image 1 Link"
-    },
-    {
-      "type": "header",
-      "content": "Image 2"
-    },
-    {
-      "type": "image_picker",
-      "id": "image_2",
-      "label": "Upload Image 2"
-    },
-    {
-      "type": "url",
-      "id": "link_2",
-      "label": "Image 2 Link"
-    },
-    {
-      "type": "header",
-      "content": "Image 3"
-    },
-    {
-      "type": "image_picker",
-      "id": "image_3",
-      "label": "Upload Image 3"
-    },
-    {
-      "type": "url",
-      "id": "link_3",
-      "label": "Image 3 Link"
+      "type": "platform_image",
+      "name": "Platform Image",
+      "limit": 12,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Platform Logo"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alt Text (optional)"
+        },
+        {
+          "type": "checkbox",
+          "id": "full_width_mobile",
+          "label": "Full width on mobile",
+          "default": false
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Fulva Availability Banner"
+      "name": "Fulva Availability Banner",
+      "blocks": [
+        { "type": "platform_image" },
+        { "type": "platform_image" },
+        { "type": "platform_image" }
+      ]
     }
   ]
 }

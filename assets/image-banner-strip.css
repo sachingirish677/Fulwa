@@ -8,10 +8,9 @@
 
 .image-banner-strip__container {
   width: 100%;
-  max-width: 1200px;
   height: var(--ibs-height);
   margin: 0 auto;
-  padding: 0 14px;
+  padding: 0 50px;
   display: flex;
   justify-content: center;
   align-items: center;
