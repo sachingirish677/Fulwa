@@ -759,6 +759,54 @@
         "hide_on_desktop": false
       }
     },
+    "featured_marquee_GVyY8w": {
+      "type": "featured-marquee",
+      "blocks": {
+        "image_qBdGqg": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/div_1.png"
+          }
+        },
+        "image_T4hWhE": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/image_19-removebg-preview.png"
+          }
+        },
+        "image_MNMj39": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/image_20-removebg-preview.png"
+          }
+        },
+        "image_4UiaDa": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/image_21-removebg-preview.png"
+          }
+        },
+        "image_aYPmAk": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/image_16-removebg-preview.png"
+          }
+        }
+      },
+      "block_order": [
+        "image_qBdGqg",
+        "image_T4hWhE",
+        "image_MNMj39",
+        "image_4UiaDa",
+        "image_aYPmAk"
+      ],
+      "name": "Featured Marquee",
+      "settings": {
+        "bg_color": "#edf7ed",
+        "max_height": 166,
+        "speed": 20
+      }
+    },
     "influencer_reels_HkfzDh": {
       "type": "influencer_reels",
       "blocks": {
@@ -1016,6 +1064,7 @@
     "popular_products_MB9ep6",
     "corporate_gifting_banner_jjrEkh",
     "spotlight_6AGJxq",
+    "featured_marquee_GVyY8w",
     "influencer_reels_HkfzDh",
     "testimonials_7xKHqX",
     "bannerwithtext_ramMzx"
