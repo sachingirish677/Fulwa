@@ -1,0 +1,348 @@
+.fulva-popular {
+  background: var(--fp-bg);
+  border-top: 1px solid var(--fp-border);
+  color: var(--fp-text);
+  font-family: var(--font-body-family, sans-serif);
+}
+
+.fulva-popular .fulva-popular__inner {
+  max-width: var(--fp-max);
+  margin: 0 auto;
+  padding: var(--fp-py) var(--fp-px);
+}
+
+.fulva-popular .fulva-popular__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.fulva-popular .fulva-popular__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  line-height: 100%;
+  letter-spacing: 1.98px;
+  text-transform: uppercase;
+  color: var(--fp-accent);
+  font-weight: 700;
+}
+
+.fulva-popular .fulva-popular__eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 2px;
+  background: #D4A843;
+  flex: 0 0 auto;
+}
+
+.fulva-popular .fulva-popular__title {
+  margin: 13px 0 0;
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 48.4px;
+  letter-spacing: 1.32px;
+  color: var(--fp-text);
+  letter-spacing: -0.01em;
+}
+
+.fulva-popular .fulva-popular__title em {
+  font-family: var(--font-heading-family, serif);
+  font-style: italic;
+  font-weight: 600;
+  color: var(--fp-title-accent);
+}
+
+.fulva-popular .fulva-popular__nav {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.fulva-popular .fulva-popular__arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 160ms ease, filter 160ms ease, background 160ms ease;
+}
+
+.fulva-popular .fulva-popular__arrow svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.fulva-popular .fulva-popular__arrow.is-prev {
+  background: #EDEDED;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.fulva-popular .fulva-popular__arrow.is-next {
+  background: var(--fp-green);
+  color: #FFFFFF;
+}
+
+.fulva-popular .fulva-popular__arrow:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+
+.fulva-popular .fulva-popular__arrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.fulva-popular .fulva-popular__track {
+  margin-top: 44px;
+  display: flex;
+  gap: var(--fp-gap);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  padding: 8px 0 12px;
+  cursor: grab;
+}
+
+.fulva-popular .fulva-popular__track::-webkit-scrollbar {
+  display: none;
+}
+
+.fulva-popular .fulva-popular__track.is-dragging {
+  cursor: grabbing;
+}
+
+.fulva-popular .fulva-popular__track.is-dragging .fulva-popular__card {
+  pointer-events: none;
+}
+
+.fulva-popular .fulva-popular__card {
+  border-radius: var(--fp-radius);
+  overflow: hidden;
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,0.03);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  transition: transform 200ms ease;
+  flex: 0 0 auto;
+  width: var(--fp-card-w);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+}
+
+.fulva-popular .fulva-popular__card:hover {
+  transform: translateY(-2px);
+}
+
+.fulva-popular .fulva-popular__media {
+  position: relative;
+  height: var(--fp-img-h);
+  flex: 0 0 auto;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.fulva-popular .fulva-popular__badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  background: var(--fp-badge-bg);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+.fulva-popular .fulva-popular__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: translateZ(0);
+  transition: transform 260ms ease;
+}
+
+.fulva-popular .fulva-popular__card:hover .fulva-popular__img {
+  transform: scale(1.04);
+}
+
+.fulva-popular .fulva-popular__ph {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-size: 44px;
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.fulva-popular .fulva-popular__body {
+  padding: 14px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.fulva-popular .fulva-popular__name {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--fp-text);
+  line-height: 1.35;
+}
+
+.fulva-popular .fulva-popular__subtitle {
+  margin-top: 3px;
+  font-size: 12px;
+  color: var(--fp-muted);
+}
+
+.fulva-popular .fulva-popular__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.fulva-popular .fulva-popular__prices {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+}
+
+.fulva-popular .fulva-popular__price {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--fp-green);
+}
+
+.fulva-popular .fulva-popular__compare {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.35);
+  text-decoration: line-through;
+  font-weight: 600;
+}
+
+.fulva-popular .fulva-popular__form {
+  margin: 0;
+}
+
+.fulva-popular .fulva-popular__cart {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border-radius: 0;
+  background: var(--fp-green);
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 700;
+  border: 0;
+  cursor: pointer;
+  transition: background 160ms ease, transform 160ms ease, filter 160ms ease;
+  font-family: var(--font-body-family, sans-serif);
+  white-space: nowrap;
+}
+
+.fulva-popular .fulva-popular__cart:hover {
+  background: var(--fp-green-hover);
+  transform: translateY(-1px);
+  filter: brightness(1.02);
+}
+
+.fulva-popular .fulva-popular__cart:disabled,
+.fulva-popular .fulva-popular__cart.is-disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.fulva-popular .fulva-popular__plus {
+  font-weight: 900;
+}
+
+.fulva-popular .fulva-popular__viewall {
+  text-align: center;
+  margin-top: 28px;
+}
+
+.fulva-popular .fulva-popular__viewall a {
+  color: var(--fp-green);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.fulva-popular .fulva-popular__viewall a:hover {
+  color: var(--fp-green-hover);
+}
+
+@media (max-width: 749px) {
+  .fulva-popular .fulva-popular__inner {
+    padding: var(--fp-py-m) var(--fp-px-m);
+  }
+
+  .fulva-popular .fulva-popular__eyebrow {
+    font-size: 9px;
+  }
+
+  .fulva-popular .fulva-popular__title {
+    font-size: 26px;
+    margin-top: 8px;
+    font-weight: 800;
+    line-height: 28.6px;
+    letter-spacing: -0.78px;
+  }
+
+  .fulva-popular .fulva-popular__nav {
+    display: none;
+  }
+
+  .fulva-popular .fulva-popular__track {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 8px 0 12px;
+    margin-top: 24px;
+    overflow: hidden;
+  }
+
+  .fulva-popular .fulva-popular__card {
+    width: 100%;
+  }
+
+  .fulva-popular .fulva-popular__prices {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .fulva-popular .fulva-popular__card:nth-child(n+5) {
+    display: none;
+  }
+
+}
+
+@media (max-width: 749px) {
+  .fulva-popular.fulva-popular--hide-mobile {
+    display: none;
+  }
+}
+
+@media (min-width: 750px) {
+  .fulva-popular.fulva-popular--hide-desktop {
+    display: none;
+  }
+}
