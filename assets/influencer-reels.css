@@ -1,0 +1,499 @@
+  .fulva-buzz {
+    color: var(--fb-text);
+    font-family: var(--font-body-family, inherit);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fulva-buzz.fulva-buzz--bg-linear {
+    background: linear-gradient(180deg, var(--fb-bg), var(--fb-bg2));
+  }
+
+  .fulva-buzz.fulva-buzz--bg-radial {
+    background: radial-gradient(circle at 50% 0%, var(--fb-bg) 0%, var(--fb-bg2) 55%, var(--fb-bg3) 100%);
+  }
+
+  .fulva-buzz::before,
+  .fulva-buzz::after {
+    content: none;
+  }
+
+  .fulva-buzz .fulva-buzz__inner {
+    max-width: var(--fb-max);
+    margin: 0 auto;
+    padding: var(--fb-py) 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .fulva-buzz .fulva-buzz__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 13px;
+    padding: 0 var(--fb-px);
+    text-align: center;
+  }
+
+  .fulva-buzz .fulva-buzz__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 9px;
+    letter-spacing: 1.8px;
+    color: #E2EE75;
+    line-height: 100%;
+    font-weight: 700;
+  }
+
+  .fulva-buzz .fulva-buzz__eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 2px;
+    background: #F4C026;
+    flex: 0 0 auto;
+  }
+
+  .fulva-buzz .fulva-buzz__title {
+    margin: 0;
+    font-family: var(--font-heading-family, inherit);
+    font-size: 44px;
+    font-weight: 800;
+    letter-spacing: -1.32px;
+    line-height: 48.4px;
+    color: #FFFFFF;
+  }
+
+  .fulva-buzz .fulva-buzz__title em {
+    font-style: normal;
+    color: var(--fb-title-highlight);
+  }
+
+  .fulva-buzz .fulva-buzz__subtitle {
+    color: #FFFFFF73;
+    font-size: 14.5px;
+    line-height: 24.65px;
+    max-width: 62ch;
+    letter-spacing: 0%;
+    font-weight: 400;
+  }
+
+  .fulva-buzz .fulva-buzz__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.30);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .fulva-buzz .fulva-buzz__cta:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.02);
+    box-shadow: 0 22px 56px rgba(0, 0, 0, 0.38);
+  }
+
+  .fulva-buzz .fulva-buzz__profiles {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 32px;
+    padding: 44px var(--fb-px) 10px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-bottom: 44px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+
+  .fulva-buzz .fulva-buzz__profiles::-webkit-scrollbar {
+    display: none;
+  }
+
+  .fulva-buzz .fulva-buzz__profile {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 88px;
+    flex: 0 0 auto;
+    text-align: center;
+    color: inherit;
+  }
+
+  .fulva-buzz .fulva-buzz__profile-avatar {
+    width: var(--fb-profile-size);
+    height: var(--fb-profile-size);
+    border-radius: 999px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.22);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .fulva-buzz .fulva-buzz__profile-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .fulva-buzz .fulva-buzz__profile-avatar-fallback {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.06));
+  }
+
+  .fulva-buzz .fulva-buzz__profile-role {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    font-weight: 900;
+    color: var(--fb-accent);
+    text-transform: uppercase;
+    white-space: nowrap;
+    max-width: 120px;
+    margin-top: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.15;
+  }
+
+  .fulva-buzz .fulva-buzz__profile-name {
+    font-size: 12px;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.88);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+    line-height: 1.15;
+  }
+
+  .fulva-buzz .fulva-buzz__profile.is-active .fulva-buzz__profile-avatar {
+    border-color: var(--fb-accent);
+    box-shadow: 0 0 0 2px var(--fb-accent), 0 20px 46px rgba(0, 0, 0, 0.26);
+    transform: translateY(-1px);
+  }
+
+  .fulva-buzz .fulva-buzz__carousel {
+    position: relative;
+    padding: 10px var(--fb-px) 0;
+  }
+
+  .fulva-buzz .fulva-buzz__stage {
+    position: relative;
+    height: var(--fb-stage-h);
+    max-width: 100%;
+    margin: 0 auto;
+    touch-action: pan-y;
+  }
+
+  .fulva-buzz .fulva-buzz__slide {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--fb-card-w);
+    transform: translate(-50%, -50%) scale(0.7);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 420ms cubic-bezier(.2, .9, .2, 1), opacity 420ms ease;
+    z-index: 1;
+  }
+
+  .fulva-buzz .fulva-buzz__slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) translateX(0) scale(1);
+    z-index: 5;
+  }
+
+  .fulva-buzz .fulva-buzz__slide.is-prev {
+    opacity: 0.92;
+    transform: translate(-50%, -50%) translateX(calc(var(--fb-offset) * -1)) scale(var(--fb-mid-scale));
+    z-index: 4;
+  }
+
+  .fulva-buzz .fulva-buzz__slide.is-next {
+    opacity: 0.92;
+    transform: translate(-50%, -50%) translateX(var(--fb-offset)) scale(var(--fb-mid-scale));
+    z-index: 4;
+  }
+
+  .fulva-buzz .fulva-buzz__slide.is-far-prev {
+    opacity: 0.28;
+    transform: translate(-50%, -50%) translateX(calc(var(--fb-offset) * -2)) scale(var(--fb-far-scale));
+    z-index: 3;
+  }
+
+  .fulva-buzz .fulva-buzz__slide.is-far-next {
+    opacity: 0.28;
+    transform: translate(-50%, -50%) translateX(calc(var(--fb-offset) * 2)) scale(var(--fb-far-scale));
+    z-index: 3;
+  }
+
+  .fulva-buzz .fulva-buzz__slide-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .fulva-buzz .fulva-buzz__slide-media {
+    position: relative;
+    border-radius: var(--fb-radius);
+    overflow: hidden;
+    box-shadow: 0 28px 72px rgba(0, 0, 0, 0.42);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+  }
+
+  .fulva-buzz .fulva-buzz__slide-media::before {
+    content: '';
+    display: block;
+    aspect-ratio: var(--fb-card-ar);
+  }
+
+  .fulva-buzz .fulva-buzz__slide-img,
+  .fulva-buzz .fulva-buzz__slide-video,
+  .fulva-buzz .fulva-buzz__slide-placeholder {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .fulva-buzz .fulva-buzz__slide-placeholder {
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04));
+  }
+
+  .fulva-buzz .fulva-buzz__slide-play {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    width: 52px;
+    height: 52px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+    pointer-events: none;
+  }
+
+  .fulva-buzz .fulva-buzz__slide-play svg {
+    width: 22px;
+    height: 22px;
+    fill: rgba(0, 0, 0, 0.88);
+    transform: translateX(1px);
+  }
+
+  .fulva-buzz .fulva-buzz__slide-views {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    padding: 7px 10px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.55);
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 12px;
+    font-weight: 800;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(10px);
+    pointer-events: none;
+  }
+
+  .fulva-buzz .fulva-buzz__slide-likes {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.46);
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 12px;
+    font-weight: 800;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    pointer-events: none;
+  }
+
+  .fulva-buzz .fulva-buzz__carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 46px;
+    height: 46px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(10px);
+    transition: transform 0.2s ease, filter 0.2s ease;
+    z-index: 10;
+  }
+
+  .fulva-buzz .fulva-buzz__carousel-arrow:hover {
+    transform: translateY(-50%) scale(1.02);
+    filter: brightness(1.05);
+  }
+
+  .fulva-buzz .fulva-buzz__carousel-arrow svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+  }
+
+  .fulva-buzz .fulva-buzz__carousel-arrow--prev {
+    left: calc(50% - (var(--fb-offset) * 2) - (var(--fb-card-w) * var(--fb-far-scale) / 2) - 58px);
+  }
+
+  .fulva-buzz .fulva-buzz__carousel-arrow--next {
+    right: calc(50% - (var(--fb-offset) * 2) - (var(--fb-card-w) * var(--fb-far-scale) / 2) - 58px);
+  }
+
+
+
+  @media (max-width: 989px) {
+    .fulva-buzz .fulva-buzz__carousel-arrow--prev {
+      left: 0;
+    }
+
+    .fulva-buzz .fulva-buzz__carousel-arrow--next {
+      right: 0;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .fulva-buzz .fulva-buzz__inner {
+      padding: var(--fb-py-m) 0;
+    }
+
+    .fulva-buzz .fulva-buzz__header {
+      padding: 0 var(--fb-px-m);
+      gap: 8px;
+    }
+
+    .fulva-buzz .fulva-buzz__title {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 28.6px;
+      letter-spacing: -0.78px;
+    }
+
+    .fulva-buzz .fulva-buzz__subtitle {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 100%;
+      letter-spacing: 0.48px;
+
+    }
+
+    .fulva-buzz .fulva-buzz__profiles {
+      padding: 28px var(--fb-px-m) 8px;
+      gap: 8px;
+      justify-content: flex-start;
+      margin-bottom: 28px;
+    }
+
+    .fulva-buzz .fulva-buzz__profile {
+      min-width: 74px;
+    }
+
+    .fulva-buzz .fulva-buzz__profile-role,
+    .fulva-buzz .fulva-buzz__profile-name {
+      max-width: 92px;
+    }
+
+    .fulva-buzz .fulva-buzz__carousel {
+      padding: 8px var(--fb-px-m) 0;
+    }
+
+    .fulva-buzz .fulva-buzz__stage {
+      height: var(--fb-stage-h-m);
+    }
+
+    .fulva-buzz .fulva-buzz__slide {
+      width: var(--fb-card-w-m);
+    }
+
+    .fulva-buzz .fulva-buzz__slide.is-prev {
+      transform: translate(-50%, -50%) translateX(calc(var(--fb-offset-m) * -1)) scale(var(--fb-mid-scale));
+    }
+
+    .fulva-buzz .fulva-buzz__slide.is-next {
+      transform: translate(-50%, -50%) translateX(var(--fb-offset-m)) scale(var(--fb-mid-scale));
+    }
+
+    .fulva-buzz .fulva-buzz__slide.is-far-prev {
+      transform: translate(-50%, -50%) translateX(calc(var(--fb-offset-m) * -2)) scale(var(--fb-far-scale));
+    }
+
+    .fulva-buzz .fulva-buzz__slide.is-far-next {
+      transform: translate(-50%, -50%) translateX(calc(var(--fb-offset-m) * 2)) scale(var(--fb-far-scale));
+    }
+
+    .fulva-buzz .fulva-buzz__carousel-arrow {
+      display: none;
+    }
+
+
+  }
+
+  @media (max-width: 749px) {
+    .fulva-buzz.fulva-buzz--hide-mobile {
+      display: none;
+    }
+  }
+
+  @media (min-width: 750px) {
+    .fulva-buzz.fulva-buzz--hide-desktop {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fulva-buzz .fulva-buzz__cta {
+      transition: none;
+    }
+
+    .fulva-buzz .fulva-buzz__carousel-arrow {
+      transition: none;
+    }
+
+    .fulva-buzz .fulva-buzz__slide {
+      transition: none;
+    }
+  }
