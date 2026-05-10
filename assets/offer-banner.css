@@ -31,12 +31,10 @@
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: linear-gradient(
-    180deg,
-    rgba(10, 20, 50, var(--fs-o1)) 0%,
-    rgba(10, 20, 50, var(--fs-o2)) 45%,
-    rgba(10, 20, 50, var(--fs-o3)) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(10, 20, 50, var(--fs-o1)) 0%,
+      rgba(10, 20, 50, var(--fs-o2)) 45%,
+      rgba(10, 20, 50, var(--fs-o3)) 100%);
 }
 
 .fulva-seasonal .fulva-seasonal__inner {
@@ -63,15 +61,15 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  font-size: 11px;
+  font-size: 9x;
+  line-height: 100%;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--fs-accent);
   font-weight: 700;
 }
 
-.fulva-seasonal .fulva-seasonal__eyebrow::before,
-.fulva-seasonal .fulva-seasonal__eyebrow::after {
+.fulva-seasonal .fulva-seasonal__eyebrow::before {
   content: '';
   width: 28px;
   height: 2px;
@@ -122,7 +120,7 @@
   justify-content: center;
   padding: 14px 28px;
   border-radius: 0px;
-  letter-spacing:0.051em;
+  letter-spacing: 0.051em;
   font-weight: 700;
   text-decoration: none;
   white-space: nowrap;
@@ -170,7 +168,7 @@
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
   overscroll-behavior-x: contain;
-  padding: 6px 20px 12px;
+  padding: 0 20px;
   width: 100%;
   cursor: grab;
 }
@@ -278,9 +276,9 @@
 }
 
 .fulva-seasonal .fulva-seasonal__price {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   min-width: 0;
 }
 
@@ -375,6 +373,17 @@
   fill: currentColor;
 }
 
+.fulva-seasonal .fulva-seasonal__nav:disabled {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Mobile nav row hidden on desktop */
+.fulva-seasonal .fulva-seasonal__nav-mobile-row {
+  display: none;
+}
+
 @media (max-width: 749px) {
   .fulva-seasonal {
     min-height: var(--fs-h-m);
@@ -390,25 +399,67 @@
   }
 
   .fulva-seasonal .fulva-seasonal__title {
-    font-size: 34px;
+    font-size: 26px;
+    line-height: 28.6px;
+    letter-spacing: -0.78px;
+    font-weight: 800;
+  }
+
+  .fulva-seasonal .fulva-seasonal__sub {
+    width: 354px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .fulva-seasonal .fulva-seasonal__btn {
+    padding: 14px 16px;
+    letter-spacing: 0.5px;
+    line-height: 100%;
+  }
+
+  .fulva-seasonal .fulva-seasonal__btn.is-primary {
+    font-size: var(--fs-btn-primary-size-m);
+  }
+
+  .fulva-seasonal .fulva-seasonal__btn.is-secondary {
+    font-size: var(--fs-btn-secondary-size-m);
   }
 
   .fulva-seasonal .fulva-seasonal__cards-wrap {
     margin-top: 22px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .fulva-seasonal .fulva-seasonal__nav--desktop {
+    display: none;
   }
 
   .fulva-seasonal .fulva-seasonal__nav {
-    display: none;
+    position: static;
+    transform: none;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 auto;
+  }
+
+  .fulva-seasonal .fulva-seasonal__nav-mobile-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 16px;
   }
 
   .fulva-seasonal .fulva-seasonal__cards {
     justify-content: flex-start;
-    scroll-padding-left: var(--fs-offset-m);
-    padding: 6px var(--fs-offset-m) 12px;
+    scroll-padding-left: var(--fs-px-m);
+    padding: 6px var(--fs-px-m) 8px;
+    scroll-snap-type: x mandatory;
   }
 
   .fulva-seasonal .fulva-seasonal__card {
-    width: var(--fs-card-w-m);
+    width: calc((100vw - var(--fs-px-m) * 2 - var(--fs-gap)) / 2);
     scroll-snap-align: start;
   }
 }

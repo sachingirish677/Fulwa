@@ -24,9 +24,11 @@
     --fs-btn-primary-bg: {{ section.settings.primary_button_bg }};
     --fs-btn-primary-text: {{ section.settings.primary_button_text }};
     --fs-btn-primary-size: {{ section.settings.primary_button_font_size }}px;
+    --fs-btn-primary-size-m: {{ section.settings.primary_button_font_size_mobile }}px;
     --fs-btn-secondary-bg: {{ section.settings.secondary_button_bg }};
     --fs-btn-secondary-text: {{ section.settings.secondary_button_text }};
     --fs-btn-secondary-size: {{ section.settings.secondary_button_font_size }}px;
+    --fs-btn-secondary-size-m: {{ section.settings.secondary_button_font_size_mobile }}px;
     --fs-card-bg: {{ section.settings.card_bg }};
     --fs-price: {{ section.settings.price_color }};
     --fs-cart-bg: {{ section.settings.cart_bg }};
@@ -101,7 +103,7 @@
 
     <div class="fulva-seasonal__cards-wrap">
       {% if section.settings.show_arrows and track_blocks.size > 0 %}
-        <button class="fulva-seasonal__nav is-prev" type="button" aria-label="Scroll left" data-fs-prev>
+        <button class="fulva-seasonal__nav fulva-seasonal__nav--desktop is-prev" type="button" aria-label="Scroll left" data-fs-prev>
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path d="M14.7 5.3a1 1 0 0 1 0 1.4L9.4 12l5.3 5.3a1 1 0 1 1-1.4 1.4l-6-6a1 1 0 0 1 0-1.4l6-6a1 1 0 0 1 1.4 0z"></path>
           </svg>
@@ -148,7 +150,7 @@
                     {{ display_image | image_url: width: 720 }} 720w,
                     {{ display_image | image_url: width: 900 }} 900w
                   "
-                  sizes="(max-width: 749px) {{ section.settings.card_width_mobile }}px, {{ section.settings.card_width_desktop }}px"
+                  sizes="(max-width: 749px) calc((100vw - 48px) / 2), {{ section.settings.card_width_desktop }}px"
                   width="{{ display_image.width }}"
                   height="{{ display_image.height }}"
                   alt="{{ display_image.alt | default: product.title | escape }}"
@@ -206,11 +208,27 @@
       </div>
 
       {% if section.settings.show_arrows and track_blocks.size > 0 %}
-        <button class="fulva-seasonal__nav is-next" type="button" aria-label="Scroll right" data-fs-next>
+        <button class="fulva-seasonal__nav fulva-seasonal__nav--desktop is-next" type="button" aria-label="Scroll right" data-fs-next>
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path d="M9.3 18.7a1 1 0 0 1 0-1.4L14.6 12 9.3 6.7a1 1 0 1 1 1.4-1.4l6 6a1 1 0 0 1 0 1.4l-6 6a1 1 0 0 1-1.4 0z"></path>
           </svg>
         </button>
+      {% endif %}
+
+      {%- comment -%} Mobile-only bottom navigation arrows {%- endcomment -%}
+      {% if track_blocks.size > 2 %}
+        <div class="fulva-seasonal__nav-mobile-row">
+          <button class="fulva-seasonal__nav is-prev" type="button" aria-label="Scroll left" data-fs-prev-m>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M14.7 5.3a1 1 0 0 1 0 1.4L9.4 12l5.3 5.3a1 1 0 1 1-1.4 1.4l-6-6a1 1 0 0 1 0-1.4l6-6a1 1 0 0 1 1.4 0z"></path>
+            </svg>
+          </button>
+          <button class="fulva-seasonal__nav is-next" type="button" aria-label="Scroll right" data-fs-next-m>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M9.3 18.7a1 1 0 0 1 0-1.4L14.6 12 9.3 6.7a1 1 0 1 1 1.4-1.4l6 6a1 1 0 0 1 0 1.4l-6 6a1 1 0 0 1-1.4 0z"></path>
+            </svg>
+          </button>
+        </div>
       {% endif %}
     </div>
   </div>
@@ -225,21 +243,34 @@
         this.track = this.querySelector('[data-fs-track]');
         this.prevBtn = this.querySelector('[data-fs-prev]');
         this.nextBtn = this.querySelector('[data-fs-next]');
+        this.prevBtnM = this.querySelector('[data-fs-prev-m]');
+        this.nextBtnM = this.querySelector('[data-fs-next-m]');
         if (!this.track) return;
 
         this.updateArrows = this.updateArrows.bind(this);
 
+        const scrollPrev = () => {
+          this.track.scrollBy({ left: -this.getScrollAmount() * 2, behavior: 'smooth' });
+        };
+        const scrollNext = () => {
+          this.track.scrollBy({ left: this.getScrollAmount() * 2, behavior: 'smooth' });
+        };
+
+        /* Desktop arrows */
         if (this.prevBtn && this.nextBtn) {
-          this.prevBtn.addEventListener('click', () => {
-            this.track.scrollBy({ left: -this.getScrollAmount() * 2, behavior: 'smooth' });
-          });
-          this.nextBtn.addEventListener('click', () => {
-            this.track.scrollBy({ left: this.getScrollAmount() * 2, behavior: 'smooth' });
-          });
-          this.track.addEventListener('scroll', this.updateArrows, { passive: true });
-          window.addEventListener('resize', this.updateArrows);
-          setTimeout(this.updateArrows, 100);
+          this.prevBtn.addEventListener('click', scrollPrev);
+          this.nextBtn.addEventListener('click', scrollNext);
         }
+
+        /* Mobile arrows */
+        if (this.prevBtnM && this.nextBtnM) {
+          this.prevBtnM.addEventListener('click', scrollPrev);
+          this.nextBtnM.addEventListener('click', scrollNext);
+        }
+
+        this.track.addEventListener('scroll', this.updateArrows, { passive: true });
+        window.addEventListener('resize', this.updateArrows);
+        setTimeout(this.updateArrows, 100);
 
         this.initDrag();
       }
@@ -296,10 +327,13 @@
       }
 
       updateArrows() {
-        if (!this.prevBtn || !this.nextBtn) return;
-        this.prevBtn.disabled = this.track.scrollLeft <= 10;
+        const sl = this.track.scrollLeft;
         const maxScroll = this.track.scrollWidth - this.track.clientWidth;
-        this.nextBtn.disabled = this.track.scrollLeft >= maxScroll - 10;
+        const atStart = sl <= 10;
+        const atEnd = sl >= maxScroll - 10;
+
+        [this.prevBtn, this.prevBtnM].forEach(btn => { if (btn) btn.disabled = atStart; });
+        [this.nextBtn, this.nextBtnM].forEach(btn => { if (btn) btn.disabled = atEnd; });
       }
 
       disconnectedCallback() {
@@ -331,12 +365,14 @@
     { "type": "header", "content": "Buttons" },
     { "type": "text", "id": "primary_button_label", "label": "Primary button label", "default": "Shop Eid Collection" },
     { "type": "url", "id": "primary_button_link", "label": "Primary button link" },
-    { "type": "range", "id": "primary_button_font_size", "label": "Primary button font size", "min": 10, "max": 24, "step": 1, "default": 14, "unit": "px" },
+    { "type": "range", "id": "primary_button_font_size", "label": "Primary button font size (desktop)", "min": 10, "max": 24, "step": 1, "default": 14, "unit": "px" },
+    { "type": "range", "id": "primary_button_font_size_mobile", "label": "Primary button font size (mobile)", "min": 10, "max": 24, "step": 1, "default": 14, "unit": "px" },
     { "type": "color", "id": "primary_button_bg", "label": "Primary button background", "default": "#FFC107" },
     { "type": "color", "id": "primary_button_text", "label": "Primary button text", "default": "#1A1A1A" },
     { "type": "text", "id": "secondary_button_label", "label": "Secondary button label", "default": "Bulk Enquiry →" },
     { "type": "url", "id": "secondary_button_link", "label": "Secondary button link" },
-    { "type": "range", "id": "secondary_button_font_size", "label": "Secondary button font size", "min": 10, "max": 24, "step": 1, "default": 14, "unit": "px" },
+    { "type": "range", "id": "secondary_button_font_size", "label": "Secondary button font size (desktop)", "min": 10, "max": 24, "step": 1, "default": 14, "unit": "px" },
+    { "type": "range", "id": "secondary_button_font_size_mobile", "label": "Secondary button font size (mobile)", "min": 10, "max": 24, "step": 1, "default": 14, "unit": "px" },
     { "type": "color", "id": "secondary_button_bg", "label": "Secondary button background", "default": "#FFFFFF" },
     { "type": "color", "id": "secondary_button_text", "label": "Secondary button text", "default": "#1B5E2F" },
     { "type": "text", "id": "cart_label", "label": "Cart label", "default": "Cart" },
