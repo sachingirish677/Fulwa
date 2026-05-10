@@ -813,9 +813,11 @@
         "mention_N9RNmC": {
           "type": "mention",
           "settings": {
+            "media": "shopify://shop_images/div.celeb-card-bg.png",
             "link": "",
-            "name": "Influencer Name",
-            "title": "Creator",
+            "avatar": "shopify://shop_images/div.celeb-card-bg.png",
+            "name": "Sunith V S",
+            "title": "✦ INFLUENCER",
             "handle": "@fulva.in",
             "badge": "Trending",
             "metric": "1M+ views",
@@ -827,8 +829,9 @@
           "type": "mention",
           "settings": {
             "link": "",
-            "name": "Influencer Name",
-            "title": "Creator",
+            "avatar": "shopify://shop_images/div.celeb-card-bg_1.png",
+            "name": "Aman Gupta",
+            "title": "✦ entrepreneuR",
             "handle": "@fulva.in",
             "badge": "Trending",
             "metric": "1M+ views",
@@ -840,8 +843,9 @@
           "type": "mention",
           "settings": {
             "link": "",
-            "name": "Influencer Name",
-            "title": "Creator",
+            "avatar": "shopify://shop_images/div.celeb-card-bg_2.png",
+            "name": "Ashish Vidyarthi",
+            "title": "✦ ACTOR",
             "handle": "@fulva.in",
             "badge": "Trending",
             "metric": "1M+ views",
@@ -853,11 +857,26 @@
           "type": "mention",
           "settings": {
             "link": "",
-            "name": "Influencer Name",
-            "title": "Creator",
+            "avatar": "shopify://shop_images/div.celeb-card-bg_3.png",
+            "name": "Govind Padmasoorya",
+            "title": "✦ ACTOR",
             "handle": "@fulva.in",
             "badge": "Trending",
             "metric": "1M+ views",
+            "like_text": "84K",
+            "quote": "Loved the taste and the giftable packaging."
+          }
+        },
+        "mention_pVffM4": {
+          "type": "mention",
+          "settings": {
+            "link": "",
+            "avatar": "shopify://shop_images/div.celeb-card-bg_4.png",
+            "name": "Hanan Shah",
+            "title": "✦ SINGER",
+            "handle": "@fulva.in",
+            "badge": "Trending",
+            "metric": "2.4M",
             "like_text": "84K",
             "quote": "Loved the taste and the giftable packaging."
           }
@@ -867,7 +886,8 @@
         "mention_N9RNmC",
         "mention_Qha94K",
         "mention_UXPJpP",
-        "mention_BENU7J"
+        "mention_BENU7J",
+        "mention_pVffM4"
       ],
       "name": "Fulva buzz",
       "settings": {
@@ -886,9 +906,9 @@
         "show_progress": true,
         "max_width": 0,
         "padding_x_desktop": 64,
-        "padding_y_desktop": 34,
+        "padding_y_desktop": 64,
         "padding_x_mobile": 16,
-        "padding_y_mobile": 18,
+        "padding_y_mobile": 32,
         "gap": 14,
         "radius": 18,
         "media_radius": 18,
