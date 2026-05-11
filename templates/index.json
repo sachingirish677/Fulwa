@@ -1042,36 +1042,6 @@
         "hide_on_mobile": false,
         "hide_on_desktop": false
       }
-    },
-    "bannerwithtext_ramMzx": {
-      "type": "bannerwithtext",
-      "name": "Fulva split story",
-      "settings": {
-        "aria_label": "Story section",
-        "eyebrow": "OUR HERITAGE",
-        "heading": "A <em>Tradition</em> Worth Protecting",
-        "subheading": "Quick order, custom gifting, and faster support — chat with our team.",
-        "show_whatsapp_icon": true,
-        "primary_label": "Start Chat on WhatsApp",
-        "primary_link": "",
-        "secondary_label": "Track Order",
-        "secondary_link": "",
-        "background": "#eaf6ea",
-        "background_2": "#f8e9b4",
-        "text_color": "#101010",
-        "muted_text_color": "#6b6b6b",
-        "accent_color": "#1c9a38",
-        "eyebrow_line_color": "#f4c026",
-        "primary_button_bg": "#1b5e2f",
-        "primary_button_text": "#ffffff",
-        "secondary_button_bg": "#ffffff",
-        "secondary_button_text": "#101010",
-        "secondary_button_border": "#d1d1d1",
-        "border_color": "#000000",
-        "border_opacity": 0,
-        "hide_on_mobile": false,
-        "hide_on_desktop": false
-      }
     }
   },
   "order": [
@@ -1086,7 +1056,6 @@
     "spotlight_6AGJxq",
     "featured_marquee_GVyY8w",
     "influencer_reels_HkfzDh",
-    "testimonials_7xKHqX",
-    "bannerwithtext_ramMzx"
+    "testimonials_7xKHqX"
   ]
 }
