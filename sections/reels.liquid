@@ -42,37 +42,39 @@
 >
   <div class="fulva-reels__inner">
     <!-- Header -->
-    <div class="fulva-reels-header">
-      <div class="fulva-reels-header-left">
-        {% if section.settings.eyebrow != blank %}
-          <div class="fulva-reels-eyebrow">{{ section.settings.eyebrow | escape }}</div>
-        {% endif %}
-        <div class="fulva-reels-title-row">
-          {% if section.settings.heading_1 != blank or section.settings.heading_2 != blank or section.settings.heading_3 != blank %}
-            <h2 class="fulva-reels-title">
-              {% if section.settings.heading_1 != blank %}<span style="color: {{ section.settings.heading_1_color }};">{{ section.settings.heading_1 }}</span> {% endif %}
-              {% if section.settings.heading_2 != blank %}<span style="color: {{ section.settings.heading_2_color }};">{{ section.settings.heading_2 }}</span> {% endif %}
-              {% if section.settings.heading_3 != blank %}<span style="color: {{ section.settings.heading_3_color }};">{{ section.settings.heading_3 }}</span>{% endif %}
-            </h2>
+    {% if section.settings.show_header %}
+      <div class="fulva-reels-header">
+        <div class="fulva-reels-header-left">
+          {% if section.settings.eyebrow != blank %}
+            <div class="fulva-reels-eyebrow">{{ section.settings.eyebrow | escape }}</div>
           {% endif %}
-          {% if section.settings.ig_handle != blank and section.settings.ig_link != blank %}
-            <a href="{{ ig_href }}" target="_blank" rel="noopener" class="fulva-ig-btn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
-              {{ section.settings.ig_handle | escape }}
-            </a>
-          {% endif %}
+          <div class="fulva-reels-title-row">
+            {% if section.settings.heading_1 != blank or section.settings.heading_2 != blank or section.settings.heading_3 != blank %}
+              <h2 class="fulva-reels-title">
+                {% if section.settings.heading_1 != blank %}<span style="color: {{ section.settings.heading_1_color }};">{{ section.settings.heading_1 }}</span> {% endif %}
+                {% if section.settings.heading_2 != blank %}<span style="color: {{ section.settings.heading_2_color }};">{{ section.settings.heading_2 }}</span> {% endif %}
+                {% if section.settings.heading_3 != blank %}<span style="color: {{ section.settings.heading_3_color }};">{{ section.settings.heading_3 }}</span>{% endif %}
+              </h2>
+            {% endif %}
+            {% if section.settings.ig_handle != blank and section.settings.ig_link != blank %}
+              <a href="{{ ig_href }}" target="_blank" rel="noopener" class="fulva-ig-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+                {{ section.settings.ig_handle | escape }}
+              </a>
+            {% endif %}
+          </div>
         </div>
-      </div>
 
-      {% if section.settings.show_filters %}
-        <div class="fulva-ugc-filter">
-          <button class="fulva-filter-chip active">All</button>
-          {% if section.settings.filter_1 != blank %}<button class="fulva-filter-chip">{{ section.settings.filter_1 | escape }}</button>{% endif %}
-          {% if section.settings.filter_2 != blank %}<button class="fulva-filter-chip">{{ section.settings.filter_2 | escape }}</button>{% endif %}
-          {% if section.settings.filter_3 != blank %}<button class="fulva-filter-chip">{{ section.settings.filter_3 | escape }}</button>{% endif %}
-        </div>
-      {% endif %}
-    </div>
+        {% if section.settings.show_filters %}
+          <div class="fulva-ugc-filter">
+            <button class="fulva-filter-chip active">All</button>
+            {% if section.settings.filter_1 != blank %}<button class="fulva-filter-chip">{{ section.settings.filter_1 | escape }}</button>{% endif %}
+            {% if section.settings.filter_2 != blank %}<button class="fulva-filter-chip">{{ section.settings.filter_2 | escape }}</button>{% endif %}
+            {% if section.settings.filter_3 != blank %}<button class="fulva-filter-chip">{{ section.settings.filter_3 | escape }}</button>{% endif %}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
 
     <!-- Reels track -->
     <div class="fulva-reels-track-wrap">
@@ -102,11 +104,11 @@
 
             {% if ig_href != blank %}
               <a class="fulva-reel-ig-icon" href="{{ ig_href }}" target="_blank" rel="noopener" aria-label="Open Instagram">
-                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/></svg>
+                <img src="{{ 'reel-icon.png' | asset_url }}" alt="Instagram" width="28" height="28">
               </a>
             {% else %}
               <div class="fulva-reel-ig-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/></svg>
+                <img src="{{ 'reel-icon.png' | asset_url }}" alt="Instagram" width="28" height="28">
               </div>
             {% endif %}
             
@@ -342,6 +344,8 @@
   "name": "Fulva Reels",
   "settings": [
     { "type": "text", "id": "aria_label", "label": "ARIA label", "default": "Instagram Reels" },
+    { "type": "header", "content": "Header settings" },
+    { "type": "checkbox", "id": "show_header", "label": "Show header section", "default": true },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Real People, Real Moments" },
     { "type": "inline_richtext", "id": "heading_1", "label": "Heading Part 1", "default": "The" },
     { "type": "color", "id": "heading_1_color", "label": "Heading Part 1 Color", "default": "#1A1A1A" },
