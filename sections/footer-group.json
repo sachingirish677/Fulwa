@@ -90,19 +90,20 @@
       "name": "Fulva Reels",
       "settings": {
         "aria_label": "Instagram Reels",
+        "show_header": true,
         "eyebrow": "Real People, Real Moments",
         "heading_1": "The",
-        "heading_1_color": "#1A1A1A",
+        "heading_1_color": "#1a1a1a",
         "heading_2": "<em>Halwa</em>",
-        "heading_2_color": "#1A1A1A",
+        "heading_2_color": "#1a1a1a",
         "heading_3": "Diaries",
-        "heading_3_color": "#1A1A1A",
+        "heading_3_color": "#1a1a1a",
         "ig_handle": "@fulva.in",
         "ig_link": "",
-        "ig_grad_1": "#F58529",
-        "ig_grad_2": "#DD2A7B",
-        "ig_grad_3": "#8134AF",
-        "ig_grad_4": "#515BD4",
+        "ig_grad_1": "#f58529",
+        "ig_grad_2": "#dd2a7b",
+        "ig_grad_3": "#8134af",
+        "ig_grad_4": "#515bd4",
         "show_filters": true,
         "filter_1": "Unboxing",
         "filter_2": "Taste Tests",
@@ -120,12 +121,12 @@
         "card_width_mobile": 212,
         "card_height_mobile": 382,
         "background": "#fafdf9",
-        "text_color": "#1A1A1A",
-        "accent_color": "#D4A843",
+        "text_color": "#1a1a1a",
+        "accent_color": "#d4a843",
         "border_color": "#000000",
         "border_opacity": 6,
         "show_bottom_section": true,
-        "bottom_bg": "#FFFFFF",
+        "bottom_bg": "#ffffff",
         "bottom_heading": "Available Across India",
         "amazon_link": "",
         "amazon_logo_alt": "Amazon",
@@ -141,21 +142,42 @@
         "faq_XxjLeT": {
           "type": "faq",
           "settings": {
-            "question": "WHY IS CALICUT HALWA DIFFERENT FROM OTHER HALWAS?",
+            "question": "Why is Calicut halwa different from other halwas?",
             "answer": "<p>Provide the answer to your question here.</p>"
           }
         },
         "faq_tJLKPn": {
           "type": "faq",
           "settings": {
-            "question": "WHY IS CALICUT HALWA DIFFERENT FROM OTHER HALWAS?",
+            "question": "Does Fulva halwa contain preservatives or artificial ingredients?",
             "answer": "<p>Provide the answer to your question here.</p>"
           }
         },
         "faq_9LeEt7": {
           "type": "faq",
           "settings": {
-            "question": "WHY IS CALICUT HALWA DIFFERENT FROM OTHER HALWAS?",
+            "question": "How long does the halwa stay fresh?",
+            "answer": "<p>Provide the answer to your question here.</p>"
+          }
+        },
+        "faq_ymLpDe": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you ship across all of India?",
+            "answer": "<p>Provide the answer to your question here.</p>"
+          }
+        },
+        "faq_ftjHA9": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I get a custom branded gift box for my company?",
+            "answer": "<p>Provide the answer to your question here.</p>"
+          }
+        },
+        "faq_PLYJGT": {
+          "type": "faq",
+          "settings": {
+            "question": "What if my order arrives damaged?",
             "answer": "<p>Provide the answer to your question here.</p>"
           }
         }
@@ -163,14 +185,19 @@
       "block_order": [
         "faq_XxjLeT",
         "faq_tJLKPn",
-        "faq_9LeEt7"
+        "faq_9LeEt7",
+        "faq_ymLpDe",
+        "faq_ftjHA9",
+        "faq_PLYJGT"
       ],
       "name": "FAQ with Image",
       "settings": {
         "bg_color": "#fafdf9",
         "heading_text_1": "Frequently Asked",
         "heading_text_2": "Questions",
-        "right_image": "shopify://shop_images/SOCIAL_BUZZ_WALL_1.png"
+        "right_image": "shopify://shop_images/SOCIAL_BUZZ_WALL_1.png",
+        "mobile_image": "shopify://shop_images/SOCIAL_BUZZ_WALL_2.png",
+        "right_bg_color": "radial-gradient(rgba(248, 215, 110, 1), rgba(252, 229, 150, 1) 50%, rgba(244, 192, 38, 1) 100%)"
       }
     },
     "footer_m9NzUG": {
