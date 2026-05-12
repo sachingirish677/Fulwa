@@ -815,6 +815,7 @@
         "mention_Qha94K": {
           "type": "mention",
           "settings": {
+            "instagram_link": "https://www.instagram.com/reel/DWTpCgqkxaG/?igsh=eHZtdTVoeWF1aWlm",
             "link": "https://www.instagram.com/reel/DWTpCgqkxaG/?igsh=eHZtdTVoeWF1aWlm",
             "avatar": "shopify://shop_images/div.celeb-card-bg_1.png",
             "name": "Aman Gupta",
@@ -829,6 +830,7 @@
         "mention_UXPJpP": {
           "type": "mention",
           "settings": {
+            "instagram_link": "https://www.instagram.com/reel/DRCYptPAswe/?igsh=bDNyMXhjOXVtZTl2",
             "link": "https://www.instagram.com/reel/DRCYptPAswe/?igsh=bDNyMXhjOXVtZTl2",
             "avatar": "shopify://shop_images/div.celeb-card-bg_2.png",
             "name": "Ashish Vidyarthi",
@@ -843,7 +845,8 @@
         "mention_BENU7J": {
           "type": "mention",
           "settings": {
-            "link": "https://www.instagram.com/reel/DRcA1k5kkoD/?igsh=MXNmaW1sMjlhOXphNg==",
+            "instagram_link": "https://www.instagram.com/reel/DRcA1k5kkoD/?utm_source=ig_web_copy_link",
+            "link": "",
             "avatar": "shopify://shop_images/div.celeb-card-bg_3.png",
             "name": "Govind Padmasoorya",
             "title": "✦ ACTOR",
@@ -857,6 +860,7 @@
         "mention_pVffM4": {
           "type": "mention",
           "settings": {
+            "instagram_link": "https://www.instagram.com/reel/DWO5hVLE62x/?igsh=MTFydXN3aG50eW8weQ==",
             "link": "https://www.instagram.com/reel/DVa8AMmk96t/?igsh=MXFic3phaHlsaWw0bw==",
             "avatar": "shopify://shop_images/div.celeb-card-bg_4.png",
             "name": "Hanan Shah",
@@ -871,20 +875,8 @@
         "mention_Qa3ntT": {
           "type": "mention",
           "settings": {
+            "instagram_link": "https://www.instagram.com/reel/DKJWJsXzm28/?igsh=MWhyMm4xZjhsczNkbA==",
             "link": "https://www.instagram.com/reel/DKJWJsXzm28/?igsh=MWhyMm4xZjhsczNkbA==",
-            "name": "Influencer Name",
-            "title": "INFLUENCER",
-            "handle": "@fulva.in",
-            "badge": "Trending",
-            "metric": "2.4M",
-            "like_text": "84K",
-            "quote": "Loved the taste and the giftable packaging."
-          }
-        },
-        "mention_PxNfgc": {
-          "type": "mention",
-          "settings": {
-            "link": "",
             "name": "Influencer Name",
             "title": "INFLUENCER",
             "handle": "@fulva.in",
@@ -897,6 +889,7 @@
         "mention_kBDNEJ": {
           "type": "mention",
           "settings": {
+            "instagram_link": "https://www.instagram.com/reel/DSRV_nok-7m/?igsh=MWdhM2h5M3R2eGV6Mg==",
             "link": "https://www.instagram.com/reel/DSRV_nok-7m/?igsh=MWdhM2h5M3R2eGV6Mg==",
             "name": "Influencer Name",
             "title": "INFLUENCER",
@@ -914,7 +907,6 @@
         "mention_BENU7J",
         "mention_pVffM4",
         "mention_Qa3ntT",
-        "mention_PxNfgc",
         "mention_kBDNEJ"
       ],
       "name": "Fulva buzz",
