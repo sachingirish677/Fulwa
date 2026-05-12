@@ -139,6 +139,7 @@
           {% liquid
             assign primary_link = block.settings.link
             assign video = block.settings.video
+            assign instagram_link = block.settings.instagram_link
             assign media = block.settings.media
             assign name = block.settings.name
             if name == blank
@@ -159,7 +160,18 @@
               <a class="fulva-buzz__slide-link" href="{{ primary_link }}" aria-label="{{ name | escape }}">
             {% endif %}
                 <div class="fulva-buzz__slide-media">
-                  {% if video != blank %}
+                  {% if instagram_link != blank %}
+                    {% assign iframe_src = instagram_link %}
+                    {% if iframe_src contains '?' %}
+                      {% assign iframe_src = iframe_src | split: '?' | first %}
+                    {% endif %}
+                    {% assign last_char = iframe_src | slice: -1 %}
+                    {% if last_char != '/' %}
+                      {% assign iframe_src = iframe_src | append: '/' %}
+                    {% endif %}
+                    {% assign iframe_src = iframe_src | append: 'embed' %}
+                    <iframe class="fulva-buzz__slide-iframe" src="{{ iframe_src }}" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen></iframe>
+                  {% elsif video != blank %}
                     {{ video | video_tag: class: 'fulva-buzz__slide-video', autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
                   {% elsif media != blank %}
                     <img
@@ -182,7 +194,7 @@
                     <div class="fulva-buzz__slide-placeholder" aria-hidden="true"></div>
                   {% endif %}
 
-                  {% if section.settings.show_play_icon %}
+                  {% if section.settings.show_play_icon and instagram_link == blank %}
                     <div class="fulva-buzz__slide-play" aria-hidden="true">
                       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                         <path d="M9 7.5v9l8-4.5-8-4.5z"></path>
@@ -404,7 +416,8 @@
       "name": "Mention",
       "settings": [
         { "type": "video", "id": "video", "label": "Video (Reel)" },
-        { "type": "image_picker", "id": "media", "label": "Fallback image (if no video)" },
+        { "type": "text", "id": "instagram_link", "label": "Instagram Link (Reel/Post)" },
+        { "type": "image_picker", "id": "media", "label": "Fallback image (if no video/link)" },
         { "type": "url", "id": "link", "label": "Link (optional)" },
         { "type": "image_picker", "id": "avatar", "label": "Avatar (optional)" },
         { "type": "text", "id": "name", "label": "Name", "default": "Influencer Name" },

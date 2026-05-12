@@ -276,12 +276,18 @@
 
   .fulva-buzz .fulva-buzz__slide-img,
   .fulva-buzz .fulva-buzz__slide-video,
+  .fulva-buzz .fulva-buzz__slide-iframe,
   .fulva-buzz .fulva-buzz__slide-placeholder {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .fulva-buzz .fulva-buzz__slide-iframe {
+    border: none;
+    background: transparent;
   }
 
   .fulva-buzz .fulva-buzz__slide-placeholder {
