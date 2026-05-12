@@ -1,4 +1,4 @@
-
+{{ 'fulva-footer.css' | asset_url | stylesheet_tag }}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
@@ -27,22 +27,69 @@
       assign has_isolated_grid_item_tablet = true
     endif
   %}
-  <div
-    class="
-      footer-content
-      spacing-style
-      {% if has_isolated_grid_item_desktop %}footer-content--isolated-grid-item-desktop{% endif %}
-      {% if has_isolated_grid_item_tablet %}footer-content--isolated-grid-item-tablet{% endif %}
-    "
-    style="
-      {%  render 'spacing-style', settings: section.settings %}
-      --footer-gap: {{ section.settings.gap }}px;
-      --grid-columns: {{ grid_columns }};
-      --last-row-count: {{ last_row_count }};
-      --tablet-last-row-count: {{ tablet_last_row_count }};
-    "
-  >
-    {% content_for 'blocks' %}
+
+  <!-- Fulva Custom Footer Layout -->
+  <div class="fulva-footer__custom-grid" style="
+    --ff-logo-h: {{ section.settings.logo_height }}px;
+    --ff-muted: {{ section.settings.footer_muted_color }};
+    --ff-accent: {{ section.settings.footer_accent_color }};
+  ">
+    <!-- Brand Column -->
+    <div class="fulva-footer__brand">
+      {% if section.settings.logo_part1 != blank or section.settings.logo_part2 != blank %}
+        <div class="fulva-footer__logo">
+          {% if section.settings.logo_part1 != blank %}
+            <img
+              class="fulva-footer__logo-part"
+              src="{{ section.settings.logo_part1 | image_url: width: 300 }}"
+              width="{{ section.settings.logo_part1.width }}"
+              height="{{ section.settings.logo_part1.height }}"
+              alt="{{ section.settings.logo_part1.alt | default: 'fu' | escape }}"
+              loading="lazy"
+              decoding="async"
+            >
+          {% endif %}
+          {% if section.settings.logo_part2 != blank %}
+            <img
+              class="fulva-footer__logo-part"
+              src="{{ section.settings.logo_part2 | image_url: width: 300 }}"
+              width="{{ section.settings.logo_part2.width }}"
+              height="{{ section.settings.logo_part2.height }}"
+              alt="{{ section.settings.logo_part2.alt | default: 'lva.' | escape }}"
+              loading="lazy"
+              decoding="async"
+            >
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if section.settings.footer_description != blank %}
+        <div class="fulva-footer__desc">{{ section.settings.footer_description }}</div>
+      {% endif %}
+
+      {% if section.settings.fssai_text != blank %}
+        <div class="fulva-footer__fssai">{{ section.settings.fssai_text | escape }}</div>
+      {% endif %}
+    </div>
+
+    <!-- Menu Columns from blocks -->
+    <div
+      class="
+        footer-content
+        spacing-style
+        {% if has_isolated_grid_item_desktop %}footer-content--isolated-grid-item-desktop{% endif %}
+        {% if has_isolated_grid_item_tablet %}footer-content--isolated-grid-item-tablet{% endif %}
+      "
+      style="
+        {% render 'spacing-style', settings: section.settings %}
+        --footer-gap: {{ section.settings.gap }}px;
+        --grid-columns: {{ grid_columns }};
+        --last-row-count: {{ last_row_count }};
+        --tablet-last-row-count: {{ tablet_last_row_count }};
+      "
+    >
+      {% content_for 'blocks' %}
+    </div>
   </div>
 </div>
 
@@ -143,6 +190,61 @@
     "groups": ["footer"]
   },
   "settings": [
+    {
+      "type": "header",
+      "content": "Fulva Brand Info"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_part1",
+      "label": "Logo part 1 (fu)"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_part2",
+      "label": "Logo part 2 (lva.)"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "Logo height (px)",
+      "min": 30,
+      "max": 120,
+      "step": 2,
+      "default": 52
+    },
+    {
+      "type": "textarea",
+      "id": "footer_description",
+      "label": "Brand description",
+      "default": "Authentic Calicut halwa, crafted with tradition and delivered fresh to your door."
+    },
+    {
+      "type": "text",
+      "id": "fssai_text",
+      "label": "FSSAI License text",
+      "default": "FSSAI Lic No. 11324999000545"
+    },
+    {
+      "type": "header",
+      "content": "Footer Colors"
+    },
+    {
+      "type": "color",
+      "id": "footer_muted_color",
+      "label": "Description text color",
+      "default": "#6B6B6B"
+    },
+    {
+      "type": "color",
+      "id": "footer_accent_color",
+      "label": "Menu heading color",
+      "default": "#1B5E2F"
+    },
+    {
+      "type": "header",
+      "content": "t:settings.width"
+    },
     {
       "type": "select",
       "id": "section_width",

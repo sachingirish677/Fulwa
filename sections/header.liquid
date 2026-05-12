@@ -176,44 +176,6 @@
   </div>
 </header>
 
-{% if section.settings.show_whatsapp and section.settings.whatsapp_url != blank and section.settings.whatsapp_display != 'header' %}
-  {% liquid
-    assign wa_widget_border_alpha = section.settings.whatsapp_widget_border_opacity | times: 0.01
-    assign wa_widget_shadow_alpha = section.settings.whatsapp_widget_shadow_opacity | times: 0.01
-  %}
-
-  <a
-    class="fulva-wa-widget fulva-wa-widget--{{ section.id }}{% if section.settings.whatsapp_widget_position == 'bottom_left' %} is-left{% else %} is-right{% endif %}{% if section.settings.whatsapp_widget_hide_mobile %} is-hide-mobile{% endif %}{% if section.settings.whatsapp_widget_hide_desktop %} is-hide-desktop{% endif %}"
-    href="{{ section.settings.whatsapp_url }}"
-    aria-label="{{ section.settings.whatsapp_widget_aria | escape }}"
-    style="
-      --fww-bg: {{ section.settings.whatsapp_widget_bg }};
-      --fww-text: {{ section.settings.whatsapp_widget_text_color }};
-      --fww-icon: {{ section.settings.whatsapp_widget_icon_color }};
-      --fww-border: {{ section.settings.whatsapp_widget_border_color | color_modify: 'alpha', wa_widget_border_alpha }};
-      --fww-shadow: {{ section.settings.whatsapp_widget_shadow_color | color_modify: 'alpha', wa_widget_shadow_alpha }};
-      --fww-x: {{ section.settings.whatsapp_widget_offset_x }}px;
-      --fww-y: {{ section.settings.whatsapp_widget_offset_y }}px;
-      --fww-icon-size: {{ section.settings.whatsapp_widget_icon_size }}px;
-      --fww-px: {{ section.settings.whatsapp_widget_padding_x }}px;
-      --fww-py: {{ section.settings.whatsapp_widget_padding_y }}px;
-    "
-    {% if section.settings.whatsapp_new_tab %}
-      target="_blank"
-      rel="noopener"
-    {% endif %}
-  >
-    <span class="fulva-wa-widget__icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-        <path d="M20.52 3.48A11.86 11.86 0 0 0 12.07 0C5.44 0 .05 5.39.04 12.03c0 2.12.55 4.19 1.6 6.02L0 24l6.12-1.6a11.95 11.95 0 0 0 5.95 1.52h.01c6.63 0 12.02-5.39 12.03-12.02a11.95 11.95 0 0 0-3.59-8.42ZM12.08 21.97h-.01a9.95 9.95 0 0 1-5.08-1.4l-.36-.22-3.63.95.97-3.54-.23-.37a9.98 9.98 0 0 1-1.53-5.31C2.22 6.6 6.64 2.18 12.08 2.18a9.95 9.95 0 0 1 7.06 2.93 9.9 9.9 0 0 1 2.92 7.03c-.01 5.44-4.43 9.83-9.98 9.83Z"></path>
-        <path d="M17.32 14.63c-.28-.14-1.68-.83-1.94-.92-.26-.1-.45-.14-.64.14-.19.28-.73.92-.89 1.11-.16.19-.33.21-.61.07-.28-.14-1.16-.43-2.22-1.38-.82-.73-1.37-1.64-1.53-1.92-.16-.28-.02-.43.12-.57.13-.13.28-.33.42-.49.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.49-.07-.14-.64-1.55-.88-2.12-.23-.56-.46-.48-.64-.49h-.55c-.19 0-.5.07-.76.35-.26.28-1 0.96-1 2.38 0 1.4 1.03 2.76 1.17 2.95.14.19 2.01 3.07 4.87 4.3.68.29 1.2.47 1.62.6.68.21 1.3.18 1.79.11.55-.08 1.68-.69 1.92-1.36.24-.67.24-1.23.17-1.35-.07-.12-.26-.19-.54-.33Z"></path>
-      </svg>
-    </span>
-    {% if section.settings.whatsapp_widget_show_label %}
-      <span class="fulva-wa-widget__text">{{ section.settings.whatsapp_widget_label | escape }}</span>
-    {% endif %}
-  </a>
-{% endif %}
 
 <style>
   .fulva-header--{{ section.id }} {
@@ -360,17 +322,7 @@
     color: var(--fh-hover);
   }
 
-  .fulva-header--{{ section.id }} .fulva-header__nav-item.is-highlight .fulva-header__nav-link::before {
-    content: '';
-    position: absolute;
-    top: calc(var(--fh-highlight-offset) * -1);
-    left: 50%;
-    transform: translateX(-50%);
-    width: var(--fh-highlight-dot);
-    height: var(--fh-highlight-dot);
-    border-radius: 999px;
-    background: {{ section.settings.highlight_dot_color }};
-  }
+
 
   .fulva-header--{{ section.id }} .fulva-header__actions {
     justify-self: end;
@@ -461,78 +413,6 @@
   .fulva-header--{{ section.id }} .fulva-header__btn.is-wa .fulva-header__icon {
     color: var(--fh-wa-color);
     stroke: none;
-  }
-
-  .fulva-wa-widget--{{ section.id }} {
-    position: fixed;
-    bottom: var(--fww-y);
-    z-index: 90;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: var(--fww-py) var(--fww-px);
-    border-radius: 999px;
-    background: var(--fww-bg);
-    color: var(--fww-text);
-    border: 1px solid var(--fww-border);
-    box-shadow: 0 18px 44px var(--fww-shadow);
-    text-decoration: none;
-    font-family: var(--font-body-family, inherit);
-    font-weight: 800;
-    line-height: 1;
-    white-space: nowrap;
-    transition: transform 0.2s ease, filter 0.2s ease;
-  }
-
-  .fulva-wa-widget--{{ section.id }}.is-right {
-    right: var(--fww-x);
-  }
-
-  .fulva-wa-widget--{{ section.id }}.is-left {
-    left: var(--fww-x);
-  }
-
-  .fulva-wa-widget--{{ section.id }}:hover {
-    transform: translateY(-1px);
-    filter: brightness(1.02);
-  }
-
-  .fulva-wa-widget--{{ section.id }} .fulva-wa-widget__icon {
-    width: var(--fww-icon-size);
-    height: var(--fww-icon-size);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--fww-icon);
-    flex: 0 0 auto;
-  }
-
-  .fulva-wa-widget--{{ section.id }} .fulva-wa-widget__icon svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-    fill: currentColor;
-  }
-
-  .fulva-wa-widget--{{ section.id }} .fulva-wa-widget__text {
-    font-size: 13px;
-  }
-
-  @media (max-width: 749px) {
-    .fulva-wa-widget--{{ section.id }}.is-hide-mobile {
-      display: none;
-    }
-    {% if section.settings.whatsapp_widget_show_label_mobile == false %}
-      .fulva-wa-widget--{{ section.id }} .fulva-wa-widget__text {
-        display: none;
-      }
-    {% endif %}
-  }
-
-  @media (min-width: 750px) {
-    .fulva-wa-widget--{{ section.id }}.is-hide-desktop {
-      display: none;
-    }
   }
 
   {% if section.settings.show_icons %}

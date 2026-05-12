@@ -1,0 +1,326 @@
+{{ 'fulva-footer.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign menu_blocks = section.blocks | where: 'type', 'menu_column'
+  assign policy_blocks = section.blocks | where: 'type', 'policy_link'
+%}
+
+<footer
+  class="fulva-footer{% if section.settings.hide_on_mobile %} fulva-footer--hide-mobile{% endif %}{% if section.settings.hide_on_desktop %} fulva-footer--hide-desktop{% endif %}"
+  aria-label="Site footer"
+  style="
+    --ff-bg: {{ section.settings.background }};
+    --ff-text: {{ section.settings.text_color }};
+    --ff-muted: {{ section.settings.muted_text_color }};
+    --ff-accent: {{ section.settings.accent_color }};
+    --ff-border: {{ section.settings.border_color }};
+    --ff-bottom-bg: {{ section.settings.bottom_bg }};
+    --ff-bottom-text: {{ section.settings.bottom_text }};
+    --ff-logo-h: {{ section.settings.logo_height }}px;
+    --ff-px: {{ section.settings.padding_x }}px;
+    --ff-py: {{ section.settings.padding_y }}px;
+    --ff-px-m: {{ section.settings.padding_x_mobile }}px;
+    --ff-py-m: {{ section.settings.padding_y_mobile }}px;
+  "
+>
+  <div class="fulva-footer__inner">
+    <div class="fulva-footer__grid">
+
+      <!-- Brand Column -->
+      <div class="fulva-footer__brand">
+        {% if section.settings.logo != blank %}
+          <div class="fulva-footer__logo">
+            <img
+              src="{{ section.settings.logo | image_url: width: 400 }}"
+              srcset="
+                {{ section.settings.logo | image_url: width: 200 }} 200w,
+                {{ section.settings.logo | image_url: width: 300 }} 300w,
+                {{ section.settings.logo | image_url: width: 400 }} 400w
+              "
+              sizes="200px"
+              width="{{ section.settings.logo.width }}"
+              height="{{ section.settings.logo.height }}"
+              alt="{{ section.settings.logo.alt | default: shop.name | escape }}"
+              loading="lazy"
+              decoding="async"
+            >
+          </div>
+        {% endif %}
+
+        {% if section.settings.description != blank %}
+          <div class="fulva-footer__desc">{{ section.settings.description }}</div>
+        {% endif %}
+
+        {% if section.settings.fssai_text != blank %}
+          <div class="fulva-footer__fssai">{{ section.settings.fssai_text | escape }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Menu Columns -->
+      {% for block in menu_blocks %}
+        <div class="fulva-footer__menu-col" {{ block.shopify_attributes }}>
+          {% if block.settings.heading != blank %}
+            <h3 class="fulva-footer__menu-heading">{{ block.settings.heading | escape }}</h3>
+          {% endif %}
+
+          {% if block.settings.menu != blank %}
+            <ul class="fulva-footer__menu-list">
+              {% for link in linklists[block.settings.menu].links %}
+                <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="fulva-footer__bottom">
+    <div class="fulva-footer__bottom-inner">
+      <div class="fulva-footer__copyright">
+        &copy; {{ section.settings.copyright_text | escape }}
+      </div>
+
+      {% if policy_blocks.size > 0 %}
+        <ul class="fulva-footer__policies">
+          {% for block in policy_blocks %}
+            <li {{ block.shopify_attributes }}>
+              <a href="{{ block.settings.url }}">{{ block.settings.label | escape }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Fulva Footer",
+  "class": "fulva-footer-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Footer logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "Logo height (px)",
+      "min": 30,
+      "max": 120,
+      "step": 2,
+      "default": 52
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Brand description",
+      "default": "Authentic Calicut halwa, crafted with tradition and delivered fresh to your door."
+    },
+    {
+      "type": "text",
+      "id": "fssai_text",
+      "label": "FSSAI License text",
+      "default": "FSSAI Lic No. 11324999000545"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright text",
+      "default": "2026 Fulva. All rights reserved."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Padding X desktop",
+      "min": 16,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_y",
+      "label": "Padding Y desktop",
+      "min": 16,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Padding X mobile",
+      "min": 12,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_y_mobile",
+      "label": "Padding Y mobile",
+      "min": 12,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#F4F9F2"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Muted text",
+      "default": "#6B6B6B"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Menu headings",
+      "default": "#1B5E2F"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Divider",
+      "default": "#E0E0E0"
+    },
+    {
+      "type": "color",
+      "id": "bottom_bg",
+      "label": "Bottom bar background",
+      "default": "#EDF3EB"
+    },
+    {
+      "type": "color",
+      "id": "bottom_text",
+      "label": "Bottom bar text",
+      "default": "#3A3A3A"
+    },
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_desktop",
+      "label": "Hide on desktop",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu_column",
+      "name": "Menu Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Column heading",
+          "default": "SHOP"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    },
+    {
+      "type": "policy_link",
+      "name": "Policy Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Privacy Policy"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "presets": [
+    {
+      "name": "Fulva Footer",
+      "blocks": [
+        {
+          "type": "menu_column",
+          "settings": {
+            "heading": "SHOP"
+          }
+        },
+        {
+          "type": "menu_column",
+          "settings": {
+            "heading": "HELP"
+          }
+        },
+        {
+          "type": "menu_column",
+          "settings": {
+            "heading": "LINKS"
+          }
+        },
+        {
+          "type": "policy_link",
+          "settings": {
+            "label": "Privacy Policy"
+          }
+        },
+        {
+          "type": "policy_link",
+          "settings": {
+            "label": "Terms of Service"
+          }
+        },
+        {
+          "type": "policy_link",
+          "settings": {
+            "label": "Sitemap"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

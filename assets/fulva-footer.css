@@ -1,0 +1,63 @@
+/* =============================================
+   Fulva Footer – Custom Layout
+   ============================================= */
+
+/* Main grid: brand column + menu blocks */
+.fulva-footer__custom-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 3fr;
+  gap: 48px;
+  align-items: start;
+  padding-top: 64px;
+}
+
+/* Brand Column */
+.fulva-footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.fulva-footer__logo {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+}
+
+.fulva-footer__logo-part {
+  display: block;
+  height: var(--ff-logo-h, 52px);
+  width: auto;
+  object-fit: contain;
+}
+
+.fulva-footer__desc {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--ff-muted, #6B6B6B);
+  max-width: 33ch;
+  padding-top: 65px;
+}
+
+.fulva-footer__fssai {
+  font-size: 12px;
+  font-weight: 400;
+  color: inherit;
+  letter-spacing: 0.01em;
+}
+
+.fulva-footer__custom-grid .footer-content.spacing-style {
+  padding-top: 170px;
+}
+
+/* Mobile */
+@media (max-width: 749px) {
+  .fulva-footer__custom-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .fulva-footer__desc {
+    max-width: 100%;
+  }
+}
