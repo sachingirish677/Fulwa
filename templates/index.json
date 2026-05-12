@@ -313,6 +313,7 @@
       "name": "Fulva Reels",
       "settings": {
         "aria_label": "Instagram Reels",
+        "show_header": true,
         "eyebrow": "Real People, Real Moments",
         "heading_1": "The",
         "heading_1_color": "#1a1a1a",
@@ -737,6 +738,7 @@
         "cart_label": "Cart",
         "fallback_price": "₹1,113",
         "background": "#f7f5f0",
+        "decor_gradient": "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(244,192,38,1) 50%, rgba(255,255,255,1) 100%)",
         "radial_color": "#f4c026",
         "text_color": "#000000",
         "muted_text_color": "#8a8a8a",
@@ -810,25 +812,10 @@
     "influencer_reels_HkfzDh": {
       "type": "influencer_reels",
       "blocks": {
-        "mention_N9RNmC": {
-          "type": "mention",
-          "settings": {
-            "media": "shopify://shop_images/div.celeb-card-bg.png",
-            "link": "",
-            "avatar": "shopify://shop_images/div.celeb-card-bg.png",
-            "name": "Sunith V S",
-            "title": "✦ INFLUENCER",
-            "handle": "@fulva.in",
-            "badge": "Trending",
-            "metric": "1M+ views",
-            "like_text": "84K",
-            "quote": "Loved the taste and the giftable packaging."
-          }
-        },
         "mention_Qha94K": {
           "type": "mention",
           "settings": {
-            "link": "",
+            "link": "https://www.instagram.com/reel/DWTpCgqkxaG/?igsh=eHZtdTVoeWF1aWlm",
             "avatar": "shopify://shop_images/div.celeb-card-bg_1.png",
             "name": "Aman Gupta",
             "title": "✦ entrepreneuR",
@@ -842,7 +829,7 @@
         "mention_UXPJpP": {
           "type": "mention",
           "settings": {
-            "link": "",
+            "link": "https://www.instagram.com/reel/DRCYptPAswe/?igsh=bDNyMXhjOXVtZTl2",
             "avatar": "shopify://shop_images/div.celeb-card-bg_2.png",
             "name": "Ashish Vidyarthi",
             "title": "✦ ACTOR",
@@ -856,7 +843,7 @@
         "mention_BENU7J": {
           "type": "mention",
           "settings": {
-            "link": "",
+            "link": "https://www.instagram.com/reel/DRcA1k5kkoD/?igsh=MXNmaW1sMjlhOXphNg==",
             "avatar": "shopify://shop_images/div.celeb-card-bg_3.png",
             "name": "Govind Padmasoorya",
             "title": "✦ ACTOR",
@@ -870,7 +857,7 @@
         "mention_pVffM4": {
           "type": "mention",
           "settings": {
-            "link": "",
+            "link": "https://www.instagram.com/reel/DVa8AMmk96t/?igsh=MXFic3phaHlsaWw0bw==",
             "avatar": "shopify://shop_images/div.celeb-card-bg_4.png",
             "name": "Hanan Shah",
             "title": "✦ SINGER",
@@ -880,14 +867,55 @@
             "like_text": "84K",
             "quote": "Loved the taste and the giftable packaging."
           }
+        },
+        "mention_Qa3ntT": {
+          "type": "mention",
+          "settings": {
+            "link": "https://www.instagram.com/reel/DKJWJsXzm28/?igsh=MWhyMm4xZjhsczNkbA==",
+            "name": "Influencer Name",
+            "title": "INFLUENCER",
+            "handle": "@fulva.in",
+            "badge": "Trending",
+            "metric": "2.4M",
+            "like_text": "84K",
+            "quote": "Loved the taste and the giftable packaging."
+          }
+        },
+        "mention_PxNfgc": {
+          "type": "mention",
+          "settings": {
+            "link": "",
+            "name": "Influencer Name",
+            "title": "INFLUENCER",
+            "handle": "@fulva.in",
+            "badge": "Trending",
+            "metric": "2.4M",
+            "like_text": "84K",
+            "quote": "Loved the taste and the giftable packaging."
+          }
+        },
+        "mention_kBDNEJ": {
+          "type": "mention",
+          "settings": {
+            "link": "https://www.instagram.com/reel/DSRV_nok-7m/?igsh=MWdhM2h5M3R2eGV6Mg==",
+            "name": "Influencer Name",
+            "title": "INFLUENCER",
+            "handle": "@fulva.in",
+            "badge": "Trending",
+            "metric": "2.4M",
+            "like_text": "84K",
+            "quote": "Loved the taste and the giftable packaging."
+          }
         }
       },
       "block_order": [
-        "mention_N9RNmC",
         "mention_Qha94K",
         "mention_UXPJpP",
         "mention_BENU7J",
-        "mention_pVffM4"
+        "mention_pVffM4",
+        "mention_Qa3ntT",
+        "mention_PxNfgc",
+        "mention_kBDNEJ"
       ],
       "name": "Fulva buzz",
       "settings": {

@@ -308,7 +308,7 @@
   }
 
   .vc-slider-container {
-    padding-top: 24px;
+    padding-top: 34.5px;
     padding-left: 24px;
   }
 
@@ -328,7 +328,7 @@
     scroll-behavior: smooth;
     scrollbar-width: none;
     gap: 12px;
-    padding: 0 24px 0px 24px;
+    padding: 0 24px 40px 24px;
     align-items: flex-start;
     scroll-snap-type: x mandatory;
   }

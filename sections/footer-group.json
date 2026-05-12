@@ -90,7 +90,7 @@
       "name": "Fulva Reels",
       "settings": {
         "aria_label": "Instagram Reels",
-        "show_header": true,
+        "show_header": false,
         "eyebrow": "Real People, Real Moments",
         "heading_1": "The",
         "heading_1_color": "#1a1a1a",
@@ -198,6 +198,91 @@
         "right_image": "shopify://shop_images/SOCIAL_BUZZ_WALL_1.png",
         "mobile_image": "shopify://shop_images/SOCIAL_BUZZ_WALL_2.png",
         "right_bg_color": "radial-gradient(rgba(248, 215, 110, 1), rgba(252, 229, 150, 1) 50%, rgba(244, 192, 38, 1) 100%)"
+      }
+    },
+    "video_carousel_gDGVcd": {
+      "type": "video-carousel",
+      "blocks": {
+        "video_card_FjMUWU": {
+          "type": "video_card",
+          "settings": {
+            "header": "Ramadan dessert",
+            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
+            "link": "",
+            "creator_name": "Arjun Mehta"
+          }
+        },
+        "video_card_FqFGmi": {
+          "type": "video_card",
+          "settings": {
+            "header": "Ramadan dessert",
+            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
+            "link": "",
+            "creator_name": "Arjun Mehta"
+          }
+        },
+        "video_card_7JJadQ": {
+          "type": "video_card",
+          "settings": {
+            "header": "Ramadan dessert",
+            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
+            "link": "",
+            "creator_name": "Arjun Mehta"
+          }
+        },
+        "video_card_4UW4pV": {
+          "type": "video_card",
+          "settings": {
+            "header": "Ramadan dessert",
+            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
+            "link": "",
+            "creator_name": "Arjun Mehta"
+          }
+        },
+        "video_card_8HGeUP": {
+          "type": "video_card",
+          "settings": {
+            "header": "Ramadan dessert",
+            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
+            "link": "",
+            "creator_name": "Arjun Mehta"
+          }
+        }
+      },
+      "block_order": [
+        "video_card_FjMUWU",
+        "video_card_FqFGmi",
+        "video_card_7JJadQ",
+        "video_card_4UW4pV",
+        "video_card_8HGeUP"
+      ],
+      "name": "Video Carousel",
+      "settings": {
+        "bg_color": "#0D3B16",
+        "mini_header": "HALWA IN YOUR KITCHEN",
+        "header_1": "Cook with",
+        "header_2": "Calicut",
+        "sub_header": "Recipes, pairings, and creative ideas from our community of halwa lovers."
+      }
+    },
+    "fulwa_heritage_kwRGMc": {
+      "type": "fulwa-heritage",
+      "name": "Fulwa Heritage",
+      "settings": {
+        "desktop_height": 528,
+        "bg_color": "#F4F9F2",
+        "image": "shopify://shop_images/Gemini_Generated_Image_vs1vhavs1vhavs1v_1.png",
+        "mobile_image": "shopify://shop_images/div.story-visual.png",
+        "image_bg_color": "#FEF9F0",
+        "tagline": "OUR HERITAGE",
+        "pre_heading": "A",
+        "heading_1": "Tradition",
+        "heading_2": "Worth Protecting",
+        "text_1": "Calicut has been making halwa for over a century. The narrow lanes of Kozhikode carry the scent of ghee and sugar — and generations of craftspeople who have kept this art alive.",
+        "quote_text": "\"We started Fulva to make sure that tradition travels — from the streets of Kozhikode to your home, anywhere in India.\"",
+        "text_2": "Today we work directly with the halwa makers of Calicut, ensuring every piece you receive is authentic, fresh, and made with the same love it always was.",
+        "button_label": "Read Our Full Story",
+        "button_link": ""
       }
     },
     "footer_m9NzUG": {
@@ -396,6 +481,8 @@
   "order": [
     "reels_dXXYdC",
     "faq_with_image_TP99ky",
+    "video_carousel_gDGVcd",
+    "fulwa_heritage_kwRGMc",
     "footer_m9NzUG",
     "footer_utilities_jLGE8U"
   ]
