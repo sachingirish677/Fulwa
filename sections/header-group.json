@@ -17,6 +17,14 @@
         "message_8YKVGW": {
           "type": "message",
           "settings": {
+            "text_1": "Free delivery above ₹499",
+            "color_1": "#ffffff",
+            "text_2": "",
+            "color_2": "#ffffff",
+            "text_3": "",
+            "color_3": "#d4a843",
+            "text_4": "",
+            "color_4": "#ffffff",
             "link": "",
             "open_in_new_tab": false
           }
@@ -24,6 +32,14 @@
         "message_9JWnLT": {
           "type": "message",
           "settings": {
+            "text_1": "Free delivery above ₹499",
+            "color_1": "#ffffff",
+            "text_2": "",
+            "color_2": "#ffffff",
+            "text_3": "",
+            "color_3": "#d4a843",
+            "text_4": "",
+            "color_4": "#ffffff",
             "link": "",
             "open_in_new_tab": false
           }
@@ -31,6 +47,14 @@
         "message_CxXY8a": {
           "type": "message",
           "settings": {
+            "text_1": "Free delivery above ₹499",
+            "color_1": "#ffffff",
+            "text_2": "",
+            "color_2": "#ffffff",
+            "text_3": "",
+            "color_3": "#d4a843",
+            "text_4": "",
+            "color_4": "#ffffff",
             "link": "",
             "open_in_new_tab": false
           }
@@ -44,7 +68,11 @@
       "name": "Announcement marquee",
       "settings": {
         "enable_marquee": true,
+        "animation_style": "ticker",
         "animation_duration": 40,
+        "ticker_in": 1,
+        "ticker_hold": 3,
+        "ticker_out": 1,
         "direction": "ltr",
         "pause_on_hover": true,
         "bg_color": "#1b5e2f",
@@ -109,15 +137,35 @@
         "button_padding_x": 18,
         "button_radius": 50,
         "show_whatsapp": true,
+        "whatsapp_display": "widget",
         "whatsapp_label": "WhatsApp",
         "whatsapp_url": "https://wa.me/9746804906",
         "whatsapp_new_tab": true,
         "whatsapp_icon_color": "#25d366",
+        "whatsapp_widget_label": "Chat on WhatsApp",
+        "whatsapp_widget_aria": "Chat with us on WhatsApp",
+        "whatsapp_widget_show_label": false,
+        "whatsapp_widget_show_label_mobile": false,
+        "whatsapp_widget_position": "bottom_right",
+        "whatsapp_widget_offset_x": 18,
+        "whatsapp_widget_offset_y": 18,
+        "whatsapp_widget_icon_size": 22,
+        "whatsapp_widget_padding_x": 14,
+        "whatsapp_widget_padding_y": 12,
+        "whatsapp_widget_bg": "#1b5e2f",
+        "whatsapp_widget_text_color": "#ffffff",
+        "whatsapp_widget_icon_color": "#ffffff",
+        "whatsapp_widget_border_color": "#000000",
+        "whatsapp_widget_border_opacity": 0,
+        "whatsapp_widget_shadow_color": "#000000",
+        "whatsapp_widget_shadow_opacity": 18,
+        "whatsapp_widget_hide_mobile": false,
+        "whatsapp_widget_hide_desktop": false,
         "show_track_order": true,
         "track_order_label": "Track Order",
         "track_order_url": "shopify://pages/contact",
         "track_border_color": "#bdbdbd",
-        "track_border_width": 2,
+        "track_border_width": 1,
         "track_padding_y": 10,
         "track_padding_x": 28,
         "track_style": "outline",
