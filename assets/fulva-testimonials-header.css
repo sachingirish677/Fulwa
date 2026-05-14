@@ -1,0 +1,122 @@
+/* =============================================
+   Fulva Testimonials Header
+   ============================================= */
+
+.fulva-testimonials-header {
+  background-color: var(--fth-bg, #f4f9f2);
+  padding: var(--fth-pt, 80px) 20px var(--fth-pb, 60px);
+  text-align: center;
+  font-family: var(--font-body-family, inherit);
+}
+
+.fth__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Sub-heading with line */
+.fth__sub-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--fth-accent, #1b5e2f);
+}
+
+.fth__sub-heading::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 2px;
+  background-color: var(--fth-line, #d4a843);
+}
+
+/* Main Heading */
+.fth__heading {
+  margin: 0;
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #1a1a1a;
+  letter-spacing: -0.02em;
+}
+
+.fth__heading-highlight {
+  color: var(--fth-accent, #1b5e2f);
+}
+
+/* Trust Badge */
+.fth__badge {
+  margin-top: 10px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 999px;
+  padding: 16px 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.fth__stars {
+  display: flex;
+  gap: 2px;
+  color: #f59e0b; /* Star color */
+}
+
+.fth__stars svg {
+  width: 16px;
+  height: 16px;
+}
+
+.fth__badge-content {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fth__badge-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #1a1a1a;
+  line-height: 1.2;
+}
+
+.fth__badge-subtext {
+  font-size: 12px;
+  color: #6b6b6b;
+  font-weight: 500;
+}
+
+/* Mobile */
+@media (max-width: 749px) {
+  .fulva-testimonials-header {
+    padding: 60px 20px 40px;
+  }
+
+  .fth__heading {
+    font-size: 32px;
+  }
+
+  .fth__badge {
+    flex-direction: column;
+    padding: 24px 20px;
+    gap: 12px;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .fth__badge-content {
+    text-align: center;
+  }
+}

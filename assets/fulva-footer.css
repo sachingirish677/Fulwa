@@ -54,10 +54,14 @@
 @media (max-width: 749px) {
   .fulva-footer__custom-grid {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 20px;
   }
 
   .fulva-footer__desc {
     max-width: 100%;
+  }
+
+  .fulva-footer__custom-grid .footer-content.spacing-style {
+    padding-top: 0px;
   }
 }

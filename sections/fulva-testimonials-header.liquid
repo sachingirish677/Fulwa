@@ -1,0 +1,135 @@
+{{ 'fulva-testimonials-header.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .fulva-testimonials-header--{{ section.id }} {
+    --fth-bg: {{ section.settings.background_color }};
+    --fth-accent: {{ section.settings.accent_color }};
+    --fth-line: {{ section.settings.line_color }};
+    --fth-pt: {{ section.settings.padding_top }}px;
+    --fth-pb: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<div class="fulva-testimonials-header fulva-testimonials-header--{{ section.id }}">
+  <div class="fth__inner">
+    {% if section.settings.sub_heading != blank %}
+      <div class="fth__sub-heading">
+        {{ section.settings.sub_heading | escape }}
+      </div>
+    {% endif %}
+
+    <h2 class="fth__heading">
+      {{ section.settings.heading_prefix | escape }}
+      {% if section.settings.heading_highlight != blank %}
+        <span class="fth__heading-highlight">{{ section.settings.heading_highlight | escape }}</span>
+      {% endif %}
+    </h2>
+
+    <div class="fth__badge">
+      <div class="fth__stars" aria-hidden="true">
+        {% for i in (1..5) %}
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+        {% endfor %}
+      </div>
+      <div class="fth__badge-content">
+        {% if section.settings.badge_title != blank %}
+          <div class="fth__badge-title">{{ section.settings.badge_title | escape }}</div>
+        {% endif %}
+        {% if section.settings.badge_subtext != blank %}
+          <div class="fth__badge-subtext">{{ section.settings.badge_subtext | escape }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Testimonials Header",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#F4F9F2"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color (Highlight)",
+      "default": "#1B5E2F"
+    },
+    {
+      "type": "color",
+      "id": "line_color",
+      "label": "Sub-heading line color",
+      "default": "#D4A843"
+    },
+    {
+      "type": "text",
+      "id": "sub_heading",
+      "label": "Sub-heading",
+      "default": "REAL PEOPLE, REAL LOVE"
+    },
+    {
+      "type": "text",
+      "id": "heading_prefix",
+      "label": "Heading (Normal)",
+      "default": "What Our Customers"
+    },
+    {
+      "type": "text",
+      "id": "heading_highlight",
+      "label": "Heading (Highlighted)",
+      "default": "Say"
+    },
+    {
+      "type": "header",
+      "content": "Trust Badge"
+    },
+    {
+      "type": "text",
+      "id": "badge_title",
+      "label": "Badge title",
+      "default": "Trusted by 50,000+ Customers"
+    },
+    {
+      "type": "text",
+      "id": "badge_subtext",
+      "label": "Badge sub-text",
+      "default": "4.9 average · 2,847 verified reviews across India"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials Header"
+    }
+  ]
+}
+{% endschema %}
