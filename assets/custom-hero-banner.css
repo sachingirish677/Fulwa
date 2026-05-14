@@ -611,7 +611,7 @@
     .fulva-hero .fulva-hero__title {
       display: inline;
       font-size: var(--fh-title-size-mobile-used);
-      margin-bottom: 0;
+      margin: 0;
       font-weight: 900;
       line-height: 100%;
       letter-spacing: -1.28px !important;
