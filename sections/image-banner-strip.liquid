@@ -4,36 +4,39 @@
 ">
   <div class="image-banner-strip__container">
     {%- if section.settings.image_1 != blank -%}
+      {%- capture img1_classes -%}{% if section.settings.hide_image_1_mobile %} ibs-hide-mobile{% endif %}{% if section.settings.hide_image_1_desktop %} ibs-hide-desktop{% endif %}{%- endcapture -%}
       {%- if section.settings.link_1 != blank -%}
-        <a href="{{ section.settings.link_1 }}" class="ibs-image-link">
+        <a href="{{ section.settings.link_1 }}" class="ibs-image-link{{ img1_classes }}">
           <img src="{{ section.settings.image_1 | img_url: 'master' }}" alt="{{ section.settings.image_1.alt | escape }}" loading="lazy">
         </a>
       {%- else -%}
-        <div class="ibs-image-wrapper">
+        <div class="ibs-image-wrapper{{ img1_classes }}">
           <img src="{{ section.settings.image_1 | img_url: 'master' }}" alt="{{ section.settings.image_1.alt | escape }}" loading="lazy">
         </div>
       {%- endif -%}
     {%- endif -%}
 
     {%- if section.settings.image_2 != blank -%}
+      {%- capture img2_classes -%}{% if section.settings.hide_image_2_mobile %} ibs-hide-mobile{% endif %}{% if section.settings.hide_image_2_desktop %} ibs-hide-desktop{% endif %}{%- endcapture -%}
       {%- if section.settings.link_2 != blank -%}
-        <a href="{{ section.settings.link_2 }}" class="ibs-image-link">
+        <a href="{{ section.settings.link_2 }}" class="ibs-image-link{{ img2_classes }}">
           <img src="{{ section.settings.image_2 | img_url: 'master' }}" alt="{{ section.settings.image_2.alt | escape }}" loading="lazy">
         </a>
       {%- else -%}
-        <div class="ibs-image-wrapper">
+        <div class="ibs-image-wrapper{{ img2_classes }}">
           <img src="{{ section.settings.image_2 | img_url: 'master' }}" alt="{{ section.settings.image_2.alt | escape }}" loading="lazy">
         </div>
       {%- endif -%}
     {%- endif -%}
 
     {%- if section.settings.image_3 != blank -%}
+      {%- capture img3_classes -%}{% if section.settings.hide_image_3_mobile %} ibs-hide-mobile{% endif %}{% if section.settings.hide_image_3_desktop %} ibs-hide-desktop{% endif %}{%- endcapture -%}
       {%- if section.settings.link_3 != blank -%}
-        <a href="{{ section.settings.link_3 }}" class="ibs-image-link">
+        <a href="{{ section.settings.link_3 }}" class="ibs-image-link{{ img3_classes }}">
           <img src="{{ section.settings.image_3 | img_url: 'master' }}" alt="{{ section.settings.image_3.alt | escape }}" loading="lazy">
         </a>
       {%- else -%}
-        <div class="ibs-image-wrapper">
+        <div class="ibs-image-wrapper{{ img3_classes }}">
           <img src="{{ section.settings.image_3 | img_url: 'master' }}" alt="{{ section.settings.image_3.alt | escape }}" loading="lazy">
         </div>
       {%- endif -%}
@@ -78,6 +81,18 @@
       "label": "Image 1 Link"
     },
     {
+      "type": "checkbox",
+      "id": "hide_image_1_mobile",
+      "label": "Hide Image 1 on mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_image_1_desktop",
+      "label": "Hide Image 1 on desktop",
+      "default": false
+    },
+    {
       "type": "header",
       "content": "Image 2"
     },
@@ -92,6 +107,18 @@
       "label": "Image 2 Link"
     },
     {
+      "type": "checkbox",
+      "id": "hide_image_2_mobile",
+      "label": "Hide Image 2 on mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_image_2_desktop",
+      "label": "Hide Image 2 on desktop",
+      "default": false
+    },
+    {
       "type": "header",
       "content": "Image 3"
     },
@@ -104,6 +131,18 @@
       "type": "url",
       "id": "link_3",
       "label": "Image 3 Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_image_3_mobile",
+      "label": "Hide Image 3 on mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_image_3_desktop",
+      "label": "Hide Image 3 on desktop",
+      "default": false
     }
   ],
   "presets": [

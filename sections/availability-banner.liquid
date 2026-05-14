@@ -12,13 +12,24 @@
       {%- for block in section.blocks -%}
         {%- if block.settings.image != blank -%}
           {%- assign alt = block.settings.alt_text | default: block.settings.image.alt -%}
+          {%- assign mobile_img = block.settings.image_mobile -%}
           {%- if block.settings.link != blank -%}
             <a href="{{ block.settings.link }}" class="ab-image-link{% if block.settings.full_width_mobile %} ab-image--full-mobile{% endif %}" {{ block.shopify_attributes }}>
-              <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ alt | escape }}">
+              <picture>
+                {%- if mobile_img != blank -%}
+                  <source media="(max-width: 768px)" srcset="{{ mobile_img | img_url: 'master' }}">
+                {%- endif -%}
+                <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ alt | escape }}">
+              </picture>
             </a>
           {%- else -%}
             <div class="ab-image-wrapper{% if block.settings.full_width_mobile %} ab-image--full-mobile{% endif %}" {{ block.shopify_attributes }}>
-              <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ alt | escape }}">
+              <picture>
+                {%- if mobile_img != blank -%}
+                  <source media="(max-width: 768px)" srcset="{{ mobile_img | img_url: 'master' }}">
+                {%- endif -%}
+                <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ alt | escape }}">
+              </picture>
             </div>
           {%- endif -%}
         {%- endif -%}
@@ -72,6 +83,12 @@
           "type": "image_picker",
           "id": "image",
           "label": "Platform Logo"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Mobile Image (optional)",
+          "info": "If uploaded, this image will be used on mobile. Otherwise the desktop image is used."
         },
         {
           "type": "url",

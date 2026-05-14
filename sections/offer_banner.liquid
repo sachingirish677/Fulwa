@@ -36,7 +36,9 @@
     --fs-card-radius: {{ section.settings.card_radius }}px;
     --fs-gap: {{ section.settings.card_gap }}px;
     --fs-card-w: {{ section.settings.card_width_desktop }}px;
+    --fs-card-h: {{ section.settings.card_height_desktop }}px;
     --fs-card-w-m: {{ section.settings.card_width_mobile }}px;
+    --fs-card-h-m: {{ section.settings.card_height_mobile }}px;
     --fs-offset: max(var(--fs-px), calc((100% - {% if section.settings.max_width > 0 %}{{ section.settings.max_width }}px{% else %}100%{% endif %}) / 2 + var(--fs-px)));
     --fs-offset-m: max(var(--fs-px-m), calc((100% - {% if section.settings.max_width > 0 %}{{ section.settings.max_width }}px{% else %}100%{% endif %}) / 2 + var(--fs-px-m)));
   "
@@ -45,7 +47,7 @@
     {% if section.settings.bg_image_desktop != blank or section.settings.bg_image_mobile != blank %}
       <picture>
         {% if section.settings.bg_image_mobile != blank %}
-          <source media="(max-width: 749px)" srcset="{{ section.settings.bg_image_mobile | image_url: width: 1200 }}">
+          <source media="(max-width: 1023px)" srcset="{{ section.settings.bg_image_mobile | image_url: width: 1200 }}">
         {% endif %}
         {% if section.settings.bg_image_desktop != blank %}
           <img
@@ -150,7 +152,7 @@
                     {{ display_image | image_url: width: 720 }} 720w,
                     {{ display_image | image_url: width: 900 }} 900w
                   "
-                  sizes="(max-width: 749px) calc((100vw - 48px) / 2), {{ section.settings.card_width_desktop }}px"
+                  sizes="(max-width: 1023px) calc((100vw - 48px) / 2), {{ section.settings.card_width_desktop }}px"
                   width="{{ display_image.width }}"
                   height="{{ display_image.height }}"
                   alt="{{ display_image.alt | default: product.title | escape }}"
@@ -389,7 +391,9 @@
     { "type": "range", "id": "card_gap", "label": "Card gap (px)", "min": 8, "max": 24, "step": 1, "default": 14 },
     { "type": "range", "id": "card_radius", "label": "Card radius (px)", "min": 0, "max": 20, "step": 1, "default": 12 },
     { "type": "range", "id": "card_width_desktop", "label": "Card width desktop (px)", "min": 260, "max": 420, "step": 2, "default": 360 },
+    { "type": "range", "id": "card_height_desktop", "label": "Card height desktop (px)", "min": 350, "max": 600, "step": 10, "default": 450 },
     { "type": "range", "id": "card_width_mobile", "label": "Card width mobile (px)", "min": 220, "max": 340, "step": 2, "default": 280 },
+    { "type": "range", "id": "card_height_mobile", "label": "Card height mobile (px)", "min": 300, "max": 500, "step": 10, "default": 420 },
 
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "accent_color", "label": "Accent", "default": "#FFC107" },

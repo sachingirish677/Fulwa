@@ -73,7 +73,7 @@
   content: '';
   width: 28px;
   height: 2px;
-  background: var(--fs-accent);
+  background: #F4C026;
   flex: 0 0 auto;
   opacity: 0.95;
 }
@@ -161,7 +161,6 @@
 
 .fulva-seasonal .fulva-seasonal__cards {
   display: flex;
-  justify-content: center;
   gap: var(--fs-gap);
   overflow-x: auto;
   scrollbar-width: none;
@@ -169,7 +168,9 @@
   scroll-snap-type: x mandatory;
   overscroll-behavior-x: contain;
   padding: 0 20px;
-  width: 100%;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 auto;
   cursor: grab;
 }
 
@@ -184,6 +185,7 @@
 .fulva-seasonal .fulva-seasonal__card {
   flex: 0 0 auto;
   width: var(--fs-card-w);
+  height: var(--fs-card-h);
   border-radius: var(--fs-card-radius);
   overflow: hidden;
   background: var(--fs-card-bg);
@@ -191,6 +193,8 @@
   transform: translateZ(0);
   transition: transform 200ms ease, box-shadow 200ms ease;
   scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .fulva-seasonal .fulva-seasonal__card:hover {
@@ -252,6 +256,9 @@
 .fulva-seasonal .fulva-seasonal__card-body {
   padding: 14px 14px 16px;
   background: var(--fs-card-bg);
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .fulva-seasonal .fulva-seasonal__name {
@@ -264,11 +271,13 @@
 .fulva-seasonal .fulva-seasonal__meta {
   margin-top: 3px;
   font-size: 12px;
-  color: rgba(0, 0, 0, 0.55);
+  color: rgba(0, 0, 0, 0.38);
 }
 
 .fulva-seasonal .fulva-seasonal__footer {
-  margin-top: 12px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -277,8 +286,9 @@
 
 .fulva-seasonal .fulva-seasonal__price {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 6px;
   min-width: 0;
 }
 
@@ -384,7 +394,7 @@
   display: none;
 }
 
-@media (max-width: 749px) {
+@media (max-width: 1023px) {
   .fulva-seasonal {
     min-height: var(--fs-h-m);
   }
@@ -429,6 +439,7 @@
     margin-top: 22px;
     flex-direction: column;
     align-items: center;
+    max-width: 100%;
   }
 
   .fulva-seasonal .fulva-seasonal__nav--desktop {
@@ -456,22 +467,41 @@
     scroll-padding-left: var(--fs-px-m);
     padding: 6px var(--fs-px-m) 8px;
     scroll-snap-type: x mandatory;
+    max-width: 100%;
   }
 
   .fulva-seasonal .fulva-seasonal__card {
-    width: calc((100vw - var(--fs-px-m) * 2 - var(--fs-gap)) / 2);
+    width: var(--fs-card-w-m);
+    height: var(--fs-card-h-m);
     scroll-snap-align: start;
+  }
+
+  .fulva-seasonal .fulva-seasonal__price {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
   }
 }
 
-@media (max-width: 749px) {
+@media (max-width: 395px) {
+  .fulva-seasonal .fulva-seasonal__footer {
+    flex-wrap: wrap;
+  }
+
+  .fulva-seasonal .fulva-seasonal__price {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 1023px) {
   .fulva-seasonal.fulva-seasonal--hide-mobile {
     display: none;
   }
 }
 
-@media (min-width: 750px) {
+@media (min-width: 1024px) {
   .fulva-seasonal.fulva-seasonal--hide-desktop {
     display: none;
   }
+
 }

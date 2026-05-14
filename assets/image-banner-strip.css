@@ -30,7 +30,6 @@
 .image-banner-strip__container img {
   width: 100%;
   min-height: 117px;
-  max-width: 585px;
   border-radius: 8px;
 }
 
@@ -38,7 +37,7 @@
   .image-banner-strip__container {
     flex-direction: column;
     height: auto;
-    padding: 14px;
+    padding: 24px;
     gap: 10px;
   }
 
@@ -51,5 +50,15 @@
   .image-banner-strip__container img {
     max-width: 100%;
     height: auto;
+  }
+
+  .ibs-hide-mobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .ibs-hide-desktop {
+    display: none !important;
   }
 }
