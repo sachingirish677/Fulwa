@@ -8,7 +8,6 @@
 
 .availability-banner__container {
   width: 100%;
-  max-width: 1200px;
   height: var(--ab-height);
   margin: 0 auto;
   padding: 0 20px;
@@ -82,6 +81,7 @@
     flex-wrap: wrap;
     justify-content: center;
     overflow-x: visible;
+    max-width: 258px;
   }
 
   .ab-image-link,

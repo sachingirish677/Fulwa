@@ -34,7 +34,7 @@
   content: '';
   width: 28px;
   height: 2px;
-  background: #D4A843;
+  background: #F4C026;
   flex: 0 0 auto;
 }
 
@@ -344,5 +344,16 @@
 @media (min-width: 750px) {
   .fulva-popular.fulva-popular--hide-desktop {
     display: none;
+  }
+}
+
+@media (max-width: 395px) {
+  .fulva-popular .fulva-popular__footer {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .fulva-popular .fulva-popular__prices {
+    min-width: 100%;
   }
 }

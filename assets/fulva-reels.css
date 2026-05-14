@@ -35,7 +35,7 @@
   letter-spacing: 2.5px;
   text-transform: uppercase;
   color: #357A38;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .fulva-reels .fulva-reels-eyebrow::before {
@@ -148,7 +148,7 @@
   gap: var(--fr-gap);
   overflow-x: auto;
   scrollbar-width: none;
-  padding: 8px var(--fr-px) 16px;
+  padding: 16px 16px 0;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
@@ -522,7 +522,7 @@
   /* Moved to separate media query for 960px */
 
   .fulva-reels .fulva-reels-track {
-    padding: 8px var(--fr-px-m) 16px;
+    padding: 0 var(--fr-px-m) 16px;
     scroll-padding-left: var(--fr-px-m);
   }
 
