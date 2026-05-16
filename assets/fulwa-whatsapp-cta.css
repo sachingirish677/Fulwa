@@ -6,6 +6,7 @@
   background: linear-gradient(0deg, var(--fw-bg1), var(--fw-bg2));
   color: var(--fw-text);
   font-family: var(--font-body-family, inherit);
+  overflow: hidden;
 }
 
 .fulva-wa .fulva-wa__inner {
