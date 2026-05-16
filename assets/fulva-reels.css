@@ -4,6 +4,7 @@
   border-top: 1px solid var(--fr-border);
   font-family: var(--font-body-family, inherit);
   position: relative;
+  overflow: hidden;
 }
 
 .fulva-reels .fulva-reels__inner {

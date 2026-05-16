@@ -36,6 +36,9 @@
       {%- render 'theme-editor' -%}
     {% endif %}
 
+    {%- comment -%} Prevent horizontal scroll on mobile {%- endcomment -%}
+    <style>html, body { overflow-x: hidden; }</style>
+
     {{ content_for_header }}
     {% # theme-check-enable RemoteAsset %}
   </head>

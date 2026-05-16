@@ -1,5 +1,6 @@
 .faq-section-wrapper {
   width: 100%;
+  overflow: hidden;
 }
 
 .faq-container {

@@ -168,7 +168,6 @@
   scroll-snap-type: x mandatory;
   overscroll-behavior-x: contain;
   padding: 0 20px;
-  width: max-content;
   max-width: 100%;
   margin: 0 auto;
   cursor: grab;
@@ -416,7 +415,8 @@
   }
 
   .fulva-seasonal .fulva-seasonal__sub {
-    width: 354px;
+    width: 100%;
+    max-width: 354px;
     margin-left: auto;
     margin-right: auto;
   }
