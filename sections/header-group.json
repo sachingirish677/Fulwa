@@ -106,7 +106,7 @@
       "settings": {
         "sticky": true,
         "show_border": true,
-        "height_desktop": 72,
+        "height_desktop": 48,
         "height_mobile": 64,
         "padding_x_desktop": 60,
         "padding_x_mobile": 16,
