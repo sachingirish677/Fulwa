@@ -14,7 +14,7 @@
   padding: var(--fc-py) 0;
   display: flex;
   align-items: center;
-  gap: 97px;
+  gap: 50px;
 }
 
 .fulva-categories .fulva-categories__label {
@@ -95,7 +95,7 @@
   color: inherit;
   scroll-snap-align: start;
   transform: translateZ(0);
-  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
 .fulva-categories .fulva-categories__card:focus-visible {
@@ -106,7 +106,6 @@
 .fulva-categories .fulva-categories__card:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 26px var(--fc-shadow);
-  border-color: var(--fc-accent);
 }
 
 .fulva-categories .fulva-categories__card-name {

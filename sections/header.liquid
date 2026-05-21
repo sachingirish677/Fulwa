@@ -183,12 +183,18 @@
     background: var(--fh-bg);
     color: var(--fh-text);
     border-bottom: {% if section.settings.show_border %}1px solid var(--fh-border){% else %}0{% endif %};
-    {% if section.settings.sticky %}
-      position: sticky;
-      top: 0;
-      z-index: 60;
-    {% endif %}
+    transition: background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
   }
+
+  {% if section.settings.sticky %}
+  .fulva-header--{{ section.id }}.is-scrolled {
+    background: color-mix(in srgb, var(--fh-bg) 70%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom-color: rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+  }
+  {% endif %}
 
   .fulva-header--{{ section.id }} .fulva-header__inner {
     max-width: var(--fh-max-width);
@@ -628,6 +634,39 @@
     {% endif %}
   }
 </style>
+
+<script>
+  (function() {
+    const header = document.querySelector('.fulva-header--{{ section.id }}');
+    const headerGroup = document.getElementById('header-group');
+    if (!header || !headerGroup) return;
+
+    // Connect the admin "Sticky header" setting to #header-group.
+    // The .is-sticky class is added server-side by Liquid when the setting is ON.
+    const isSticky = header.classList.contains('is-sticky');
+
+    if (!isSticky) {
+      // Admin has turned sticky OFF — override the sticky set in theme.liquid
+      headerGroup.style.position = 'relative';
+    } else {
+      // Admin has sticky ON — add scroll listener for the glass effect
+      if (window._fulvaHeaderScrollListener) {
+        window.removeEventListener('scroll', window._fulvaHeaderScrollListener);
+      }
+
+      window._fulvaHeaderScrollListener = function() {
+        if (window.scrollY > 10) {
+          header.classList.add('is-scrolled');
+        } else {
+          header.classList.remove('is-scrolled');
+        }
+      };
+
+      window.addEventListener('scroll', window._fulvaHeaderScrollListener, { passive: true });
+      window._fulvaHeaderScrollListener();
+    }
+  })();
+</script>
 
 {% schema %}
 {

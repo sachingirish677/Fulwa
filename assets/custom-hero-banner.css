@@ -473,7 +473,7 @@
 
 .fulva-hero .fulva-hero__bottom {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr auto;
   align-items: center;
   padding: clamp(10px, calc(var(--fh-height-used) * 0.016), 14px) 0 clamp(12px, calc(var(--fh-height-used) * 0.022), 20px);
   gap: 16px;
@@ -481,23 +481,26 @@
 
 .fulva-hero .fulva-hero__bottom-left {
   display: inline-flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
   justify-content: flex-start;
 }
 
 .fulva-hero .fulva-hero__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
+  width: 32px;
+  height: 2px;
+  border-radius: 2px;
   border: 0;
   padding: 0;
   cursor: pointer;
   background: rgba(255, 255, 255, 0.25);
+  transition: background 300ms ease, height 300ms ease, box-shadow 300ms ease;
 }
 
 .fulva-hero .fulva-hero__dot.is-active {
+  height: 3px;
   background: var(--fh-accent);
+  box-shadow: 0 0 6px rgba(212, 168, 67, 0.4);
 }
 
 .fulva-hero .fulva-hero__bottom-right {
@@ -505,8 +508,6 @@
   gap: 10px;
   align-items: center;
   justify-content: flex-end;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 18px;
   user-select: none;
 }
 
@@ -517,16 +518,27 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: transparent;
-  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
+  transition: background 200ms ease, border-color 200ms ease, color 200ms ease;
+}
+
+.fulva-hero .fulva-hero__arrow:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
 }
 
 .fulva-hero .fulva-hero__arrow svg {
-  width: 18px;
-  height: 18px;
-  fill: currentColor;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
   display: block;
 }
 
@@ -713,17 +725,21 @@
     padding: 12px 0 18px;
   }
 
+  .fulva-hero .fulva-hero__dot {
+    width: 24px;
+  }
+
   .fulva-hero .fulva-hero__bottom-right {
     display: inline-flex;
     justify-content: flex-end;
   }
 
   .fulva-hero .fulva-hero__arrow {
-    width: 40px;
-    height: 40px;
-    border-color: rgba(255, 255, 255, 0.42);
+    width: 36px;
+    height: 36px;
+    border-color: rgba(255, 255, 255, 0.35);
     background: rgba(255, 255, 255, 0.10);
-    color: rgba(255, 255, 255, 0.92);
+    color: rgba(255, 255, 255, 0.9);
   }
 }
 
