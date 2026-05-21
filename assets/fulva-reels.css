@@ -589,3 +589,242 @@
     transition: none;
   }
 }
+
+/* ==========================
+   REELS MODAL (LIGHTBOX)
+   ========================== */
+.fr-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  padding: var(--fr-modal-py-desktop, 30px) 0;
+  box-sizing: border-box;
+}
+
+.fr-modal[aria-hidden="true"] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.fr-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+.fr-modal__content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: calc((100vh - (var(--fr-modal-py-desktop, 30px) * 2)) * 0.5625);
+  max-height: calc(100vw * 1.7778);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.fr-modal__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: transparent;
+  pointer-events: none;
+  border-radius: var(--fr-radius, 16px);
+}
+
+/* Controls */
+.fr-modal__header {
+  position: absolute; 
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 10;
+  pointer-events: none; /* Let clicks pass through if not on a button */
+}
+
+.fr-modal__header-right {
+  display: flex;
+  gap: 12px;
+}
+
+.fr-modal__btn {
+  pointer-events: auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.fr-modal__btn:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: scale(1.05);
+}
+
+.fr-modal__btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Modal Nav Arrows */
+.fr-modal__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  z-index: 20;
+  transition: transform 0.2s ease;
+  padding: 0;
+}
+
+.fr-modal__nav:hover {
+  transform: translateY(-50%) scale(1.1);
+}
+
+.fr-modal__nav--prev {
+  left: 16px;
+}
+
+.fr-modal__nav--next {
+  right: 16px;
+}
+
+.fr-modal__nav svg {
+  width: 32px;
+  height: 32px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+/* Product Card Overlay */
+.fr-modal__product {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 400px;
+  z-index: 10;
+  color: #fff;
+  display: none;
+}
+
+.fr-modal__product.has-product-info {
+  background: rgba(20, 20, 20, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.fr-mp-inner {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.fr-mp-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #333;
+  flex-shrink: 0;
+}
+
+.fr-mp-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fr-mp-title {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: #fff;
+}
+
+.fr-mp-price {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.fr-mp-price strong {
+  font-weight: 800;
+}
+
+.fr-mp-btn {
+  display: block;
+  width: 100%;
+  background: #1B5E2F;
+  color: #fff;
+  text-align: center;
+  padding: 14px 0;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.fr-mp-btn:hover {
+  background: #134621;
+}
+
+@media (max-width: 749px) {
+  .fr-modal {
+    padding: var(--fr-modal-py-mobile, 30px) 0;
+  }
+  .fr-modal__content {
+    max-width: calc((100vh - (var(--fr-modal-py-mobile, 30px) * 2)) * 0.5625);
+  }
+  .fr-modal__header {
+    top: 16px;
+    left: 16px;
+    right: 16px;
+  }
+  .fr-modal__product {
+    bottom: 16px;
+    width: calc(100% - 32px);
+  }
+  .fr-modal__nav {
+    display: none !important;
+  }
+}

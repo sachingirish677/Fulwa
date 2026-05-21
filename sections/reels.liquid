@@ -38,6 +38,8 @@
     --fr-gap: {{ section.settings.gap }}px;
     --fr-radius: {{ section.settings.radius }}px;
     --fr-ig-grad: linear-gradient(45deg, {{ section.settings.ig_grad_1 }} 0%, {{ section.settings.ig_grad_2 }} 33%, {{ section.settings.ig_grad_3 }} 66%, {{ section.settings.ig_grad_4 }} 100%);
+    --fr-modal-py-desktop: {{ section.settings.modal_padding_y_desktop }}px;
+    --fr-modal-py-mobile: {{ section.settings.modal_padding_y_mobile }}px;
   "
 >
   <div class="fulva-reels__inner">
@@ -90,8 +92,20 @@
             assign img = block.settings.image
             assign mp4_url = block.settings.mp4_url
             assign category = block.settings.category
+            assign linked_product = block.settings.linked_product
+            
+            assign pd_title = linked_product.title | default: ''
+            assign pd_url = linked_product.url | default: ''
+            assign pd_img = linked_product.featured_image | image_url: width: 100 | default: ''
+            assign pd_price = linked_product.price | money | default: ''
+            assign pd_compare = linked_product.compare_at_price | money | default: ''
+            
+            assign pd_discount = 0
+            if linked_product.compare_at_price > linked_product.price
+              assign pd_discount = linked_product.compare_at_price | minus: linked_product.price | times: 100.0 | divided_by: linked_product.compare_at_price | round
+            endif
           %}
-          <div class="fulva-reel-card" data-fr-category="{{ category | escape }}" {{ block.shopify_attributes }}>
+          <div class="fulva-reel-card" data-fr-category="{{ category | escape }}" data-video="{{ mp4_url }}" data-p-title="{{ pd_title | escape }}" data-p-url="{{ pd_url }}" data-p-img="{{ pd_img }}" data-p-price="{{ pd_price | escape }}" data-p-compare="{{ pd_compare | escape }}" data-p-discount="{{ pd_discount }}" data-btn-url="{{ block.settings.button_link }}" data-btn-label="{{ block.settings.button_label | escape }}" {{ block.shopify_attributes }}>
             {% if mp4_url != blank %}
               <video class="reel-thumb" autoplay muted loop playsinline webkit-playsinline preload="metadata"{% if img != blank %} poster="{{ img | image_url: width: 600 }}"{% endif %}>
                 <source src="{{ mp4_url }}" type="video/mp4">
@@ -143,6 +157,41 @@
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12H20M20 12L14 6M20 12L14 18"></path></svg>
         </button>
       {% endif %}
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="fr-modal" id="fr-modal-{{ section.id }}" aria-hidden="true">
+    <div class="fr-modal__backdrop" data-fr-close></div>
+    <div class="fr-modal__content">
+      <div class="fr-modal__header">
+        <button class="fr-modal__btn fr-modal__minimize" data-fr-close aria-label="Minimize">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7"/></svg>
+        </button>
+        <div class="fr-modal__header-right">
+          <button class="fr-modal__btn fr-modal__mute" data-fr-mute aria-label="Toggle Sound">
+            <svg class="fr-icon-unmute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            <svg class="fr-icon-mute" style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+          </button>
+          <button class="fr-modal__btn fr-modal__close" data-fr-close aria-label="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+          </button>
+        </div>
+      </div>
+      
+      <button class="fr-modal__nav fr-modal__nav--prev" data-fr-modal-prev aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg>
+      </button>
+      
+      <video class="fr-modal__video" id="fr-modal-video-{{ section.id }}" loop playsinline></video>
+      
+      <button class="fr-modal__nav fr-modal__nav--next" data-fr-modal-next aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"></path></svg>
+      </button>
+      
+      <div class="fr-modal__product" id="fr-modal-product-{{ section.id }}">
+        <!-- Injected via JS -->
+      </div>
     </div>
   </div>
 </section>
@@ -326,6 +375,148 @@
       });
     }
 
+    // Modal logic
+    const modal = root.querySelector('#fr-modal-{{ section.id }}');
+    const modalVideo = root.querySelector('#fr-modal-video-{{ section.id }}');
+    const modalProduct = root.querySelector('#fr-modal-product-{{ section.id }}');
+    const muteBtn = root.querySelector('[data-fr-mute]');
+    const closeBtns = root.querySelectorAll('[data-fr-close]');
+    const prevModalBtn = root.querySelector('[data-fr-modal-prev]');
+    const nextModalBtn = root.querySelector('[data-fr-modal-next]');
+    
+    let isMuted = false;
+    let currentCardIndex = -1;
+
+    if (modal && modalVideo) {
+      const getVisibleCards = () => Array.from(track.querySelectorAll('.fulva-reel-card:not(.is-hidden)'));
+      
+      const updateModalNav = (visibleCards) => {
+        if (!prevModalBtn || !nextModalBtn) return;
+        prevModalBtn.style.display = currentCardIndex > 0 ? 'flex' : 'none';
+        nextModalBtn.style.display = currentCardIndex < visibleCards.length - 1 ? 'flex' : 'none';
+      };
+
+      const openModal = (card) => {
+        const videoSrc = card.getAttribute('data-video');
+        if (!videoSrc) return;
+        
+        const visibleCards = getVisibleCards();
+        currentCardIndex = visibleCards.indexOf(card);
+        updateModalNav(visibleCards);
+
+        const pTitle = card.getAttribute('data-p-title');
+        const pUrl = card.getAttribute('data-p-url');
+        const pImg = card.getAttribute('data-p-img');
+        const pPrice = card.getAttribute('data-p-price');
+        const pCompare = card.getAttribute('data-p-compare');
+        const pDiscount = card.getAttribute('data-p-discount');
+        const btnUrl = card.getAttribute('data-btn-url') || pUrl;
+        const btnLabel = card.getAttribute('data-btn-label') || 'Buy Now';
+
+        modalVideo.src = videoSrc;
+        modalVideo.muted = isMuted;
+        
+        if ((pTitle && pUrl) || btnUrl) {
+          let priceHtml = '';
+          if (pTitle && pUrl) {
+            modalProduct.classList.add('has-product-info');
+            priceHtml = `<strong>${pPrice}</strong>`;
+            if (pCompare) {
+              priceHtml += ` <s style="color:#888; font-size:10px; margin-left:4px;">${pCompare}</s>`;
+              if (pDiscount > 0) {
+                priceHtml += ` <span style="color:#28a745; font-size:10px; margin-left:4px;">${pDiscount}% Off</span>`;
+              }
+            }
+          } else {
+            modalProduct.classList.remove('has-product-info');
+          }
+          
+          let innerHtml = '';
+          if (pTitle && pUrl) {
+            innerHtml = `
+              <div class="fr-mp-inner">
+                ${pImg ? `<img src="${pImg}" alt="" class="fr-mp-img">` : ''}
+                <div class="fr-mp-info">
+                  <div class="fr-mp-title">${pTitle} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;margin-left:4px;vertical-align:middle;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></div>
+                  <div class="fr-mp-price">${priceHtml}</div>
+                </div>
+              </div>
+            `;
+          }
+          
+          modalProduct.innerHTML = `
+            ${innerHtml}
+            <a href="${btnUrl}" class="fr-mp-btn">${btnLabel}</a>
+          `;
+          modalProduct.style.display = 'block';
+        } else {
+          modalProduct.style.display = 'none';
+        }
+
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        
+        const playPromise = modalVideo.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            modalVideo.muted = true;
+            isMuted = true;
+            updateMuteIcon();
+            modalVideo.play();
+          });
+        }
+      };
+
+      const closeModal = () => {
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        modalVideo.pause();
+        modalVideo.src = '';
+      };
+
+      const updateMuteIcon = () => {
+        const unmuteIcon = muteBtn.querySelector('.fr-icon-unmute');
+        const muteIcon = muteBtn.querySelector('.fr-icon-mute');
+        if (isMuted) {
+          unmuteIcon.style.display = 'none';
+          muteIcon.style.display = 'block';
+        } else {
+          unmuteIcon.style.display = 'block';
+          muteIcon.style.display = 'none';
+        }
+      };
+
+      muteBtn.addEventListener('click', () => {
+        isMuted = !isMuted;
+        modalVideo.muted = isMuted;
+        updateMuteIcon();
+      });
+
+      closeBtns.forEach(btn => btn.addEventListener('click', closeModal));
+
+      const goPrev = () => {
+        const visibleCards = getVisibleCards();
+        if (currentCardIndex > 0) openModal(visibleCards[currentCardIndex - 1]);
+      };
+
+      const goNext = () => {
+        const visibleCards = getVisibleCards();
+        if (currentCardIndex < visibleCards.length - 1) openModal(visibleCards[currentCardIndex + 1]);
+      };
+
+      if (prevModalBtn) prevModalBtn.addEventListener('click', goPrev);
+      if (nextModalBtn) nextModalBtn.addEventListener('click', goNext);
+
+      cards.forEach(card => {
+        card.addEventListener('click', (e) => {
+          if (window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches && track.classList.contains('is-dragging')) return;
+          // Prevent opening if they click the IG icon or Buy button inside the card itself
+          if (e.target.closest('.fulva-reel-ig-icon') || e.target.closest('.fulva-reel-buy')) return;
+          openModal(card);
+        });
+      });
+    }
+
     track.addEventListener('touchstart', () => { track.style.scrollSnapType = 'none'; }, { passive: true });
     track.addEventListener('touchend', () => { track.style.scrollSnapType = ''; }, { passive: true });
   };
@@ -403,7 +594,11 @@
 
     { "type": "header", "content": "Visibility" },
     { "type": "checkbox", "id": "hide_on_mobile", "label": "Hide on mobile", "default": false },
-    { "type": "checkbox", "id": "hide_on_desktop", "label": "Hide on desktop", "default": false }
+    { "type": "checkbox", "id": "hide_on_desktop", "label": "Hide on desktop", "default": false },
+    
+    { "type": "header", "content": "Modal Settings" },
+    { "type": "range", "id": "modal_padding_y_desktop", "label": "Modal Padding Y (Desktop)", "min": 0, "max": 100, "step": 2, "default": 30, "unit": "px" },
+    { "type": "range", "id": "modal_padding_y_mobile", "label": "Modal Padding Y (Mobile)", "min": 0, "max": 100, "step": 2, "default": 30, "unit": "px" }
   ],
   "blocks": [
     {
@@ -416,7 +611,7 @@
         { "type": "text", "id": "category", "label": "Category (must match filter chip text)", "default": "Unboxing" },
         { "type": "text", "id": "views", "label": "Views (e.g. 1.2M)", "default": "1.2M views" },
         { "type": "text", "id": "username", "label": "Instagram Username", "default": "@fulva.in" },
-        { "type": "text", "id": "product_tag", "label": "Product Tag", "default": "24 Variety Box" },
+        { "type": "product", "id": "linked_product", "label": "Associated Product for Modal" },
         { "type": "text", "id": "button_label", "label": "Button Label", "default": "Buy Now" },
         { "type": "url", "id": "button_link", "label": "Button Link" },
         { "type": "text", "id": "likes", "label": "Likes (e.g. 84K)", "default": "84K" }

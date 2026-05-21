@@ -3,12 +3,26 @@
 <div class="featured-marquee" style="--fm-bg: {{ section.settings.bg_color }}; --fm-height: {{ section.settings.max_height }}px; --fm-speed: {{ section.settings.speed }}s;">
   {%- if section.blocks.size > 0 -%}
     {%- assign first_block = section.blocks.first -%}
+
+    {%- comment -%} Mobile: first image centered above marquee {%- endcomment -%}
     <div class="fm-mobile-header">
-      {%- if first_block.settings.image != blank -%}
-        <img src="{{ first_block.settings.image | img_url: 'master' }}" alt="{{ first_block.settings.image.alt | escape }}" loading="lazy" class="fm-image">
+      {%- assign mobile_first_image = first_block.settings.image_mobile | default: first_block.settings.image -%}
+      {%- if mobile_first_image != blank -%}
+        <img src="{{ mobile_first_image | img_url: 'master' }}" alt="{{ mobile_first_image.alt | escape }}" loading="lazy" class="fm-image">
       {%- else -%}
         <div class="fm-placeholder">Upload Logo</div>
       {%- endif -%}
+    </div>
+
+    {%- comment -%} Desktop: first image pinned to left, static {%- endcomment -%}
+    <div class="fm-static">
+      {%- assign desktop_first_image = first_block.settings.image | default: first_block.settings.image_mobile -%}
+      {%- if desktop_first_image != blank -%}
+        <img src="{{ desktop_first_image | img_url: 'master' }}" alt="{{ desktop_first_image.alt | escape }}" loading="lazy" class="fm-image">
+      {%- else -%}
+        <div class="fm-placeholder">Upload Logo</div>
+      {%- endif -%}
+      <span class="fm-separator"></span>
     </div>
   {%- endif -%}
 
@@ -16,17 +30,24 @@
     {%- for i in (1..2) -%}
       <div class="fm-group" aria-hidden="{% if forloop.index == 2 %}true{% else %}false{% endif %}">
         {%- for block in section.blocks -%}
-          <div class="fm-item {% if forloop.first %}fm-item-first{% endif %}" {{ block.shopify_attributes }}>
-            {%- if block.settings.image != blank -%}
-              <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.image.alt | escape }}" loading="lazy" class="fm-image">
-            {%- else -%}
-              <div class="fm-placeholder">Upload Logo</div>
-            {%- endif -%}
-            
-            {%- if forloop.first -%}
-              <span class="fm-separator"></span>
-            {%- endif -%}
-          </div>
+          {%- unless forloop.first -%}
+            <div class="fm-item" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank or block.settings.image_mobile != blank -%}
+                {%- assign default_image = block.settings.image | default: block.settings.image_mobile -%}
+                <picture class="fm-image-picture">
+                  {%- if block.settings.image_mobile != blank -%}
+                    <source media="(max-width: 990px)" srcset="{{ block.settings.image_mobile | img_url: 'master' }}">
+                  {%- endif -%}
+                  {%- if block.settings.image != blank -%}
+                    <source media="(min-width: 991px)" srcset="{{ block.settings.image | img_url: 'master' }}">
+                  {%- endif -%}
+                  <img src="{{ default_image | img_url: 'master' }}" alt="{{ default_image.alt | escape }}" loading="lazy" class="fm-image">
+                </picture>
+              {%- else -%}
+                <div class="fm-placeholder">Upload Logo</div>
+              {%- endif -%}
+            </div>
+          {%- endunless -%}
         {%- endfor -%}
       </div>
     {%- endfor -%}
@@ -71,7 +92,12 @@
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Image"
+          "label": "Image (Desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Image (Mobile)"
         }
       ]
     }
