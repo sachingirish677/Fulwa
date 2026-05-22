@@ -21,7 +21,7 @@
             "category": "Unboxing",
             "views": "1.2M views",
             "username": "@fulva.in",
-            "product_tag": "24 Variety Box",
+            "linked_product": "",
             "button_label": "Buy Now",
             "button_link": "",
             "likes": "84K"
@@ -34,7 +34,7 @@
             "category": "Unboxing",
             "views": "1.2M views",
             "username": "@fulva.in",
-            "product_tag": "24 Variety Box",
+            "linked_product": "",
             "button_label": "Buy Now",
             "button_link": "",
             "likes": "84K"
@@ -47,7 +47,7 @@
             "category": "Unboxing",
             "views": "1.2M views",
             "username": "@fulva.in",
-            "product_tag": "24 Variety Box",
+            "linked_product": "",
             "button_label": "Buy Now",
             "button_link": "",
             "likes": "84K"
@@ -60,7 +60,7 @@
             "category": "Unboxing",
             "views": "1.2M views",
             "username": "@fulva.in",
-            "product_tag": "24 Variety Box",
+            "linked_product": "",
             "button_label": "Buy Now",
             "button_link": "",
             "likes": "84K"
@@ -73,7 +73,7 @@
             "category": "Unboxing",
             "views": "1.2M views",
             "username": "@fulva.in",
-            "product_tag": "24 Variety Box",
+            "linked_product": "",
             "button_label": "Buy Now",
             "button_link": "",
             "likes": "84K"
@@ -133,7 +133,9 @@
         "flipkart_link": "",
         "flipkart_logo_alt": "Flipkart",
         "hide_on_mobile": false,
-        "hide_on_desktop": false
+        "hide_on_desktop": false,
+        "modal_padding_y_desktop": 30,
+        "modal_padding_y_mobile": 30
       }
     },
     "faq_with_image_TP99ky": {
@@ -298,17 +300,17 @@
         "primary_link": "shopify://products/6-varieties-of-delicious-calicut-halwa",
         "secondary_label": "Track Order",
         "secondary_link": "shopify://products/3-varieties-of-delicious-calicut-halwa",
-        "background": "#F4C026",
-        "background_2": "#F8E9B4",
+        "background": "#f4c026",
+        "background_2": "#f8e9b4",
         "text_color": "#101010",
-        "muted_text_color": "#5A5A5A",
-        "accent_color": "#1B5E2F",
-        "eyebrow_line_color": "#1B5E2F",
-        "primary_button_bg": "#1B5E2F",
-        "primary_button_text": "#FFFFFF",
-        "secondary_button_bg": "#FFFFFF",
+        "muted_text_color": "#5a5a5a",
+        "accent_color": "#1b5e2f",
+        "eyebrow_line_color": "#1b5e2f",
+        "primary_button_bg": "#1b5e2f",
+        "primary_button_text": "#ffffff",
+        "secondary_button_bg": "#ffffff",
         "secondary_button_text": "#101010",
-        "secondary_button_border": "#D1D1D1",
+        "secondary_button_border": "#d1d1d1",
         "border_color": "#000000",
         "border_opacity": 12,
         "hide_on_mobile": false,
