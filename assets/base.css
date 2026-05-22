@@ -4213,3 +4213,64 @@ product-recommendations:has([data-has-recommendations='false']) {
     translate: 0px var(--atc-destination, 0px);
   }
 }
+
+/* Custom Product Page UI Overrides */
+
+/* Ensure quantity and add-to-cart are perfectly side by side */
+.product-form__buttons {
+  display: flex !important;
+  gap: 12px !important;
+  align-items: stretch !important;
+  flex-direction: row !important;
+}
+
+quantity-input.quantity {
+  height: auto !important;
+  flex: 0 0 auto !important;
+}
+
+.product-form__submit {
+  flex: 1 1 auto !important;
+  margin-bottom: 0 !important;
+}
+
+/* Style the gallery controls to float at the bottom right */
+.media-gallery .slideshow__controls {
+  position: absolute !important;
+  bottom: 16px !important;
+  right: 16px !important;
+  width: auto !important;
+  background: transparent !important;
+  justify-content: flex-end !important;
+}
+
+.media-gallery .slideshow__arrows {
+  display: flex !important;
+  gap: 8px !important;
+}
+
+.media-gallery .slideshow__arrows button {
+  background: rgba(0,0,0,0.5) !important;
+  color: white !important;
+  border-radius: 8px !important;
+  width: 36px !important;
+  height: 36px !important;
+}
+
+.media-gallery .slideshow__arrows button:hover {
+  background: rgba(0,0,0,0.8) !important;
+}
+
+/* Hide pagination dots as per design */
+.media-gallery .slider-counter {
+  display: none !important;
+}
+
+/* Ensure swatches layout correctly */
+.variant-picker__option-values {
+  gap: 12px !important;
+}
+
+.product-details {
+  padding-top: 32px !important;
+}

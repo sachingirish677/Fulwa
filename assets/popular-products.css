@@ -123,10 +123,6 @@
   cursor: grabbing;
 }
 
-.fulva-popular .fulva-popular__track.is-dragging .fulva-popular__card {
-  pointer-events: none;
-}
-
 .fulva-popular .fulva-popular__card {
   border-radius: var(--fp-radius);
   overflow: hidden;
@@ -146,6 +142,7 @@
 }
 
 .fulva-popular .fulva-popular__media {
+  display: block;
   position: relative;
   height: var(--fp-img-h);
   flex: 0 0 auto;

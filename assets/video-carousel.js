@@ -110,14 +110,125 @@ document.addEventListener('DOMContentLoaded', function () {
   // Maintain responsiveness
   window.addEventListener('resize', () => updateCarousel(true));
 
+  // Modal logic
+  const vcModal = document.querySelector('.vc-modal');
+  const vcModalVideo = document.querySelector('.vc-modal__video');
+  const vcMuteBtn = document.querySelector('[data-vc-mute]');
+  const vcCloseBtns = document.querySelectorAll('[data-vc-close]');
+  const vcPrevModalBtn = document.querySelector('[data-vc-modal-prev]');
+  const vcNextModalBtn = document.querySelector('[data-vc-modal-next]');
+  
+  let isVcMuted = true;
+  let currentModalSlide = null;
+
+  const updateVcMuteIcon = () => {
+    if (!vcMuteBtn) return;
+    const unmuteIcon = vcMuteBtn.querySelector('.vc-icon-unmute');
+    const muteIcon = vcMuteBtn.querySelector('.vc-icon-mute');
+    if (isVcMuted) {
+      unmuteIcon.style.display = 'none';
+      muteIcon.style.display = 'block';
+    } else {
+      unmuteIcon.style.display = 'block';
+      muteIcon.style.display = 'none';
+    }
+  };
+
+  const openVcModal = (slide) => {
+    if (!vcModal || !vcModalVideo) return;
+    const videoSrc = slide.getAttribute('data-video-url');
+    if (!videoSrc) return;
+
+    currentModalSlide = slide;
+    vcModalVideo.src = videoSrc;
+    vcModalVideo.muted = isVcMuted;
+    
+    vcModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    
+    const playPromise = vcModalVideo.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        vcModalVideo.muted = true;
+        isVcMuted = true;
+        updateVcMuteIcon();
+        vcModalVideo.play();
+      });
+    }
+  };
+
+  const closeVcModal = () => {
+    if (!vcModal || !vcModalVideo) return;
+    vcModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    vcModalVideo.pause();
+    vcModalVideo.src = '';
+    currentModalSlide = null;
+  };
+
+  if (vcMuteBtn) {
+    vcMuteBtn.addEventListener('click', () => {
+      isVcMuted = !isVcMuted;
+      vcModalVideo.muted = isVcMuted;
+      updateVcMuteIcon();
+    });
+  }
+
+  if (vcCloseBtns) {
+    vcCloseBtns.forEach(btn => btn.addEventListener('click', closeVcModal));
+  }
+
+  const goVcPrev = () => {
+    if (!currentModalSlide) return;
+    const currentIndex = slides.indexOf(currentModalSlide);
+    const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+    openVcModal(slides[prevIndex]);
+  };
+
+  const goVcNext = () => {
+    if (!currentModalSlide) return;
+    const currentIndex = slides.indexOf(currentModalSlide);
+    const nextIndex = (currentIndex + 1) % slides.length;
+    openVcModal(slides[nextIndex]);
+  };
+
+  if (vcPrevModalBtn) vcPrevModalBtn.addEventListener('click', goVcPrev);
+  if (vcNextModalBtn) vcNextModalBtn.addEventListener('click', goVcNext);
+
+  // Inline mute logic
+  document.querySelectorAll('.vc-inline-mute').forEach(btn => {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const slide = this.closest('.vc-slide');
+      const video = slide.querySelector('video');
+      if (video) {
+        video.muted = !video.muted;
+        const unmuteIcon = this.querySelector('.vc-icon-unmute');
+        const muteIcon = this.querySelector('.vc-icon-mute');
+        if (video.muted) {
+          unmuteIcon.style.display = 'none';
+          muteIcon.style.display = 'block';
+        } else {
+          unmuteIcon.style.display = 'block';
+          muteIcon.style.display = 'none';
+        }
+      }
+    });
+  });
+
   // Event delegation or looping (since we cloned nodes, we add listeners directly to the new array)
   slides.forEach((slide) => {
     if (!(slide instanceof HTMLElement)) return;
-    slide.addEventListener('click', function () {
+    slide.addEventListener('click', function (e) {
+      if (e.target.closest('.vc-inline-mute')) return;
+
       const isMobile = window.innerWidth <= 768;
 
       if (isMobile) {
-        if (slide.classList.contains('is-active')) return;
+        if (slide.classList.contains('is-active')) {
+          openVcModal(slide);
+          return;
+        }
         
         slides.forEach(s => {
           s.classList.remove('is-active');
@@ -134,7 +245,10 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       const offset = parseInt(slide.dataset.offset || '0');
-      if (offset === 0) return; // already active
+      if (offset === 0) {
+        openVcModal(slide);
+        return; // already active, open modal
+      }
 
       // Pause old active video
       const oldActiveSlide = slides.find(s => s.classList.contains('is-active'));

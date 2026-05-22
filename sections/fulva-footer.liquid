@@ -21,6 +21,8 @@
     --ff-py: {{ section.settings.padding_y }}px;
     --ff-px-m: {{ section.settings.padding_x_mobile }}px;
     --ff-py-m: {{ section.settings.padding_y_mobile }}px;
+    --ff-min-height: {{ section.settings.min_height_desktop }}px;
+    --ff-min-height-m: {{ section.settings.min_height_mobile }}px;
   "
 >
   <div class="fulva-footer__inner">
@@ -136,6 +138,26 @@
     {
       "type": "header",
       "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "min_height_desktop",
+      "label": "Min height desktop",
+      "min": 0,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "min_height_mobile",
+      "label": "Min height mobile",
+      "min": 0,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 0
     },
     {
       "type": "range",
