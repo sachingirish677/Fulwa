@@ -25,7 +25,19 @@
   <div class="vc-slider-container">
     <div class="vc-slider-track">
       {%- for block in section.blocks -%}
-        <div class="vc-slide {% if forloop.first %}is-active{% endif %}" {{ block.shopify_attributes }}>
+        {%- assign video_url = "" -%}
+        {%- if block.settings.video != blank -%}
+          {%- for source in block.settings.video.sources -%}
+            {%- if source.format == 'mp4' -%}
+              {%- assign video_url = source.url -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if video_url == blank -%}
+            {%- assign video_url = block.settings.video.sources[0].url -%}
+          {%- endif -%}
+        {%- endif -%}
+        <div class="vc-slide {% if forloop.first %}is-active{% endif %}" data-video-url="{{ video_url }}" {{ block.shopify_attributes }}>
           
           <div class="vc-video-wrapper">
             {%- if block.settings.video != blank -%}
@@ -33,6 +45,10 @@
             {%- else -%}
               <div class="vc-placeholder-video"></div>
             {%- endif -%}
+            <button class="vc-inline-mute" data-vc-inline-mute aria-label="Toggle Sound">
+              <svg class="vc-icon-unmute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+              <svg class="vc-icon-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+            </button>
             
             <div class="vc-play-icon">
               <!-- Play Icon (Default) -->
@@ -77,6 +93,37 @@
           
         </div>
       {%- endfor -%}
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="vc-modal" id="vc-modal-{{ section.id }}" aria-hidden="true">
+    <div class="vc-modal__backdrop" data-vc-close></div>
+    <div class="vc-modal__content">
+      <div class="vc-modal__header">
+        <button class="vc-modal__btn vc-modal__minimize" data-vc-close aria-label="Minimize">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7"/></svg>
+        </button>
+        <div class="vc-modal__header-right">
+          <button class="vc-modal__btn vc-modal__mute" data-vc-mute aria-label="Toggle Sound">
+            <svg class="vc-icon-unmute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            <svg class="vc-icon-mute" style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+          </button>
+          <button class="vc-modal__btn vc-modal__close" data-vc-close aria-label="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+          </button>
+        </div>
+      </div>
+      
+      <button class="vc-modal__nav vc-modal__nav--prev" data-vc-modal-prev aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg>
+      </button>
+      
+      <video class="vc-modal__video" id="vc-modal-video-{{ section.id }}" loop playsinline></video>
+      
+      <button class="vc-modal__nav vc-modal__nav--next" data-vc-modal-next aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"></path></svg>
+      </button>
     </div>
   </div>
 </div>

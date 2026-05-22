@@ -161,6 +161,186 @@
   display: block !important;
 }
 
+.vc-slide.is-prev .vc-details-card,
+.vc-slide.is-next .vc-details-card {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* ==========================
+   INLINE MUTE BUTTON
+   ========================== */
+.vc-inline-mute {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: none; /* Only show on active slide */
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+  z-index: 15;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.vc-slide.is-active .vc-inline-mute {
+  display: flex;
+}
+
+.vc-inline-mute svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ==========================
+   MODAL (LIGHTBOX)
+   ========================== */
+.vc-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  padding: 30px 0;
+  box-sizing: border-box;
+}
+
+.vc-modal[aria-hidden="true"] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.vc-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+.vc-modal__content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: calc((100vh - 60px) * 0.5625); /* 30px padding * 2 = 60 */
+  max-height: calc(100vw * 1.7778);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.vc-modal__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: transparent;
+  pointer-events: none;
+  border-radius: 16px;
+}
+
+/* Controls */
+.vc-modal__header {
+  position: absolute; 
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.vc-modal__header-right {
+  display: flex;
+  gap: 12px;
+}
+
+.vc-modal__btn {
+  pointer-events: auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.vc-modal__btn:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: scale(1.05);
+}
+
+.vc-modal__btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Modal Nav Arrows */
+.vc-modal__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: #1B5E2F;
+  cursor: pointer;
+  z-index: 20;
+  transition: transform 0.2s ease;
+  padding: 0;
+}
+
+.vc-modal__nav:hover {
+  transform: translateY(-50%) scale(1.1);
+}
+
+.vc-modal__nav--prev {
+  left: 16px;
+}
+
+.vc-modal__nav--next {
+  right: 16px;
+}
+
+.vc-modal__nav svg {
+  width: 32px;
+  height: 32px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+@media (max-width: 749px) {
+  .vc-modal__nav {
+    display: none !important;
+  }
+}
+
 .vc-slide.is-prev .icon-play,
 .vc-slide.is-prev .icon-next {
   display: none !important;

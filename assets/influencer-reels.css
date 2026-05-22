@@ -223,6 +223,18 @@
     z-index: 1;
   }
 
+  .fulva-buzz .fulva-buzz__slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    cursor: pointer;
+  }
+
+  .fulva-buzz .fulva-buzz__slide.is-active::after {
+    display: none;
+  }
+
   .fulva-buzz .fulva-buzz__slide.is-active {
     opacity: 1;
     pointer-events: auto;
@@ -234,24 +246,28 @@
     opacity: 0.92;
     transform: translate(-50%, -50%) translateX(calc(var(--fb-offset) * -1)) scale(var(--fb-mid-scale));
     z-index: 4;
+    pointer-events: auto;
   }
 
   .fulva-buzz .fulva-buzz__slide.is-next {
     opacity: 0.92;
     transform: translate(-50%, -50%) translateX(var(--fb-offset)) scale(var(--fb-mid-scale));
     z-index: 4;
+    pointer-events: auto;
   }
 
   .fulva-buzz .fulva-buzz__slide.is-far-prev {
     opacity: 0.28;
     transform: translate(-50%, -50%) translateX(calc(var(--fb-offset) * -2)) scale(var(--fb-far-scale));
     z-index: 3;
+    pointer-events: auto;
   }
 
   .fulva-buzz .fulva-buzz__slide.is-far-next {
     opacity: 0.28;
     transform: translate(-50%, -50%) translateX(calc(var(--fb-offset) * 2)) scale(var(--fb-far-scale));
     z-index: 3;
+    pointer-events: auto;
   }
 
   .fulva-buzz .fulva-buzz__slide-link {

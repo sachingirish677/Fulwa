@@ -92,7 +92,12 @@
         %}
 
         <div class="fulva-popular__card" role="listitem" {{ block.shopify_attributes }}>
-          <div class="fulva-popular__media">
+          {% if product != blank %}
+            <a href="{{ product.url }}" class="fulva-popular__media" aria-label="{{ product.title | escape }}">
+          {% else %}
+            <div class="fulva-popular__media">
+          {% endif %}
+          
             {% if show_custom_badge and badge_text != blank %}
               <div class="fulva-popular__badge">{{ badge_text | escape }}</div>
             {% elsif show_percent_badge %}
@@ -119,7 +124,12 @@
             {% else %}
               <div class="fulva-popular__ph" aria-hidden="true">✦</div>
             {% endif %}
-          </div>
+
+          {% if product != blank %}
+            </a>
+          {% else %}
+            </div>
+          {% endif %}
 
           <div class="fulva-popular__body">
             <div class="fulva-popular__name">

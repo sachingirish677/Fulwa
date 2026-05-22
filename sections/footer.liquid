@@ -1,6 +1,27 @@
 {{ 'fulva-footer.css' | asset_url | stylesheet_tag }}
 
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+{% liquid
+  assign bg_h_desktop = section.settings.bg_height_desktop | append: 'px'
+  if section.settings.bg_height_desktop == 0
+    assign bg_h_desktop = '100%'
+  endif
+
+  assign bg_h_mobile = section.settings.bg_height_mobile | append: 'px'
+  if section.settings.bg_height_mobile == 0
+    assign bg_h_mobile = '100%'
+  endif
+%}
+<style>
+  .footer-bg-{{ section.id }} {
+    height: {{ bg_h_desktop }} !important;
+  }
+  @media (max-width: 749px) {
+    .footer-bg-{{ section.id }} {
+      height: {{ bg_h_mobile }} !important;
+    }
+  }
+</style>
+<div class="section-background color-{{ section.settings.color_scheme }} footer-bg-{{ section.id }}"></div>
 <div
   class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
 >
@@ -33,6 +54,8 @@
     --ff-logo-h: {{ section.settings.logo_height }}px;
     --ff-muted: {{ section.settings.footer_muted_color }};
     --ff-accent: {{ section.settings.footer_accent_color }};
+    --ff-menu-pt: {{ section.settings.top_spacing_desktop }}px;
+    --ff-menu-pt-m: {{ section.settings.top_spacing_mobile }}px;
   ">
     <!-- Brand Column -->
     <div class="fulva-footer__brand">
@@ -240,6 +263,30 @@
       "id": "footer_accent_color",
       "label": "Menu heading color",
       "default": "#1B5E2F"
+    },
+    {
+      "type": "header",
+      "content": "Background Height"
+    },
+    {
+      "type": "range",
+      "id": "bg_height_desktop",
+      "label": "Background height desktop (0 = 100%)",
+      "min": 0,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "bg_height_mobile",
+      "label": "Background height mobile (0 = 100%)",
+      "min": 0,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 0
     },
     {
       "type": "header",
