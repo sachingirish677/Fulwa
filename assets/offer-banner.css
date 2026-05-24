@@ -203,6 +203,7 @@
 
 .fulva-seasonal .fulva-seasonal__card-media {
   position: relative;
+  display: block;
   aspect-ratio: 4 / 3;
   background: rgba(0, 0, 0, 0.04);
   overflow: hidden;
@@ -261,6 +262,8 @@
 }
 
 .fulva-seasonal .fulva-seasonal__name {
+  display: block;
+  text-decoration: none;
   font-size: 15px;
   font-weight: 800;
   color: #1a1a1a;

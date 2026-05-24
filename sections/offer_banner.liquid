@@ -135,7 +135,7 @@
           %}
 
           <div class="fulva-seasonal__card" role="listitem" {{ block.shopify_attributes }}>
-            <div class="fulva-seasonal__card-media">
+            <a href="{{ product.url | default: '#' }}" class="fulva-seasonal__card-media">
               {% if show_percent_badge %}
                 <div class="fulva-seasonal__badge">-{{ percent_off }}%</div>
               {% elsif show_custom_badge and badge_text != blank %}
@@ -162,16 +162,16 @@
               {% else %}
                 <div class="fulva-seasonal__ph" aria-hidden="true">✦</div>
               {% endif %}
-            </div>
+            </a>
 
             <div class="fulva-seasonal__card-body">
-              <div class="fulva-seasonal__name">
+              <a href="{{ product.url | default: '#' }}" class="fulva-seasonal__name">
                 {% if product != blank %}
                   {{ product.title | escape }}
                 {% else %}
                   {{ block.settings.fallback_title | escape }}
                 {% endif %}
-              </div>
+              </a>
 
               {% if block.settings.subtitle != blank %}
                 <div class="fulva-seasonal__meta">{{ block.settings.subtitle | escape }}</div>
