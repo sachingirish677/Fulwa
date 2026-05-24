@@ -115,6 +115,7 @@
   object-fit: cover;
   opacity: 0.8;
   transition: opacity 0.3s;
+  pointer-events: none;
 }
 
 .vc-slide.is-active .vc-video-el {
@@ -125,6 +126,7 @@
   width: 100%;
   height: 100%;
   background: #333;
+  pointer-events: none;
 }
 
 .vc-play-icon {

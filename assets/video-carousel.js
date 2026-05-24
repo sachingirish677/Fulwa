@@ -216,10 +216,16 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  let wasDragged = false;
+
   // Event delegation or looping (since we cloned nodes, we add listeners directly to the new array)
   slides.forEach((slide) => {
     if (!(slide instanceof HTMLElement)) return;
     slide.addEventListener('click', function (e) {
+      if (wasDragged) {
+        e.preventDefault();
+        return;
+      }
       if (e.target.closest('.vc-inline-mute')) return;
 
       const isMobile = window.innerWidth <= 768;
@@ -268,4 +274,68 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+
+  // Desktop Drag-to-Scroll Logic
+  let isDragging = false;
+  let startX = 0;
+  let startY = 0;
+
+  track.addEventListener('mousedown', (e) => {
+    if (window.innerWidth <= 768) return; // Native scroll handles mobile
+    if (e.button !== 0) return;
+    if (e.target.closest('.vc-inline-mute') || e.target.closest('a')) return;
+    isDragging = true;
+    wasDragged = false;
+    startX = e.clientX;
+    startY = e.clientY;
+  });
+
+  track.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 5) {
+      wasDragged = true;
+      e.preventDefault();
+    }
+  });
+
+  const endDrag = (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    if (window.innerWidth <= 768) return;
+    
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    
+    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) {
+      // Not enough horizontal movement, let it be a click if it was small
+      return;
+    }
+    
+    // Pause old active video
+    const oldActiveSlide = slides.find(s => s.classList.contains('is-active'));
+    if (oldActiveSlide) {
+      const oldVideo = oldActiveSlide.querySelector('video');
+      if (oldVideo) oldVideo.pause();
+    }
+
+    // Determine direction: drag left = next (+1), drag right = prev (-1)
+    let offset = dx < 0 ? 1 : -1; 
+    virtualActiveIndex += offset;
+    updateCarousel(false, offset);
+
+    // Play new active video
+    setTimeout(() => {
+      const newActiveSlide = slides.find(s => s.classList.contains('is-active'));
+      if (newActiveSlide) {
+        const newVideo = newActiveSlide.querySelector('video');
+        if (newVideo) newVideo.play();
+      }
+    }, 50); // slight delay to allow classes to update
+  };
+
+  track.addEventListener('mouseup', endDrag);
+  track.addEventListener('mouseleave', endDrag);
+
 });
