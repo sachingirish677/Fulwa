@@ -253,7 +253,7 @@
         "heading": "All <em>Categories</em>",
         "eyebrow": "Browse by type",
         "max_width": 0,
-        "padding_x_desktop": 38,
+        "padding_x_desktop": 20,
         "padding_y_desktop": 30,
         "padding_x_mobile": 16,
         "padding_y_mobile": 16,
@@ -287,12 +287,11 @@
           "settings": {
             "mp4_url": "https://cdn.shopify.com/videos/c/o/v/3530311c8d6641c19cab558fcd8dc737.mp4",
             "category": "Unboxing",
-            "views": "1.2M views",
             "username": "@fulva.in",
             "linked_product": "",
+            "product_tag": "24 Variety Box",
             "button_label": "Buy Now",
-            "button_link": "shopify://products/24-box",
-            "likes": "84K"
+            "button_link": "shopify://products/24-box"
           }
         },
         "reel_zcrY9T": {
@@ -300,12 +299,11 @@
           "settings": {
             "mp4_url": "https://cdn.shopify.com/videos/c/o/v/040fdfad02854692a54acdc8a3e9371d.mp4",
             "category": "Unboxing",
-            "views": "1.2M views",
             "username": "@fulva.in",
             "linked_product": "",
+            "product_tag": "24 Variety Box",
             "button_label": "Buy Now",
-            "button_link": "shopify://products/24-box",
-            "likes": "84K"
+            "button_link": "shopify://products/24-box"
           }
         },
         "reel_eXGrzJ": {
@@ -313,12 +311,11 @@
           "settings": {
             "mp4_url": "https://cdn.shopify.com/videos/c/o/v/3530311c8d6641c19cab558fcd8dc737.mp4",
             "category": "Unboxing",
-            "views": "1.2M views",
             "username": "@fulva.in",
             "linked_product": "",
+            "product_tag": "24 Variety Box",
             "button_label": "Buy Now",
-            "button_link": "",
-            "likes": "84K"
+            "button_link": ""
           }
         },
         "reel_UiFMcF": {
@@ -326,12 +323,11 @@
           "settings": {
             "mp4_url": "https://cdn.shopify.com/videos/c/o/v/3530311c8d6641c19cab558fcd8dc737.mp4",
             "category": "Unboxing",
-            "views": "1.2M views",
             "username": "@fulva.in",
             "linked_product": "",
+            "product_tag": "24 Variety Box",
             "button_label": "Buy Now",
-            "button_link": "",
-            "likes": "84K"
+            "button_link": ""
           }
         },
         "reel_WNJ4c9": {
@@ -339,12 +335,11 @@
           "settings": {
             "mp4_url": "https://cdn.shopify.com/videos/c/o/v/040fdfad02854692a54acdc8a3e9371d.mp4",
             "category": "Unboxing",
-            "views": "1.2M views",
             "username": "@fulva.in",
             "linked_product": "",
+            "product_tag": "24 Variety Box",
             "button_label": "Buy Now",
-            "button_link": "",
-            "likes": "84K"
+            "button_link": ""
           }
         },
         "reel_EMqQGL": {
@@ -352,12 +347,11 @@
           "settings": {
             "mp4_url": "https://cdn.shopify.com/videos/c/o/v/3530311c8d6641c19cab558fcd8dc737.mp4",
             "category": "Unboxing",
-            "views": "1.2M views",
             "username": "@fulva.in",
             "linked_product": "",
+            "product_tag": "24 Variety Box",
             "button_label": "Buy Now",
-            "button_link": "",
-            "likes": "84K"
+            "button_link": ""
           }
         }
       },
@@ -1047,62 +1041,6 @@
     },
     "testimonials_7xKHqX": {
       "type": "testimonials",
-      "blocks": {
-        "testimonial_7fpCpx": {
-          "type": "testimonial",
-          "settings": {
-            "badge": "Verified",
-            "rating": 5,
-            "title": "Excellent taste",
-            "body": "Super rich flavour and premium packaging. Perfect for gifting.",
-            "name": "Priyanka",
-            "meta": "Repeat customer",
-            "verified": true
-          }
-        },
-        "testimonial_PQhmcp": {
-          "type": "testimonial",
-          "settings": {
-            "badge": "Verified",
-            "rating": 5,
-            "title": "Excellent taste",
-            "body": "Super rich flavour and premium packaging. Perfect for gifting.",
-            "name": "Priyanka",
-            "meta": "Repeat customer",
-            "verified": true
-          }
-        },
-        "testimonial_NPxYc9": {
-          "type": "testimonial",
-          "settings": {
-            "badge": "Verified",
-            "rating": 5,
-            "title": "Excellent taste",
-            "body": "Super rich flavour and premium packaging. Perfect for gifting.",
-            "name": "Priyanka",
-            "meta": "Repeat customer",
-            "verified": true
-          }
-        },
-        "testimonial_MyqRDQ": {
-          "type": "testimonial",
-          "settings": {
-            "badge": "Verified",
-            "rating": 5,
-            "title": "Excellent taste",
-            "body": "Super rich flavour and premium packaging. Perfect for gifting.",
-            "name": "Priyanka",
-            "meta": "Repeat customer",
-            "verified": true
-          }
-        }
-      },
-      "block_order": [
-        "testimonial_7fpCpx",
-        "testimonial_PQhmcp",
-        "testimonial_NPxYc9",
-        "testimonial_MyqRDQ"
-      ],
       "name": "Fulva testimonials",
       "settings": {
         "aria_label": "Customer testimonials",

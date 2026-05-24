@@ -19,12 +19,11 @@
           "settings": {
             "mp4_url": "",
             "category": "Unboxing",
-            "views": "1.2M views",
             "username": "@fulva.in",
             "linked_product": "",
+            "product_tag": "24 Variety Box",
             "button_label": "Buy Now",
-            "button_link": "",
-            "likes": "84K"
+            "button_link": ""
           }
         },
         "reel_TrQxLw": {
@@ -32,12 +31,11 @@
           "settings": {
             "mp4_url": "",
             "category": "Unboxing",
-            "views": "1.2M views",
             "username": "@fulva.in",
             "linked_product": "",
+            "product_tag": "24 Variety Box",
             "button_label": "Buy Now",
-            "button_link": "",
-            "likes": "84K"
+            "button_link": ""
           }
         },
         "reel_AXQaMM": {
@@ -45,12 +43,11 @@
           "settings": {
             "mp4_url": "",
             "category": "Unboxing",
-            "views": "1.2M views",
             "username": "@fulva.in",
             "linked_product": "",
+            "product_tag": "24 Variety Box",
             "button_label": "Buy Now",
-            "button_link": "",
-            "likes": "84K"
+            "button_link": ""
           }
         },
         "reel_Mdt9J7": {
@@ -58,12 +55,11 @@
           "settings": {
             "mp4_url": "",
             "category": "Unboxing",
-            "views": "1.2M views",
             "username": "@fulva.in",
             "linked_product": "",
+            "product_tag": "24 Variety Box",
             "button_label": "Buy Now",
-            "button_link": "",
-            "likes": "84K"
+            "button_link": ""
           }
         },
         "reel_U96UHJ": {
@@ -71,12 +67,11 @@
           "settings": {
             "mp4_url": "",
             "category": "Unboxing",
-            "views": "1.2M views",
             "username": "@fulva.in",
             "linked_product": "",
+            "product_tag": "24 Variety Box",
             "button_label": "Buy Now",
-            "button_link": "",
-            "likes": "84K"
+            "button_link": ""
           }
         }
       },
@@ -136,6 +131,131 @@
         "hide_on_desktop": false,
         "modal_padding_y_desktop": 30,
         "modal_padding_y_mobile": 30
+      }
+    },
+    "faq_with_image_mRPrXb": {
+      "type": "faq-with-image",
+      "blocks": {
+        "faq_EhcEaF": {
+          "type": "faq",
+          "settings": {
+            "question": "WHY IS CALICUT HALWA DIFFERENT FROM OTHER HALWAS?",
+            "answer": "<p>Provide the answer to your question here.</p>"
+          }
+        },
+        "faq_YAYLWT": {
+          "type": "faq",
+          "settings": {
+            "question": "WHY IS CALICUT HALWA DIFFERENT FROM OTHER HALWAS?",
+            "answer": "<p>Provide the answer to your question here.</p>"
+          }
+        },
+        "faq_RrQ6bG": {
+          "type": "faq",
+          "settings": {
+            "question": "WHY IS CALICUT HALWA DIFFERENT FROM OTHER HALWAS?",
+            "answer": "<p>Provide the answer to your question here.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_EhcEaF",
+        "faq_YAYLWT",
+        "faq_RrQ6bG"
+      ],
+      "name": "FAQ with Image",
+      "settings": {
+        "bg_color": "#f7f9f7",
+        "heading_text_1": "Frequently Asked",
+        "heading_text_2": "Questions",
+        "right_image": "shopify://shop_images/SOCIAL_BUZZ_WALL_1.png",
+        "mobile_image": "shopify://shop_images/SOCIAL_BUZZ_WALL_2.png",
+        "right_bg_color": "linear-gradient(180deg, rgba(255, 251, 240, 1), rgba(252, 229, 150, 1) 50%, rgba(244, 192, 38, 1) 100%)"
+      }
+    },
+    "video_carousel_8N9A9W": {
+      "type": "video-carousel",
+      "blocks": {
+        "video_card_VKQJiy": {
+          "type": "video_card",
+          "settings": {
+            "header": "Ramadan dessert",
+            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
+            "link": "",
+            "creator_name": "Arjun Mehta"
+          }
+        },
+        "video_card_4LLebC": {
+          "type": "video_card",
+          "settings": {
+            "header": "Ramadan dessert",
+            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
+            "link": "",
+            "creator_name": "Arjun Mehta"
+          }
+        },
+        "video_card_ipqfka": {
+          "type": "video_card",
+          "settings": {
+            "header": "Ramadan dessert",
+            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
+            "link": "",
+            "creator_name": "Arjun Mehta"
+          }
+        },
+        "video_card_pKXiRq": {
+          "type": "video_card",
+          "settings": {
+            "header": "Ramadan dessert",
+            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
+            "link": "",
+            "creator_name": "Arjun Mehta"
+          }
+        },
+        "video_card_UVpCVH": {
+          "type": "video_card",
+          "settings": {
+            "header": "Ramadan dessert",
+            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
+            "link": "",
+            "creator_name": "Arjun Mehta"
+          }
+        }
+      },
+      "block_order": [
+        "video_card_VKQJiy",
+        "video_card_4LLebC",
+        "video_card_ipqfka",
+        "video_card_pKXiRq",
+        "video_card_UVpCVH"
+      ],
+      "name": "Video Carousel",
+      "settings": {
+        "bg_color": "#0d3b16",
+        "mini_header": "HALWA IN YOUR KITCHEN",
+        "header_1": "Cook with",
+        "header_2": "Calicut",
+        "sub_header": "Recipes, pairings, and creative ideas from our community of halwa lovers."
+      }
+    },
+    "fulwa_heritage_xfC9YM": {
+      "type": "fulwa-heritage",
+      "name": "Fulwa Heritage",
+      "settings": {
+        "desktop_height": 528,
+        "bg_color": "#f4f9f2",
+        "image": "shopify://shop_images/Gemini_Generated_Image_vs1vhavs1vhavs1v_1.png",
+        "mobile_image": "shopify://shop_images/div.story-visual.png",
+        "image_bg_color": "#fef9f0",
+        "tagline": "OUR HERITAGE",
+        "pre_heading": "A",
+        "heading_1": "Tradition",
+        "heading_2": "Worth Protecting",
+        "text_1": "Calicut has been making halwa for over a century. The narrow lanes of Kozhikode carry the scent of ghee and sugar — and generations of craftspeople who have kept this art alive.",
+        "quote_text": "\"We started Fulva to make sure that tradition travels — from the streets of Kozhikode to your home, anywhere in India.\"",
+        "text_2": "Today we work directly with the halwa makers of Calicut, ensuring every piece you receive is authentic, fresh, and made with the same love it always was.",
+        "button_label": "Read Our Full Story",
+        "button_link": ""
       }
     },
     "bannerwithtext_YMQEgD": {
@@ -264,7 +384,7 @@
         "footer_copyright_jweRK8": {
           "type": "footer-copyright",
           "settings": {
-            "show_powered_by": true,
+            "show_powered_by": false,
             "font_size": "0.75rem",
             "case": "none"
           },
@@ -316,6 +436,9 @@
   },
   "order": [
     "reels_dXXYdC",
+    "faq_with_image_mRPrXb",
+    "video_carousel_8N9A9W",
+    "fulwa_heritage_xfC9YM",
     "bannerwithtext_YMQEgD",
     "footer_m9NzUG",
     "footer_utilities_jLGE8U"
