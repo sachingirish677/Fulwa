@@ -129,12 +129,7 @@
                 "padding-block-end": 16
               }
             },
-            "features_text_1": {
-              "type": "text",
-              "settings": {
-                "text": "<p><strong>Free</strong></p>"
-              }
-            },
+
             "variant_picker_R3rGDr": {
               "type": "variant-picker",
               "settings": {
@@ -171,7 +166,6 @@
           "block_order": [
             "group_icgrde",
             "divider_VJhene",
-            "features_text_1",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi"
           ]

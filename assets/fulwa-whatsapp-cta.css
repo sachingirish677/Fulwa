@@ -141,6 +141,14 @@
     gap: 14px;
   }
 
+  .fulva-wa .fulva-wa__left {
+    width: 100%;
+  }
+
+  .fulva-wa .fulva-wa__sub {
+    padding-right: 16px;
+  }
+
   .fulva-wa .fulva-wa__actions {
     width: 100%;
     align-items: stretch;
