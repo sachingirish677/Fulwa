@@ -299,6 +299,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    pointer-events: none;
   }
 
   .fulva-buzz .fulva-buzz__slide-iframe {

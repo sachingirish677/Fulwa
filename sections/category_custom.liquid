@@ -104,6 +104,12 @@
         {% endif %}
       {% endfor %}
     </div>
+
+    <div class="fulva-categories__dots" data-fc-dots>
+      {% for block in category_blocks %}
+        <button type="button" class="fulva-categories__dot{% if forloop.first %} is-active{% endif %}" aria-label="Go to category {{ forloop.index }}" data-index="{{ forloop.index0 }}"></button>
+      {% endfor %}
+    </div>
   </div>
 </fulva-categories>
 
@@ -116,10 +122,13 @@
         this.track = this.querySelector('[data-fc-track]');
         this.prevBtn = this.querySelector('[data-fc-prev]');
         this.nextBtn = this.querySelector('[data-fc-next]');
+        this.dots = this.querySelectorAll('[data-fc-dots] .fulva-categories__dot');
+        this.dotsContainer = this.querySelector('[data-fc-dots]');
         
         if (!this.track) return;
 
         this.updateArrowStates = this.updateArrowStates.bind(this);
+        this.updateDots = this.updateDots.bind(this);
         
         if (this.prevBtn && this.nextBtn) {
           this.prevBtn.addEventListener('click', () => {
@@ -128,10 +137,35 @@
           this.nextBtn.addEventListener('click', () => {
             this.track.scrollBy({ left: this.getScrollAmount() * 2, behavior: 'smooth' });
           });
-          this.track.addEventListener('scroll', this.updateArrowStates, { passive: true });
-          setTimeout(this.updateArrowStates, 100);
-          window.addEventListener('resize', this.updateArrowStates);
         }
+
+        if (this.dots) {
+          this.dots.forEach((dot) => {
+            dot.addEventListener('click', (e) => {
+              const index = parseInt(e.currentTarget.getAttribute('data-index'));
+              const card = this.track.querySelectorAll('.fulva-categories__card')[index];
+              if (card) {
+                const scrollLeft = card.offsetLeft - this.track.offsetLeft - parseInt(window.getComputedStyle(this.track).paddingLeft);
+                this.track.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+              }
+            });
+          });
+        }
+
+        this.track.addEventListener('scroll', () => {
+          this.updateArrowStates();
+          this.updateDots();
+        }, { passive: true });
+        
+        setTimeout(() => {
+          this.updateArrowStates();
+          this.updateDots();
+        }, 100);
+        
+        window.addEventListener('resize', () => {
+          this.updateArrowStates();
+          this.updateDots();
+        });
 
         // Desktop Mouse Drag to Scroll
         this.isDown = false;
@@ -193,8 +227,36 @@
         }
       }
 
+      updateDots() {
+        if (!this.dots || this.dots.length === 0 || !this.dotsContainer) return;
+        const scrollRatio = this.track.clientWidth / this.track.scrollWidth;
+        
+        // Hide dots if there's nothing to scroll
+        if (scrollRatio >= 1) {
+          this.dotsContainer.style.display = 'none';
+          return;
+        } else {
+          this.dotsContainer.style.display = 'flex';
+        }
+        
+        const scrollProgress = this.track.scrollLeft / (this.track.scrollWidth - this.track.clientWidth);
+        // Calculate the index based on scroll progress
+        let activeIndex = Math.round(scrollProgress * (this.dots.length - 1));
+        // Bound the active index
+        activeIndex = Math.max(0, Math.min(activeIndex, this.dots.length - 1));
+
+        this.dots.forEach((dot, index) => {
+          if (index === activeIndex) {
+            dot.classList.add('is-active');
+          } else {
+            dot.classList.remove('is-active');
+          }
+        });
+      }
+
       disconnectedCallback() {
         window.removeEventListener('resize', this.updateArrowStates);
+        window.removeEventListener('resize', this.updateScrollbar);
       }
     });
   }

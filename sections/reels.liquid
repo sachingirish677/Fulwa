@@ -116,25 +116,31 @@
               <div class="fulva-reel-placeholder">✨</div>
             {% endif %}
 
+            {% liquid
+              assign icon_url = 'reel-icon.png' | asset_url
+              if block.settings.ig_icon != blank
+                assign icon_url = block.settings.ig_icon | image_url: width: 56
+              endif
+            %}
             {% if ig_href != blank %}
               <a class="fulva-reel-ig-icon" href="{{ ig_href }}" target="_blank" rel="noopener" aria-label="Open Instagram">
-                <img src="{{ 'reel-icon.png' | asset_url }}" alt="Instagram" width="28" height="28">
+                <img src="{{ icon_url }}" alt="Instagram" width="28" height="28" loading="lazy">
               </a>
             {% else %}
               <div class="fulva-reel-ig-icon" aria-hidden="true">
-                <img src="{{ 'reel-icon.png' | asset_url }}" alt="Instagram" width="28" height="28">
+                <img src="{{ icon_url }}" alt="Instagram" width="28" height="28" loading="lazy">
               </div>
             {% endif %}
             
-            {% if block.settings.views != blank %}
-              <span class="fulva-reel-views">{{ block.settings.views | escape }}</span>
-            {% endif %}
+
 
             <div class="fulva-reel-bottom">
               {% if block.settings.username != blank %}
                 <span class="fulva-reel-user">{{ block.settings.username | escape }}</span>
               {% endif %}
-              {% if block.settings.product_tag != blank %}
+              {% if block.settings.linked_product != blank %}
+                <span class="fulva-reel-product-tag">{{ block.settings.linked_product.title | escape }}</span>
+              {% elsif block.settings.product_tag != blank %}
                 <span class="fulva-reel-product-tag">{{ block.settings.product_tag | escape }}</span>
               {% endif %}
               <div class="fulva-reel-actions">
@@ -143,9 +149,7 @@
                 {% else %}
                   <div></div>
                 {% endif %}
-                {% if block.settings.likes != blank %}
-                  <span class="fulva-reel-likes"><span class="heart">♥</span> {{ block.settings.likes | escape }}</span>
-                {% endif %}
+
               </div>
             </div>
           </div>
@@ -515,6 +519,77 @@
           openModal(card);
         });
       });
+
+      // Swipe to navigate in modal
+      let isModalSwiping = false;
+      let modalStartX = 0;
+      let modalStartY = 0;
+      const modalContent = modal.querySelector('.fr-modal__content');
+
+      if (modalContent) {
+        // Touch Events
+        modalContent.addEventListener('touchstart', (e) => {
+          if (e.touches.length !== 1) return;
+          if (e.target.closest('button') || e.target.closest('a')) return;
+          isModalSwiping = true;
+          modalStartX = e.touches[0].clientX;
+          modalStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        modalContent.addEventListener('touchmove', (e) => {
+          if (!isModalSwiping) return;
+          const dx = e.touches[0].clientX - modalStartX;
+          const dy = e.touches[0].clientY - modalStartY;
+          if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 5) {
+            if (e.cancelable) e.preventDefault();
+          }
+        }, { passive: false });
+
+        modalContent.addEventListener('touchend', (e) => {
+          if (!isModalSwiping) return;
+          isModalSwiping = false;
+          
+          const dx = e.changedTouches[0].clientX - modalStartX;
+          const dy = e.changedTouches[0].clientY - modalStartY;
+          
+          if (Math.abs(dx) < 30 || Math.abs(dx) < Math.abs(dy)) return;
+          if (dx < 0) goNext();
+          else goPrev();
+        }, { passive: true });
+
+        // Mouse Events
+        modalContent.addEventListener('mousedown', (e) => {
+          if (e.button !== 0) return;
+          if (e.target.closest('button') || e.target.closest('a')) return;
+          isModalSwiping = true;
+          modalStartX = e.clientX;
+          modalStartY = e.clientY;
+        });
+
+        modalContent.addEventListener('mousemove', (e) => {
+          if (!isModalSwiping) return;
+          const dx = e.clientX - modalStartX;
+          const dy = e.clientY - modalStartY;
+          if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 5) {
+            e.preventDefault();
+          }
+        });
+
+        const endMouseSwipe = (e) => {
+          if (!isModalSwiping) return;
+          isModalSwiping = false;
+          
+          const dx = e.clientX - modalStartX;
+          const dy = e.clientY - modalStartY;
+          
+          if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+          if (dx < 0) goNext();
+          else goPrev();
+        };
+
+        modalContent.addEventListener('mouseup', endMouseSwipe);
+        modalContent.addEventListener('mouseleave', endMouseSwipe);
+      }
     }
 
     track.addEventListener('touchstart', () => { track.style.scrollSnapType = 'none'; }, { passive: true });
@@ -609,12 +684,14 @@
         { "type": "image_picker", "id": "image", "label": "Reel Image (or Video Fallback)" },
         { "type": "url", "id": "mp4_url", "label": "MP4 link (upload in Settings → Files)" },
         { "type": "text", "id": "category", "label": "Category (must match filter chip text)", "default": "Unboxing" },
-        { "type": "text", "id": "views", "label": "Views (e.g. 1.2M)", "default": "1.2M views" },
+
         { "type": "text", "id": "username", "label": "Instagram Username", "default": "@fulva.in" },
         { "type": "product", "id": "linked_product", "label": "Associated Product for Modal" },
+        { "type": "text", "id": "product_tag", "label": "Product Tag (Fallback text)", "default": "24 Variety Box" },
         { "type": "text", "id": "button_label", "label": "Button Label", "default": "Buy Now" },
         { "type": "url", "id": "button_link", "label": "Button Link" },
-        { "type": "text", "id": "likes", "label": "Likes (e.g. 84K)", "default": "84K" }
+
+        { "type": "image_picker", "id": "ig_icon", "label": "Custom Instagram Icon (optional)" }
       ]
     }
   ],

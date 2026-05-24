@@ -117,7 +117,7 @@
           %}
 
           <div class="fulva-spotlight__card" role="listitem" {{ block.shopify_attributes }}>
-            <div class="fulva-spotlight__media">
+            <a href="{{ product.url | default: '#' }}" class="fulva-spotlight__media">
               {% if show_percent_badge %}
                 <div class="fulva-spotlight__badge">-{{ percent_off }}%</div>
               {% elsif show_custom_badge and badge_text != blank %}
@@ -146,16 +146,16 @@
               {% else %}
                 <div class="fulva-spotlight__ph" aria-hidden="true">✦</div>
               {% endif %}
-            </div>
+            </a>
 
             <div class="fulva-spotlight__body">
-              <div class="fulva-spotlight__name">
+              <a href="{{ product.url | default: '#' }}" class="fulva-spotlight__name">
                 {% if product != blank %}
                   {{ product.title | escape }}
                 {% else %}
                   {{ block.settings.fallback_title | escape }}
                 {% endif %}
-              </div>
+              </a>
 
               {% if block.settings.subtitle != blank %}
                 <div class="fulva-spotlight__subtitle">{{ block.settings.subtitle | escape }}</div>
