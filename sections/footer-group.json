@@ -138,155 +138,6 @@
         "modal_padding_y_mobile": 30
       }
     },
-    "faq_with_image_TP99ky": {
-      "type": "faq-with-image",
-      "blocks": {
-        "faq_XxjLeT": {
-          "type": "faq",
-          "settings": {
-            "question": "Why is Calicut halwa different from other halwas?",
-            "answer": "<p>Provide the answer to your question here.</p>"
-          }
-        },
-        "faq_tJLKPn": {
-          "type": "faq",
-          "settings": {
-            "question": "Does Fulva halwa contain preservatives or artificial ingredients?",
-            "answer": "<p>Provide the answer to your question here.</p>"
-          }
-        },
-        "faq_9LeEt7": {
-          "type": "faq",
-          "settings": {
-            "question": "How long does the halwa stay fresh?",
-            "answer": "<p>Provide the answer to your question here.</p>"
-          }
-        },
-        "faq_ymLpDe": {
-          "type": "faq",
-          "settings": {
-            "question": "Do you ship across all of India?",
-            "answer": "<p>Provide the answer to your question here.</p>"
-          }
-        },
-        "faq_ftjHA9": {
-          "type": "faq",
-          "settings": {
-            "question": "Can I get a custom branded gift box for my company?",
-            "answer": "<p>Provide the answer to your question here.</p>"
-          }
-        },
-        "faq_PLYJGT": {
-          "type": "faq",
-          "settings": {
-            "question": "What if my order arrives damaged?",
-            "answer": "<p>Provide the answer to your question here.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "faq_XxjLeT",
-        "faq_tJLKPn",
-        "faq_9LeEt7",
-        "faq_ymLpDe",
-        "faq_ftjHA9",
-        "faq_PLYJGT"
-      ],
-      "name": "FAQ with Image",
-      "settings": {
-        "bg_color": "#fafdf9",
-        "heading_text_1": "Frequently Asked",
-        "heading_text_2": "Questions",
-        "right_image": "shopify://shop_images/SOCIAL_BUZZ_WALL_1.png",
-        "mobile_image": "shopify://shop_images/SOCIAL_BUZZ_WALL_2.png",
-        "right_bg_color": "radial-gradient(rgba(248, 215, 110, 1), rgba(252, 229, 150, 1) 50%, rgba(244, 192, 38, 1) 100%)"
-      }
-    },
-    "video_carousel_gDGVcd": {
-      "type": "video-carousel",
-      "blocks": {
-        "video_card_FjMUWU": {
-          "type": "video_card",
-          "settings": {
-            "header": "Ramadan dessert",
-            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
-            "link": "",
-            "creator_name": "Arjun Mehta"
-          }
-        },
-        "video_card_FqFGmi": {
-          "type": "video_card",
-          "settings": {
-            "header": "Ramadan dessert",
-            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
-            "link": "",
-            "creator_name": "Arjun Mehta"
-          }
-        },
-        "video_card_7JJadQ": {
-          "type": "video_card",
-          "settings": {
-            "header": "Ramadan dessert",
-            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
-            "link": "",
-            "creator_name": "Arjun Mehta"
-          }
-        },
-        "video_card_4UW4pV": {
-          "type": "video_card",
-          "settings": {
-            "header": "Ramadan dessert",
-            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
-            "link": "",
-            "creator_name": "Arjun Mehta"
-          }
-        },
-        "video_card_8HGeUP": {
-          "type": "video_card",
-          "settings": {
-            "header": "Ramadan dessert",
-            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
-            "link": "",
-            "creator_name": "Arjun Mehta"
-          }
-        }
-      },
-      "block_order": [
-        "video_card_FjMUWU",
-        "video_card_FqFGmi",
-        "video_card_7JJadQ",
-        "video_card_4UW4pV",
-        "video_card_8HGeUP"
-      ],
-      "name": "Video Carousel",
-      "settings": {
-        "bg_color": "#0d3b16",
-        "mini_header": "HALWA IN YOUR KITCHEN",
-        "header_1": "Cook with",
-        "header_2": "Calicut",
-        "sub_header": "Recipes, pairings, and creative ideas from our community of halwa lovers."
-      }
-    },
-    "fulwa_heritage_kwRGMc": {
-      "type": "fulwa-heritage",
-      "name": "Fulwa Heritage",
-      "settings": {
-        "desktop_height": 528,
-        "bg_color": "#f4f9f2",
-        "image": "shopify://shop_images/Gemini_Generated_Image_vs1vhavs1vhavs1v_1.png",
-        "mobile_image": "shopify://shop_images/div.story-visual.png",
-        "image_bg_color": "#fef9f0",
-        "tagline": "OUR HERITAGE",
-        "pre_heading": "A",
-        "heading_1": "Tradition",
-        "heading_2": "Worth Protecting",
-        "text_1": "Calicut has been making halwa for over a century. The narrow lanes of Kozhikode carry the scent of ghee and sugar — and generations of craftspeople who have kept this art alive.",
-        "quote_text": "\"We started Fulva to make sure that tradition travels — from the streets of Kozhikode to your home, anywhere in India.\"",
-        "text_2": "Today we work directly with the halwa makers of Calicut, ensuring every piece you receive is authentic, fresh, and made with the same love it always was.",
-        "button_label": "Read Our Full Story",
-        "button_link": ""
-      }
-    },
     "bannerwithtext_YMQEgD": {
       "type": "bannerwithtext",
       "name": "Fulva WhatsApp CTA",
@@ -393,11 +244,13 @@
       "settings": {
         "logo_part1": "shopify://shop_images/Vector_4.png",
         "logo_part2": "shopify://shop_images/Frame_64.png",
-        "logo_height": 96,
+        "logo_height": 76,
         "footer_description": "Authentic Calicut halwa, crafted with tradition and delivered fresh to your door.",
         "fssai_text": "FSSAI Lic No. 11324999000545",
         "footer_muted_color": "#6b6b6b",
         "footer_accent_color": "#1b5e2f",
+        "bg_height_desktop": 100,
+        "bg_height_mobile": 0,
         "section_width": "page-width",
         "gap": 20,
         "color_scheme": "scheme-1",
@@ -463,9 +316,6 @@
   },
   "order": [
     "reels_dXXYdC",
-    "faq_with_image_TP99ky",
-    "video_carousel_gDGVcd",
-    "fulwa_heritage_kwRGMc",
     "bannerwithtext_YMQEgD",
     "footer_m9NzUG",
     "footer_utilities_jLGE8U"

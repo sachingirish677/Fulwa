@@ -12,6 +12,50 @@
     "custom_hero_banner_DcgeWT": {
       "type": "custom_hero_banner",
       "blocks": {
+        "slide_RjUWht": {
+          "type": "slide",
+          "settings": {
+            "bg_fallback_color": "#000000",
+            "bg_fit": "cover",
+            "eyebrow_text": "AUTHENTIC KOZHIKODEN CRAFT",
+            "title_text": "Taste the tradition of",
+            "accent_text": "<em>Calicut</em>",
+            "subtext": "<p>Freshly made halwa, crafted with care and shipped across India.</p>",
+            "placeholder_text": "Add a hero image in the editor",
+            "primary_label": "Buy Now",
+            "primary_url": "",
+            "secondary_label": "Our Story",
+            "secondary_url": "",
+            "stat_1_number": "50K+",
+            "stat_1_label": "Happy customers",
+            "stat_2_number": "12",
+            "stat_2_label": "Varieties",
+            "stat_3_number": "0",
+            "stat_3_label": "Preservatives"
+          }
+        },
+        "slide_yVK4KT": {
+          "type": "slide",
+          "settings": {
+            "bg_fallback_color": "#000000",
+            "bg_fit": "cover",
+            "eyebrow_text": "AUTHENTIC KOZHIKODEN CRAFT",
+            "title_text": "Taste the tradition of",
+            "accent_text": "<em>Calicut</em>",
+            "subtext": "<p>Freshly made halwa, crafted with care and shipped across India.</p>",
+            "placeholder_text": "Add a hero image in the editor",
+            "primary_label": "Buy Now",
+            "primary_url": "",
+            "secondary_label": "Our Story",
+            "secondary_url": "",
+            "stat_1_number": "50K+",
+            "stat_1_label": "Happy customers",
+            "stat_2_number": "12",
+            "stat_2_label": "Varieties",
+            "stat_3_number": "0",
+            "stat_3_label": "Preservatives"
+          }
+        },
         "slide_xBrQkF": {
           "type": "slide",
           "settings": {
@@ -39,6 +83,8 @@
         }
       },
       "block_order": [
+        "slide_RjUWht",
+        "slide_yVK4KT",
         "slide_xBrQkF"
       ],
       "name": "Hero banner",
@@ -243,6 +289,7 @@
             "category": "Unboxing",
             "views": "1.2M views",
             "username": "@fulva.in",
+            "linked_product": "",
             "button_label": "Buy Now",
             "button_link": "shopify://products/24-box",
             "likes": "84K"
@@ -255,6 +302,7 @@
             "category": "Unboxing",
             "views": "1.2M views",
             "username": "@fulva.in",
+            "linked_product": "",
             "button_label": "Buy Now",
             "button_link": "shopify://products/24-box",
             "likes": "84K"
@@ -267,6 +315,7 @@
             "category": "Unboxing",
             "views": "1.2M views",
             "username": "@fulva.in",
+            "linked_product": "",
             "button_label": "Buy Now",
             "button_link": "",
             "likes": "84K"
@@ -279,6 +328,7 @@
             "category": "Unboxing",
             "views": "1.2M views",
             "username": "@fulva.in",
+            "linked_product": "",
             "button_label": "Buy Now",
             "button_link": "",
             "likes": "84K"
@@ -291,6 +341,20 @@
             "category": "Unboxing",
             "views": "1.2M views",
             "username": "@fulva.in",
+            "linked_product": "",
+            "button_label": "Buy Now",
+            "button_link": "",
+            "likes": "84K"
+          }
+        },
+        "reel_EMqQGL": {
+          "type": "reel",
+          "settings": {
+            "mp4_url": "https://cdn.shopify.com/videos/c/o/v/3530311c8d6641c19cab558fcd8dc737.mp4",
+            "category": "Unboxing",
+            "views": "1.2M views",
+            "username": "@fulva.in",
+            "linked_product": "",
             "button_label": "Buy Now",
             "button_link": "",
             "likes": "84K"
@@ -302,7 +366,8 @@
         "reel_zcrY9T",
         "reel_eXGrzJ",
         "reel_UiFMcF",
-        "reel_WNJ4c9"
+        "reel_WNJ4c9",
+        "reel_EMqQGL"
       ],
       "name": "Fulva Reels",
       "settings": {
@@ -350,7 +415,9 @@
         "flipkart_link": "",
         "flipkart_logo_alt": "Flipkart",
         "hide_on_mobile": false,
-        "hide_on_desktop": false
+        "hide_on_desktop": false,
+        "modal_padding_y_desktop": 30,
+        "modal_padding_y_mobile": 30
       }
     },
     "availability_banner_DVQT66": {
