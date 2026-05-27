@@ -243,6 +243,7 @@
     const stage = root.querySelector('[data-fb-stage]');
     const slides = Array.from(root.querySelectorAll('[data-fb-slide]'));
     const profiles = Array.from(root.querySelectorAll('[data-fb-profile]'));
+    const profilesContainer = root.querySelector('[data-fb-profiles]');
     const dots = Array.from(root.querySelectorAll('[data-fb-dot]'));
     if (!stage || slides.length === 0) return;
 
@@ -268,7 +269,12 @@
       });
 
       profiles.forEach((p, i) => {
-        p.classList.toggle('is-active', i === active);
+        const isActive = (i === active);
+        p.classList.toggle('is-active', isActive);
+        if (isActive && profilesContainer) {
+          const scrollTarget = p.offsetLeft - (profilesContainer.offsetWidth / 2) + (p.offsetWidth / 2);
+          profilesContainer.scrollTo({ left: scrollTarget, behavior: 'smooth' });
+        }
       });
 
       dots.forEach((d, i) => {
@@ -282,12 +288,51 @@
     if (nextBtn) nextBtn.addEventListener('click', next);
     if (prevBtn) prevBtn.addEventListener('click', prev);
 
+    let isProfileDragged = false;
     profiles.forEach((btn) => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
+        if (isProfileDragged) {
+          e.preventDefault();
+          return;
+        }
         const idx = parseInt(btn.getAttribute('data-index') || '0', 10);
         setActive(idx);
       });
     });
+
+    if (profilesContainer && window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      let isProfileDown = false;
+      let startProfileX;
+      let scrollProfileL;
+
+      profilesContainer.addEventListener('mousedown', (e) => {
+        isProfileDown = true;
+        isProfileDragged = false;
+        startProfileX = e.pageX - profilesContainer.offsetLeft;
+        scrollProfileL = profilesContainer.scrollLeft;
+      });
+      profilesContainer.addEventListener('mouseleave', () => {
+        isProfileDown = false;
+        profilesContainer.style.cursor = '';
+      });
+      profilesContainer.addEventListener('mouseup', () => {
+        isProfileDown = false;
+        profilesContainer.style.cursor = '';
+      });
+      profilesContainer.addEventListener('mousemove', (e) => {
+        if (!isProfileDown) return;
+        const x = e.pageX - profilesContainer.offsetLeft;
+        const walk = (x - startProfileX) * 2;
+        if (Math.abs(walk) > 10) {
+          isProfileDragged = true;
+          profilesContainer.style.cursor = 'grabbing';
+        }
+        if (isProfileDragged) {
+          e.preventDefault();
+          profilesContainer.scrollLeft = scrollProfileL - walk;
+        }
+      });
+    }
 
     slides.forEach((slide) => {
       slide.addEventListener('click', (e) => {
@@ -331,6 +376,22 @@
       if (dx < 0) next();
       else prev();
     }, { passive: true });
+
+    // Wheel Events (Desktop Trackpad)
+    let wheelTimeout;
+    stage.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        e.preventDefault();
+        if (!wheelTimeout) {
+          if (e.deltaX > 0) next();
+          else if (e.deltaX < 0) prev();
+          
+          wheelTimeout = setTimeout(() => {
+            wheelTimeout = null;
+          }, 800);
+        }
+      }
+    }, { passive: false });
 
     // Mouse Events
     stage.addEventListener('mousedown', (e) => {
