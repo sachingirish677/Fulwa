@@ -1,0 +1,207 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "faq_with_image_cQV8fJ": {
+      "type": "faq-with-image",
+      "blocks": {
+        "faq_GLUK8F": {
+          "type": "faq",
+          "settings": {
+            "question": "WHY IS CALICUT HALWA DIFFERENT FROM OTHER HALWAS?",
+            "answer": "<p>Provide the answer to your question here.</p>"
+          }
+        },
+        "faq_LpkrBz": {
+          "type": "faq",
+          "settings": {
+            "question": "WHY IS CALICUT HALWA DIFFERENT FROM OTHER HALWAS?",
+            "answer": "<p>Provide the answer to your question here.</p>"
+          }
+        },
+        "faq_dePme4": {
+          "type": "faq",
+          "settings": {
+            "question": "WHY IS CALICUT HALWA DIFFERENT FROM OTHER HALWAS?",
+            "answer": "<p>Provide the answer to your question here.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_GLUK8F",
+        "faq_LpkrBz",
+        "faq_dePme4"
+      ],
+      "name": "FAQ with Image",
+      "settings": {
+        "bg_color": "#F7F9F7",
+        "heading_text_1": "Frequently Asked",
+        "heading_text_2": "Questions",
+        "right_bg_color": "linear-gradient(180deg, rgba(255, 251, 240, 1), rgba(252, 229, 150, 1) 50%, rgba(244, 192, 38, 1) 100%)"
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "name": "Title",
+          "settings": {
+            "text": "<h1>{{ closest.page.title }}</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "page-content": {
+          "type": "page-content",
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "page-content"
+      ],
+      "disabled": true,
+      "settings": {
+        "content_direction": "column",
+        "gap": 32,
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    },
+    "popular_products_yUrVPM": {
+      "type": "popular_products",
+      "blocks": {
+        "product_7bQikU": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "subtitle": "Assorted · 120g",
+            "show_custom_badge": false,
+            "badge_text": "~50%",
+            "fallback_title": "Product name"
+          }
+        },
+        "product_kdL4zQ": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "subtitle": "Assorted · 120g",
+            "show_custom_badge": false,
+            "badge_text": "~50%",
+            "fallback_title": "Product name"
+          }
+        },
+        "product_7EiBH9": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "subtitle": "Assorted · 120g",
+            "show_custom_badge": false,
+            "badge_text": "~50%",
+            "fallback_title": "Product name"
+          }
+        },
+        "product_m9V8Fj": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "subtitle": "Assorted · 120g",
+            "show_custom_badge": false,
+            "badge_text": "~50%",
+            "fallback_title": "Product name"
+          }
+        },
+        "product_NFwpj9": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "subtitle": "Assorted · 120g",
+            "show_custom_badge": false,
+            "badge_text": "~50%",
+            "fallback_title": "Product name"
+          }
+        }
+      },
+      "block_order": [
+        "product_7bQikU",
+        "product_kdL4zQ",
+        "product_7EiBH9",
+        "product_m9V8Fj",
+        "product_NFwpj9"
+      ],
+      "name": "Fulva popular products",
+      "settings": {
+        "aria_label": "Most popular products",
+        "eyebrow": "Top sellers",
+        "title_before": "Most",
+        "title_emphasis": "Popular",
+        "title_after": "Products",
+        "layout_mode": "grid",
+        "mobile_layout": "swipe",
+        "show_arrows": true,
+        "max_width": 0,
+        "padding_x_desktop": 64,
+        "padding_y_desktop": 52,
+        "padding_x_mobile": 16,
+        "padding_y_mobile": 24,
+        "gap": 14,
+        "card_radius": 15,
+        "image_height": 200,
+        "card_width_desktop": 248,
+        "card_width_mobile": 210,
+        "view_all_label": "View All Products ➔",
+        "view_all_collection": "",
+        "cart_label": "Cart",
+        "fallback_price": "₹1,113",
+        "background": "#FFFFFF",
+        "text_color": "#000000",
+        "title_accent_color": "#000000",
+        "muted_text_color": "#8A8A8A",
+        "accent_color": "#D4A843",
+        "badge_bg_color": "#1B5E2F",
+        "primary_green": "#1B5E2F",
+        "primary_green_hover": "#237A3B",
+        "border_color": "#000000",
+        "border_opacity": 6,
+        "card_border_color": "#000000",
+        "card_border_opacity": 0,
+        "shadow_color": "#000000",
+        "shadow_opacity": 10,
+        "hide_on_mobile": false,
+        "hide_on_desktop": false
+      }
+    }
+  },
+  "order": [
+    "faq_with_image_cQV8fJ",
+    "main",
+    "popular_products_yUrVPM"
+  ]
+}

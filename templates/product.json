@@ -20,13 +20,13 @@
             "media_columns": "two",
             "image_gap": 4,
             "large_first_image": false,
-            "icons_style": "arrow",
+            "icons_style": "chevron_large",
             "slideshow_controls_style": "thumbnails",
-            "slideshow_mobile_controls_style": "dots",
+            "slideshow_mobile_controls_style": "thumbnails",
             "thumbnail_position": "left",
             "thumbnail_width": 64,
             "thumbnail_radius": 0,
-            "aspect_ratio": "adapt",
+            "aspect_ratio": "1",
             "constrain_to_viewport": true,
             "media_fit": "contain",
             "media_radius": 8,
@@ -34,10 +34,10 @@
             "zoom": true,
             "video_loop": false,
             "hide_variants": true,
-            "padding-block-start": 0,
+            "padding-block-start": 10,
             "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-inline-start": 10,
+            "padding-inline-end": 10
           },
           "blocks": {}
         },
@@ -128,7 +128,7 @@
                     "background_color": "#00000026",
                     "corner_radius": 0,
                     "padding-block-start": 0,
-                    "padding-block-end": 100,
+                    "padding-block-end": 0,
                     "padding-inline-start": 0,
                     "padding-inline-end": 0
                   },
@@ -210,36 +210,10 @@
                         "padding-inline-end": 0
                       },
                       "blocks": {}
-                    },
-                    "sku_stock": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>In Stock</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "rte",
-                        "font": "var(--font-body--family)",
-                        "font_size": "1rem",
-                        "line_height": "normal",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "var(--color-foreground)",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
                     }
                   },
                   "block_order": [
-                    "price_tVjtKg",
-                    "sku_stock"
+                    "price_tVjtKg"
                   ]
                 }
               },
@@ -250,18 +224,43 @@
                 "group_price_row"
               ]
             },
+            "text_TA337B": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "{{ closest.product.metafields.custom.product_info | metafield_tag }}",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "loose",
+                "letter_spacing": "loose",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "divider_VJhene": {
               "type": "_divider",
               "settings": {
                 "thickness": 1,
                 "corner_radius": "square",
                 "width_percent": 100,
-                "padding-block-start": 16,
-                "padding-block-end": 16
+                "padding-block-start": 0,
+                "padding-block-end": 0
               },
               "blocks": {}
             },
-
             "variant_picker_R3rGDr": {
               "type": "variant-picker",
               "settings": {
@@ -313,6 +312,7 @@
           },
           "block_order": [
             "group_icgrde",
+            "text_TA337B",
             "divider_VJhene",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi"
@@ -322,8 +322,8 @@
       "settings": {
         "content_width": "content-center-aligned",
         "desktop_media_position": "left",
-        "equal_columns": false,
-        "limit_details_width": false,
+        "equal_columns": true,
+        "limit_details_width": true,
         "gap": 48,
         "enable_sticky_add_to_cart": true,
         "color_scheme": "",
@@ -334,6 +334,32 @@
     "product_recommendations_qggXJq": {
       "type": "product-recommendations",
       "blocks": {
+        "product_description_86PBzY": {
+          "type": "product-description",
+          "name": "t:names.product_description",
+          "settings": {
+            "text": "<p>{{ closest.product.description }}</p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "text_cbcgyb": {
           "type": "text",
           "name": "t:names.header",
@@ -450,6 +476,7 @@
         }
       },
       "block_order": [
+        "product_description_86PBzY",
         "text_cbcgyb"
       ],
       "name": "t:names.product_recommendations",

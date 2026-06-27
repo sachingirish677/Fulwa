@@ -12,55 +12,90 @@
     "custom_hero_banner_DcgeWT": {
       "type": "custom_hero_banner",
       "blocks": {
-        "slide_RjUWht": {
+        "slide_6eL9wz": {
           "type": "slide",
+          "name": "Jackfruit Slide",
           "settings": {
+            "bg_image_desktop": "shopify://shop_images/Website_Banner_Jackfruit.webp",
+            "bg_image_mobile": "shopify://shop_images/Mobile_Website_Banner_Jackfruit_1.webp",
             "bg_fallback_color": "#000000",
             "bg_fit": "cover",
-            "eyebrow_text": "AUTHENTIC KOZHIKODEN CRAFT",
-            "title_text": "Taste the tradition of",
-            "accent_text": "<em>Calicut</em>",
-            "subtext": "<p>Freshly made halwa, crafted with care and shipped across India.</p>",
+            "eyebrow_text": "THE NOSTALGIC BOX",
+            "title_text": "Experience the",
+            "accent_text": "<em>Taste of Childhood</em>",
+            "subtext": "<p>Freshly made wiith jackfruit and ghee, crafted with care and shipped across India.</p>",
+            "image": "shopify://shop_images/Website_Jackfruit_Products_1_1.webp",
             "placeholder_text": "Add a hero image in the editor",
             "primary_label": "Buy Now",
-            "primary_url": "",
+            "primary_url": "shopify://collections/all",
             "secondary_label": "Our Story",
-            "secondary_url": "",
-            "stat_1_number": "50K+",
+            "secondary_url": "shopify://collections/all",
+            "stat_1_number": "60K+",
             "stat_1_label": "Happy customers",
-            "stat_2_number": "12",
-            "stat_2_label": "Varieties",
-            "stat_3_number": "0",
-            "stat_3_label": "Preservatives"
+            "stat_2_number": "3",
+            "stat_2_label": "Editions",
+            "stat_3_number": "2",
+            "stat_3_label": "Flavours"
           }
         },
         "slide_yVK4KT": {
           "type": "slide",
+          "name": "Mango Slide",
           "settings": {
+            "bg_image_desktop": "shopify://shop_images/Mango_Website_Bg.webp",
+            "bg_image_mobile": "shopify://shop_images/Mobile_Website_Banner_Mango_1.webp",
+            "bg_fallback_color": "#000000",
+            "bg_fit": "cover",
+            "eyebrow_text": "The Nostalgic Box",
+            "title_text": "Taste of the",
+            "accent_text": "<em>Childhood</em>",
+            "subtext": "<p>Freshly made wiith Mango and ghee, crafted with care and shipped across India.</p>",
+            "image": "shopify://shop_images/Website_Mango_Products_1_1.webp",
+            "placeholder_text": "Add a hero image in the editor",
+            "primary_label": "Buy Now",
+            "primary_url": "/",
+            "secondary_label": "Our Story",
+            "secondary_url": "/",
+            "stat_1_number": "60K+",
+            "stat_1_label": "Happy customers",
+            "stat_2_number": "3",
+            "stat_2_label": "Editions",
+            "stat_3_number": "2",
+            "stat_3_label": "Flavours"
+          }
+        },
+        "slide_xBrQkF": {
+          "type": "slide",
+          "name": "24 Variety Slide",
+          "settings": {
+            "bg_image_desktop": "shopify://shop_images/Website_Banner_24.webp",
+            "bg_image_mobile": "shopify://shop_images/Mobile_Website_Banner_24_png.webp",
             "bg_fallback_color": "#000000",
             "bg_fit": "cover",
             "eyebrow_text": "AUTHENTIC KOZHIKODEN CRAFT",
-            "title_text": "Taste the tradition of",
+            "title_text": "Taste the Legacy of",
             "accent_text": "<em>Calicut</em>",
-            "subtext": "<p>Freshly made halwa, crafted with care and shipped across India.</p>",
+            "subtext": "<p>Hand-crafted halwa from recipes passed down through generations — delivered fresh anywhere in India.</p>",
+            "image": "shopify://shop_images/Website_24_Products_1.webp",
             "placeholder_text": "Add a hero image in the editor",
             "primary_label": "Buy Now",
-            "primary_url": "",
+            "primary_url": "shopify://products/12-box",
             "secondary_label": "Our Story",
-            "secondary_url": "",
-            "stat_1_number": "50K+",
+            "secondary_url": "shopify://pages/contact",
+            "stat_1_number": "60K+",
             "stat_1_label": "Happy customers",
-            "stat_2_number": "12",
+            "stat_2_number": "24",
             "stat_2_label": "Varieties",
             "stat_3_number": "0",
             "stat_3_label": "Preservatives"
           }
         },
-        "slide_xBrQkF": {
+        "slide_JFDF4Y": {
           "type": "slide",
+          "name": "12 Variety Slide",
           "settings": {
             "bg_image_desktop": "shopify://shop_images/image_2.webp",
-            "bg_image_mobile": "shopify://shop_images/Geometric_background_layer.png",
+            "bg_image_mobile": "shopify://shop_images/Geometric_background_layer.webp",
             "bg_fallback_color": "#000000",
             "bg_fit": "cover",
             "eyebrow_text": "AUTHENTIC KOZHIKODEN CRAFT",
@@ -73,7 +108,7 @@
             "primary_url": "shopify://products/12-box",
             "secondary_label": "Our Story",
             "secondary_url": "shopify://pages/contact",
-            "stat_1_number": "50K+",
+            "stat_1_number": "60K+",
             "stat_1_label": "Happy customers",
             "stat_2_number": "12",
             "stat_2_label": "Varieties",
@@ -83,9 +118,10 @@
         }
       },
       "block_order": [
-        "slide_RjUWht",
+        "slide_6eL9wz",
         "slide_yVK4KT",
-        "slide_xBrQkF"
+        "slide_xBrQkF",
+        "slide_JFDF4Y"
       ],
       "name": "Hero banner",
       "settings": {
@@ -129,8 +165,8 @@
         "hover_scale": 102,
         "hover_raise": 6,
         "transition_duration_ms": 400,
-        "enable_autoplay": false,
-        "autoplay_interval": 6,
+        "enable_autoplay": true,
+        "autoplay_interval": 5,
         "pause_on_hover": true,
         "hover_switch_dots": true,
         "show_bottom_controls": true,
@@ -561,10 +597,10 @@
         "overlay_mid_opacity": 15,
         "overlay_bottom_opacity": 30,
         "eyebrow": "Right now",
-        "title_before": "Ramzan &",
-        "title_accent": "Eid Delights",
-        "subtitle": "Limited edition festive boxes. Available while stocks last.",
-        "primary_button_label": "Shop Eid Collection",
+        "title_before": "The Nostalgic",
+        "title_accent": "Box",
+        "subtitle": "Limited edition nostalgic boxes. Available while stocks last.",
+        "primary_button_label": "Shop Nostalgic Box",
         "primary_button_link": "shopify://products/12-box",
         "primary_button_font_size": 14,
         "primary_button_font_size_mobile": 14,
@@ -1041,6 +1077,101 @@
     },
     "testimonials_7xKHqX": {
       "type": "testimonials",
+      "blocks": {
+        "testimonial_n6pd6K": {
+          "type": "testimonial",
+          "settings": {
+            "badge": "Verified",
+            "rating": 5,
+            "title": "Excellent taste",
+            "body": "Super rich flavour and premium packaging. Perfect for gifting.",
+            "name": "Priyanka",
+            "meta": "Repeat customer",
+            "verified": true
+          }
+        },
+        "testimonial_hnYwUX": {
+          "type": "testimonial",
+          "settings": {
+            "badge": "Verified",
+            "rating": 5,
+            "title": "Excellent taste",
+            "body": "Super rich flavour and premium packaging. Perfect for gifting.",
+            "name": "Priyanka",
+            "meta": "Repeat customer",
+            "verified": true
+          }
+        },
+        "testimonial_FKTnzA": {
+          "type": "testimonial",
+          "settings": {
+            "badge": "Verified",
+            "rating": 5,
+            "title": "Excellent taste",
+            "body": "Super rich flavour and premium packaging. Perfect for gifting.",
+            "name": "Priyanka",
+            "meta": "Repeat customer",
+            "verified": true
+          }
+        },
+        "testimonial_DygF6N": {
+          "type": "testimonial",
+          "settings": {
+            "badge": "Verified",
+            "rating": 5,
+            "title": "Excellent taste",
+            "body": "Super rich flavour and premium packaging. Perfect for gifting.",
+            "name": "Priyanka",
+            "meta": "Repeat customer",
+            "verified": true
+          }
+        },
+        "testimonial_cGVYWW": {
+          "type": "testimonial",
+          "settings": {
+            "badge": "Verified",
+            "rating": 5,
+            "title": "Excellent taste",
+            "body": "Super rich flavour and premium packaging. Perfect for gifting.",
+            "name": "Priyanka",
+            "meta": "Repeat customer",
+            "verified": true
+          }
+        },
+        "testimonial_dciErb": {
+          "type": "testimonial",
+          "settings": {
+            "badge": "Verified",
+            "rating": 5,
+            "title": "Excellent taste",
+            "body": "Super rich flavour and premium packaging. Perfect for gifting.",
+            "name": "Priyanka",
+            "meta": "Repeat customer",
+            "verified": true
+          }
+        },
+        "testimonial_mP6LFy": {
+          "type": "testimonial",
+          "settings": {
+            "badge": "Verified",
+            "rating": 5,
+            "title": "Excellent taste",
+            "body": "Super rich flavour and premium packaging. Perfect for gifting.",
+            "name": "Priyanka",
+            "meta": "Repeat customer",
+            "verified": true
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_n6pd6K",
+        "testimonial_hnYwUX",
+        "testimonial_FKTnzA",
+        "testimonial_DygF6N",
+        "testimonial_cGVYWW",
+        "testimonial_dciErb",
+        "testimonial_mP6LFy"
+      ],
       "name": "Fulva testimonials",
       "settings": {
         "aria_label": "Customer testimonials",
@@ -1076,134 +1207,300 @@
         "hide_on_desktop": false
       }
     },
-    "1779638711c7c43f90": {
-      "type": "_blocks",
+    "reels_44gKXn": {
+      "type": "reels",
       "blocks": {
-        "judge_me_reviews_testimonials_carousel_3G3rPc": {
-          "type": "shopify://apps/judge-me-reviews/blocks/testimonials_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "reel_PGQftX": {
+          "type": "reel",
           "settings": {
-            "show_sample_reviews": false,
-            "reviews_selection": "all",
-            "products": [],
-            "star_rating": "4_to_5_star",
-            "max_reviews": 20,
-            "quote_marks_size": "small",
-            "product_name_text_size": "small",
-            "verified_badge_style": "icon",
-            "card_height": "compact",
-            "text_size": "extra_small",
-            "stars_size": "small",
-            "arrows_position": "bottom",
-            "max_width": 600,
-            "corner_styling": "round",
-            "quote_marks_style": "serif",
-            "card_color": "#ffffff",
-            "stars_and_quote_marks_color": "#064414",
-            "text_color": "#000000",
-            "arrows_color": "#000000",
-            "show_border": false,
-            "border_color": "#108474",
-            "show_drop_shadow": false,
-            "transition_speed": 5,
-            "header_text": "",
-            "show_average_rating": true
+            "mp4_url": "",
+            "category": "Unboxing",
+            "username": "",
+            "linked_product": "",
+            "product_tag": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "reel_iG84jt": {
+          "type": "reel",
+          "settings": {
+            "mp4_url": "",
+            "category": "Unboxing",
+            "username": "",
+            "linked_product": "",
+            "product_tag": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "reel_XQANWL": {
+          "type": "reel",
+          "settings": {
+            "mp4_url": "",
+            "category": "Unboxing",
+            "username": "",
+            "linked_product": "",
+            "product_tag": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "reel_RKRWJz": {
+          "type": "reel",
+          "settings": {
+            "mp4_url": "",
+            "category": "Unboxing",
+            "username": "",
+            "linked_product": "",
+            "product_tag": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "reel_m8hy7K": {
+          "type": "reel",
+          "settings": {
+            "mp4_url": "",
+            "category": "Unboxing",
+            "username": "",
+            "linked_product": "",
+            "product_tag": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "reel_akBVk4": {
+          "type": "reel",
+          "settings": {
+            "mp4_url": "",
+            "category": "Unboxing",
+            "username": "",
+            "linked_product": "",
+            "product_tag": "",
+            "button_label": "",
+            "button_link": ""
           }
         }
       },
       "block_order": [
-        "judge_me_reviews_testimonials_carousel_3G3rPc"
+        "reel_PGQftX",
+        "reel_iG84jt",
+        "reel_XQANWL",
+        "reel_RKRWJz",
+        "reel_m8hy7K",
+        "reel_akBVk4"
       ],
+      "name": "Fulva Reels",
       "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
+        "aria_label": "Instagram Reels",
+        "show_header": false,
+        "eyebrow": "Real People, Real Moments",
+        "heading_1": "The",
+        "heading_1_color": "#1a1a1a",
+        "heading_2": "<em>Halwa</em>",
+        "heading_2_color": "#1a1a1a",
+        "heading_3": "Diaries",
+        "heading_3_color": "#1a1a1a",
+        "ig_handle": "@fulva.in",
+        "ig_link": "",
+        "ig_grad_1": "#f58529",
+        "ig_grad_2": "#dd2a7b",
+        "ig_grad_3": "#8134af",
+        "ig_grad_4": "#515bd4",
+        "show_filters": false,
+        "filter_1": "Unboxing",
+        "filter_2": "Taste Tests",
+        "filter_3": "Gifting",
+        "show_arrows": true,
+        "max_width": 0,
+        "padding_x_desktop": 64,
+        "padding_y_desktop": 32,
+        "padding_x_mobile": 16,
+        "padding_y_mobile": 24,
         "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "color_scheme": "",
-        "background_media": "none",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 0,
-        "padding-block-end": 0
+        "radius": 16,
+        "card_width_desktop": 248,
+        "card_height_desktop": 448,
+        "card_width_mobile": 212,
+        "card_height_mobile": 382,
+        "background": "#ffffff",
+        "text_color": "#1a1a1a",
+        "accent_color": "#d4a843",
+        "border_color": "#000000",
+        "border_opacity": 0,
+        "show_bottom_section": false,
+        "bottom_bg": "#ffffff",
+        "bottom_heading": "Available Across India",
+        "amazon_link": "",
+        "amazon_logo_alt": "Amazon",
+        "flipkart_link": "",
+        "flipkart_logo_alt": "Flipkart",
+        "hide_on_mobile": false,
+        "hide_on_desktop": false,
+        "modal_padding_y_desktop": 30,
+        "modal_padding_y_mobile": 30
       }
     },
-    "1779697545b0712419": {
-      "type": "_blocks",
+    "faq_with_image_jNGhCc": {
+      "type": "faq-with-image",
       "blocks": {
-        "judge_me_reviews_videos_carousel_rYetUi": {
-          "type": "shopify://apps/judge-me-reviews/blocks/videos_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "faq_RRYz8U": {
+          "type": "faq",
           "settings": {
-            "show_sample_reviews": true,
-            "reviews_selection": "all",
-            "products": [],
-            "star_rating": "all",
-            "review_type": "photo_and_video",
-            "max_reviews": 20,
-            "show_reviewer_name": true,
-            "stars_size": "medium",
-            "text_size": "medium",
-            "arrows_position": "bottom",
-            "max_width": 1100,
-            "corner_styling": "soft",
-            "header_text_color": "#000000",
-            "card_color": "#7d7d7d",
-            "stars_color": "",
-            "text_color": "#ffffff",
-            "arrows_color": "#000000",
-            "show_drop_shadow": false,
-            "show_border": false,
-            "border_color": "#108474",
-            "autoplay_media": true,
-            "transition_speed": 5,
-            "carousel_style": "highlight",
-            "header_text": "",
-            "show_average_rating": false
+            "question": "WHY IS CALICUT HALWA DIFFERENT FROM OTHER HALWAS?",
+            "answer": "<p>Provide the answer to your question here.</p>"
+          }
+        },
+        "faq_HNTMDX": {
+          "type": "faq",
+          "settings": {
+            "question": "WHY IS CALICUT HALWA DIFFERENT FROM OTHER HALWAS?",
+            "answer": "<p>Provide the answer to your question here.</p>"
+          }
+        },
+        "faq_UeMq9m": {
+          "type": "faq",
+          "settings": {
+            "question": "WHY IS CALICUT HALWA DIFFERENT FROM OTHER HALWAS?",
+            "answer": "<p>Provide the answer to your question here.</p>"
           }
         }
       },
       "block_order": [
-        "judge_me_reviews_videos_carousel_rYetUi"
+        "faq_RRYz8U",
+        "faq_HNTMDX",
+        "faq_UeMq9m"
       ],
+      "name": "FAQ with Image",
       "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "color_scheme": "",
-        "background_media": "none",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 0,
-        "padding-block-end": 0
+        "bg_color": "#f7f9f7",
+        "heading_text_1": "Frequently Asked",
+        "heading_text_2": "Questions",
+        "right_bg_color": "linear-gradient(180deg, rgba(255, 251, 240, 1), rgba(252, 229, 150, 1) 50%, rgba(244, 192, 38, 1) 100%)"
+      }
+    },
+    "video_carousel_A7UViw": {
+      "type": "video-carousel",
+      "blocks": {
+        "video_card_nkyKNT": {
+          "type": "video_card",
+          "settings": {
+            "header": "Ramadan dessert",
+            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
+            "link": "",
+            "creator_name": "Arjun Mehta"
+          }
+        },
+        "video_card_VteLbg": {
+          "type": "video_card",
+          "settings": {
+            "header": "Ramadan dessert",
+            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
+            "link": "",
+            "creator_name": "Arjun Mehta"
+          }
+        },
+        "video_card_XwjMMY": {
+          "type": "video_card",
+          "settings": {
+            "header": "Ramadan dessert",
+            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
+            "link": "",
+            "creator_name": "Arjun Mehta"
+          }
+        },
+        "video_card_qjDLFP": {
+          "type": "video_card",
+          "settings": {
+            "header": "Ramadan dessert",
+            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
+            "link": "",
+            "creator_name": "Arjun Mehta"
+          }
+        },
+        "video_card_JQCWPw": {
+          "type": "video_card",
+          "settings": {
+            "header": "Ramadan dessert",
+            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
+            "link": "",
+            "creator_name": "Arjun Mehta"
+          }
+        },
+        "video_card_KkB63V": {
+          "type": "video_card",
+          "settings": {
+            "header": "Ramadan dessert",
+            "description": "<p>Must try... Fulva Tender coconut halwa...</p>",
+            "link": "",
+            "creator_name": "Arjun Mehta"
+          }
+        }
+      },
+      "block_order": [
+        "video_card_nkyKNT",
+        "video_card_VteLbg",
+        "video_card_XwjMMY",
+        "video_card_qjDLFP",
+        "video_card_JQCWPw",
+        "video_card_KkB63V"
+      ],
+      "name": "Video Carousel",
+      "settings": {
+        "bg_color": "#0d3b16",
+        "mini_header": "HALWA IN YOUR KITCHEN",
+        "header_1": "Cook with",
+        "header_2": "Calicut",
+        "sub_header": "Recipes, pairings, and creative ideas from our community of halwa lovers."
+      }
+    },
+    "fulwa_heritage_Xgm97M": {
+      "type": "fulwa-heritage",
+      "name": "Fulwa Heritage",
+      "settings": {
+        "desktop_height": 528,
+        "bg_color": "#f4f9f2",
+        "image_bg_color": "#fef9f0",
+        "tagline": "OUR HERITAGE",
+        "pre_heading": "A",
+        "heading_1": "Tradition",
+        "heading_2": "Worth Protecting",
+        "text_1": "Calicut has been making halwa for over a century. The narrow lanes of Kozhikode carry the scent of ghee and sugar — and generations of craftspeople who have kept this art alive.",
+        "quote_text": "\"We started Fulva to make sure that tradition travels — from the streets of Kozhikode to your home, anywhere in India.\"",
+        "text_2": "Today we work directly with the halwa makers of Calicut, ensuring every piece you receive is authentic, fresh, and made with the same love it always was.",
+        "button_label": "Read Our Full Story",
+        "button_link": ""
+      }
+    },
+    "bannerwithtext_mAYcc9": {
+      "type": "bannerwithtext",
+      "name": "Fulva WhatsApp CTA",
+      "settings": {
+        "aria_label": "WhatsApp order",
+        "eyebrow": "DIRECT & PERSONAL",
+        "heading": "Prefer to Order on WhatsApp?",
+        "subheading": "Quick order, custom gifting, and faster support — chat with our team.",
+        "show_whatsapp_icon": true,
+        "primary_label": "Chat with us on whatsApp",
+        "primary_link": "shopify://pages/contact",
+        "secondary_label": "Track Order",
+        "secondary_link": "shopify://policies/privacy-policy",
+        "background": "#f4c026",
+        "background_2": "#f8e9b4",
+        "text_color": "#101010",
+        "muted_text_color": "#5a5a5a",
+        "accent_color": "#1b5e2f",
+        "eyebrow_line_color": "#1b5e2f",
+        "primary_button_bg": "#1b5e2f",
+        "primary_button_text": "#ffffff",
+        "secondary_button_bg": "#ffffff",
+        "secondary_button_text": "#101010",
+        "secondary_button_border": "#d1d1d1",
+        "border_color": "#000000",
+        "border_opacity": 12,
+        "hide_on_mobile": false,
+        "hide_on_desktop": false
       }
     }
   },
@@ -1220,7 +1517,10 @@
     "featured_marquee_GVyY8w",
     "influencer_reels_HkfzDh",
     "testimonials_7xKHqX",
-    "1779638711c7c43f90",
-    "1779697545b0712419"
+    "reels_44gKXn",
+    "faq_with_image_jNGhCc",
+    "video_carousel_A7UViw",
+    "fulwa_heritage_Xgm97M",
+    "bannerwithtext_mAYcc9"
   ]
 }

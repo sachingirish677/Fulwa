@@ -16,8 +16,9 @@
       "blocks": {
         "message_8YKVGW": {
           "type": "message",
+          "name": "Customer Count",
           "settings": {
-            "text_1": "Free delivery above ₹499",
+            "text_1": "Trusted by 60,000+ Customers",
             "color_1": "#ffffff",
             "text_2": "",
             "color_2": "#ffffff",
@@ -31,8 +32,9 @@
         },
         "message_9JWnLT": {
           "type": "message",
+          "name": "Same Day",
           "settings": {
-            "text_1": "Free delivery above ₹499",
+            "text_1": "Same day or next day delivery in eligible pincodes*",
             "color_1": "#ffffff",
             "text_2": "",
             "color_2": "#ffffff",
@@ -46,8 +48,25 @@
         },
         "message_CxXY8a": {
           "type": "message",
+          "name": "Delivery",
           "settings": {
-            "text_1": "Free delivery above ₹499",
+            "text_1": "All India delivery within 2 to 5 business days",
+            "color_1": "#ffffff",
+            "text_2": "",
+            "color_2": "#ffffff",
+            "text_3": "",
+            "color_3": "#d4a843",
+            "text_4": "",
+            "color_4": "#ffffff",
+            "link": "",
+            "open_in_new_tab": false
+          }
+        },
+        "message_KH9nHJ": {
+          "type": "message",
+          "name": "Free Delivery",
+          "settings": {
+            "text_1": "Free delivery for orders above ₹499",
             "color_1": "#ffffff",
             "text_2": "",
             "color_2": "#ffffff",
@@ -63,7 +82,8 @@
       "block_order": [
         "message_8YKVGW",
         "message_9JWnLT",
-        "message_CxXY8a"
+        "message_CxXY8a",
+        "message_KH9nHJ"
       ],
       "name": "Announcement marquee",
       "settings": {
@@ -117,7 +137,7 @@
         "accent_color": "#1b5e2f",
         "border_color": "#000000",
         "border_opacity": 6,
-        "logo_image": "shopify://shop_images/Layer_1.webp",
+        "logo_image": "shopify://shop_images/fulva-logo-black-1_fcfc76c6-8dd7-454c-a051-5adffcc77a57.webp",
         "logo_text": "fulva",
         "logo_font": "heading",
         "logo_size_desktop": 40,
@@ -139,13 +159,13 @@
         "show_whatsapp": true,
         "whatsapp_display": "widget",
         "whatsapp_label": "WhatsApp",
-        "whatsapp_url": "https://wa.me/9746804906",
+        "whatsapp_url": "https://wa.me/918281829819/",
         "whatsapp_new_tab": true,
         "whatsapp_icon_color": "#25d366",
         "whatsapp_widget_label": "Chat on WhatsApp",
         "whatsapp_widget_aria": "Chat with us on WhatsApp",
-        "whatsapp_widget_show_label": false,
-        "whatsapp_widget_show_label_mobile": false,
+        "whatsapp_widget_show_label": true,
+        "whatsapp_widget_show_label_mobile": true,
         "whatsapp_widget_position": "bottom_right",
         "whatsapp_widget_offset_x": 18,
         "whatsapp_widget_offset_y": 18,
@@ -163,7 +183,7 @@
         "whatsapp_widget_hide_desktop": false,
         "show_track_order": true,
         "track_order_label": "Track Order",
-        "track_order_url": "shopify://pages/contact",
+        "track_order_url": "shopify://pages/track-your-order",
         "track_border_color": "#bdbdbd",
         "track_border_width": 1,
         "track_padding_y": 10,
