@@ -466,9 +466,9 @@
       }
 
       &:is([aria-selected='true']) {
-        outline: var(--focus-outline-width) solid currentcolor;
-        outline-offset: calc(var(--focus-outline-offset) / 2);
-        border: var(--style-border-width) solid rgb(var(--color-border-rgb) / var(--media-border-opacity));
+        outline: none;
+        border: 2px solid #D38E22;
+        border-radius: var(--thumbnail-radius, var(--media-radius));
       }
     }
   }

@@ -1,0 +1,303 @@
+{%- style -%}
+  .pna-container-{{ section.id }} {
+    width: 100%;
+    margin-bottom: 2rem;
+    border-top: 1px solid #EAEAEA;
+    font-family: inherit;
+  }
+  
+  .pna-details {
+    border-bottom: 1px solid #EAEAEA;
+  }
+
+  .pna-summary {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #111;
+  }
+
+  .pna-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .pna-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  
+  .pna-icon-plus {
+    background-color: #3b8849; /* Green color matching UI */
+  }
+  
+  .pna-icon-minus {
+    background-color: #BDBDBD; /* Grey color matching UI */
+    display: none;
+  }
+  
+  .pna-details[open] .pna-icon-plus {
+    display: none;
+  }
+  
+  .pna-details[open] .pna-icon-minus {
+    display: flex;
+  }
+
+  .pna-content {
+    padding-bottom: 24px;
+    font-size: 13px;
+    color: #444;
+    line-height: 1.6;
+  }
+
+  /* Table Styles matching UI */
+  .pna-table-container {
+    width: 100%;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #F0F0F0;
+  }
+  
+  .pna-table-header {
+    background-color: #F7F7F7;
+    font-weight: 700;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #111;
+    border-bottom: 1px solid #F0F0F0;
+  }
+
+  .pna-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  
+  .pna-table th, .pna-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #F0F0F0;
+  }
+  
+  .pna-table tr:last-child th, .pna-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .pna-table th {
+    font-weight: 700;
+    color: #111;
+    width: 40%;
+  }
+  
+  .pna-table td {
+    color: #444;
+  }
+
+  .pna-disclaimer {
+    font-size: 11px;
+    color: #888;
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+{%- endstyle -%}
+
+<div class="pna-container-{{ section.id }}">
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'rich_text' and block.settings.text == blank -%}
+      {%- continue -%}
+    {%- endif -%}
+
+    <details class="pna-details" {{ block.shopify_attributes }} {% if forloop.index == 2 %}open{% endif %}>
+      <summary class="pna-summary">
+        {{ block.settings.heading }}
+        <div class="pna-icon pna-icon-plus">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 2V10M2 6H10" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="pna-icon pna-icon-minus">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 6H10" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </summary>
+      
+      <div class="pna-content">
+        {%- case block.type -%}
+          {%- when 'description' -%}
+            {{ product.description }}
+
+          {%- when 'rich_text' -%}
+            {{ block.settings.text }}
+
+          {%- when 'nutritional_table' -%}
+            <!-- Table 1: Nutritional Facts -->
+            <div class="pna-table-container">
+              <div class="pna-table-header">Nutritional Facts</div>
+              <table class="pna-table">
+                <tbody>
+                  <tr>
+                    <th style="font-weight: normal; color: #444;">Serving Size</th>
+                    <td>{{ block.settings.serving_size }}</td>
+                  </tr>
+                  <tr>
+                    <th style="font-weight: normal; color: #444;">Servings per pack</th>
+                    <td>{{ block.settings.servings_per_pack }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Table 2: Particulars -->
+            <div class="pna-table-container">
+              <table class="pna-table">
+                <thead>
+                  <tr>
+                    <th style="background: #F7F7F7; width: 30%">Particulars</th>
+                    <th style="background: #F7F7F7; width: 35%">Per 100g</th>
+                    <th style="background: #F7F7F7; width: 35%">% RDA Per Serving**</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Energy(Kcal)</td>
+                    <td>{{ block.settings.energy_100g }}</td>
+                    <td>{{ block.settings.energy_rda }}</td>
+                  </tr>
+                  <tr>
+                    <td>Carbohydrates</td>
+                    <td>{{ block.settings.carbs_100g }}</td>
+                    <td>{{ block.settings.carbs_rda }}</td>
+                  </tr>
+                  <tr>
+                    <td>Sugars</td>
+                    <td>{{ block.settings.sugars_100g }}</td>
+                    <td>{{ block.settings.sugars_rda }}</td>
+                  </tr>
+                  <tr>
+                    <td>Fat</td>
+                    <td>{{ block.settings.fat_100g }}</td>
+                    <td>{{ block.settings.fat_rda }}</td>
+                  </tr>
+                  <tr>
+                    <td>Saturated Fat</td>
+                    <td>{{ block.settings.sat_fat_100g }}</td>
+                    <td>{{ block.settings.sat_fat_rda }}</td>
+                  </tr>
+                  <tr>
+                    <td>Trans Fat</td>
+                    <td>{{ block.settings.trans_fat_100g }}</td>
+                    <td>{{ block.settings.trans_fat_rda }}</td>
+                  </tr>
+                  <tr>
+                    <td>Cholesterol</td>
+                    <td>{{ block.settings.cholesterol_100g }}</td>
+                    <td>{{ block.settings.cholesterol_rda }}</td>
+                  </tr>
+                  <tr>
+                    <td>Protein</td>
+                    <td>{{ block.settings.protein_100g }}</td>
+                    <td>{{ block.settings.protein_rda }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+            <div class="pna-disclaimer">
+              * Average Values<br>
+              ** %RDA calculated based on serving daily energy intake
+            </div>
+        {%- endcase -%}
+      </div>
+    </details>
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Nutrition Accordion",
+  "tag": "section",
+  "class": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Description" }
+      ]
+    },
+    {
+      "type": "rich_text",
+      "name": "Rich Text Tab",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Ingredients" },
+        { "type": "richtext", "id": "text", "label": "Text" }
+      ]
+    },
+    {
+      "type": "nutritional_table",
+      "name": "Nutritional Table",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Product Details" },
+        { "type": "header", "content": "Nutritional Facts" },
+        { "type": "text", "id": "serving_size", "label": "Serving Size", "default": "50g" },
+        { "type": "text", "id": "servings_per_pack", "label": "Servings per pack", "default": "9.5" },
+        { "type": "header", "content": "Particulars (Per 100g)" },
+        { "type": "text", "id": "energy_100g", "label": "Energy (Kcal)", "default": "450" },
+        { "type": "text", "id": "energy_rda", "label": "Energy % RDA", "default": "11%" },
+        { "type": "text", "id": "carbs_100g", "label": "Carbohydrates", "default": "67" },
+        { "type": "text", "id": "carbs_rda", "label": "Carbs % RDA", "default": "11%" },
+        { "type": "text", "id": "sugars_100g", "label": "Sugars", "default": "55" },
+        { "type": "text", "id": "sugars_rda", "label": "Sugars % RDA", "default": "55%" },
+        { "type": "text", "id": "fat_100g", "label": "Fat", "default": "-" },
+        { "type": "text", "id": "fat_rda", "label": "Fat % RDA", "default": "4%" },
+        { "type": "text", "id": "sat_fat_100g", "label": "Saturated Fat", "default": "10" },
+        { "type": "text", "id": "sat_fat_rda", "label": "Sat Fat % RDA", "default": "25%" },
+        { "type": "text", "id": "trans_fat_100g", "label": "Trans Fat", "default": "Nil" },
+        { "type": "text", "id": "trans_fat_rda", "label": "Trans Fat % RDA", "default": "-" },
+        { "type": "text", "id": "cholesterol_100g", "label": "Cholesterol", "default": "30" },
+        { "type": "text", "id": "cholesterol_rda", "label": "Cholesterol % RDA", "default": "5%" },
+        { "type": "text", "id": "protein_100g", "label": "Protein", "default": "2.5" },
+        { "type": "text", "id": "protein_rda", "label": "Protein % RDA", "default": "2.50%" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Nutrition Accordion",
+      "blocks": [
+        { "type": "description" },
+        { "type": "nutritional_table" },
+        { 
+          "type": "rich_text", 
+          "settings": { "heading": "Ingredients" } 
+        },
+        { 
+          "type": "rich_text", 
+          "settings": { "heading": "Allergic Ingredients" } 
+        },
+        { 
+          "type": "rich_text", 
+          "settings": { "heading": "Shipping" } 
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

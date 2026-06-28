@@ -368,9 +368,21 @@
             <div
               class="product-media-constraint-wrapper">
               {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
+              {% if forloop.first and closest.product.selected_or_first_available_variant.compare_at_price > closest.product.selected_or_first_available_variant.price %}
+                {% assign gallery_discount = closest.product.selected_or_first_available_variant.compare_at_price | minus: closest.product.selected_or_first_available_variant.price %}
+                {% assign gallery_discount_percent = gallery_discount | times: 100.0 | divided_by: closest.product.selected_or_first_available_variant.compare_at_price | round %}
+                <span style="position: absolute; top: 12px; left: 12px; background: #F4C026; color: #000; font-weight: 900; font-size: 13px; padding: 4px 10px; border-radius: 6px; z-index: 2;">{{ gallery_discount_percent }}% OFF</span>
+              {% endif %}
             </div>
           {% else %}
-            {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
+            <div style="position: relative; width: 100%; height: 100%;">
+              {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
+              {% if forloop.first and closest.product.selected_or_first_available_variant.compare_at_price > closest.product.selected_or_first_available_variant.price %}
+                {% assign gallery_discount = closest.product.selected_or_first_available_variant.compare_at_price | minus: closest.product.selected_or_first_available_variant.price %}
+                {% assign gallery_discount_percent = gallery_discount | times: 100.0 | divided_by: closest.product.selected_or_first_available_variant.compare_at_price | round %}
+                <span style="position: absolute; top: 12px; left: 12px; background: #F4C026; color: #000; font-weight: 900; font-size: 13px; padding: 4px 10px; border-radius: 6px; z-index: 2;">{{ gallery_discount_percent }}% OFF</span>
+              {% endif %}
+            </div>
           {% endif %}
         {% endcapture %}
         {% capture class %}
