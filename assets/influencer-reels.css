@@ -6,11 +6,18 @@
   }
 
   .fulva-buzz.fulva-buzz--bg-linear {
-    background: linear-gradient(180deg, var(--fb-bg), var(--fb-bg2));
+    background: linear-gradient(180deg, var(--fb-bg), var(--fb-bg2), var(--fb-bg3));
   }
 
   .fulva-buzz.fulva-buzz--bg-radial {
     background: radial-gradient(circle at 50% 0%, var(--fb-bg) 0%, var(--fb-bg2) 55%, var(--fb-bg3) 100%);
+  }
+
+  .fulva-buzz.fulva-buzz--bg-layered {
+    background: 
+      radial-gradient(ellipse 120% 50% at 50% 25%, var(--fb-bg2) 0%, var(--fb-bg3) 70%, transparent 100%),
+      linear-gradient(180deg, transparent 0%, var(--fb-bg3) 100%),
+      var(--fb-bg);
   }
 
   .fulva-buzz::before,

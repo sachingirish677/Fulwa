@@ -1,0 +1,276 @@
+<style>
+  .product-coupons-{{ block.id }} {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: #D0D0D0 transparent;
+    -webkit-overflow-scrolling: touch;
+  }
+  .product-coupons-{{ block.id }}::-webkit-scrollbar {
+    height: 4px;
+  }
+  .product-coupons-{{ block.id }}::-webkit-scrollbar-thumb {
+    background: #D0D0D0;
+    border-radius: 4px;
+  }
+  .product-coupons-{{ block.id }} .coupon-card {
+    display: flex;
+    align-items: stretch;
+    min-width: 220px;
+    max-width: 260px;
+    border: 1px solid #E8E8E8;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #FFFFFF;
+    flex-shrink: 0;
+  }
+  .product-coupons-{{ block.id }} .coupon-card__badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    background: {{ block.settings.badge_bg | default: '#387B45' }};
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 800;
+    text-align: center;
+    line-height: 1.2;
+    flex-shrink: 0;
+    padding: 8px 4px;
+  }
+  .product-coupons-{{ block.id }} .coupon-card__content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 12px;
+    min-width: 0;
+    flex: 1;
+  }
+  .product-coupons-{{ block.id }} .coupon-card__code {
+    font-size: 13px;
+    font-weight: 800;
+    color: #111111;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .product-coupons-{{ block.id }} .coupon-card__desc {
+    font-size: 10px;
+    color: #777777;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .product-coupons-{{ block.id }} .coupon-card__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 3px 10px;
+    margin-top: 4px;
+    border: 1px solid #387B45;
+    border-radius: 4px;
+    background: transparent;
+    color: #387B45;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    width: fit-content;
+    transition: background 0.2s ease, color 0.2s ease;
+    font-family: var(--font-body--family);
+  }
+  .product-coupons-{{ block.id }} .coupon-card__btn:hover {
+    background: #387B45;
+    color: #FFFFFF;
+  }
+  .product-coupons-{{ block.id }} .coupon-card__btn svg {
+    width: 10px;
+    height: 10px;
+  }
+  .product-coupons-{{ block.id }} .coupon-card__btn--copied {
+    background: #387B45 !important;
+    color: #FFFFFF !important;
+  }
+</style>
+
+<div class="product-coupons-{{ block.id }}" {{ block.shopify_attributes }}>
+  {%- if block.settings.coupon_1_code != blank -%}
+    <div class="coupon-card">
+      <div class="coupon-card__badge">{{ block.settings.coupon_1_value }}</div>
+      <div class="coupon-card__content">
+        <span class="coupon-card__code">{{ block.settings.coupon_1_code }}</span>
+        <span class="coupon-card__desc">{{ block.settings.coupon_1_desc }}</span>
+        <button type="button" class="coupon-card__btn" data-coupon-code="{{ block.settings.coupon_1_code }}" onclick="copyCoupon_{{ block.id | replace: '-', '_' }}(this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          Use Code
+        </button>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if block.settings.coupon_2_code != blank -%}
+    <div class="coupon-card">
+      <div class="coupon-card__badge">{{ block.settings.coupon_2_value }}</div>
+      <div class="coupon-card__content">
+        <span class="coupon-card__code">{{ block.settings.coupon_2_code }}</span>
+        <span class="coupon-card__desc">{{ block.settings.coupon_2_desc }}</span>
+        <button type="button" class="coupon-card__btn" data-coupon-code="{{ block.settings.coupon_2_code }}" onclick="copyCoupon_{{ block.id | replace: '-', '_' }}(this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          Use Code
+        </button>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if block.settings.coupon_3_code != blank -%}
+    <div class="coupon-card">
+      <div class="coupon-card__badge">{{ block.settings.coupon_3_value }}</div>
+      <div class="coupon-card__content">
+        <span class="coupon-card__code">{{ block.settings.coupon_3_code }}</span>
+        <span class="coupon-card__desc">{{ block.settings.coupon_3_desc }}</span>
+        <button type="button" class="coupon-card__btn" data-coupon-code="{{ block.settings.coupon_3_code }}" onclick="copyCoupon_{{ block.id | replace: '-', '_' }}(this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          Use Code
+        </button>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if block.settings.coupon_4_code != blank -%}
+    <div class="coupon-card">
+      <div class="coupon-card__badge">{{ block.settings.coupon_4_value }}</div>
+      <div class="coupon-card__content">
+        <span class="coupon-card__code">{{ block.settings.coupon_4_code }}</span>
+        <span class="coupon-card__desc">{{ block.settings.coupon_4_desc }}</span>
+        <button type="button" class="coupon-card__btn" data-coupon-code="{{ block.settings.coupon_4_code }}" onclick="copyCoupon_{{ block.id | replace: '-', '_' }}(this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          Use Code
+        </button>
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  function copyCoupon_{{ block.id | replace: '-', '_' }}(btn) {
+    var code = btn.getAttribute('data-coupon-code');
+    navigator.clipboard.writeText(code).then(function() {
+      var origText = btn.innerHTML;
+      btn.classList.add('coupon-card__btn--copied');
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!';
+      setTimeout(function() {
+        btn.classList.remove('coupon-card__btn--copied');
+        btn.innerHTML = origText;
+      }, 1500);
+    });
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Product Coupon Codes",
+  "settings": [
+    {
+      "type": "color",
+      "id": "badge_bg",
+      "label": "Badge Background Color",
+      "default": "#387B45"
+    },
+    {
+      "type": "header",
+      "content": "Coupon 1"
+    },
+    {
+      "type": "text",
+      "id": "coupon_1_value",
+      "label": "Discount Value",
+      "default": "Rs. 200"
+    },
+    {
+      "type": "text",
+      "id": "coupon_1_code",
+      "label": "Coupon Code",
+      "default": "LOADEDUP"
+    },
+    {
+      "type": "text",
+      "id": "coupon_1_desc",
+      "label": "Description",
+      "default": "Add 20% off/unlock cart for final savings"
+    },
+    {
+      "type": "header",
+      "content": "Coupon 2"
+    },
+    {
+      "type": "text",
+      "id": "coupon_2_value",
+      "label": "Discount Value",
+      "default": "Rs. 200"
+    },
+    {
+      "type": "text",
+      "id": "coupon_2_code",
+      "label": "Coupon Code",
+      "default": "LOADEDUP"
+    },
+    {
+      "type": "text",
+      "id": "coupon_2_desc",
+      "label": "Description",
+      "default": "Add 20% off/unlock cart for final savings"
+    },
+    {
+      "type": "header",
+      "content": "Coupon 3"
+    },
+    {
+      "type": "text",
+      "id": "coupon_3_value",
+      "label": "Discount Value",
+      "default": "Rs. 200"
+    },
+    {
+      "type": "text",
+      "id": "coupon_3_code",
+      "label": "Coupon Code",
+      "default": "LOADEDUP"
+    },
+    {
+      "type": "text",
+      "id": "coupon_3_desc",
+      "label": "Description",
+      "default": "Add 20% off/unlock cart for final savings"
+    },
+    {
+      "type": "header",
+      "content": "Coupon 4"
+    },
+    {
+      "type": "text",
+      "id": "coupon_4_value",
+      "label": "Discount Value"
+    },
+    {
+      "type": "text",
+      "id": "coupon_4_code",
+      "label": "Coupon Code"
+    },
+    {
+      "type": "text",
+      "id": "coupon_4_desc",
+      "label": "Description"
+    }
+  ],
+  "presets": [
+    { "name": "Product Coupon Codes" }
+  ]
+}
+{% endschema %}

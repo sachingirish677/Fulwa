@@ -39,6 +39,69 @@
   class="buy-buttons-block buy-buttons-block--{{ block.id }}"
   {{ block.shopify_attributes }}
 >
+  <style>
+    .buy-buttons-block--{{ block.id }} .product-form-buttons {
+      display: grid !important;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto auto;
+      gap: 0;
+      row-gap: 0;
+      column-gap: 0;
+    }
+    /* Row 1: Add to Cart full width */
+    .buy-buttons-block--{{ block.id }} .product-form-buttons .add-to-cart-button-wrapper {
+      grid-column: 1 / -1;
+      grid-row: 1;
+    }
+    /* Row 2: "Or" separator */
+    .buy-buttons-block--{{ block.id }} .buy-buttons-or-separator {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      text-align: center;
+      font-size: 13px;
+      color: #999999;
+      padding: 6px 0;
+    }
+    /* Row 3: Quantity + Buy Now side by side */
+    .buy-buttons-block--{{ block.id }} .product-form-buttons .quantity-selector-wrapper {
+      grid-column: 1;
+      grid-row: 3;
+    }
+    .buy-buttons-block--{{ block.id }} .accelerated-checkout-block-wrapper {
+      grid-column: 2;
+      grid-row: 3;
+    }
+    /* Add to Cart: green outline, flat corners */
+    .buy-buttons-block--{{ block.id }} .add-to-cart-button {
+      background: transparent !important;
+      color: #387B45 !important;
+      border: 1.5px solid #387B45 !important;
+      border-radius: 6px !important;
+    }
+    .buy-buttons-block--{{ block.id }} .add-to-cart-button:hover {
+      background: #F5F9F6 !important;
+    }
+    /* Buy Now: yellow, flat corners */
+    .buy-buttons-block--{{ block.id }} .shopify-payment-button__button--unbranded {
+      background-color: #F4C026 !important;
+      color: #333333 !important;
+      border-radius: 0 6px 6px 0 !important;
+      font-weight: 700 !important;
+      transition: background-color 0.2s ease !important;
+    }
+    .buy-buttons-block--{{ block.id }} .shopify-payment-button__button--unbranded:hover {
+      background-color: #D38E22 !important;
+    }
+    /* Quantity selector: flat right edge to butt against Buy Now */
+    .buy-buttons-block--{{ block.id }} .quantity-selector {
+      border-radius: 6px 0 0 6px !important;
+      border-right: none !important;
+    }
+    /* Hide standard quantity label */
+    .buy-buttons-block--{{ block.id }} .quantity-label {
+      display: none !important;
+    }
+  </style>
   {%- if product != blank -%}
     {%- assign product_form_id = 'BuyButtons-ProductForm-' | append: section.id -%}
     <product-form-component
@@ -106,7 +169,9 @@
             </div>
           {%- endif -%}
 
+          <div class="quantity-selector-wrapper">
           {% content_for 'block', type: 'quantity', id: 'quantity' %}
+          </div>
 
           {%- if has_quantity_rules -%}
             <div
@@ -217,19 +282,25 @@
               </div>
             </volume-pricing>
           {%- endif -%}
+          <div class="add-to-cart-button-wrapper">
           {% content_for 'block',
             type: 'add-to-cart',
             id: 'add-to-cart',
             can_add_to_cart: can_add_to_cart,
             add_to_cart_text: add_to_cart_text
           %}
+          </div>
 
+          <div class="buy-buttons-or-separator">Or</div>
+
+          <div class="accelerated-checkout-block-wrapper">
           {% content_for 'block',
             type: 'accelerated-checkout',
             id: 'accelerated-checkout',
             can_add_to_cart: can_add_to_cart,
             form_obj: form
           %}
+          </div>
         </div>
         {%- if block_settings.gift_card_form and product.gift_card? -%}
           </span>

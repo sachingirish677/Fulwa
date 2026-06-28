@@ -1,0 +1,386 @@
+{%- style -%}
+  .why-choose--{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    font-family: var(--font-body-family, inherit);
+  }
+  
+  .why-choose--{{ section.id }} .why-choose__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .why-choose--{{ section.id }} .why-choose__header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .why-choose--{{ section.id }} .why-choose__title {
+    font-size: 36px;
+    font-weight: 800;
+    color: #101010;
+    margin-bottom: 24px;
+    font-family: var(--font-heading-family, inherit);
+  }
+  
+  .why-choose--{{ section.id }} .why-choose__title-highlight {
+    color: {{ section.settings.highlight_color }};
+  }
+  
+  .why-choose--{{ section.id }} .why-choose__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #387B45;
+    color: #FFFFFF;
+    padding: 14px 28px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    transition: opacity 0.2s;
+  }
+  
+  .why-choose--{{ section.id }} .why-choose__btn:hover {
+    opacity: 0.9;
+  }
+  
+  .why-choose--{{ section.id }} .why-choose__tags-wrapper {
+    margin-bottom: 40px;
+    border-top: 1px dashed rgba(0,0,0,0.1);
+    border-bottom: 1px dashed rgba(0,0,0,0.1);
+    padding: 24px 0;
+  }
+  
+  .why-choose--{{ section.id }} .why-choose__tags-subheading {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #387B45;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  
+  .why-choose--{{ section.id }} .why-choose__tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+  
+  .why-choose--{{ section.id }} .why-choose__tag {
+    background: #FFFFFF;
+    border: 1px solid #EBEBEB;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #333333;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  }
+
+  .why-choose--{{ section.id }} .why-choose__cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  
+  .why-choose--{{ section.id }} .why-choose__card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+    border: 1px solid #F0F0F0;
+  }
+  
+  .why-choose--{{ section.id }} .why-choose__card-icon-wrapper {
+    width: 54px;
+    height: 54px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .why-choose--{{ section.id }} .why-choose__card-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+  
+  .why-choose--{{ section.id }} .why-choose__card-icon-placeholder {
+    width: 28px;
+    height: 28px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 4px;
+  }
+  
+  .why-choose--{{ section.id }} .why-choose__card-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #101010;
+    margin: 0 0 8px 0;
+  }
+  
+  .why-choose--{{ section.id }} .why-choose__card-text {
+    font-size: 13px;
+    color: #707070;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  @media (max-width: 989px) {
+    .why-choose--{{ section.id }} .why-choose__cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 749px) {
+    .why-choose--{{ section.id }} {
+      padding-top: {{ section.settings.padding_top | divided_by: 1.5 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | divided_by: 1.5 }}px;
+    }
+    
+    .why-choose--{{ section.id }} .why-choose__header {
+      text-align: left;
+    }
+    
+    .why-choose--{{ section.id }} .why-choose__title {
+      font-size: 28px;
+    }
+    
+    .why-choose--{{ section.id }} .why-choose__tags-wrapper {
+      border: none;
+      padding: 16px 0;
+    }
+    
+    .why-choose--{{ section.id }} .why-choose__tags-subheading {
+      text-align: left;
+    }
+    
+    .why-choose--{{ section.id }} .why-choose__tags {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin: 0 -20px;
+      padding-left: 20px;
+      padding-right: 20px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    
+    .why-choose--{{ section.id }} .why-choose__tags::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .why-choose--{{ section.id }} .why-choose__tags::after {
+      content: '';
+      flex: 0 0 1px;
+    }
+    
+    .why-choose--{{ section.id }} .why-choose__card {
+      padding: 20px;
+    }
+    
+    .why-choose--{{ section.id }} .why-choose__cards {
+      gap: 12px;
+    }
+    
+    .why-choose--{{ section.id }} .why-choose__card-icon-wrapper {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 16px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="why-choose why-choose--{{ section.id }}">
+  <div class="why-choose__inner">
+    
+    <div class="why-choose__header">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="why-choose__title">
+          {{ section.settings.heading }} 
+          {% if section.settings.heading_highlight != blank %}
+            <span class="why-choose__title-highlight">{{ section.settings.heading_highlight }}</span>
+          {% endif %}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.btn_label != blank -%}
+        <a href="{{ section.settings.btn_link }}" class="why-choose__btn">
+          {{ section.settings.btn_label }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="why-choose__tags-wrapper">
+      {%- if section.settings.subheading != blank -%}
+        <div class="why-choose__tags-subheading">{{ section.settings.subheading }}</div>
+      {%- endif -%}
+      
+      <div class="why-choose__tags">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'tag' -%}
+            <div class="why-choose__tag" {{ block.shopify_attributes }}>
+              {{ block.settings.title }}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="why-choose__cards">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'card' -%}
+          <div class="why-choose__card" {{ block.shopify_attributes }}>
+            <div class="why-choose__card-icon-wrapper" style="background-color: {{ block.settings.icon_bg }};">
+              {%- if block.settings.icon != blank -%}
+                <img src="{{ block.settings.icon | img_url: 'master' }}" alt="{{ block.settings.icon.alt | escape }}" class="why-choose__card-icon" loading="lazy">
+              {%- else -%}
+                <div class="why-choose__card-icon-placeholder"></div>
+              {%- endif -%}
+            </div>
+            {%- if block.settings.title != blank -%}
+              <h3 class="why-choose__card-title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="why-choose__card-text">{{ block.settings.text }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Why Choose",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F7F9F7"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Choose"
+    },
+    {
+      "type": "text",
+      "id": "heading_highlight",
+      "label": "Heading Highlight Word",
+      "default": "Fulva"
+    },
+    {
+      "type": "color",
+      "id": "highlight_color",
+      "label": "Highlight Color",
+      "default": "#1B5E20"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Button Label",
+      "default": "View Brochure"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading (Tags)",
+      "default": "PERFECT FOR ALL OCCASIONS"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tag",
+      "name": "Occasion Tag",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tag Text",
+          "default": "Eid & Ramzan"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "name": "Feature Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon Image"
+        },
+        {
+          "type": "color",
+          "id": "icon_bg",
+          "label": "Icon Background Color",
+          "default": "#E8F5E9"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Custom Branding"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Fully customisable boxes with custom greeting cards"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why Choose",
+      "blocks": [
+        { "type": "tag" },
+        { "type": "tag" },
+        { "type": "tag" },
+        { "type": "card" },
+        { "type": "card" },
+        { "type": "card" },
+        { "type": "card" }
+      ]
+    }
+  ]
+}
+{% endschema %}

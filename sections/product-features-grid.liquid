@@ -1,0 +1,324 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .pf-container-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .pf-top-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .pf-top-left-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pf-top-right-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .pf-bottom-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .pf-bottom-item-{{ section.id }} {
+    aspect-ratio: 16 / 10;
+    width: 100%;
+  }
+
+  /* Protect text on left and right images by anchoring crop to the left edge */
+  .pf-bottom-item-{{ section.id }}:nth-child(1) .pf-item img,
+  .pf-bottom-item-{{ section.id }}:nth-child(3) .pf-item img {
+    object-position: left center;
+  }
+
+
+  .pf-item {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .pf-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 8px; /* Optional subtle radius */
+  }
+
+  /* Desktop Flexbox Configuration */
+  @media screen and (min-width: 750px) {
+    .pf-container-{{ section.id }} {
+      padding: 0 32px;
+    }
+    
+    .pf-top-{{ section.id }} {
+      flex-direction: row;
+      align-items: stretch;
+    }
+    
+    .pf-top-left-{{ section.id }} {
+      flex: 2;
+      min-width: 0;
+    }
+    
+    .pf-top-left-{{ section.id }} .pf-item {
+      height: 100%;
+    }
+    
+    .pf-top-right-{{ section.id }} {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .pf-top-right-{{ section.id }} .pf-item {
+      flex: 1;
+      height: 100%;
+    }
+
+    .pf-bottom-{{ section.id }} {
+      flex-direction: row;
+      align-items: stretch;
+    }
+
+    .pf-bottom-item-{{ section.id }} {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+  <div class="pf-container-{{ section.id }}">
+    
+    <div class="pf-top-{{ section.id }}">
+      <div class="pf-top-left-{{ section.id }}">
+        {%- if section.settings.image_1 != blank -%}
+          {%- if section.settings.link_1 != blank -%}<a href="{{ section.settings.link_1 }}" class="pf-item">{%- else -%}<div class="pf-item">{%- endif -%}
+          {{ section.settings.image_1 | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 66vw, 100vw', widths: '375, 550, 750, 1100, 1500' }}
+          {%- if section.settings.link_1 != blank -%}</a>{%- else -%}</div>{%- endif -%}
+        {%- endif -%}
+      </div>
+      
+      <div class="pf-top-right-{{ section.id }}">
+        {%- if section.settings.image_2 != blank -%}
+          {%- if section.settings.link_2 != blank -%}<a href="{{ section.settings.link_2 }}" class="pf-item">{%- else -%}<div class="pf-item">{%- endif -%}
+          {{ section.settings.image_2 | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 33vw, 100vw', widths: '375, 550, 750, 1100' }}
+          {%- if section.settings.link_2 != blank -%}</a>{%- else -%}</div>{%- endif -%}
+        {%- endif -%}
+        
+        {%- if section.settings.image_3 != blank -%}
+          {%- if section.settings.link_3 != blank -%}<a href="{{ section.settings.link_3 }}" class="pf-item">{%- else -%}<div class="pf-item">{%- endif -%}
+          {{ section.settings.image_3 | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 33vw, 100vw', widths: '375, 550, 750, 1100' }}
+          {%- if section.settings.link_3 != blank -%}</a>{%- else -%}</div>{%- endif -%}
+        {%- endif -%}
+        
+        {%- if section.settings.image_4 != blank -%}
+          {%- if section.settings.link_4 != blank -%}<a href="{{ section.settings.link_4 }}" class="pf-item">{%- else -%}<div class="pf-item">{%- endif -%}
+          {{ section.settings.image_4 | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 33vw, 100vw', widths: '375, 550, 750, 1100' }}
+          {%- if section.settings.link_4 != blank -%}</a>{%- else -%}</div>{%- endif -%}
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="pf-bottom-{{ section.id }}">
+      <div class="pf-bottom-item-{{ section.id }}">
+        {%- if section.settings.image_5 != blank -%}
+          {%- if section.settings.link_5 != blank -%}<a href="{{ section.settings.link_5 }}" class="pf-item">{%- else -%}<div class="pf-item">{%- endif -%}
+          {{ section.settings.image_5 | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 33vw, 100vw', widths: '375, 550, 750, 1100' }}
+          {%- if section.settings.link_5 != blank -%}</a>{%- else -%}</div>{%- endif -%}
+        {%- endif -%}
+      </div>
+      
+      <div class="pf-bottom-item-{{ section.id }}">
+        {%- if section.settings.image_6 != blank -%}
+          {%- if section.settings.link_6 != blank -%}<a href="{{ section.settings.link_6 }}" class="pf-item">{%- else -%}<div class="pf-item">{%- endif -%}
+          {{ section.settings.image_6 | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 33vw, 100vw', widths: '375, 550, 750, 1100' }}
+          {%- if section.settings.link_6 != blank -%}</a>{%- else -%}</div>{%- endif -%}
+        {%- endif -%}
+      </div>
+      
+      <div class="pf-bottom-item-{{ section.id }}">
+        {%- if section.settings.image_7 != blank -%}
+          {%- if section.settings.link_7 != blank -%}<a href="{{ section.settings.link_7 }}" class="pf-item">{%- else -%}<div class="pf-item">{%- endif -%}
+          {{ section.settings.image_7 | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 33vw, 100vw', widths: '375, 550, 750, 1100' }}
+          {%- if section.settings.link_7 != blank -%}</a>{%- else -%}</div>{%- endif -%}
+        {%- endif -%}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product Features Grid",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Image 1 (Main Hero)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image 1",
+      "info": "Desktop: Spans left 2 columns"
+    },
+    {
+      "type": "url",
+      "id": "link_1",
+      "label": "Link 1"
+    },
+    {
+      "type": "header",
+      "content": "Image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image 2",
+      "info": "Desktop: Top right"
+    },
+    {
+      "type": "url",
+      "id": "link_2",
+      "label": "Link 2"
+    },
+    {
+      "type": "header",
+      "content": "Image 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Image 3",
+      "info": "Desktop: Middle right"
+    },
+    {
+      "type": "url",
+      "id": "link_3",
+      "label": "Link 3"
+    },
+    {
+      "type": "header",
+      "content": "Image 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_4",
+      "label": "Image 4",
+      "info": "Desktop: Bottom right (above bottom row)"
+    },
+    {
+      "type": "url",
+      "id": "link_4",
+      "label": "Link 4"
+    },
+    {
+      "type": "header",
+      "content": "Image 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_5",
+      "label": "Image 5",
+      "info": "Desktop: Bottom row, left"
+    },
+    {
+      "type": "url",
+      "id": "link_5",
+      "label": "Link 5"
+    },
+    {
+      "type": "header",
+      "content": "Image 6"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_6",
+      "label": "Image 6",
+      "info": "Desktop: Bottom row, middle"
+    },
+    {
+      "type": "url",
+      "id": "link_6",
+      "label": "Link 6"
+    },
+    {
+      "type": "header",
+      "content": "Image 7"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_7",
+      "label": "Image 7",
+      "info": "Desktop: Bottom row, right"
+    },
+    {
+      "type": "url",
+      "id": "link_7",
+      "label": "Link 7"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Features Grid"
+    }
+  ]
+}
+{% endschema %}

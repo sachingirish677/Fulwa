@@ -116,9 +116,9 @@
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
-                    "type_preset": "h3",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
+                    "type_preset": "custom",
+                    "font": "var(--font-heading--family)",
+                    "font_size": "2rem",
                     "line_height": "normal",
                     "letter_spacing": "normal",
                     "case": "none",
@@ -215,40 +215,30 @@
                   "block_order": [
                     "price_tVjtKg"
                   ]
+                },
+                "eyebrow": {
+                  "type": "product-eyebrow"
+                },
+                "sold_tag": {
+                  "type": "product-sold-tag"
+                },
+                "share_btn": {
+                  "type": "product-share"
+                },
+                "tax_notice": {
+                  "type": "product-tax-notice"
                 }
               },
               "block_order": [
+                "eyebrow",
                 "text_xrnftG",
                 "judge_me_reviews_preview_badge_aRBR8Q",
                 "review_stars",
-                "group_price_row"
+                "sold_tag",
+                "group_price_row",
+                "share_btn",
+                "tax_notice"
               ]
-            },
-            "text_TA337B": {
-              "type": "text",
-              "name": "t:names.text",
-              "settings": {
-                "text": "{{ closest.product.metafields.custom.product_info | metafield_tag }}",
-                "width": "100%",
-                "max_width": "none",
-                "alignment": "left",
-                "type_preset": "custom",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "loose",
-                "letter_spacing": "loose",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
             },
             "divider_VJhene": {
               "type": "_divider",
@@ -308,14 +298,32 @@
                 }
               },
               "block_order": []
+            },
+            "info_badges": {
+              "type": "product-info-badges"
+            },
+            "tiered_offers": {
+              "type": "product-tiered-offers"
+            },
+            "coupon_codes": {
+              "type": "product-coupon-codes"
+            },
+            "trust_badges": {
+              "type": "product-trust-badges"
+            },
+            "divider": {
+              "type": "_divider"
             }
           },
           "block_order": [
             "group_icgrde",
-            "text_TA337B",
+            "info_badges",
             "divider_VJhene",
+            "coupon_codes",
+            "tiered_offers",
             "variant_picker_R3rGDr",
-            "buy_buttons_eYQEYi"
+            "buy_buttons_eYQEYi",
+            "trust_badges"
           ]
         }
       },
@@ -572,10 +580,47 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "product_nutrition_accordion": {
+      "type": "product-nutrition-accordion",
+      "blocks": {
+        "description": {
+          "type": "description"
+        },
+        "nutritional_table": {
+          "type": "nutritional_table"
+        },
+        "ingredients": {
+          "type": "rich_text",
+          "settings": {
+            "heading": "Ingredients"
+          }
+        },
+        "allergic": {
+          "type": "rich_text",
+          "settings": {
+            "heading": "Allergic Ingredients"
+          }
+        },
+        "shipping": {
+          "type": "rich_text",
+          "settings": {
+            "heading": "Shipping"
+          }
+        }
+      },
+      "block_order": [
+        "description",
+        "nutritional_table",
+        "ingredients",
+        "allergic",
+        "shipping"
+      ]
     }
   },
   "order": [
     "main",
+    "product_nutrition_accordion",
     "product_recommendations_qggXJq",
     "1779547595d87537de",
     "177954790461b1192b"

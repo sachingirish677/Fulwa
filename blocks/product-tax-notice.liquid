@@ -1,0 +1,35 @@
+<style>
+  .product-tax-notice-{{ block.id }} {
+    font-size: 12px;
+    color: {{ block.settings.color }};
+    line-height: 1.5;
+    font-family: var(--font-body--family);
+  }
+</style>
+
+<div class="product-tax-notice-{{ block.id }}" {{ block.shopify_attributes }}>
+  {{ block.settings.text }}
+</div>
+
+{% schema %}
+{
+  "name": "Product Tax Notice",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Notice Text",
+      "default": "Inclusive of all taxes · Free delivery on this order"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Text Color",
+      "default": "#888888"
+    }
+  ],
+  "presets": [
+    { "name": "Product Tax Notice" }
+  ]
+}
+{% endschema %}

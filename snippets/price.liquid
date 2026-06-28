@@ -113,11 +113,21 @@
         <span class="price-item__group">
           <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
           <span class="price-item--regular compare-at-price">{{- compare_at_price -}}</span>
+          {% if product_resource.selected_or_first_available_variant.compare_at_price > product_resource.selected_or_first_available_variant.price %}
+            {% assign discount_amount = product_resource.selected_or_first_available_variant.compare_at_price | minus: product_resource.selected_or_first_available_variant.price %}
+            {% assign discount_percentage = discount_amount | times: 100.0 | divided_by: product_resource.selected_or_first_available_variant.compare_at_price | round %}
+            <span class="price-save-badge">SAVE {{ discount_percentage }}%</span>
+          {% endif %}
         </span>
       {% else %}
         <span class="price-item__group">
           <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
           <span class="price-item--regular compare-at-price">{{- compare_at_price -}}</span>
+          {% if product_resource.selected_or_first_available_variant.compare_at_price > product_resource.selected_or_first_available_variant.price %}
+            {% assign discount_amount = product_resource.selected_or_first_available_variant.compare_at_price | minus: product_resource.selected_or_first_available_variant.price %}
+            {% assign discount_percentage = discount_amount | times: 100.0 | divided_by: product_resource.selected_or_first_available_variant.compare_at_price | round %}
+            <span class="price-save-badge">SAVE {{ discount_percentage }}%</span>
+          {% endif %}
         </span>
         <span class="price-item__group">
           <span class="visually-hidden">{{ 'content.price_sale' | t }}&nbsp;</span>
