@@ -53,6 +53,33 @@
     show_sale_price_first: block_settings.show_sale_price_first
   %}
 
+  <style>
+    .text-block[data-block-id="{{ block.id }}"] .price-item--sale {
+      color: {{ block_settings.color | default: '#387B45' }};
+      font-weight: 800;
+      font-size: clamp(24px, 4vw, 28px);
+      letter-spacing: -1px;
+    }
+    .text-block[data-block-id="{{ block.id }}"] .price__regular .price {
+      color: {{ block_settings.color | default: '#387B45' }};
+      font-weight: 800;
+      font-size: clamp(24px, 4vw, 28px);
+      letter-spacing: -1px;
+    }
+    .text-block[data-block-id="{{ block.id }}"] .price-save-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      background: #F4C026;
+      color: #333333;
+      font-size: 11px;
+      font-weight: 800;
+      border-radius: 6px;
+      white-space: nowrap;
+      margin-left: 8px;
+    }
+  </style>
+
   {% if block_settings.show_tax_info %}
     <div class="tax-note">
       {%- if cart.duties_included and cart.taxes_included -%}

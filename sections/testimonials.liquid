@@ -4,6 +4,7 @@
   assign shadow_alpha = section.settings.shadow_opacity | times: 0.01
 
   assign testimonial_blocks = section.blocks | where: 'type', 'testimonial'
+  assign logo_blocks = section.blocks | where: 'type', 'logo_row'
 %}
 
 <section
@@ -11,6 +12,10 @@
   aria-label="{{ section.settings.aria_label | escape }}"
   style="
     --ft-bg: {{ section.settings.background }};
+    --ft-bg-g1: {{ section.settings.bg_gradient_1 }};
+    --ft-bg-g2: {{ section.settings.bg_gradient_2 }};
+    --ft-bg-g3: {{ section.settings.bg_gradient_3 }};
+    --ft-bg-edge: {% if section.settings.use_gradient_bg %}{{ section.settings.bg_gradient_2 }}{% else %}{{ section.settings.background }}{% endif %};
     --ft-text: {{ section.settings.text_color }};
     --ft-muted: {{ section.settings.muted_text_color }};
     --ft-accent: {{ section.settings.accent_color }};
@@ -28,6 +33,12 @@
     --ft-radius: {{ section.settings.radius }}px;
     --ft-card-min: {{ section.settings.card_min_width }}px;
     --ft-cols: {{ section.settings.cards_per_view_desktop }};
+    --ft-logo-gap: {{ section.settings.logo_row_gap }}px;
+    --ft-logo-card-bg: {{ section.settings.logo_card_bg }};
+    --ft-logo-card-border: {{ section.settings.logo_card_border }};
+    --ft-logo-card-radius: {{ section.settings.logo_card_radius }}px;
+    --ft-logo-h: {{ section.settings.logo_card_height }}px;
+    --ft-logo-h-m: {{ section.settings.logo_card_height_mobile }}px;
   "
 >
   <div class="fulva-testimonials__inner">
@@ -56,6 +67,89 @@
         </div>
       {% endif %}
     </header>
+
+    {%- if logo_blocks.size > 0 -%}
+      <div class="fulva-testimonials__logos">
+        {%- for block in logo_blocks -%}
+          {%- assign logo_count = 0 -%}
+          {%- if block.settings.logo_1 != blank -%}{%- assign logo_count = logo_count | plus: 1 -%}{%- endif -%}
+          {%- if block.settings.logo_2 != blank -%}{%- assign logo_count = logo_count | plus: 1 -%}{%- endif -%}
+          {%- if block.settings.logo_3 != blank -%}{%- assign logo_count = logo_count | plus: 1 -%}{%- endif -%}
+          {%- if block.settings.logo_4 != blank -%}{%- assign logo_count = logo_count | plus: 1 -%}{%- endif -%}
+          {%- if block.settings.logo_5 != blank -%}{%- assign logo_count = logo_count | plus: 1 -%}{%- endif -%}
+          {%- if block.settings.logo_6 != blank -%}{%- assign logo_count = logo_count | plus: 1 -%}{%- endif -%}
+          {%- if block.settings.logo_7 != blank -%}{%- assign logo_count = logo_count | plus: 1 -%}{%- endif -%}
+          {%- if block.settings.logo_8 != blank -%}{%- assign logo_count = logo_count | plus: 1 -%}{%- endif -%}
+          {%- if block.settings.logo_9 != blank -%}{%- assign logo_count = logo_count | plus: 1 -%}{%- endif -%}
+          {%- if block.settings.logo_10 != blank -%}{%- assign logo_count = logo_count | plus: 1 -%}{%- endif -%}
+
+          {%- if logo_count > 0 -%}
+            <div
+              class="fulva-testimonials__logo-row"
+              style="--ft-logo-speed: {{ block.settings.speed }}s;"
+              {{ block.shopify_attributes }}
+            >
+              <div class="fulva-testimonials__logo-track{% if block.settings.scroll_direction == 'right' %} fulva-testimonials__logo-track--right{% endif %}">
+                {%- for copy in (1..2) -%}
+                  <div class="fulva-testimonials__logo-group" {% if copy == 2 %}aria-hidden="true"{% endif %}>
+                    {%- if block.settings.logo_1 != blank -%}
+                      <div class="fulva-testimonials__logo-item">
+                        <img src="{{ block.settings.logo_1 | image_url: width: 200 }}" alt="{{ block.settings.logo_1.alt | escape }}" loading="lazy" decoding="async">
+                      </div>
+                    {%- endif -%}
+                    {%- if block.settings.logo_2 != blank -%}
+                      <div class="fulva-testimonials__logo-item">
+                        <img src="{{ block.settings.logo_2 | image_url: width: 200 }}" alt="{{ block.settings.logo_2.alt | escape }}" loading="lazy" decoding="async">
+                      </div>
+                    {%- endif -%}
+                    {%- if block.settings.logo_3 != blank -%}
+                      <div class="fulva-testimonials__logo-item">
+                        <img src="{{ block.settings.logo_3 | image_url: width: 200 }}" alt="{{ block.settings.logo_3.alt | escape }}" loading="lazy" decoding="async">
+                      </div>
+                    {%- endif -%}
+                    {%- if block.settings.logo_4 != blank -%}
+                      <div class="fulva-testimonials__logo-item">
+                        <img src="{{ block.settings.logo_4 | image_url: width: 200 }}" alt="{{ block.settings.logo_4.alt | escape }}" loading="lazy" decoding="async">
+                      </div>
+                    {%- endif -%}
+                    {%- if block.settings.logo_5 != blank -%}
+                      <div class="fulva-testimonials__logo-item">
+                        <img src="{{ block.settings.logo_5 | image_url: width: 200 }}" alt="{{ block.settings.logo_5.alt | escape }}" loading="lazy" decoding="async">
+                      </div>
+                    {%- endif -%}
+                    {%- if block.settings.logo_6 != blank -%}
+                      <div class="fulva-testimonials__logo-item">
+                        <img src="{{ block.settings.logo_6 | image_url: width: 200 }}" alt="{{ block.settings.logo_6.alt | escape }}" loading="lazy" decoding="async">
+                      </div>
+                    {%- endif -%}
+                    {%- if block.settings.logo_7 != blank -%}
+                      <div class="fulva-testimonials__logo-item">
+                        <img src="{{ block.settings.logo_7 | image_url: width: 200 }}" alt="{{ block.settings.logo_7.alt | escape }}" loading="lazy" decoding="async">
+                      </div>
+                    {%- endif -%}
+                    {%- if block.settings.logo_8 != blank -%}
+                      <div class="fulva-testimonials__logo-item">
+                        <img src="{{ block.settings.logo_8 | image_url: width: 200 }}" alt="{{ block.settings.logo_8.alt | escape }}" loading="lazy" decoding="async">
+                      </div>
+                    {%- endif -%}
+                    {%- if block.settings.logo_9 != blank -%}
+                      <div class="fulva-testimonials__logo-item">
+                        <img src="{{ block.settings.logo_9 | image_url: width: 200 }}" alt="{{ block.settings.logo_9.alt | escape }}" loading="lazy" decoding="async">
+                      </div>
+                    {%- endif -%}
+                    {%- if block.settings.logo_10 != blank -%}
+                      <div class="fulva-testimonials__logo-item">
+                        <img src="{{ block.settings.logo_10 | image_url: width: 200 }}" alt="{{ block.settings.logo_10.alt | escape }}" loading="lazy" decoding="async">
+                      </div>
+                    {%- endif -%}
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
 
     <div class="fulva-testimonials__wrap">
       {% if section.settings.show_arrows %}
@@ -155,7 +249,14 @@
 
 <style>
   .fulva-testimonials--{{ section.id }} {
-    background: var(--ft-bg);
+    {% if section.settings.use_gradient_bg %}
+      background: 
+        radial-gradient(ellipse 120% 50% at 50% 25%, var(--ft-bg-g2) 0%, var(--ft-bg-g3) 70%, transparent 100%),
+        linear-gradient(180deg, transparent 0%, var(--ft-bg-g3) 100%),
+        var(--ft-bg-g1);
+    {% else %}
+      background: var(--ft-bg);
+    {% endif %}
     color: var(--ft-text);
     font-family: var(--font-body-family, inherit);
   }
@@ -462,7 +563,7 @@
     }
   }
 
-  @media (max-width: 749px) {
+   @media (max-width: 749px) {
     .fulva-testimonials--{{ section.id }}.fulva-testimonials--hide-mobile {
       display: none;
     }
@@ -471,6 +572,144 @@
   @media (min-width: 750px) {
     .fulva-testimonials--{{ section.id }}.fulva-testimonials--hide-desktop {
       display: none;
+    }
+  }
+
+  /* ---- Logo Marquee ---- */
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__logos {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--ft-logo-gap, 12px);
+    margin-top: 20px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-row {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-row::before,
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-row::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 60px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-row::before {
+    left: 0;
+    background: linear-gradient(to right, var(--ft-bg-edge, #f5f6f2), transparent);
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-row::after {
+    right: 0;
+    background: linear-gradient(to left, var(--ft-bg-edge, #f5f6f2), transparent);
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-track {
+    display: flex;
+    width: max-content;
+    animation: ft-scroll-left var(--ft-logo-speed, 20s) linear infinite;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-track--right {
+    animation-name: ft-scroll-right;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-right: 16px;
+    flex-shrink: 0;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--ft-logo-h, 56px);
+    padding: 8px 18px;
+    background: var(--ft-logo-card-bg, #fff);
+    border: 1px solid var(--ft-logo-card-border, #e0e0e0);
+    border-radius: var(--ft-logo-card-radius, 8px);
+    flex-shrink: 0;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-item:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-item img {
+    display: block;
+    height: 100%;
+    width: auto;
+    max-width: 120px;
+    object-fit: contain;
+  }
+
+  @keyframes ft-scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes ft-scroll-right {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
+  .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-row:hover .fulva-testimonials__logo-track {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-track {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 989px) {
+    .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-item {
+      padding: 6px 14px;
+    }
+    .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-item img {
+      max-width: 100px;
+    }
+    .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-row::before,
+    .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-row::after {
+      width: 40px;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .fulva-testimonials--{{ section.id }} .fulva-testimonials__logos {
+      margin-top: 16px;
+      gap: calc(var(--ft-logo-gap, 12px) * 0.75);
+    }
+    .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-item {
+      height: var(--ft-logo-h-m, 40px);
+      padding: 5px 12px;
+      border-radius: calc(var(--ft-logo-card-radius, 8px) * 0.75);
+    }
+    .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-item img {
+      max-width: 80px;
+    }
+    .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-group {
+      gap: 10px;
+      padding-right: 10px;
+    }
+    .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-row::before,
+    .fulva-testimonials--{{ section.id }} .fulva-testimonials__logo-row::after {
+      width: 24px;
     }
   }
 </style>
@@ -563,6 +802,10 @@
 
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "background", "label": "Background", "default": "#F5F6F2" },
+    { "type": "checkbox", "id": "use_gradient_bg", "label": "Use gradient background", "default": false },
+    { "type": "color", "id": "bg_gradient_1", "label": "Base Color", "default": "#F5F6F2" },
+    { "type": "color", "id": "bg_gradient_2", "label": "Radial Highlight Color", "default": "#F5F6F2" },
+    { "type": "color", "id": "bg_gradient_3", "label": "Gradient Accent Color", "default": "#F5F6F2" },
     { "type": "color", "id": "text_color", "label": "Text", "default": "#101010" },
     { "type": "color", "id": "muted_text_color", "label": "Muted text", "default": "#6B6B6B" },
     { "type": "color", "id": "accent_color", "label": "Accent", "default": "#F4C026" },
@@ -574,6 +817,14 @@
     { "type": "range", "id": "card_border_opacity", "label": "Card border opacity (%)", "min": 0, "max": 30, "step": 1, "default": 6 },
     { "type": "color", "id": "shadow_color", "label": "Shadow color", "default": "#000000" },
     { "type": "range", "id": "shadow_opacity", "label": "Shadow opacity (%)", "min": 0, "max": 24, "step": 1, "default": 6 },
+
+    { "type": "header", "content": "Logo Marquee" },
+    { "type": "range", "id": "logo_row_gap", "label": "Logo row gap (px)", "min": 4, "max": 24, "step": 2, "default": 12, "unit": "px" },
+    { "type": "color", "id": "logo_card_bg", "label": "Logo card background", "default": "#FFFFFF" },
+    { "type": "color", "id": "logo_card_border", "label": "Logo card border", "default": "#E0E0E0" },
+    { "type": "range", "id": "logo_card_radius", "label": "Logo card radius (px)", "min": 0, "max": 16, "step": 1, "default": 8, "unit": "px" },
+    { "type": "range", "id": "logo_card_height", "label": "Logo card height desktop (px)", "min": 40, "max": 80, "step": 2, "default": 56, "unit": "px" },
+    { "type": "range", "id": "logo_card_height_mobile", "label": "Logo card height mobile (px)", "min": 30, "max": 60, "step": 2, "default": 40, "unit": "px" },
 
     { "type": "header", "content": "Visibility" },
     { "type": "checkbox", "id": "hide_on_mobile", "label": "Hide on mobile", "default": false },
@@ -592,6 +843,43 @@
         { "type": "text", "id": "name", "label": "Name", "default": "Priyanka" },
         { "type": "text", "id": "meta", "label": "Meta (optional)", "default": "Repeat customer" },
         { "type": "checkbox", "id": "verified", "label": "Show verified tick", "default": true }
+      ]
+    },
+    {
+      "type": "logo_row",
+      "name": "Logo Row",
+      "settings": [
+        { "type": "header", "content": "Logos (up to 10)" },
+        { "type": "image_picker", "id": "logo_1", "label": "Logo 1" },
+        { "type": "image_picker", "id": "logo_2", "label": "Logo 2" },
+        { "type": "image_picker", "id": "logo_3", "label": "Logo 3" },
+        { "type": "image_picker", "id": "logo_4", "label": "Logo 4" },
+        { "type": "image_picker", "id": "logo_5", "label": "Logo 5" },
+        { "type": "image_picker", "id": "logo_6", "label": "Logo 6" },
+        { "type": "image_picker", "id": "logo_7", "label": "Logo 7" },
+        { "type": "image_picker", "id": "logo_8", "label": "Logo 8" },
+        { "type": "image_picker", "id": "logo_9", "label": "Logo 9" },
+        { "type": "image_picker", "id": "logo_10", "label": "Logo 10" },
+        { "type": "header", "content": "Animation" },
+        {
+          "type": "select",
+          "id": "scroll_direction",
+          "label": "Scroll direction",
+          "default": "left",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "speed",
+          "label": "Speed (seconds)",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 20
+        }
       ]
     }
   ],

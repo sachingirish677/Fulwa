@@ -1,0 +1,454 @@
+<style>
+  .product-tiered-offers-{{ block.id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-family: var(--font-body--family);
+  }
+  .product-tiered-offers-{{ block.id }} .tiered-offer {
+    display: flex;
+    align-items: stretch;
+    border: 1px solid #E8E8E8;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #FFFFFF;
+    position: relative;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .product-tiered-offers-{{ block.id }} .tiered-offer:hover {
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border-color: #D0D0D0;
+  }
+  .product-tiered-offers-{{ block.id }} .tiered-offer--popular {
+    background: linear-gradient(90deg, #FFFFFF 0%, #FFF2C8 100%);
+  }
+  .product-tiered-offers-{{ block.id }} .tiered-offer__percent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    background: {{ block.settings.accent_color }};
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 800;
+    text-align: center;
+    line-height: 1.1;
+    flex-shrink: 0;
+  }
+  .product-tiered-offers-{{ block.id }} .tiered-offer__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    padding: 8px 12px;
+    gap: 10px;
+    min-width: 0;
+  }
+  .product-tiered-offers-{{ block.id }} .tiered-offer__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex-shrink: 1;
+  }
+  .product-tiered-offers-{{ block.id }} .tiered-offer__title {
+    font-size: 13px;
+    font-weight: 800;
+    color: #111111;
+    white-space: nowrap;
+  }
+  .product-tiered-offers-{{ block.id }} .tiered-offer__desc {
+    font-size: 11px;
+    color: #777777;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  
+  .product-tiered-offers-{{ block.id }} .tiered-offer__right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .product-tiered-offers-{{ block.id }} .tiered-offer__badge-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .product-tiered-offers-{{ block.id }} .tiered-offer__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 4px;
+    background: transparent;
+    white-space: nowrap;
+  }
+  
+  .product-tiered-offers-{{ block.id }} .tiered-offer__badge--great-value {
+    color: #387B45;
+    border: 1px solid #387B45;
+  }
+  
+  .product-tiered-offers-{{ block.id }} .tiered-offer__badge--popular {
+    color: #3C64B1;
+    border: 1px solid #3C64B1;
+  }
+
+  .product-tiered-offers-{{ block.id }} .tiered-offer__badge svg {
+    width: 11px;
+    height: 11px;
+  }
+
+  .product-tiered-offers-{{ block.id }} .tiered-offer__price {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0px;
+    min-width: 44px;
+  }
+  .product-tiered-offers-{{ block.id }} .tiered-offer__price-current {
+    font-size: 15px;
+    font-weight: 800;
+    color: #387B45;
+    line-height: 1.2;
+  }
+  .product-tiered-offers-{{ block.id }} .tiered-offer__price-original {
+    font-size: 11px;
+    color: #B3B3B3;
+    text-decoration: line-through;
+    line-height: 1.2;
+  }
+  
+  .product-tiered-offers-{{ block.id }} .tiered-offer__save {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    background: {{ block.settings.save_bg }};
+    color: {{ block.settings.save_color }};
+    font-size: 13px;
+    font-weight: 800;
+    border-radius: 4px;
+    white-space: nowrap;
+    border: none;
+  }
+
+  @media (max-width: 749px) {
+    .product-tiered-offers-{{ block.id }} .tiered-offer__percent {
+      width: 40px;
+      font-size: 13px;
+    }
+    .product-tiered-offers-{{ block.id }} .tiered-offer__content {
+      padding: 6px 8px;
+      gap: 6px;
+    }
+    .product-tiered-offers-{{ block.id }} .tiered-offer__title {
+      font-size: 11px;
+    }
+    .product-tiered-offers-{{ block.id }} .tiered-offer__desc {
+      font-size: 9px;
+    }
+    .product-tiered-offers-{{ block.id }} .tiered-offer__badge {
+      display: none;
+    }
+    .product-tiered-offers-{{ block.id }} .tiered-offer__save {
+      padding: 4px 8px;
+      font-size: 10px;
+    }
+    .product-tiered-offers-{{ block.id }} .tiered-offer__price-current {
+      font-size: 13px;
+    }
+    .product-tiered-offers-{{ block.id }} .tiered-offer__price-original {
+      font-size: 9px;
+    }
+  }
+</style>
+
+<div class="product-tiered-offers-{{ block.id }}" {{ block.shopify_attributes }}>
+  {%- if block.settings.offer_1_title != blank -%}
+    <div class="tiered-offer">
+      <div class="tiered-offer__percent">{{ block.settings.offer_1_percent }}</div>
+      <div class="tiered-offer__content">
+        <div class="tiered-offer__text">
+          <span class="tiered-offer__title">{{ block.settings.offer_1_title }}</span>
+          <span class="tiered-offer__desc">{{ block.settings.offer_1_desc }}</span>
+        </div>
+        
+        <div class="tiered-offer__right">
+          {%- if block.settings.offer_1_badge != blank -%}
+            <div class="tiered-offer__badge-container">
+              <span class="tiered-offer__badge tiered-offer__badge--great-value">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                {{ block.settings.offer_1_badge }}
+              </span>
+            </div>
+          {%- endif -%}
+          
+          <div class="tiered-offer__price">
+            {%- if block.settings.offer_1_discounted_price != blank -%}
+              <span class="tiered-offer__price-current">{{ block.settings.offer_1_discounted_price }}</span>
+            {%- endif -%}
+            {%- if block.settings.offer_1_original_price != blank -%}
+              <span class="tiered-offer__price-original">{{ block.settings.offer_1_original_price }}</span>
+            {%- endif -%}
+          </div>
+          
+          {%- if block.settings.offer_1_save_text != blank -%}
+            <span class="tiered-offer__save">{{ block.settings.offer_1_save_text }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if block.settings.offer_2_title != blank -%}
+    <div class="tiered-offer">
+      <div class="tiered-offer__percent">{{ block.settings.offer_2_percent }}</div>
+      <div class="tiered-offer__content">
+        <div class="tiered-offer__text">
+          <span class="tiered-offer__title">{{ block.settings.offer_2_title }}</span>
+          <span class="tiered-offer__desc">{{ block.settings.offer_2_desc }}</span>
+        </div>
+        
+        <div class="tiered-offer__right">
+          {%- if block.settings.offer_2_badge != blank -%}
+            <div class="tiered-offer__badge-container">
+              <span class="tiered-offer__badge tiered-offer__badge--great-value">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                {{ block.settings.offer_2_badge }}
+              </span>
+            </div>
+          {%- endif -%}
+
+          <div class="tiered-offer__price">
+            {%- if block.settings.offer_2_discounted_price != blank -%}
+              <span class="tiered-offer__price-current">{{ block.settings.offer_2_discounted_price }}</span>
+            {%- endif -%}
+            {%- if block.settings.offer_2_original_price != blank -%}
+              <span class="tiered-offer__price-original">{{ block.settings.offer_2_original_price }}</span>
+            {%- endif -%}
+          </div>
+          
+          {%- if block.settings.offer_2_save_text != blank -%}
+            <span class="tiered-offer__save">{{ block.settings.offer_2_save_text }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if block.settings.offer_3_title != blank -%}
+    <div class="tiered-offer tiered-offer--popular">
+      <div class="tiered-offer__percent">{{ block.settings.offer_3_percent }}</div>
+      <div class="tiered-offer__content">
+        <div class="tiered-offer__text">
+          <span class="tiered-offer__title">{{ block.settings.offer_3_title }}</span>
+          <span class="tiered-offer__desc">{{ block.settings.offer_3_desc }}</span>
+        </div>
+        
+        <div class="tiered-offer__right">
+          {%- if block.settings.offer_3_badge != blank -%}
+            <div class="tiered-offer__badge-container">
+              <span class="tiered-offer__badge tiered-offer__badge--popular">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                {{ block.settings.offer_3_badge }}
+              </span>
+            </div>
+          {%- endif -%}
+
+          <div class="tiered-offer__price">
+            {%- if block.settings.offer_3_discounted_price != blank -%}
+              <span class="tiered-offer__price-current">{{ block.settings.offer_3_discounted_price }}</span>
+            {%- endif -%}
+            {%- if block.settings.offer_3_original_price != blank -%}
+              <span class="tiered-offer__price-original">{{ block.settings.offer_3_original_price }}</span>
+            {%- endif -%}
+          </div>
+          
+          {%- if block.settings.offer_3_save_text != blank -%}
+            <span class="tiered-offer__save">{{ block.settings.offer_3_save_text }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Product Tiered Offers",
+  "settings": [
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent / Percent Background",
+      "default": "#387B45"
+    },
+    {
+      "type": "color",
+      "id": "save_bg",
+      "label": "Save Button Background",
+      "default": "#F4C026"
+    },
+    {
+      "type": "color",
+      "id": "save_color",
+      "label": "Save Button Text Color",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "popular_badge_color",
+      "label": "Most Popular Badge Color",
+      "default": "#D38E22"
+    },
+    {
+      "type": "header",
+      "content": "Offer 1"
+    },
+    {
+      "type": "text",
+      "id": "offer_1_percent",
+      "label": "Discount Percent",
+      "default": "5%"
+    },
+    {
+      "type": "text",
+      "id": "offer_1_title",
+      "label": "Title",
+      "default": "Buy 2 - Get 5% Off"
+    },
+    {
+      "type": "text",
+      "id": "offer_1_desc",
+      "label": "Description",
+      "default": "Applicable for 2 different flavours"
+    },
+    {
+      "type": "text",
+      "id": "offer_1_discounted_price",
+      "label": "Discounted Price",
+      "default": "₹378"
+    },
+    {
+      "type": "text",
+      "id": "offer_1_original_price",
+      "label": "Original Price",
+      "default": "₹398"
+    },
+    {
+      "type": "text",
+      "id": "offer_1_save_text",
+      "label": "Save Text",
+      "default": "Save ₹20"
+    },
+    {
+      "type": "text",
+      "id": "offer_1_badge",
+      "label": "Badge Text",
+      "default": "GREAT VALUE"
+    },
+    {
+      "type": "header",
+      "content": "Offer 2"
+    },
+    {
+      "type": "text",
+      "id": "offer_2_percent",
+      "label": "Discount Percent",
+      "default": "10%"
+    },
+    {
+      "type": "text",
+      "id": "offer_2_title",
+      "label": "Title",
+      "default": "Buy 3 - Get 10% Off"
+    },
+    {
+      "type": "text",
+      "id": "offer_2_desc",
+      "label": "Description",
+      "default": "Applicable for 3 different flavours"
+    },
+    {
+      "type": "text",
+      "id": "offer_2_discounted_price",
+      "label": "Discounted Price",
+      "default": "₹537"
+    },
+    {
+      "type": "text",
+      "id": "offer_2_original_price",
+      "label": "Original Price",
+      "default": "₹597"
+    },
+    {
+      "type": "text",
+      "id": "offer_2_save_text",
+      "label": "Save Text",
+      "default": "Save ₹60"
+    },
+    {
+      "type": "text",
+      "id": "offer_2_badge",
+      "label": "Badge Text"
+    },
+    {
+      "type": "header",
+      "content": "Offer 3"
+    },
+    {
+      "type": "text",
+      "id": "offer_3_percent",
+      "label": "Discount Percent",
+      "default": "15%"
+    },
+    {
+      "type": "text",
+      "id": "offer_3_title",
+      "label": "Title",
+      "default": "Buy 4 - Get 15% Off"
+    },
+    {
+      "type": "text",
+      "id": "offer_3_desc",
+      "label": "Description",
+      "default": "Applicable for 4 different flavours"
+    },
+    {
+      "type": "text",
+      "id": "offer_3_discounted_price",
+      "label": "Discounted Price",
+      "default": "₹677"
+    },
+    {
+      "type": "text",
+      "id": "offer_3_original_price",
+      "label": "Original Price",
+      "default": "₹796"
+    },
+    {
+      "type": "text",
+      "id": "offer_3_save_text",
+      "label": "Save Text",
+      "default": "Save ₹119"
+    },
+    {
+      "type": "text",
+      "id": "offer_3_badge",
+      "label": "Badge Text",
+      "default": "MOST POPULAR"
+    }
+  ],
+  "presets": [
+    { "name": "Product Tiered Offers" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,66 @@
+<style>
+  .product-eyebrow-{{ block.id }} {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: {{ block.settings.text_color }};
+    font-family: var(--font-body--family);
+    line-height: 1;
+  }
+  .product-eyebrow-{{ block.id }} .eyebrow-icon {
+    font-size: 10px;
+    color: {{ block.settings.icon_color }};
+  }
+</style>
+
+<div class="product-eyebrow-{{ block.id }}" {{ block.shopify_attributes }}>
+  {%- if block.settings.show_icon -%}
+    <span class="eyebrow-icon">{{ block.settings.icon }}</span>
+  {%- endif -%}
+  <span>{{ block.settings.text }}</span>
+</div>
+
+{% schema %}
+{
+  "name": "Product Eyebrow",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Eyebrow Text",
+      "default": "PREMIUM COLLECTION"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#387B45"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icon",
+      "label": "Show Icon",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "icon",
+      "label": "Icon Character",
+      "default": "★"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color",
+      "default": "#F4C026"
+    }
+  ],
+  "presets": [
+    { "name": "Product Eyebrow" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,45 @@
+<style>
+  .product-sold-tag-{{ block.id }} {
+    display: inline-flex;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: {{ block.settings.color }};
+    font-family: var(--font-body--family);
+    line-height: 1;
+  }
+  .product-sold-tag-{{ block.id }}::before {
+    content: '·';
+    color: #999999;
+    font-size: 18px;
+    margin-right: 8px;
+    line-height: 1;
+  }
+</style>
+
+<span class="product-sold-tag-{{ block.id }}" {{ block.shopify_attributes }}>
+  {{ block.settings.text }}
+</span>
+
+{% schema %}
+{
+  "name": "Product Sold Tag",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Sold Count Text",
+      "default": "50K+ sold"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Text Color",
+      "default": "#333333"
+    }
+  ],
+  "presets": [
+    { "name": "Product Sold Tag" }
+  ]
+}
+{% endschema %}

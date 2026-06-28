@@ -1,0 +1,98 @@
+<style>
+  .product-share-{{ block.id }} {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    background: #FFFFFF;
+    color: #555555;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font-body--family);
+    transition: border-color 0.2s ease, background 0.2s ease;
+    white-space: nowrap;
+  }
+  .product-share-{{ block.id }}:hover {
+    border-color: #BBBBBB;
+    background: #FAFAFA;
+  }
+  .product-share-{{ block.id }} .share-icon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .product-share-{{ block.id }} .share-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  .product-share-{{ block.id }} .share-tooltip {
+    position: absolute;
+    top: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #FFF;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .product-share-{{ block.id }} .share-tooltip.show {
+    opacity: 1;
+  }
+</style>
+
+<button
+  type="button"
+  class="product-share-{{ block.id }}"
+  {{ block.shopify_attributes }}
+  data-product-url="{{ shop.url }}{{ closest.product.url }}"
+  onclick="
+    var url = this.getAttribute('data-product-url') || window.location.href;
+    navigator.clipboard.writeText(url).then(function() {
+      var tip = document.querySelector('.share-tooltip-{{ block.id }}');
+      tip.classList.add('show');
+      setTimeout(function() { tip.classList.remove('show'); }, 1500);
+    });
+  "
+>
+  <span class="share-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="18" cy="5" r="3"/>
+      <circle cx="6" cy="12" r="3"/>
+      <circle cx="18" cy="19" r="3"/>
+      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+      <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+    </svg>
+  </span>
+  {{ block.settings.label }}
+  <span class="share-tooltip share-tooltip-{{ block.id }}">Copied!</span>
+</button>
+
+{% schema %}
+{
+  "name": "Product Share",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Button Label",
+      "default": "Share"
+    }
+  ],
+  "presets": [
+    { "name": "Product Share" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,73 @@
+<style>
+  .product-breadcrumb-{{ block.id }} {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: {{ block.settings.text_color }};
+    font-family: var(--font-body--family);
+    line-height: 1.4;
+  }
+  .product-breadcrumb-{{ block.id }} a {
+    color: {{ block.settings.text_color }};
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .product-breadcrumb-{{ block.id }} a:hover {
+    color: var(--color-foreground);
+    text-decoration: underline;
+  }
+  .product-breadcrumb-{{ block.id }} .breadcrumb-sep {
+    color: {{ block.settings.separator_color }};
+    font-size: 10px;
+    user-select: none;
+  }
+  .product-breadcrumb-{{ block.id }} .breadcrumb-current {
+    color: var(--color-foreground);
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 260px;
+  }
+</style>
+
+{%- liquid
+  assign product = closest.product
+  assign collection = product.collections.first
+-%}
+
+<nav class="product-breadcrumb-{{ block.id }}" {{ block.shopify_attributes }} aria-label="Breadcrumb">
+  <a href="/">Home</a>
+  <span class="breadcrumb-sep">›</span>
+  {%- if collection -%}
+    <a href="{{ collection.url }}">{{ collection.title }}</a>
+    <span class="breadcrumb-sep">›</span>
+  {%- endif -%}
+  <span class="breadcrumb-current">{{ product.title }}</span>
+</nav>
+
+{% schema %}
+{
+  "name": "Product Breadcrumb",
+  "settings": [
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#888888"
+    },
+    {
+      "type": "color",
+      "id": "separator_color",
+      "label": "Separator Color",
+      "default": "#CCCCCC"
+    }
+  ],
+  "presets": [
+    { "name": "Product Breadcrumb" }
+  ]
+}
+{% endschema %}
