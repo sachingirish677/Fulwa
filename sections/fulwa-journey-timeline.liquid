@@ -1,0 +1,381 @@
+{{ 'fulwa-journey-timeline.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .fjt-section--{{ section.id }} {
+    --fjt-bg: {{ section.settings.bg_color }};
+    --fjt-line-color: {{ section.settings.line_color }};
+    --fjt-marker-border: {{ section.settings.marker_border_color }};
+    --fjt-marker-text: {{ section.settings.marker_text_color }};
+    --fjt-pt: {{ section.settings.padding_top }}px;
+    --fjt-pt-mobile: {{ section.settings.padding_top_mobile }}px;
+  }
+{%- endstyle -%}
+
+<section class="fjt-section fjt-section--{{ section.id }}">
+  <div class="fjt-container">
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="fjt-timeline">
+
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'milestone' -%}
+            {%- assign is_odd = forloop.index | modulo: 2 -%}
+            {%- if is_odd == 1 -%}
+              {%- assign side_class = 'fjt-milestone--left' -%}
+            {%- else -%}
+              {%- assign side_class = 'fjt-milestone--right' -%}
+            {%- endif -%}
+
+            <div class="fjt-milestone {{ side_class }}" {{ block.shopify_attributes }}>
+
+              {%- comment -%} Image column {%- endcomment -%}
+              <div class="fjt-milestone__image-col">
+                {%- if block.settings.image != blank -%}
+                  <div class="fjt-milestone__image-wrap">
+                    {{ block.settings.image | image_url: width: 720 | image_tag: loading: 'lazy' }}
+                  </div>
+                {%- else -%}
+                  <div class="fjt-milestone__image-wrap">
+                    <div class="fjt-milestone__placeholder"></div>
+                  </div>
+                {%- endif -%}
+              </div>
+
+              {%- comment -%} Center marker {%- endcomment -%}
+              <div class="fjt-milestone__marker">
+                <span class="fjt-marker-number">{{ block.settings.number | default: forloop.index | prepend: '00' | slice: -2, 2 }}</span>
+              </div>
+
+              {%- comment -%} Content column {%- endcomment -%}
+              <div class="fjt-milestone__content-col">
+                <div class="fjt-milestone__content-inner">
+
+                  {%- if block.settings.heading != blank -%}
+                    <div class="fjt-milestone__heading">
+                      {{ block.settings.heading | image_url: width: 600 | image_tag: loading: 'lazy' }}
+                    </div>
+                  {%- endif -%}
+
+                  {%- if block.settings.subheading != blank -%}
+                    <span class="fjt-milestone__subheading">{{ block.settings.subheading }}</span>
+                  {%- endif -%}
+
+                  {%- if block.settings.description != blank -%}
+                    <p class="fjt-milestone__description">{{ block.settings.description }}</p>
+                  {%- endif -%}
+
+                </div>
+              </div>
+
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+      </div>
+    {%- endif -%}
+
+  </div>
+
+  {%- comment -%} ===== Bottom CTA Banner ===== {%- endcomment -%}
+  {%- if section.settings.cta_heading != blank or section.settings.cta_heading_highlight != blank -%}
+    <div class="fjt-cta-outer" style="background: linear-gradient(to bottom, {{ section.settings.cta_grad_start | default: '#FFFFF0' }}, {{ section.settings.cta_grad_end | default: '#F4C026' }});">
+      <div class="fjt-cta-card" style="background: radial-gradient(circle at center, {{ section.settings.cta_card_color_1 | default: '#327435' }}, {{ section.settings.cta_card_color_2 | default: '#012003' }});">
+
+        <h2 class="fjt-cta__heading">
+          {{ section.settings.cta_heading }}
+          {%- if section.settings.cta_heading_highlight != blank -%}
+            <span class="fjt-cta__heading-highlight"> {{ section.settings.cta_heading_highlight }}</span>
+          {%- endif -%}
+        </h2>
+
+        {%- if section.settings.cta_text != blank -%}
+          <p class="fjt-cta__text">{{ section.settings.cta_text }}</p>
+        {%- endif -%}
+
+        <div class="fjt-cta__buttons">
+          {%- if section.settings.cta_btn1_label != blank -%}
+            <a
+              href="{{ section.settings.cta_btn1_link | default: '#' }}"
+              class="fjt-cta__btn fjt-cta__btn--primary"
+              style="background-color: {{ section.settings.cta_btn1_color }};"
+            >
+              {{ section.settings.cta_btn1_label }}
+            </a>
+          {%- endif -%}
+
+          {%- if section.settings.cta_btn2_label != blank -%}
+            <a
+              href="{{ section.settings.cta_btn2_link | default: '#' }}"
+              class="fjt-cta__btn fjt-cta__btn--secondary"
+            >
+              {{ section.settings.cta_btn2_label }}
+            </a>
+          {%- endif -%}
+        </div>
+
+      </div>
+    </div>
+  {%- endif -%}
+
+</section>
+
+{% schema %}
+{
+  "name": "Journey Timeline",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Style"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFDF5"
+    },
+    {
+      "type": "color",
+      "id": "line_color",
+      "label": "Timeline Line Color",
+      "default": "#F4C026"
+    },
+    {
+      "type": "color",
+      "id": "marker_border_color",
+      "label": "Marker Border Color",
+      "default": "#F4C026"
+    },
+    {
+      "type": "color",
+      "id": "marker_text_color",
+      "label": "Marker Number Color",
+      "default": "#A68B2C"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top (Desktop)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top (Mobile)",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Bottom CTA Banner"
+    },
+    {
+      "type": "color",
+      "id": "cta_grad_start",
+      "label": "CTA Gradient Start",
+      "default": "#FFFFF0"
+    },
+    {
+      "type": "color",
+      "id": "cta_grad_end",
+      "label": "CTA Gradient End",
+      "default": "#F4C026"
+    },
+    {
+      "type": "color",
+      "id": "cta_card_color_1",
+      "label": "CTA Card Color (Center)",
+      "default": "#327435"
+    },
+    {
+      "type": "color",
+      "id": "cta_card_color_2",
+      "label": "CTA Card Color (Edge)",
+      "default": "#012003"
+    },
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "CTA Heading",
+      "default": "The Journey"
+    },
+    {
+      "type": "text",
+      "id": "cta_heading_highlight",
+      "label": "CTA Heading (Highlighted)",
+      "default": "Continues"
+    },
+    {
+      "type": "textarea",
+      "id": "cta_text",
+      "label": "CTA Description",
+      "default": "We carry the legacy of Calicut forward — one handcrafted halwa at a time. Fresh from the streets of Kozhikode, straight to your doorstep."
+    },
+    {
+      "type": "header",
+      "content": "Primary Button"
+    },
+    {
+      "type": "text",
+      "id": "cta_btn1_label",
+      "label": "Primary Button Label",
+      "default": "Shop Fulwa"
+    },
+    {
+      "type": "url",
+      "id": "cta_btn1_link",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "color",
+      "id": "cta_btn1_color",
+      "label": "Primary Button Color",
+      "default": "#F4C026"
+    },
+    {
+      "type": "header",
+      "content": "Secondary Button"
+    },
+    {
+      "type": "text",
+      "id": "cta_btn2_label",
+      "label": "Secondary Button Label",
+      "default": "Explore Gifts"
+    },
+    {
+      "type": "url",
+      "id": "cta_btn2_link",
+      "label": "Secondary Button Link"
+    },
+    {
+      "type": "color",
+      "id": "cta_btn2_color",
+      "label": "Secondary Button Color",
+      "default": "#B9B9B9"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "milestone",
+      "name": "Milestone",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "01",
+          "info": "Shown inside the circle marker (e.g. 01, 02 …)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "heading",
+          "label": "Heading Image",
+          "info": "Upload the scroll/banner heading image"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Sub-heading / Era",
+          "default": "Historical Period",
+          "info": "E.g. 'The Zamorin Era · 14th Century'"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "A brief description of this milestone in the journey."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 16,
+  "presets": [
+    {
+      "name": "Journey Timeline",
+      "blocks": [
+        {
+          "type": "milestone",
+          "settings": {
+            "number": "01",
+            "subheading": "Ancient Trade Era",
+            "description": "Centuries ago, Arab traders introduced Halwa along the Malabar coast, a port where the world came to trade in spices, cotton, and gems."
+          }
+        },
+        {
+          "type": "milestone",
+          "settings": {
+            "number": "02",
+            "subheading": "The Zamorin Era · 14th Century",
+            "description": "The Zamorins of Calicut embraced the confectionery, highlighting Halwa as a royal delicacy served at special occasions and celebrations."
+          }
+        },
+        {
+          "type": "milestone",
+          "settings": {
+            "number": "03",
+            "subheading": "Colonial Period",
+            "description": "Local artisans perfected the art of making it in cauldrons — ghee, sugar, and rice flour whisked into perfection with Malabar spices."
+          }
+        },
+        {
+          "type": "milestone",
+          "settings": {
+            "number": "04",
+            "subheading": "Trade Route Era",
+            "description": "Calicut became a gateway for spice commerce, ultimately shaping the core of Halwa's iconic taste & distinct flavor."
+          }
+        },
+        {
+          "type": "milestone",
+          "settings": {
+            "number": "05",
+            "subheading": "Early 20th Century",
+            "description": "Halwa shops lined the streets, and every celebration, wedding, and festival in Calicut featured the sweet prominently."
+          }
+        },
+        {
+          "type": "milestone",
+          "settings": {
+            "number": "06",
+            "subheading": "Mid 20th Century",
+            "description": "From late taluks to prominent places of craftsmanship, Calicut Halwa became a regional landmark in culinary tradition."
+          }
+        },
+        {
+          "type": "milestone",
+          "settings": {
+            "number": "07",
+            "subheading": "Modern Era",
+            "description": "Fulva was born as a passion project, a way to bring the authentic Calicut Halwa to every doorstep across India, honouring the artisans of Kozhikode."
+          }
+        },
+        {
+          "type": "milestone",
+          "settings": {
+            "number": "08",
+            "subheading": "Today",
+            "description": "Today, Fulva delivers the handcrafted goodness to doorsteps across India, keeping tradition alive in a new generation of halwa lovers."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
