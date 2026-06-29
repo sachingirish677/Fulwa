@@ -1,0 +1,269 @@
+/* ==============================================
+   Fulwa Sweet Story Header – Styles
+   ============================================== */
+
+/* ---------- Section ---------- */
+.fss-section {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ---------- Hero Container ---------- */
+.fss-hero {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 40px 44px;
+  text-align: center;
+  position: relative;
+}
+
+/* ---------- Product Image ---------- */
+.fss-hero__product-image {
+  max-width: 320px;
+  margin: 0 auto 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.fss-hero__product-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* ---------- Decorative Images ---------- */
+.fss-hero__deco-left,
+.fss-hero__deco-right {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.fss-hero__deco-left {
+  left: 12%;
+  bottom: 80px;
+  max-width: 180px;
+}
+
+.fss-hero__deco-right {
+  right: 12%;
+  top: 48%;
+  max-width: 110px;
+}
+
+.fss-hero__deco-left img,
+.fss-hero__deco-right img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ---------- Tagline ---------- */
+.fss-hero__tagline {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #8B7A3E;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 2;
+}
+
+.fss-hero__tagline::before,
+.fss-hero__tagline::after {
+  content: '';
+  width: 28px;
+  height: 1.5px;
+  background: #D4B060;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ---------- Heading ---------- */
+.fss-hero__heading {
+  font-family: var(--font-heading-family, inherit);
+  font-size: 42px;
+  font-weight: 800;
+  color: #1A1A1A;
+  margin: 0 0 14px 0;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 2;
+}
+
+.fss-hero__heading-highlight {
+  color: #2E7D32;
+  font-style: italic;
+  display: block;
+  font-family: var(--font-heading-family, inherit);
+}
+
+/* ---------- Description ---------- */
+.fss-hero__description {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #555;
+  max-width: 520px;
+  margin: 0 auto 32px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ---------- Trust Badges Row ---------- */
+.fss-hero__badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
+}
+
+.fss-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 24px;
+  border-left: 1px solid #E0E0E0;
+}
+
+.fss-badge:first-child {
+  border-left: none;
+}
+
+.fss-badge__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fss-badge__icon img {
+  width: auto;
+  height: auto;
+  max-height: 26px;
+  max-width: 32px;
+  display: block;
+  object-fit: contain;
+}
+
+.fss-badge__text {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #555;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+
+.fss-badge__highlight {
+  font-weight: 800;
+  color: #1A1A1A;
+  font-size: 13px;
+}
+
+/* ==============================================
+   Responsive – Tablet
+   ============================================== */
+@media (max-width: 1024px) {
+  .fss-hero {
+    padding: 40px 24px 36px;
+  }
+
+  .fss-hero__deco-left {
+    left: 4%;
+    max-width: 140px;
+  }
+
+  .fss-hero__deco-right {
+    right: 4%;
+    max-width: 85px;
+  }
+
+  .fss-hero__heading {
+    font-size: 36px;
+  }
+
+  .fss-badge {
+    padding: 0 16px;
+  }
+}
+
+/* ==============================================
+   Responsive – Mobile
+   ============================================== */
+@media (max-width: 768px) {
+  .fss-hero {
+    padding: 32px 16px 28px;
+  }
+
+  .fss-hero__product-image {
+    max-width: 240px;
+    margin-bottom: 16px;
+  }
+
+  /* Hide side decorative images on mobile */
+  .fss-hero__deco-left,
+  .fss-hero__deco-right {
+    display: none;
+  }
+
+  .fss-hero__tagline {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    margin-bottom: 8px;
+  }
+
+  .fss-hero__tagline::before,
+  .fss-hero__tagline::after {
+    width: 20px;
+  }
+
+  .fss-hero__heading {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+
+  .fss-hero__description {
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+    padding: 0 8px;
+  }
+
+  /* Badges: 2x2 grid on mobile */
+  .fss-hero__badges {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 8px;
+    justify-items: center;
+  }
+
+  .fss-badge {
+    border-left: none;
+    padding: 0;
+    gap: 6px;
+  }
+
+  .fss-badge__icon img {
+    max-height: 20px;
+    max-width: 26px;
+  }
+
+  .fss-badge__text {
+    font-size: 10px;
+  }
+
+  .fss-badge__highlight {
+    font-size: 11px;
+  }
+}

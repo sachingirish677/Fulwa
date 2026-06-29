@@ -1,0 +1,442 @@
+/* ==============================================
+   Fulwa Journey Timeline – Styles
+   ============================================== */
+
+/* ---------- Section ---------- */
+.fjt-section {
+  width: 100%;
+  overflow: hidden;
+  padding-top: var(--fjt-pt, 60px);
+  padding-bottom: 0;
+  background-color: var(--fjt-bg, #FFFDF5);
+  font-family: var(--font-body-family, inherit);
+}
+
+/* ---------- Container ---------- */
+.fjt-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* ---------- Timeline Wrapper ---------- */
+.fjt-timeline {
+  position: relative;
+  padding-bottom: 40px;
+}
+
+/* Golden vertical line */
+.fjt-timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 100%;
+  background: var(--fjt-line-color, #F4C026);
+  border-radius: 4px;
+  z-index: 0;
+}
+
+/* ---------- Milestone Row ---------- */
+.fjt-milestone {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+/* Alternation: odd = image left, text right (default) */
+.fjt-milestone--left {
+  flex-direction: row;
+}
+
+/* Alternation: even = text left, image right */
+.fjt-milestone--right {
+  flex-direction: row-reverse;
+}
+
+/* ---------- Image Column ---------- */
+.fjt-milestone__image-col {
+  width: calc(50% - 36px);
+  flex-shrink: 0;
+}
+
+.fjt-milestone--left .fjt-milestone__image-col {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.fjt-milestone--right .fjt-milestone__image-col {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.fjt-milestone__image-wrap {
+  width: 100%;
+  max-width: 360px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+  background: #fff;
+}
+
+.fjt-milestone__image-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.fjt-milestone__placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #e8e0d0;
+  border-radius: 14px;
+}
+
+/* ---------- Center Marker ---------- */
+.fjt-milestone__marker {
+  width: 72px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.fjt-marker-number {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid var(--fjt-marker-border, #F4C026);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--fjt-marker-text, #A68B2C);
+  font-family: var(--font-heading-family, inherit);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* ---------- Content Column ---------- */
+.fjt-milestone__content-col {
+  width: calc(50% - 36px);
+  flex-shrink: 0;
+}
+
+.fjt-milestone--left .fjt-milestone__content-col {
+  padding-left: 4px;
+}
+
+.fjt-milestone--right .fjt-milestone__content-col {
+  padding-right: 4px;
+  text-align: right;
+}
+
+.fjt-milestone__content-inner {
+  max-width: 360px;
+}
+
+.fjt-milestone--left .fjt-milestone__content-inner {
+  margin-right: auto;
+}
+
+.fjt-milestone--right .fjt-milestone__content-inner {
+  margin-left: auto;
+}
+
+/* Heading as image */
+.fjt-milestone__heading {
+  display: inline-block;
+  margin: 0 0 10px 0;
+  max-width: 100%;
+}
+
+.fjt-milestone__heading img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 52px;
+  object-fit: contain;
+}
+
+/* Subheading / era – pill badge */
+.fjt-milestone__subheading {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  color: #6B5D4A;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+  background: #F5F0E3;
+  padding: 6px 16px;
+  border-radius: 50px;
+  line-height: 1.4;
+}
+
+/* Description */
+.fjt-milestone__description {
+  font-size: 13px;
+  line-height: 1.65;
+  color: #555;
+  margin: 0;
+}
+
+/* ---------- Bottom CTA Banner ---------- */
+
+/* Outer: full-width yellow/gold gradient */
+.fjt-cta-outer {
+  width: 100%;
+  padding: 48px 40px 56px;
+  position: relative;
+}
+
+/* Inner: dark green rounded card */
+.fjt-cta-card {
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 16px;
+  padding: 48px 56px;
+  position: relative;
+  overflow: hidden;
+}
+
+.fjt-cta__heading {
+  font-family: var(--font-heading-family, inherit);
+  font-size: 36px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 12px 0;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.fjt-cta__heading-highlight {
+  color: #F4C026;
+  font-style: italic;
+  font-family: var(--font-heading-family, inherit);
+}
+
+.fjt-cta__text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 480px;
+  margin: 0 0 28px 0;
+}
+
+.fjt-cta__buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.fjt-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  border: 1.5px solid transparent;
+  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.fjt-cta__btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+
+.fjt-cta__btn--primary {
+  color: #1A1A1A;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+}
+
+.fjt-cta__btn--secondary {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #fff;
+}
+
+/* ==============================================
+   Responsive – Tablet
+   ============================================== */
+@media (max-width: 1024px) {
+  .fjt-container {
+    padding: 0 24px;
+  }
+
+  .fjt-milestone__image-wrap {
+    max-width: 280px;
+  }
+
+  .fjt-milestone__content-inner {
+    max-width: 280px;
+  }
+
+  .fjt-cta-card {
+    padding: 40px 40px;
+  }
+
+  .fjt-cta__heading {
+    font-size: 30px;
+  }
+}
+
+/* ==============================================
+   Responsive – Mobile
+   ============================================== */
+@media (max-width: 768px) {
+  .fjt-section {
+    padding-top: var(--fjt-pt-mobile, 40px);
+  }
+
+  .fjt-container {
+    padding: 0 16px;
+  }
+
+  .fjt-timeline {
+    padding-bottom: 20px;
+  }
+
+  /* Hide the centered line on mobile — we'll reposition it */
+  .fjt-timeline::before {
+    left: 50%;
+    width: 3px;
+  }
+
+  /* Stack all milestones vertically */
+  .fjt-milestone,
+  .fjt-milestone--left,
+  .fjt-milestone--right {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .fjt-milestone__image-col {
+    width: 100%;
+    order: 1;
+    display: flex;
+    justify-content: center !important;
+    position: relative;
+    z-index: 2;
+  }
+
+  .fjt-milestone__image-wrap {
+    max-width: 100%;
+  }
+
+  .fjt-milestone__marker {
+    order: 0;
+    margin-bottom: 12px;
+    width: auto;
+  }
+
+  .fjt-marker-number {
+    width: 38px;
+    height: 38px;
+    font-size: 12px;
+    border-width: 2.5px;
+  }
+
+  .fjt-milestone__content-col {
+    width: 100%;
+    order: 2;
+    padding: 0 12px;
+    margin-top: 0;
+  }
+
+  .fjt-milestone--right .fjt-milestone__content-col {
+    text-align: center;
+    padding-right: 12px;
+  }
+
+  .fjt-milestone__content-inner {
+    max-width: 100%;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    margin-top: -20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .fjt-milestone--right .fjt-milestone__content-inner {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -20px;
+  }
+
+  /* Golden line separator between heading and subheading */
+  .fjt-milestone__heading::after {
+    content: '';
+    display: block;
+    width: 2.5px;
+    height: 24px;
+    background: #F4C026;
+    margin: 10px auto 6px;
+    border-radius: 2px;
+  }
+
+  .fjt-milestone__heading img {
+    max-height: 40px;
+  }
+
+  .fjt-milestone__subheading {
+    font-size: 10px;
+  }
+
+  .fjt-milestone__description {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  /* CTA Banner mobile */
+  .fjt-cta-outer {
+    padding: 32px 16px 40px;
+  }
+
+  .fjt-cta-card {
+    padding: 32px 24px;
+    border-radius: 12px;
+  }
+
+  .fjt-cta__heading {
+    font-size: 24px;
+  }
+
+  .fjt-cta__text {
+    font-size: 12px;
+    margin-bottom: 20px;
+  }
+
+  .fjt-cta__buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .fjt-cta__btn {
+    width: 100%;
+    max-width: 280px;
+    padding: 11px 20px;
+    font-size: 12px;
+  }
+}
