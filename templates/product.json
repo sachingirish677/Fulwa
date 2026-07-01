@@ -108,6 +108,18 @@
                 "padding-inline-end": 0
               },
               "blocks": {
+                "product_eyebrow_XJmJfL": {
+                  "type": "product-eyebrow",
+                  "name": "Product Eyebrow",
+                  "settings": {
+                    "text": "PREMIUM COLLECTION",
+                    "text_color": "#387B45",
+                    "show_icon": true,
+                    "icon": "★",
+                    "icon_color": "#F4C026"
+                  },
+                  "blocks": {}
+                },
                 "text_xrnftG": {
                   "type": "text",
                   "name": "Product title",
@@ -131,6 +143,15 @@
                     "padding-block-end": 0,
                     "padding-inline-start": 0,
                     "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "product_sold_tag_yQi6dq": {
+                  "type": "product-sold-tag",
+                  "name": "Product Sold Tag",
+                  "settings": {
+                    "text": "50K+ sold",
+                    "color": "#333333"
                   },
                   "blocks": {}
                 },
@@ -210,43 +231,69 @@
                         "padding-inline-end": 0
                       },
                       "blocks": {}
+                    },
+                    "product_share_aqNiL8": {
+                      "type": "product-share",
+                      "name": "Product Share",
+                      "settings": {
+                        "label": "Share"
+                      },
+                      "blocks": {}
                     }
                   },
                   "block_order": [
-                    "price_tVjtKg"
+                    "price_tVjtKg",
+                    "product_share_aqNiL8"
                   ]
                 }
               },
               "block_order": [
+                "product_eyebrow_XJmJfL",
                 "text_xrnftG",
+                "product_sold_tag_yQi6dq",
                 "judge_me_reviews_preview_badge_aRBR8Q",
                 "review_stars",
                 "group_price_row"
               ]
             },
-            "text_TA337B": {
-              "type": "text",
-              "name": "t:names.text",
+            "product_tax_notice_XzG7E3": {
+              "type": "product-tax-notice",
+              "name": "Product Tax Notice",
               "settings": {
-                "text": "{{ closest.product.metafields.custom.product_info | metafield_tag }}",
-                "width": "100%",
-                "max_width": "none",
-                "alignment": "left",
-                "type_preset": "custom",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "loose",
-                "letter_spacing": "loose",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "text": "Inclusive of all taxes · Free delivery on this order",
+                "color": "#888888"
+              },
+              "blocks": {}
+            },
+            "product_tiered_offers_JazXtW": {
+              "type": "product-tiered-offers",
+              "name": "Product Tiered Offers",
+              "settings": {
+                "accent_color": "#387B45",
+                "save_bg": "#F4C026",
+                "save_color": "#222222",
+                "popular_badge_color": "#D38E22",
+                "offer_1_percent": "5%",
+                "offer_1_title": "Buy 2 - Get 5% Off",
+                "offer_1_desc": "Applicable for 2 different flavours",
+                "offer_1_discounted_price": "₹378",
+                "offer_1_original_price": "₹398",
+                "offer_1_save_text": "Save ₹20",
+                "offer_1_badge": "GREAT VALUE",
+                "offer_2_percent": "10%",
+                "offer_2_title": "Buy 3 - Get 10% Off",
+                "offer_2_desc": "Applicable for 3 different flavours",
+                "offer_2_discounted_price": "₹537",
+                "offer_2_original_price": "₹597",
+                "offer_2_save_text": "Save ₹60",
+                "offer_2_badge": "",
+                "offer_3_percent": "15%",
+                "offer_3_title": "Buy 4 - Get 15% Off",
+                "offer_3_desc": "Applicable for 4 different flavours",
+                "offer_3_discounted_price": "₹677",
+                "offer_3_original_price": "₹796",
+                "offer_3_save_text": "Save ₹119",
+                "offer_3_badge": "MOST POPULAR"
               },
               "blocks": {}
             },
@@ -308,14 +355,56 @@
                 }
               },
               "block_order": []
+            },
+            "product_trust_badges_bcd6Ke": {
+              "type": "product-trust-badges",
+              "name": "Product Trust Badges",
+              "settings": {
+                "badge_bg": "#F9F9F9",
+                "badge_border": "#EEEEEE",
+                "text_color": "#555555",
+                "badge_1_icon": "shopify://shop_images/image_54.png",
+                "badge_1_text": "FSSAI Certified",
+                "badge_2_icon": "shopify://shop_images/Vector_5.png",
+                "badge_2_text": "Approved",
+                "badge_3_icon": "shopify://shop_images/Vector_6.png",
+                "badge_3_text": "Free Delivery",
+                "badge_4_icon": "shopify://shop_images/Vector_7.png",
+                "badge_4_text": "Fast Shipping",
+                "badge_5_text": "Product of India"
+              },
+              "blocks": {}
+            },
+            "product_coupon_codes_8x4wNC": {
+              "type": "product-coupon-codes",
+              "name": "Product Coupon Codes",
+              "settings": {
+                "badge_bg": "#387B45",
+                "coupon_1_value": "Rs. 200",
+                "coupon_1_code": "LOADEDUP",
+                "coupon_1_desc": "Add 20% off/unlock cart for final savings",
+                "coupon_2_value": "Rs. 200",
+                "coupon_2_code": "LOADEDUP",
+                "coupon_2_desc": "Add 20% off/unlock cart for final savings",
+                "coupon_3_value": "Rs. 200",
+                "coupon_3_code": "LOADEDUP",
+                "coupon_3_desc": "Add 20% off/unlock cart for final savings",
+                "coupon_4_value": "",
+                "coupon_4_code": "",
+                "coupon_4_desc": ""
+              },
+              "blocks": {}
             }
           },
           "block_order": [
             "group_icgrde",
-            "text_TA337B",
+            "product_tax_notice_XzG7E3",
+            "product_tiered_offers_JazXtW",
             "divider_VJhene",
             "variant_picker_R3rGDr",
-            "buy_buttons_eYQEYi"
+            "buy_buttons_eYQEYi",
+            "product_trust_badges_bcd6Ke",
+            "product_coupon_codes_8x4wNC"
           ]
         }
       },
@@ -331,35 +420,219 @@
         "padding-block-end": 0
       }
     },
+    "reels_igUKyq": {
+      "type": "reels",
+      "blocks": {
+        "reel_8jpfNx": {
+          "type": "reel",
+          "settings": {
+            "mp4_url": "",
+            "category": "Unboxing",
+            "username": "@fulva.in",
+            "linked_product": "",
+            "product_tag": "24 Variety Box",
+            "button_label": "Buy Now",
+            "button_link": ""
+          }
+        },
+        "reel_LPLdx7": {
+          "type": "reel",
+          "settings": {
+            "mp4_url": "",
+            "category": "Unboxing",
+            "username": "@fulva.in",
+            "linked_product": "",
+            "product_tag": "24 Variety Box",
+            "button_label": "Buy Now",
+            "button_link": ""
+          }
+        },
+        "reel_nnLbMc": {
+          "type": "reel",
+          "settings": {
+            "mp4_url": "",
+            "category": "Unboxing",
+            "username": "@fulva.in",
+            "linked_product": "",
+            "product_tag": "24 Variety Box",
+            "button_label": "Buy Now",
+            "button_link": ""
+          }
+        },
+        "reel_UCDPir": {
+          "type": "reel",
+          "settings": {
+            "mp4_url": "",
+            "category": "Unboxing",
+            "username": "@fulva.in",
+            "linked_product": "",
+            "product_tag": "24 Variety Box",
+            "button_label": "Buy Now",
+            "button_link": ""
+          }
+        },
+        "reel_cQGDk4": {
+          "type": "reel",
+          "settings": {
+            "mp4_url": "",
+            "category": "Unboxing",
+            "username": "@fulva.in",
+            "linked_product": "",
+            "product_tag": "24 Variety Box",
+            "button_label": "Buy Now",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "reel_8jpfNx",
+        "reel_LPLdx7",
+        "reel_nnLbMc",
+        "reel_UCDPir",
+        "reel_cQGDk4"
+      ],
+      "name": "Fulva Reels",
+      "settings": {
+        "aria_label": "Instagram Reels",
+        "show_header": false,
+        "eyebrow": "Real People, Real Moments",
+        "heading_1": "The",
+        "heading_1_color": "#1A1A1A",
+        "heading_2": "<em>Halwa</em>",
+        "heading_2_color": "#1A1A1A",
+        "heading_3": "Diaries",
+        "heading_3_color": "#1A1A1A",
+        "ig_handle": "@fulva.in",
+        "ig_link": "",
+        "ig_grad_1": "#F58529",
+        "ig_grad_2": "#DD2A7B",
+        "ig_grad_3": "#8134AF",
+        "ig_grad_4": "#515BD4",
+        "show_filters": true,
+        "filter_1": "Unboxing",
+        "filter_2": "Taste Tests",
+        "filter_3": "Gifting",
+        "show_arrows": true,
+        "max_width": 0,
+        "padding_x_desktop": 64,
+        "padding_y_desktop": 32,
+        "padding_x_mobile": 16,
+        "padding_y_mobile": 24,
+        "gap": 12,
+        "radius": 16,
+        "card_width_desktop": 248,
+        "card_height_desktop": 448,
+        "card_width_mobile": 212,
+        "card_height_mobile": 382,
+        "background": "#F7F5F0",
+        "text_color": "#1A1A1A",
+        "accent_color": "#D4A843",
+        "border_color": "#000000",
+        "border_opacity": 6,
+        "show_bottom_section": true,
+        "bottom_bg": "#FFFFFF",
+        "bottom_heading": "Available Across India",
+        "amazon_link": "",
+        "amazon_logo_alt": "Amazon",
+        "flipkart_link": "",
+        "flipkart_logo_alt": "Flipkart",
+        "hide_on_mobile": false,
+        "hide_on_desktop": false,
+        "modal_padding_y_desktop": 30,
+        "modal_padding_y_mobile": 30
+      }
+    },
+    "product_features_grid_QK98eF": {
+      "type": "product-features-grid",
+      "name": "Product Features Grid",
+      "settings": {
+        "color_scheme": "",
+        "image_1": "shopify://shop_images/image_106.png",
+        "link_1": "",
+        "image_2": "shopify://shop_images/image_105.png",
+        "link_2": "",
+        "image_3": "shopify://shop_images/image_107.png",
+        "link_3": "",
+        "image_4": "shopify://shop_images/image_108.png",
+        "link_4": "",
+        "image_5": "shopify://shop_images/image_107_1.png",
+        "link_5": "",
+        "image_6": "shopify://shop_images/image_109.png",
+        "link_6": "",
+        "image_7": "shopify://shop_images/image_108_1.png",
+        "link_7": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "product_nutrition_accordion_jB9WPa": {
+      "type": "product-nutrition-accordion",
+      "blocks": {
+        "description_QAYQaA": {
+          "type": "description",
+          "settings": {
+            "heading": "Description"
+          }
+        },
+        "nutritional_table_cm9akX": {
+          "type": "nutritional_table",
+          "settings": {
+            "heading": "Product Details",
+            "serving_size": "50g",
+            "servings_per_pack": "9.5",
+            "energy_100g": "450",
+            "energy_rda": "11%",
+            "carbs_100g": "67",
+            "carbs_rda": "11%",
+            "sugars_100g": "55",
+            "sugars_rda": "55%",
+            "fat_100g": "-",
+            "fat_rda": "4%",
+            "sat_fat_100g": "10",
+            "sat_fat_rda": "25%",
+            "trans_fat_100g": "Nil",
+            "trans_fat_rda": "-",
+            "cholesterol_100g": "30",
+            "cholesterol_rda": "5%",
+            "protein_100g": "2.5",
+            "protein_rda": "2.50%"
+          }
+        },
+        "rich_text_fXDnrN": {
+          "type": "rich_text",
+          "settings": {
+            "heading": "Ingredients",
+            "text": ""
+          }
+        },
+        "rich_text_raFT4b": {
+          "type": "rich_text",
+          "settings": {
+            "heading": "Allergic Ingredients",
+            "text": ""
+          }
+        },
+        "rich_text_hUUBYb": {
+          "type": "rich_text",
+          "settings": {
+            "heading": "Shipping",
+            "text": ""
+          }
+        }
+      },
+      "block_order": [
+        "description_QAYQaA",
+        "nutritional_table_cm9akX",
+        "rich_text_fXDnrN",
+        "rich_text_raFT4b",
+        "rich_text_hUUBYb"
+      ],
+      "name": "Nutrition Accordion",
+      "settings": {}
+    },
     "product_recommendations_qggXJq": {
       "type": "product-recommendations",
       "blocks": {
-        "product_description_86PBzY": {
-          "type": "product-description",
-          "name": "t:names.product_description",
-          "settings": {
-            "text": "<p>{{ closest.product.description }}</p>",
-            "width": "100%",
-            "max_width": "none",
-            "alignment": "center",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
         "text_cbcgyb": {
           "type": "text",
           "name": "t:names.header",
@@ -476,7 +749,6 @@
         }
       },
       "block_order": [
-        "product_description_86PBzY",
         "text_cbcgyb"
       ],
       "name": "t:names.product_recommendations",
@@ -543,6 +815,49 @@
         "padding-block-end": 0
       }
     },
+    "faq_with_image_zqUYwV": {
+      "type": "faq-with-image",
+      "blocks": {
+        "faq_MqhGex": {
+          "type": "faq",
+          "settings": {
+            "question": "WHY IS CALICUT HALWA DIFFERENT FROM OTHER HALWAS?",
+            "answer": "<p>Provide the answer to your question here.</p>"
+          }
+        },
+        "faq_hArTPY": {
+          "type": "faq",
+          "settings": {
+            "question": "WHY IS CALICUT HALWA DIFFERENT FROM OTHER HALWAS?",
+            "answer": "<p>Provide the answer to your question here.</p>"
+          }
+        },
+        "faq_AkeCVt": {
+          "type": "faq",
+          "settings": {
+            "question": "WHY IS CALICUT HALWA DIFFERENT FROM OTHER HALWAS?",
+            "answer": "<p>Provide the answer to your question here.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_MqhGex",
+        "faq_hArTPY",
+        "faq_AkeCVt"
+      ],
+      "name": "FAQ with Image",
+      "settings": {
+        "bg_color": "#F7F9F7",
+        "use_gradient_bg": false,
+        "bg_gradient_1": "#F7F9F7",
+        "bg_gradient_2": "#F7F9F7",
+        "bg_gradient_3": "#F7F9F7",
+        "heading_text_1": "Frequently Asked",
+        "heading_text_2": "Questions",
+        "show_image_section": true,
+        "right_bg_color": "linear-gradient(180deg, rgba(255, 251, 240, 1), rgba(252, 229, 150, 1) 50%, rgba(244, 192, 38, 1) 100%)"
+      }
+    },
     "177954790461b1192b": {
       "type": "_blocks",
       "settings": {
@@ -576,8 +891,12 @@
   },
   "order": [
     "main",
+    "reels_igUKyq",
+    "product_features_grid_QK98eF",
+    "product_nutrition_accordion_jB9WPa",
     "product_recommendations_qggXJq",
     "1779547595d87537de",
+    "faq_with_image_zqUYwV",
     "177954790461b1192b"
   ]
 }
