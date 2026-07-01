@@ -56,9 +56,226 @@
         "padding-block-start": 40,
         "padding-block-end": 80
       }
+    },
+    "fulwa_sweet_story_9tXgnp": {
+      "type": "fulwa-sweet-story",
+      "blocks": {
+        "trust_badge_B74dg4": {
+          "type": "trust_badge",
+          "settings": {
+            "highlight": "",
+            "label": "Approved"
+          }
+        },
+        "trust_badge_kpxXrN": {
+          "type": "trust_badge",
+          "settings": {
+            "highlight": "",
+            "label": "Free Delivery"
+          }
+        },
+        "trust_badge_cgyhCV": {
+          "type": "trust_badge",
+          "settings": {
+            "highlight": "50K+",
+            "label": "Happy Customers"
+          }
+        },
+        "trust_badge_Bq4pyL": {
+          "type": "trust_badge",
+          "settings": {
+            "highlight": "",
+            "label": "Product of India"
+          }
+        }
+      },
+      "block_order": [
+        "trust_badge_B74dg4",
+        "trust_badge_kpxXrN",
+        "trust_badge_cgyhCV",
+        "trust_badge_Bq4pyL"
+      ],
+      "name": "Sweet Story Header",
+      "settings": {
+        "grad_start": "#F4C026",
+        "grad_end": "#ffffff",
+        "product_image": "shopify://shop_images/Frame_63.png",
+        "deco_left": "shopify://shop_images/edited-photo_1.png",
+        "deco_right": "shopify://shop_images/edited-photo_1_1.png",
+        "tagline": "THE LEGACY OF CALICUT",
+        "heading": "The Sweet Story of",
+        "heading_highlight": "Fulva",
+        "heading_highlight_color": "#2E7D32",
+        "description": "From Arab traders arriving at the shores of Calicut to Fulva sharing Kerala's regional taste worldwide — this is the journey of tradition, friendship, and authentic halwa.",
+        "padding_top": 48,
+        "padding_bottom": 44
+      }
+    },
+    "fulwa_journey_timeline_FRhEmD": {
+      "type": "fulwa-journey-timeline",
+      "blocks": {
+        "milestone_Ai7qKg": {
+          "type": "milestone",
+          "settings": {
+            "number": "01",
+            "image": "shopify://shop_images/fulva_images_1_1_3d6b993f-709c-4a6b-8e70-0871c650bc21.png",
+            "heading": "shopify://shop_images/fulva_label_1_1.png",
+            "subheading": "Ancient Trade Era",
+            "description": "Centuries ago, Arab traders introduced Halwa along the Malabar coast, a port where the world came to trade in spices, cotton, and gems."
+          }
+        },
+        "milestone_aH89pH": {
+          "type": "milestone",
+          "settings": {
+            "number": "02",
+            "image": "shopify://shop_images/fulva_images_2_1.png",
+            "heading": "shopify://shop_images/fulva_label_2_1_1.png",
+            "subheading": "The Zamorin Era · 14th Century",
+            "description": "The Zamorins of Calicut embraced the confectionery, highlighting Halwa as a royal delicacy served at special occasions and celebrations."
+          }
+        },
+        "milestone_6iVwg8": {
+          "type": "milestone",
+          "settings": {
+            "number": "03",
+            "image": "shopify://shop_images/fulva_images_4_1.png",
+            "heading": "shopify://shop_images/fulva_label_3_1.png",
+            "subheading": "Colonial Period",
+            "description": "Local artisans perfected the art of making it in cauldrons — ghee, sugar, and rice flour whisked into perfection with Malabar spices."
+          }
+        },
+        "milestone_34xHwz": {
+          "type": "milestone",
+          "settings": {
+            "number": "04",
+            "image": "shopify://shop_images/fulva_images_3_1.png",
+            "heading": "shopify://shop_images/fulva_label_4_1.png",
+            "subheading": "Trade Route Era",
+            "description": "Calicut became a gateway for spice commerce, ultimately shaping the core of Halwa's iconic taste & distinct flavor."
+          }
+        },
+        "milestone_3V7AWf": {
+          "type": "milestone",
+          "settings": {
+            "number": "05",
+            "image": "shopify://shop_images/fulva_images_5_1.png",
+            "heading": "shopify://shop_images/fulva_label_5_1.png",
+            "subheading": "Early 20th Century",
+            "description": "Halwa shops lined the streets, and every celebration, wedding, and festival in Calicut featured the sweet prominently."
+          }
+        },
+        "milestone_eVDTXj": {
+          "type": "milestone",
+          "settings": {
+            "number": "06",
+            "image": "shopify://shop_images/fulva_images_6_1.png",
+            "heading": "shopify://shop_images/fulva_label_6_1.png",
+            "subheading": "Mid 20th Century",
+            "description": "From late taluks to prominent places of craftsmanship, Calicut Halwa became a regional landmark in culinary tradition."
+          }
+        },
+        "milestone_4RPdYB": {
+          "type": "milestone",
+          "settings": {
+            "number": "07",
+            "image": "shopify://shop_images/fulva_images_7_1.png",
+            "heading": "shopify://shop_images/fulva_label_7_1.png",
+            "subheading": "Modern Era",
+            "description": "Fulva was born as a passion project, a way to bring the authentic Calicut Halwa to every doorstep across India, honouring the artisans of Kozhikode."
+          }
+        },
+        "milestone_7qgJqd": {
+          "type": "milestone",
+          "settings": {
+            "number": "08",
+            "image": "shopify://shop_images/fulva_images_8_1.png",
+            "heading": "shopify://shop_images/fulva_label_8_1.png",
+            "subheading": "Today",
+            "description": "Today, Fulva delivers the handcrafted goodness to doorsteps across India, keeping tradition alive in a new generation of halwa lovers."
+          }
+        }
+      },
+      "block_order": [
+        "milestone_Ai7qKg",
+        "milestone_aH89pH",
+        "milestone_6iVwg8",
+        "milestone_34xHwz",
+        "milestone_3V7AWf",
+        "milestone_eVDTXj",
+        "milestone_4RPdYB",
+        "milestone_7qgJqd"
+      ],
+      "name": "Journey Timeline",
+      "settings": {
+        "bg_color": "#FFFDF5",
+        "line_color": "#F4C026",
+        "marker_border_color": "#F4C026",
+        "marker_text_color": "#A68B2C",
+        "padding_top": 60,
+        "padding_top_mobile": 40,
+        "cta_grad_start": "#FFFFF0",
+        "cta_grad_end": "#F4C026",
+        "cta_card_color_1": "#327435",
+        "cta_card_color_2": "#012003",
+        "cta_heading": "The Journey",
+        "cta_heading_highlight": "Continues",
+        "cta_text": "We carry the legacy of Calicut forward — one handcrafted halwa at a time. Fresh from the streets of Kozhikode, straight to your doorstep.",
+        "cta_btn1_label": "Shop Fulwa",
+        "cta_btn1_link": "",
+        "cta_btn1_color": "#F4C026",
+        "cta_btn2_label": "Explore Gifts",
+        "cta_btn2_link": "",
+        "cta_btn2_color": "#B9B9B9"
+      }
+    },
+    "faq_with_image_kCNrFh": {
+      "type": "faq-with-image",
+      "blocks": {
+        "faq_PDTfg3": {
+          "type": "faq",
+          "settings": {
+            "question": "WHY IS CALICUT HALWA DIFFERENT FROM OTHER HALWAS?",
+            "answer": "<p>Provide the answer to your question here.</p>"
+          }
+        },
+        "faq_9JtWPe": {
+          "type": "faq",
+          "settings": {
+            "question": "WHY IS CALICUT HALWA DIFFERENT FROM OTHER HALWAS?",
+            "answer": "<p>Provide the answer to your question here.</p>"
+          }
+        },
+        "faq_cpVCpD": {
+          "type": "faq",
+          "settings": {
+            "question": "WHY IS CALICUT HALWA DIFFERENT FROM OTHER HALWAS?",
+            "answer": "<p>Provide the answer to your question here.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_PDTfg3",
+        "faq_9JtWPe",
+        "faq_cpVCpD"
+      ],
+      "name": "FAQ with Image",
+      "settings": {
+        "bg_color": "#F7F9F7",
+        "use_gradient_bg": false,
+        "bg_gradient_1": "#F7F9F7",
+        "bg_gradient_2": "#F7F9F7",
+        "bg_gradient_3": "#F7F9F7",
+        "heading_text_1": "Frequently Asked",
+        "heading_text_2": "Questions",
+        "show_image_section": true,
+        "right_bg_color": "linear-gradient(180deg, rgba(255, 251, 240, 1), rgba(252, 229, 150, 1) 50%, rgba(244, 192, 38, 1) 100%)"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "fulwa_sweet_story_9tXgnp",
+    "fulwa_journey_timeline_FRhEmD",
+    "faq_with_image_kCNrFh"
   ]
 }
