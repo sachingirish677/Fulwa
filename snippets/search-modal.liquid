@@ -116,7 +116,7 @@
             on:click="/handleModalClick"
           >
             {% render 'predictive-search-empty-state',
-              load_empty_state: true,
+              load_empty_state: false,
               shadow_opacity: 0.1,
               products_test_id: 'products-list-default--modal'
             %}
@@ -143,45 +143,111 @@
     --search-border-width: var(--style-border-width);
   }
 
-  .search-modal__content {
-    /* Approx set the top so when the content is at max height, the modal is centered */
-    --modal-top-margin: calc(50dvh - var(--modal-max-height) / 2 - 2rem);
-    --modal-width: 66dvw;
-
-    padding: 0;
-    border: var(--style-border-popover);
-
-    @media screen and (min-width: 750px) {
-      width: var(--modal-width);
-      margin-block-start: var(--modal-top-margin);
-      overflow: hidden;
+  @keyframes search-element-slide-down {
+    0% {
+      transform: translateX(-50%) translateY(-20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
     }
   }
 
-  /* Hide the default dialog backdrop on small screens */
+  @keyframes search-element-slide-up-out {
+    0% {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(-50%) translateY(-20px);
+      opacity: 0;
+    }
+  }
+
+  .search-modal__content {
+    padding: 0;
+    border: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
+    border-radius: var(--search-border-radius, 16px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    position: fixed;
+    top: calc(var(--header-group-height, var(--header-height, 81px)) + 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: var(--page-width, 1200px);
+    margin: 0;
+    max-height: calc(100vh - var(--header-group-height, var(--header-height, 81px)) - 40px);
+  }
+
+  /* Force override base.css .dialog-modal mobile full-screen styles */
   @media screen and (max-width: 749px) {
+    .search-modal__content.dialog-modal {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      max-height: calc(100dvh - var(--header-group-height, var(--header-height, 81px)) - 24px) !important;
+      padding: 0 !important;
+      top: var(--header-group-height, var(--header-height, 81px)) !important;
+      left: 0 !important;
+      transform: none !important;
+      border-radius: 0 !important;
+      border: 0 !important;
+      border-bottom: 1px solid var(--color-border, rgba(0, 0, 0, 0.08)) !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06) !important;
+      background: transparent !important;
+    }
+
     .search-modal__content::backdrop {
       display: none;
+    }
+
+    /* Make inner predictive-search-component transparent to remove color-scheme background */
+    .search-modal__content .predictive-search {
+      background: transparent !important;
+    }
+
+    /* Keep white background only on the actual search input bar */
+    .search-modal__content .predictive-search-form__header {
+      background-color: var(--color-background, #fff);
+    }
+
+    /* Keep white background on the results dropdown when it appears */
+    .search-modal__content .predictive-search-form__content-wrapper {
+      background-color: var(--color-background, #fff);
+    }
+
+    /* Override predictive-search-styles max-height: 100% so content doesn't fill the removed full height */
+    .search-modal__content .predictive-search-form__content {
+      max-height: 50dvh !important;
     }
   }
 
   .dialog-modal[open].search-modal__content {
-    transform-origin: bottom center;
-    animation: search-element-slide-in-bottom 300ms var(--ease-out-quad) forwards;
-    border-radius: var(--search-border-radius);
-    box-shadow: var(--shadow-popover);
+    animation: search-element-slide-down 300ms var(--ease-out-quad) forwards;
+    border-radius: var(--search-border-radius, 16px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  }
 
-    @media screen and (max-width: 749px) {
-      border-radius: 0;
+  @media screen and (max-width: 749px) {
+    .dialog-modal[open].search-modal__content {
+      border-radius: 0 !important;
+      height: auto !important;
+      transform: none !important;
     }
   }
 
   .dialog-modal.search-modal__content.dialog-closing {
-    animation: search-element-slide-out-bottom 200ms var(--ease-out-quad) forwards;
+    animation: search-element-slide-up-out 200ms var(--ease-out-quad) forwards;
   }
 
   .search-modal__content[open] {
     display: flex;
+  }
+
+  .predictive-search-form__content-wrapper:not(:has(.predictive-search-results__inner)) {
+    display: none !important;
   }
 
   .search-modal__content :is(.predictive-search-dropdown, .predictive-search-form__content-wrapper) {
@@ -277,18 +343,17 @@
   }
 
   .predictive-search-form__content-wrapper {
-    position: absolute;
-    top: 100%;
+    position: relative;
     width: 100%;
-    left: 0;
     z-index: var(--layer-raised);
     display: flex;
     flex-direction: column;
-    border-radius: 0 0 var(--search-border-radius) var(--search-border-radius);
+    border-radius: 0;
     transition: box-shadow var(--animation-speed) var(--animation-easing);
     transform: translateZ(0);
     will-change: transform, opacity;
     overflow: hidden;
+    border-top: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
 
     @media screen and (max-width: 749px) {
       border-radius: 0;

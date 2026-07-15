@@ -69,6 +69,19 @@
                   {% endif %}
                 </li>
               {% endfor %}
+              {% if section.settings.show_search %}
+                <li class="fulva-header__mobile-item is-search">
+                  <button class="fulva-header__mobile-link" on:click="#search-modal/showDialog" aria-haspopup="dialog">
+                    {% if section.settings.show_icons %}
+                      <svg class="fulva-header__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                      </svg>
+                    {% endif %}
+                    {{ section.settings.search_label | escape }}
+                  </button>
+                </li>
+              {% endif %}
               {% if section.settings.show_track_order and section.settings.track_order_url != blank %}
                 <li class="fulva-header__mobile-item is-track">
                   <a class="fulva-header__mobile-link is-track" href="{{ section.settings.track_order_url }}">
@@ -144,6 +157,18 @@
           {% endif %}
           <span class="fulva-header__btn-text">{{ section.settings.whatsapp_label | escape }}</span>
         </a>
+      {% endif %}
+
+      {% if section.settings.show_search %}
+        <button class="fulva-header__btn is-search" on:click="#search-modal/showDialog" aria-label="{{ section.settings.search_label | escape }}" aria-haspopup="dialog">
+          {% if section.settings.show_icons %}
+            <svg class="fulva-header__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          {% endif %}
+          <span class="fulva-header__btn-text">{{ section.settings.search_label | escape }}</span>
+        </button>
       {% endif %}
 
       {% if section.settings.show_track_order and section.settings.track_order_url != blank %}
@@ -472,6 +497,20 @@
     transition: background 180ms ease, color 180ms ease;
   }
 
+  .fulva-header--{{ section.id }} button.fulva-header__mobile-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    text-align: left;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
   .fulva-header--{{ section.id }} .fulva-header__mobile-link:hover {
     background: rgba(0, 0, 0, 0.06);
     color: var(--fh-hover);
@@ -751,6 +790,9 @@
     { "type": "range", "id": "whatsapp_widget_shadow_opacity", "label": "Widget shadow opacity (%)", "min": 0, "max": 30, "step": 1, "default": 18 },
     { "type": "checkbox", "id": "whatsapp_widget_hide_mobile", "label": "Hide widget on mobile", "default": false },
     { "type": "checkbox", "id": "whatsapp_widget_hide_desktop", "label": "Hide widget on desktop", "default": false },
+
+    { "type": "checkbox", "id": "show_search", "label": "Show Search", "default": true },
+    { "type": "text", "id": "search_label", "label": "Search label", "default": "Search" },
 
     { "type": "checkbox", "id": "show_track_order", "label": "Show Track Order", "default": true },
     { "type": "text", "id": "track_order_label", "label": "Track Order label", "default": "Track Order" },

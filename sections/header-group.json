@@ -181,6 +181,8 @@
         "whatsapp_widget_shadow_opacity": 18,
         "whatsapp_widget_hide_mobile": false,
         "whatsapp_widget_hide_desktop": false,
+        "show_search": true,
+        "search_label": "Search",
         "show_track_order": true,
         "track_order_label": "Track Order",
         "track_order_url": "shopify://pages/track-your-order",

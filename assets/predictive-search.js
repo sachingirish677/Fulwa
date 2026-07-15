@@ -56,11 +56,11 @@ class PredictiveSearchComponent extends Component {
       this.addEventListener('click', this.#handleModalClick, { signal });
     }
 
-    if (RecentlyViewed.getProducts().length > 0) {
-      requestIdleCallback(() => {
-        this.#loadEmptyState();
-      });
-    }
+    // if (RecentlyViewed.getProducts().length > 0) {
+    //   requestIdleCallback(() => {
+    //     this.#loadEmptyState();
+    //   });
+    // }
   }
 
   /**
@@ -105,9 +105,9 @@ class PredictiveSearchComponent extends Component {
   };
 
   #handleDialogOpen = () => {
-    if (!this.#emptyStateLoaded && RecentlyViewed.getProducts().length > 0) {
-      this.#loadEmptyState();
-    }
+    // if (!this.#emptyStateLoaded && RecentlyViewed.getProducts().length > 0) {
+    //   this.#loadEmptyState();
+    // }
   };
 
   #loadEmptyState() {
@@ -397,26 +397,26 @@ class PredictiveSearchComponent extends Component {
 
     /** This needs to be awaited and not .then so the DOM is already morphed
      * when #closeResults is called and therefore the height is animated */
-    const viewedProducts = RecentlyViewed.getProducts();
-
-    if (viewedProducts.length > 0) {
-      const recentlyViewedMarkup = await this.#getRecentlyViewedProductsMarkup();
-      if (!recentlyViewedMarkup) return;
-
-      const parsedRecentlyViewedMarkup = new DOMParser().parseFromString(recentlyViewedMarkup, 'text/html');
-      const recentlyViewedProductsHtml = parsedRecentlyViewedMarkup.getElementById('predictive-search-products');
-      if (!recentlyViewedProductsHtml) return;
-
-      for (const child of recentlyViewedProductsHtml.children) {
-        if (child instanceof HTMLElement) {
-          child.setAttribute('ref', 'recentlyViewedWrapper');
-        }
-      }
-
-      const collectionElement = parsedEmptySectionMarkup.querySelector('#predictive-search-products');
-      if (!collectionElement) return;
-      collectionElement.prepend(...recentlyViewedProductsHtml.children);
-    }
+    // const viewedProducts = RecentlyViewed.getProducts();
+    // 
+    // if (viewedProducts.length > 0) {
+    //   const recentlyViewedMarkup = await this.#getRecentlyViewedProductsMarkup();
+    //   if (!recentlyViewedMarkup) return;
+    // 
+    //   const parsedRecentlyViewedMarkup = new DOMParser().parseFromString(recentlyViewedMarkup, 'text/html');
+    //   const recentlyViewedProductsHtml = parsedRecentlyViewedMarkup.getElementById('predictive-search-products');
+    //   if (!recentlyViewedProductsHtml) return;
+    // 
+    //   for (const child of recentlyViewedProductsHtml.children) {
+    //     if (child instanceof HTMLElement) {
+    //       child.setAttribute('ref', 'recentlyViewedWrapper');
+    //     }
+    //   }
+    // 
+    //   const collectionElement = parsedEmptySectionMarkup.querySelector('#predictive-search-products');
+    //   if (!collectionElement) return;
+    //   collectionElement.prepend(...recentlyViewedProductsHtml.children);
+    // }
 
     if (abortController.signal.aborted) return;
 
