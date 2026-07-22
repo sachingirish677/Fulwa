@@ -70,6 +70,8 @@
             -%}
           {% endif %}
 
+          {% comment %} Collections removed from search results {% endcomment %}
+          {% comment %}
           {% if predictive_search.resources.collections.size > 0 %}
             {% assign resource_title = 'content.search_results_resource_collections' | t %}
 
@@ -79,7 +81,10 @@
               resources: predictive_search.resources.collections
             %}
           {% endif %}
+          {% endcomment %}
 
+          {% comment %} Pages removed from search results {% endcomment %}
+          {% comment %}
           {% if predictive_search.resources.pages.size > 0 %}
             {% assign resource_title = 'content.search_results_resource_pages' | t %}
 
@@ -89,6 +94,7 @@
               resources: predictive_search.resources.pages
             %}
           {% endif %}
+          {% endcomment %}
 
           {% if predictive_search.resources.articles.size > 0 %}
             {% assign resource_title = 'content.search_results_resource_articles' | t %}

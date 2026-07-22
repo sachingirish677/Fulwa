@@ -82,6 +82,19 @@
                   </button>
                 </li>
               {% endif %}
+              {% if section.settings.show_account %}
+                <li class="fulva-header__mobile-item">
+                  <a class="fulva-header__mobile-link" href="{{ routes.account_login_url }}">
+                    {% if section.settings.show_icons %}
+                      <svg class="fulva-header__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                      </svg>
+                    {% endif %}
+                    {{ section.settings.account_label | escape }}
+                  </a>
+                </li>
+              {% endif %}
               {% if section.settings.show_track_order and section.settings.track_order_url != blank %}
                 <li class="fulva-header__mobile-item is-track">
                   <a class="fulva-header__mobile-link is-track" href="{{ section.settings.track_order_url }}">
@@ -169,6 +182,18 @@
           {% endif %}
           <span class="fulva-header__btn-text">{{ section.settings.search_label | escape }}</span>
         </button>
+      {% endif %}
+
+      {% if section.settings.show_account %}
+        <a class="fulva-header__btn is-account" href="{{ routes.account_login_url }}" aria-label="{{ section.settings.account_label | escape }}">
+          {% if section.settings.show_icons %}
+            <svg class="fulva-header__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          {% endif %}
+          <span class="fulva-header__btn-text">{{ section.settings.account_label | escape }}</span>
+        </a>
       {% endif %}
 
       {% if section.settings.show_track_order and section.settings.track_order_url != blank %}
@@ -650,8 +675,13 @@
       order: 2;
     }
 
+    .fulva-header--{{ section.id }} .fulva-header__btn.is-account {
+      order: 3;
+    }
+
     .fulva-header--{{ section.id }} .fulva-header__btn.is-wa,
     .fulva-header--{{ section.id }} .fulva-header__btn.is-cart,
+    .fulva-header--{{ section.id }} .fulva-header__btn.is-account,
     .fulva-header--{{ section.id }} .fulva-header__icon-btn {
       padding: 10px;
       border-radius: 12px;
@@ -805,6 +835,10 @@
       { "value": "outline", "label": "Outline" },
       { "value": "solid", "label": "Solid" }
     ]},
+
+    { "type": "header", "content": "Account" },
+    { "type": "checkbox", "id": "show_account", "label": "Show Account", "default": true },
+    { "type": "text", "id": "account_label", "label": "Account label", "default": "Account" },
 
     { "type": "checkbox", "id": "show_cart", "label": "Show Cart", "default": true },
     { "type": "text", "id": "cart_label", "label": "Cart label", "default": "Cart" },
